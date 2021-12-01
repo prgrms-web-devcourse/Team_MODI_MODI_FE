@@ -1,8 +1,4 @@
-function App({ a, b }) {
-  const obj = [1, 2];
-  console.log(obj);
-  console.log(a, b);
-
+function App() {
   return (
     <div>
       <div>MODI</div>

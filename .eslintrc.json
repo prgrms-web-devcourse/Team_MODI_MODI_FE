@@ -10,7 +10,8 @@
     "plugin:prettier/recommended",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime"
   ],
   "rules": {
     "prettier/prettier": [
@@ -52,18 +53,5 @@
     "default-case": ["error", { "commentPattern": "^no\\sdefault" }],
     "eqeqeq": ["error", "always"],
     "newline-before-return": "error"
-  },
-  "jsx-runtime": {
-    "plugins": ["react"],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "jsxPragma": null // for @typescript/eslint-parser
-    },
-    "rules": {
-      "react/react-in-jsx-scope": 0,
-      "react/jsx-uses-react": 0
-    }
   }
 }
