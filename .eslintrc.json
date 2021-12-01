@@ -9,7 +9,8 @@
     "react-app",
     "plugin:prettier/recommended",
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "rules": {
     "prettier/prettier": [
