@@ -44,7 +44,7 @@ const theme = createTheme({
       'sans-serif',
     ].join(','),
     h2: {
-      fontSize: 20,
+      fontSize: 22,
       fontWeight: 500,
     },
     h3: {
