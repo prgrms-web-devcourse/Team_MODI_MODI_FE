@@ -1,10 +1,9 @@
-import NaverLogin from './components/NaverLogin';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
     <div>
-      <div>MODI</div>
-      <NaverLogin />
+      <LoginPage />
     </div>
   );
 }

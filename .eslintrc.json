@@ -36,7 +36,6 @@
     "lines-between-class-members": ["error", "always"],
     "no-new-func": "error",
     "prefer-arrow-callback": "error",
-    "arrow-parens": ["error", "as-needed"],
     "implicit-arrow-linebreak": ["error", "beside"],
     "prefer-destructuring": ["error", { "object": true, "array": false }],
     "prefer-template": "error",
