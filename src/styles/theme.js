@@ -13,13 +13,14 @@ const theme = createTheme({
       main: '#FBEDA4',
     },
     modiGray: {
-      light: '#EEEEEE',
+      black: '191A20',
       main: '#BBBBBB',
-      dark: '#666666',
+      light: '#EEEEEE',
+      white: '#FFFFFF',
     },
     text: {
-      primary: '#191A20',
-      secondary: '#343434',
+      primary: '#343434',
+      secondary: '#666666',
     },
     action: {
       active: '#BBBBBB',
@@ -29,7 +30,19 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Spoqa Han Sans Neo', 'sans-serif'].join(','),
+    fontFamily: [
+      'Pretendard',
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'system-ui',
+      'Roboto',
+      'Helvetica Neue',
+      'Segoe UI',
+      'Apple SD Gothic Neo',
+      'Noto Sans KR',
+      'Malgun Gothic',
+      'sans-serif',
+    ].join(','),
     h2: {
       fontSize: 20,
       fontWeight: 500,
