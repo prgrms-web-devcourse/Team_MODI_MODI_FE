@@ -1,6 +1,7 @@
 import { Container, Box, Typography } from '@mui/material';
+import { styled } from '@mui/system';
 import { useCallback } from 'react';
-import NaverLogin from '../components/NaverLogin';
+import SocialLoginButton from '../components/SocialLoginButton';
 
 const LoginPage = () => {
   const handleClickLoginButton = useCallback(() => {
@@ -19,46 +20,46 @@ const LoginPage = () => {
       >
         <Box
           sx={{
+            display: 'flex',
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-between',
             margin: '0 30px',
           }}
         >
-          <Typography
-            variant="h4"
-            mt={10}
-            mb={6}
-            color="#bbcc4b"
-            fontWeight={600}
-          >
-            MODI
-          </Typography>
           <Box>
-            <Typography fontSize="2rem" fontWeight="600">
-              재밌는 컨텐츠
+            <Typography
+              variant="h4"
+              mt={10}
+              mb={6}
+              color="#bbcc4b"
+              fontWeight={600}
+            >
+              MODI
             </Typography>
-            <Typography fontSize="2rem" fontWeight="600">
-              모두와 함께 즐겨요
-            </Typography>
-            <Typography fontSize="2rem" fontWeight="600">
-              모두의 아이디
-            </Typography>
+            <LoginDescription>재밌는 컨텐츠</LoginDescription>
+            <LoginDescription>모두와 함께 즐겨요</LoginDescription>
+            <LoginDescription>모두의 아이디</LoginDescription>
           </Box>
-        </Box>
-        <Box mb={0}>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle2" textAlign="center">
             3개의 넷플릭스 파티가 여러분을 기다리고 있습니다.
           </Typography>
         </Box>
         <Box
           sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             width: '100%',
-            height: '11.5rem',
+            height: '9.125rem',
             backgroundColor: '#BBCC4B',
             borderRadius: ' 32px 32px 0 0',
           }}
         >
-          <NaverLogin onClick={handleClickLoginButton}>
-            네이버 로그인
-          </NaverLogin>
+          <SocialLoginButton
+            onClick={handleClickLoginButton}
+            provider="kakao"
+          />
         </Box>
       </Box>
     </Container>
@@ -66,3 +67,8 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const LoginDescription = styled(Typography)`
+  font-size: 1.75rem;
+  font-weight: 500;
+`;
