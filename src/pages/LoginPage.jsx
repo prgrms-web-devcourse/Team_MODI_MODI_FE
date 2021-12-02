@@ -48,14 +48,19 @@ const LoginPage = () => {
         <Box
           sx={{
             display: 'flex',
+            flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            height: '9.125rem',
+            height: '224px',
             backgroundColor: '#BBCC4B',
             borderRadius: ' 32px 32px 0 0',
           }}
         >
+          <SocialLoginButton
+            onClick={handleClickLoginButton}
+            provider="naver"
+          />
           <SocialLoginButton
             onClick={handleClickLoginButton}
             provider="kakao"

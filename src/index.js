@@ -1,14 +1,16 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { CssBaseline } from '@mui/material';
+import OauthRedirectPage from 'pages/OauthRedirectPage';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <CssBaseline />
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="oauth/redirect" element={<OauthRedirectPage />} />
+    </Routes>
+  </BrowserRouter>,
   document.getElementById('root'),
 );
 
