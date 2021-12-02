@@ -52,6 +52,13 @@
     "no-fallthrough": ["error"],
     "default-case": ["error", { "commentPattern": "^no\\sdefault" }],
     "eqeqeq": ["error", "always"],
-    "newline-before-return": "error"
+    "newline-before-return": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ]
   }
 }
