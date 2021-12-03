@@ -67,7 +67,7 @@ const LoginPage = () => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          bgcolor: '#f7f8fa',
+          bgcolor: 'modiGray.semilight',
           boxShadow: '0px -2px 8px rgba(0, 0, 0, 0.25)',
           height: '224px',
           borderRadius: ' 32px 32px 0 0',
