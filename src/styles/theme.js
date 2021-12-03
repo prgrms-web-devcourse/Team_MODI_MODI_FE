@@ -43,34 +43,45 @@ const theme = createTheme({
       'Malgun Gothic',
       'sans-serif',
     ].join(','),
-    h2: {
-      fontSize: 22,
-      fontWeight: 500,
-    },
-    h3: {
-      fontSize: 20,
-      fontWeight: 400,
-    },
-    h4: {
-      fontSize: 18,
-      fontWeight: 500,
-    },
-    h5: {
-      fontSize: 16,
-      fontWeight: 500,
-    },
-    subtitle1: {
-      fontSize: 16,
-      fontWeight: 400,
-    },
-    subtitle2: {
+    micro: {
       fontSize: 12,
       fontWeight: 400,
     },
-    body1: {
+    microB: {
+      fontSize: 12,
+      fontWeight: 700,
+    },
+    small: {
+      fontSize: 14,
+      fontWeight: 400,
+    },
+    smallB: {
+      fontSize: 14,
+      fontWeight: 700,
+    },
+    base: {
       fontSize: 16,
       fontWeight: 400,
-      lineHeight: 1.5,
+    },
+    baseB: {
+      fontSize: 16,
+      fontWeight: 700,
+    },
+    medium: {
+      fontSize: 18,
+      fontWeight: 400,
+    },
+    mediumB: {
+      fontSize: 16,
+      fontWeight: 700,
+    },
+    large: {
+      fontSize: 22,
+      fontWeight: 700,
+    },
+    visual: {
+      fontSize: 26,
+      fontWeight: 700,
     },
   },
 });
