@@ -14,7 +14,6 @@ const LoginPage = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        border: '1px solid',
         height: '100vh',
         background:
           'radial-gradient(53.14% 58.21% at 8.64% 19.43%, #C2D15D 0%, #9EC238 100%)',
@@ -57,7 +56,7 @@ const LoginPage = () => {
           color="common.white"
           mb={3.5}
         >
-          3개의 넷플릭스 파티가 여러분을 기다리고 있습니다.
+          모디에서 세상의 모든 디지털 컨텐츠를 즐겨보세요!
         </Typography>
       </Box>
       <Box
