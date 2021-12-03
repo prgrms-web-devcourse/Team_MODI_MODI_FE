@@ -10,15 +10,14 @@ const LoginButton = styled(Button)`
   margin: 0.5rem;
   border-radius: 32px;
   font-weight: 600;
-
+  box-shadow: 0px 4px 7px 2px rgba(66, 66, 66, 0.15);
   &:hover {
     background-color: #dddddd;
   }
 `;
 
 const SocialLoginButton = ({ provider }) => {
-  const loginUrl = `http://aae05aa0de4963.localhost.run/login/oauth2/code/${provider}`;
-  console.log(loginUrl);
+  const loginUrl = `http://1de37912de915f.localhost.run/oauth2/authorization/${provider}?redirect_uri=http://localhost:3000/oauth/redirect `;
 
   return (
     <>
