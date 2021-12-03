@@ -16,6 +16,7 @@ const theme = createTheme({
       black: '191A20',
       main: '#BBBBBB',
       light: '#EEEEEE',
+      semilight: 'F7F8FA',
       white: '#FFFFFF',
     },
     text: {
