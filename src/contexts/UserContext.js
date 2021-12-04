@@ -1,3 +1,6 @@
+import PropTypes from 'prop-types';
+import { createContext } from 'react';
+
 const initialState = {
   user: {
     loading: false,
@@ -55,4 +58,26 @@ const userReducer = (state, action) => {
   }
 
   return newState;
+};
+
+const UserStateContext = createContext(null);
+const UserDispatchContext = createContext(null);
+
+export const UserProvider = ({ children }) => {
+  const [state, dispatch] = userReducer(userReducer, initialState);
+
+  return (
+    <UserStateContext.Provider value={state}>
+      <UserDispatchContext.Provider value={dispatch}>
+        {children}
+      </UserDispatchContext.Provider>
+    </UserStateContext.Provider>
+  );
+};
+
+UserProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
