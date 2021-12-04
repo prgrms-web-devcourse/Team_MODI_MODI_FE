@@ -1,5 +1,6 @@
+import axios from 'axios';
 import PropTypes from 'prop-types';
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 
 const initialState = {
   user: {
@@ -80,4 +81,43 @@ UserProvider.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+};
+
+export const useUserState = () => {
+  const state = useContext(UserStateContext);
+
+  if (!state) {
+    throw new Error('Cannot find UserProvider');
+  }
+
+  return state;
+};
+
+export const useUserDispatch = () => {
+  const dispatch = useContext(UserDispatchContext);
+
+  if (!dispatch) {
+    throw new Error('Cannot find UserProvider');
+  }
+
+  return dispatch;
+};
+
+export const getUser = async (dispatch, id) => {
+  dispatch({ type: 'GET_USER' });
+  try {
+    const response = await axios.get(
+      `https://198716b8-3226-4714-b0fc-3190ce76b098.mock.pstmn.io/api/users/${id}`,
+    );
+    dispatch({
+      type: 'GET_USER_SUCCESS',
+      data: response.data,
+    });
+  } catch (error) {
+    console.error(error);
+    dispatch({
+      type: 'GET_USER_ERROR',
+      error,
+    });
+  }
 };
