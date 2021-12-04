@@ -17,7 +17,8 @@
     "prettier/prettier": [
       "error",
       {
-        "endOfLine": "auto"
+        "endOfLine": "auto",
+        "arrowParens": "avoid"
       }
     ],
     "import/no-anonymous-default-export": "off",
