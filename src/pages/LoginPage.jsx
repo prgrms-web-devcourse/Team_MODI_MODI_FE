@@ -1,13 +1,8 @@
 import { Container, Box, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import { useCallback } from 'react';
 import SocialLoginButton from 'components/SocialLoginButton';
 
 const LoginPage = () => {
-  const handleClickLoginButton = useCallback(() => {
-    console.log(1);
-  }, []);
-
   return (
     <Container
       maxWidth="xs"
@@ -22,34 +17,33 @@ const LoginPage = () => {
     >
       <Box
         sx={{
+          position: 'static',
           display: 'flex',
           flex: 1,
           flexDirection: 'column',
-          m: ' 0 30px',
+          m: '0 30px',
         }}
       >
-        <>
-          <Typography
-            component="h1"
-            sx={{
-              mt: '100px',
-              fontSize: '2.75rem',
-              fontWeight: 700,
-              color: 'common.white',
-            }}
-          >
-            Mo;D
-          </Typography>
-          <Box
-            sx={{
-              flex: 1,
-              mt: 1,
-            }}
-          >
-            <LoginDescription>세상 모든 OTT</LoginDescription>
-            <LoginDescription>모두의 아이디 모디</LoginDescription>
-          </Box>
-        </>
+        <Typography
+          component="h1"
+          sx={{
+            mt: '100px',
+            fontSize: '2.75rem',
+            fontWeight: 700,
+            color: 'common.white',
+          }}
+        >
+          Mo;D
+        </Typography>
+        <Box
+          sx={{
+            flex: 1,
+            mt: 1,
+          }}
+        >
+          <LoginDescription>세상 모든 OTT</LoginDescription>
+          <LoginDescription>모두의 아이디 모디</LoginDescription>
+        </Box>
         <Typography
           variant="subtitle2"
           textAlign="center"
@@ -58,6 +52,7 @@ const LoginPage = () => {
         >
           모디에서 세상의 모든 디지털 컨텐츠를 즐겨보세요!
         </Typography>
+        <StyleCircularDiv />
       </Box>
       <Box
         sx={{
@@ -72,10 +67,9 @@ const LoginPage = () => {
           borderRadius: ' 32px 32px 0 0',
         }}
       >
-        <SocialLoginButton onClick={handleClickLoginButton} provider="naver" />
-        <SocialLoginButton onClick={handleClickLoginButton} provider="kakao" />
+        <SocialLoginButton provider="naver" />
+        <SocialLoginButton provider="kakao" />
       </Box>
-      <StyleCircularDiv />
     </Container>
   );
 };

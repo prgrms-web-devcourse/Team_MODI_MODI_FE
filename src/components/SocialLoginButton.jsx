@@ -9,6 +9,7 @@ const providerLogo = {
   naver: naverLogoSrc,
   kakao: kakaoLogoSrc,
 };
+
 const SocialLoginButton = ({ provider }) => {
   const loginUrl = `http://1de37912de915f.localhost.run/oauth2/authorization/${provider}?redirect_uri=http://localhost:3000/oauth/redirect `;
 
