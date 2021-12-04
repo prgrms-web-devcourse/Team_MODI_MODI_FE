@@ -13,11 +13,12 @@ const theme = createTheme({
       main: '#FBEDA4',
     },
     modiGray: {
-      black: '191A20',
+      black: '#191A20',
       main: '#BBBBBB',
       light: '#EEEEEE',
-      semilight: 'F7F8FA',
+      semilight: '#F7F8FA',
       white: '#FFFFFF',
+      contrastText: '#FFFFFF',
     },
     text: {
       primary: '#343434',
