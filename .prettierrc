@@ -6,6 +6,7 @@
   "quoteProps": "as-needed",
   "trailingComma": "all",
   "bracketSpacing": true,
+  "arrowParens": "avoid",
   "proseWrap": "preserve",
   "endOfLine": "crlf",
   "htmlWhitespaceSensitivity": "css"
