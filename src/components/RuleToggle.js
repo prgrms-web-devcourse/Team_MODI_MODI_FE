@@ -23,7 +23,6 @@ const RuleToggle = ({ ruleId, ruleName, onSelectRule }) => {
         sx={{
           m: 0.5,
           cursor: 'pointer',
-          filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
         }}
         color={selected ? 'primary' : 'default'}
         key={ruleId}
