@@ -1,58 +1,26 @@
 import PropTypes from 'prop-types';
 import { createContext, useContext, useReducer } from 'react';
-import { createAsyncDispatcher } from 'utils/asyncAction';
+import {
+  createAsyncDispatcher,
+  createAsyncHandler,
+  initialAsyncState,
+} from 'utils/asyncAction';
 import * as api from 'utils/api';
 
 const initialState = {
-  user: {
-    loading: false,
-    data: null,
-    error: null,
-  },
+  user: initialAsyncState,
 };
 
-//로딩 중일 때의 상태
-const loadingState = {
-  loading: true,
-  data: null,
-  error: null,
-};
-
-const successFetch = data => ({
-  loading: false,
-  data,
-  error: null,
-});
-
-const errorFetch = error => ({
-  loading: false,
-  data: null,
-  error,
-});
+const userHandler = createAsyncHandler('GET_USER', 'user');
 
 const userReducer = (state, action) => {
   let newState = state;
 
   switch (action.type) {
     case 'GET_USER':
-      newState = {
-        ...state,
-        user: loadingState,
-      };
-      break;
-
     case 'GET_USER_SUCCESS':
-      newState = {
-        ...state,
-        user: successFetch(action.data),
-      };
-      break;
-
     case 'GET_USER_ERROR':
-      newState = {
-        ...state,
-        user: errorFetch(action.error),
-      };
+      newState = userHandler(state, action);
       break;
 
     default:
