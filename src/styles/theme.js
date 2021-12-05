@@ -99,6 +99,15 @@ const theme = createTheme({
         root: {
           borderRadius: '22px / 50%',
         },
+        sizeSmall: {
+          borderRadius: 16,
+        },
+        sizeMedium: {
+          borderRadius: 18,
+        },
+        sizeLarge: {
+          borderRadius: 21,
+        },
       },
     },
   },
