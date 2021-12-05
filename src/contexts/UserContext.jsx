@@ -1,6 +1,7 @@
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { createContext, useContext, useReducer } from 'react';
+import { createAsyncDispatcher } from 'utils/asyncAction';
+import * as api from 'utils/api';
 
 const initialState = {
   user: {
@@ -103,22 +104,4 @@ export const useUserDispatch = () => {
   return dispatch;
 };
 
-export const getUser = async (dispatch, id) => {
-  dispatch({ type: 'GET_USER' });
-
-  try {
-    const response = await axios.get(
-      `https://198716b8-3226-4714-b0fc-3190ce76b098.mock.pstmn.io/api/users/${id}`,
-    );
-    dispatch({
-      type: 'GET_USER_SUCCESS',
-      data: response.data,
-    });
-  } catch (error) {
-    console.error(error);
-    dispatch({
-      type: 'GET_USER_ERROR',
-      error,
-    });
-  }
-};
+export const getUser = createAsyncDispatcher('GET_USER', api.getUser);
