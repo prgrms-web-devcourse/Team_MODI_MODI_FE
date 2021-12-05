@@ -9,7 +9,7 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-const SharedInfoForm = ({ initialValues, onSubmit, validate }) => {
+const SharedInfoForm = () => {
   const [sharedInfo, setSharedInfo] = useState({
     sharedId: '',
     sharedPassword: '',
