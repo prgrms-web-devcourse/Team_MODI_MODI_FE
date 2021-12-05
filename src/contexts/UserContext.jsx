@@ -1,6 +1,6 @@
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
   user: {
@@ -65,7 +65,7 @@ const UserStateContext = createContext(null);
 const UserDispatchContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-  const [state, dispatch] = userReducer(userReducer, initialState);
+  const [state, dispatch] = useReducer(userReducer, initialState);
 
   return (
     <UserStateContext.Provider value={state}>
@@ -105,6 +105,7 @@ export const useUserDispatch = () => {
 
 export const getUser = async (dispatch, id) => {
   dispatch({ type: 'GET_USER' });
+
   try {
     const response = await axios.get(
       `https://198716b8-3226-4714-b0fc-3190ce76b098.mock.pstmn.io/api/users/${id}`,
