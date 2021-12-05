@@ -24,7 +24,7 @@ const error = error => ({
   error,
 });
 
-const asyncReducer = (state, action) => {
+const asyncReducer = (_state, action) => {
   switch (action.type) {
     case 'loading':
       return loadingState;
