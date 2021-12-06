@@ -7,15 +7,11 @@ const MemberCounter = ({ member }) => {
   const [count, setCount] = useState(member);
 
   const onDecrease = () => {
-    if (count > 1) {
-      setCount((prevCount) => prevCount - 1);
-    }
+    count > 1 && setCount((prevCount) => prevCount - 1);
   };
 
   const onIncrease = () => {
-    if (count < 3) {
-      setCount((prevCount) => prevCount + 1);
-    }
+    count < 3 && setCount((prevCount) => prevCount + 1);
   };
 
   return (
