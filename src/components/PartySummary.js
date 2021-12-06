@@ -33,7 +33,12 @@ const PartySummary = ({
   endDate,
   period,
   mustFilled,
+  onClickParty,
 }) => {
+  const handleClickParty = () => {
+    onClickParty(partyId);
+  };
+
   return (
     <Paper
       elevation={3}
@@ -41,7 +46,9 @@ const PartySummary = ({
         width: 351,
         height: 129,
         borderRadius: '16px',
+        cursor: 'pointer',
       }}
+      onClick={handleClickParty}
     >
       <Box
         sx={{
@@ -142,6 +149,7 @@ PartySummary.propTypes = {
   endDate: PropTypes.string,
   period: PropTypes.number,
   mustFilled: PropTypes.bool,
+  onClickParty: PropTypes.func,
 };
 
 export default PartySummary;

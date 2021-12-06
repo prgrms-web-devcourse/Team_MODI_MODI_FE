@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import PartySummary from './PartySummary';
 
 const PartyList = ({ parties }) => {
+  const handleClickParty = partyId => {
+    console.log(partyId);
+  };
+
   return (
     <Box sx={{ width: 400 }}>
       <List>
@@ -32,6 +36,7 @@ const PartyList = ({ parties }) => {
                 endDate={endDate}
                 period={period}
                 mustFilled={mustFilled}
+                onClickParty={handleClickParty}
               />
             </ListItem>
           ),
