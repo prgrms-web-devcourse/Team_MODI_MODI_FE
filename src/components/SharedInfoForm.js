@@ -1,5 +1,5 @@
 import { TextField, Box } from '@mui/material';
-import styled from '@emotion/styled';
+import { styled } from '@mui/system';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
@@ -33,6 +33,7 @@ const SharedInfoForm = () => {
           p: 1,
           m: 1,
         }}
+        onChange={handleChange}
       >
         <StyledTextField
           sx={{
@@ -45,7 +46,6 @@ const SharedInfoForm = () => {
           label="아이디"
           variant="outlined"
           autoComplete="off"
-          onChange={handleChange}
         />
         <StyledTextField
           sx={{
@@ -59,7 +59,6 @@ const SharedInfoForm = () => {
           variant="outlined"
           type="password"
           autoComplete="off"
-          onChange={handleChange}
         />
         <StyledTextField
           sx={{
@@ -72,7 +71,6 @@ const SharedInfoForm = () => {
           label="비밀번호 확인"
           variant="outlined"
           type="password"
-          onChange={handleChange}
         />
       </Box>
     </Box>
