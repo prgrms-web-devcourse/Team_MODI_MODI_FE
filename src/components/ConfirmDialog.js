@@ -5,7 +5,12 @@ import {
   CardContent,
   Typography,
 } from '@mui/material';
+import { styled } from '@mui/system';
 import { useState } from 'react';
+
+const StyledButton = styled(Button)`
+  width: 50%;
+`;
 
 const ConfirmDialog = () => {
   const [mustFilled, setMustFilled] = useState(false);
@@ -28,7 +33,7 @@ const ConfirmDialog = () => {
       }}
     >
       <CardContent>
-        <Typography variant="mediumB" style={{ display: 'block' }}>
+        <Typography variant="mediumB" component="p">
           모집 인원이 충족되지 않아도 파티를 자동으로 시작할까요?
         </Typography>
         <Typography variant="small" color="text.secondary">
@@ -37,28 +42,22 @@ const ConfirmDialog = () => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button
+        <StyledButton
           size="large"
-          sx={{
-            width: 160,
-          }}
           color={mustFilled ? 'modiGray' : 'primary'}
           variant="contained"
           onClick={handleClickNo}
         >
           아니오
-        </Button>
-        <Button
+        </StyledButton>
+        <StyledButton
           size="large"
-          sx={{
-            width: 160,
-          }}
           variant="contained"
           color={mustFilled ? 'primary' : 'modiGray'}
           onClick={handleClickYes}
         >
           예
-        </Button>
+        </StyledButton>
       </CardActions>
     </Card>
   );
