@@ -2,10 +2,11 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 
-import { Avatar, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import OttLogo from './OttLogo';
+import OttServiceName from './OttServiceName';
 
-const PartyTitle = ({ ottName }) => {
+const PartyTitle = ({ ottName, ottGrade }) => {
   return (
     <Box
       sx={{
@@ -15,20 +16,7 @@ const PartyTitle = ({ ottName }) => {
       }}
     >
       <OttLogo ottName={ottName} size={72} />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          ml: '10px',
-        }}
-      >
-        <Typography variant="microB" color="text.secondary">
-          디즈니 플러스
-        </Typography>
-        <Typography variant="baseB" color="text.primary">
-          스탠다드
-        </Typography>
-      </Box>
+      <OttServiceName ottName={ottName} ottGrade={ottGrade} />
 
       <Box
         sx={{
@@ -65,5 +53,7 @@ const PartyTitle = ({ ottName }) => {
 export default PartyTitle;
 
 PartyTitle.propTypes = {
-  ottName: PropTypes.string.isRequired,
+  ottName: PropTypes.oneOf(['넷플릭스', '왓챠', '디즈니 플러스', '웨이브'])
+    .isRequired,
+  ottGrade: PropTypes.string,
 };

@@ -5,7 +5,7 @@ const TestPage = () => {
   return (
     <>
       <CssBaseline>
-        <PartyTitle />
+        <PartyTitle ottName="넷플릭스" ottGrade="스탠다드" />
       </CssBaseline>
     </>
   );

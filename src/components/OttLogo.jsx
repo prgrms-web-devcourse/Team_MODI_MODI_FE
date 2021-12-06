@@ -10,16 +10,14 @@ const ottLogoSrc = {
 };
 
 const OttLogo = ({ ottName, size }) => {
+  const ottLogoSx = {
+    width: size,
+    height: size,
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
+  };
+
   return (
-    <Avatar
-      alt={`${ottName}-logo`}
-      sx={{
-        width: size,
-        height: size,
-        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
-      }}
-      src={ottLogoSrc[ottName]}
-    />
+    <Avatar alt={`${ottName}-logo`} sx={ottLogoSx} src={ottLogoSrc[ottName]} />
   );
 };
 
