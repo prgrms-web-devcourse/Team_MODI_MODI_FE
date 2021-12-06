@@ -7,12 +7,12 @@ const RuleList = ({ rules }) => {
   const [selectedRules, setSelectedRules] = useState([]);
 
   const handleSelectRule = ruleId => {
-    if (selectedRules.indexOf(ruleId) >= 0) {
-      const newSelectedRules = selectedRules.filter(rule => rule !== ruleId);
-      setSelectedRules(newSelectedRules);
+    if (selectedRules.some(rule => rule === ruleId)) {
+      setSelectedRules(selectedRules.filter(rule => rule !== ruleId));
     } else {
       setSelectedRules([...selectedRules, ruleId]);
     }
+    console.log(selectedRules);
   };
 
   return (
