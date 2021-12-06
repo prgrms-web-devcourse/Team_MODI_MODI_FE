@@ -25,7 +25,7 @@ const OttList = ({ ottServices }) => {
           key={ottId}
           ottId={ottId}
           ottName={ottName}
-          selectedId={selectedId}
+          selected={ottId === selectedId}
           onSelectOtt={handleSelectOtt}
         />
       ))}
