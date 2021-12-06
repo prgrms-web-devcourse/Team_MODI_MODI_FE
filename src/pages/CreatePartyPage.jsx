@@ -66,6 +66,7 @@ const ottServices = [
 
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [nextDisable, setNextDisable] = useState(true);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
@@ -89,27 +90,34 @@ const CreatePartyPage = () => {
     sharedPassword: '',
   });
 
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-  };
+  useEffect(() => console.log(activeStep, newParty), [activeStep, newParty]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log('submit', e);
+  const handleNext = () => {
+    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setNextDisable(true);
+    console.log('next');
+  };
+
+  const nextStep = () => {
+    nextDisable && setNextDisable(false);
   };
 
   const handleSelectedOtt = id => {
+    nextDisable && setNextDisable(false);
     setNewParty(current => ({
       ...current,
       ottId: id,
     }));
   };
 
-  useEffect(() => console.log(newParty), [newParty]);
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log('submit', e);
+  };
 
   const getStepContent = stepNumber => {
     switch (stepNumber) {
@@ -163,47 +171,44 @@ const CreatePartyPage = () => {
         ) : null}
 
         {getStepContent(activeStep)}
+        <Box>
+          <Button type="button" size="medium" onClick={nextStep}>
+            선택완료
+          </Button>
+        </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            position: 'absolute',
-            bottom: 30,
-            width: '100%',
-          }}
-        >
-          <Button
+        <BottomButtonWrapper>
+          <StepperButton
+            type="button"
             size="large"
             variant="outlined"
             onClick={handleBack}
             disabled={activeStep === 0}
-            sx={{ width: '48%' }}
           >
             <KeyboardArrowLeft />
             이전
-          </Button>
+          </StepperButton>
           {activeStep !== 4 ? (
-            <Button
-              size="large"
+            <StepperButton
               type="button"
+              size="large"
               variant="contained"
+              disabled={nextDisable}
               onClick={handleNext}
-              sx={{ width: '48%' }}
             >
               다음 <KeyboardArrowRight />
-            </Button>
+            </StepperButton>
           ) : (
-            <Button
+            <StepperButton
+              type="submit"
               size="large"
               variant="contained"
-              type="submit"
-              sx={{ width: '48%' }}
+              disabled={nextDisable}
             >
               완료
-            </Button>
+            </StepperButton>
           )}
-        </Box>
+        </BottomButtonWrapper>
       </form>
     </Container>
   );
@@ -214,6 +219,20 @@ const StyledStepper = styled(MobileStepper)`
   span {
     width: 100%;
   }
+`;
+
+const StepperButton = styled(Button)`
+  width: 48%;
+`;
+
+const BottomButtonWrapper = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 2;
+  width: 100%;
 `;
 
 export default CreatePartyPage;
