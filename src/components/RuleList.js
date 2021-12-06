@@ -12,7 +12,6 @@ const RuleList = ({ rules }) => {
     } else {
       setSelectedRules([...selectedRules, ruleId]);
     }
-    console.log(selectedRules);
   };
 
   return (
