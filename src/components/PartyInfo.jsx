@@ -7,12 +7,16 @@ const PartyInfo = ({ name, info }) => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        margin: 0,
       }}
+      component="dl"
     >
-      <Typography color="text.secondary" variant="small">
+      <Typography color="text.secondary" variant="small" component="dt">
         {name}
       </Typography>
-      <Typography variant="small">{info}</Typography>
+      <Typography variant="small" component="dd">
+        {info}
+      </Typography>
     </Box>
   );
 };
