@@ -1,8 +1,19 @@
 import { Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import PropTypes from 'prop-types';
+import { useCallback, useMemo } from 'react';
+import { priceToString } from 'utils/priceToString';
 
-const PaymentInfo = ({ totalPrice }) => {
+const COMMISSION_RATE = 0.05;
+
+const PaymentInfo = ({ totalPrice, myPoint }) => {
+  const commission = useMemo(() => totalPrice * COMMISSION_RATE, [totalPrice]);
+  const extraCharge = useMemo(
+    () => totalPrice * (1 + COMMISSION_RATE),
+    [totalPrice],
+  );
+  const toNumberNotation = useCallback(price => priceToString(price), []);
+
   return (
     <>
       <Typography variant="baseB" color="text.primary">
@@ -20,7 +31,7 @@ const PaymentInfo = ({ totalPrice }) => {
           서비스 이용료
         </Typography>
         <Typography variant="small" color="text.primary">
-          8500 P
+          {toNumberNotation(totalPrice)} P
         </Typography>
       </Box>
 
@@ -37,7 +48,7 @@ const PaymentInfo = ({ totalPrice }) => {
           수수료(이용료의 5%)
         </Typography>
         <Typography variant="small" color="text.primary">
-          425 P
+          {toNumberNotation(commission)} P
         </Typography>
       </Box>
       <Box
@@ -48,7 +59,7 @@ const PaymentInfo = ({ totalPrice }) => {
           mt: 1,
         }}
       >
-        <Typography mr="auto" variant="small">
+        <Typography mr="auto" variant="small" color="text.secondary">
           보유 포인트
         </Typography>
         <ChargeButton>
@@ -57,7 +68,7 @@ const PaymentInfo = ({ totalPrice }) => {
           </Typography>
         </ChargeButton>
         <Typography variant="small" color="text.primary">
-          20000 P
+          {toNumberNotation(myPoint)} P
         </Typography>
       </Box>
       <Box
@@ -71,7 +82,7 @@ const PaymentInfo = ({ totalPrice }) => {
           결제 포인트
         </Typography>
         <Typography variant="visual" color="text.primary">
-          8925 P
+          {toNumberNotation(extraCharge)} P
         </Typography>
       </Box>
     </>
@@ -82,6 +93,7 @@ export default PaymentInfo;
 
 PaymentInfo.propTypes = {
   totalPrice: PropTypes.number.isRequired,
+  myPoint: PropTypes.number.isRequired,
 };
 
 const ChargeButton = styled('button')`
@@ -102,9 +114,3 @@ const ChargeButton = styled('button')`
     background-color: #51c4c4;
   }
 `;
-//   width: 36px;
-//   height: 24px;
-//   border-radius: 12px;
-//   border: 0px;
-//   background-color:
-// `;

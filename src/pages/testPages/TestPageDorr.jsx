@@ -5,7 +5,7 @@ const TestPageDorr = () => {
   return (
     <>
       <CssBaseline />
-      <PaymentInfo />
+      <PaymentInfo totalPrice={9000} myPoint={100000} />
     </>
   );
 };
