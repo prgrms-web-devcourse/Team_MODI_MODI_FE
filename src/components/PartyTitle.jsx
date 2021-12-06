@@ -2,14 +2,8 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 
-import logo from 'assets/logo-main.svg';
 import { Avatar, Typography } from '@mui/material';
-
-const ottLogos = {
-  넷플릭스: logo,
-  '디즈니 플러스': logo,
-  웨이브: logo,
-};
+import OttLogo from './OttLogo';
 
 const PartyTitle = ({ ottName }) => {
   return (
@@ -20,15 +14,7 @@ const PartyTitle = ({ ottName }) => {
         height: '80px',
       }}
     >
-      <Avatar
-        alt={`${ottName}-logo`}
-        sx={{
-          width: 72,
-          height: 72,
-          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
-        }}
-        src={logo}
-      />
+      <OttLogo ottName={ottName} size={72} />
       <Box
         sx={{
           display: 'flex',
@@ -53,25 +39,24 @@ const PartyTitle = ({ ottName }) => {
         <Typography variant="microB" color="text.secondary" component="div">
           월 3,500P (2개월)
         </Typography>
-        <Box
+
+        <MonetizationOnIcon
           sx={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            verticalAlign: 'baseline',
+            fontSize: 16,
+            verticalAlign: 'text-bottom',
           }}
-        >
-          <MonetizationOnIcon sx={{ fontSize: 16 }} color="primary" />
-          <Typography variant="micro" component="span">
-            총{' '}
-          </Typography>
-          <Typography variant="mediumB" component="span">
-            7,000
-          </Typography>
-          <Typography variant="micro" component="span">
-            {' '}
-            P
-          </Typography>
-        </Box>
+          color="primary"
+        />
+        <Typography variant="micro" component="span">
+          총{' '}
+        </Typography>
+        <Typography variant="mediumB" component="span">
+          7,000
+        </Typography>
+        <Typography variant="micro" component="span">
+          {' '}
+          P
+        </Typography>
       </Box>
     </Box>
   );
