@@ -3,15 +3,17 @@ import { Add, Remove } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
 import { useState } from 'react';
 
-const MemberCounter = ({ member }) => {
+const MemberCounter = ({ member, onClick }) => {
   const [count, setCount] = useState(member);
 
   const onDecrease = () => {
     count > 1 && setCount((prevCount) => prevCount - 1);
+    onClick(count);
   };
 
   const onIncrease = () => {
     count < 3 && setCount((prevCount) => prevCount + 1);
+    onClick(count);
   };
 
   return (
@@ -20,7 +22,7 @@ const MemberCounter = ({ member }) => {
       sx={{
         color: 'black',
         boxShadow: 1,
-        borderRadius: 1,
+        borderRadius: 20,
         alignItems: 'center',
         textAlign: 'center',
         p: 2,
@@ -49,6 +51,7 @@ const MemberCounter = ({ member }) => {
 
 MemberCounter.propTypes = {
   member: PropTypes.number.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default MemberCounter;
