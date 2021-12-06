@@ -5,12 +5,14 @@ import { styled } from '@mui/system';
 const PageHeader = ({ src, alt, title, children }) => {
   return (
     <PageHeaderStyle>
-      <Avatar
-        src={src}
-        alt={alt}
-        size={72}
-        sx={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)' }}
-      />
+      {src && (
+        <Avatar
+          src={src}
+          alt={alt}
+          size={72}
+          sx={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)' }}
+        />
+      )}
       <Typography variant="large">{title}</Typography>
       {children && children}
     </PageHeaderStyle>
