@@ -17,6 +17,7 @@ const PartyList = ({ parties }) => {
             startDate,
             startsIn,
             endDate,
+            period,
             mustFilled,
           }) => (
             <ListItem key={partyId}>
@@ -29,6 +30,7 @@ const PartyList = ({ parties }) => {
                 startDate={startDate}
                 startsIn={startsIn}
                 endDate={endDate}
+                period={period}
                 mustFilled={mustFilled}
               />
             </ListItem>

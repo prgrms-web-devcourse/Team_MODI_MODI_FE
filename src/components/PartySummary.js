@@ -31,6 +31,7 @@ const PartySummary = ({
   startDate,
   startsIn,
   endDate,
+  period,
   mustFilled,
 }) => {
   return (
@@ -47,7 +48,6 @@ const PartySummary = ({
           display: 'flex',
           flexDirection: 'column',
           p: 1,
-          m: 1,
         }}
       >
         <Box
@@ -74,7 +74,7 @@ const PartySummary = ({
             </Box>
 
             <Typography variant="small" color="text.secondary">
-              ~{endDate} 까지
+              ~{endDate} 까지 ({period}개월)
             </Typography>
             <Box
               sx={{
@@ -140,6 +140,7 @@ PartySummary.propTypes = {
   startDate: PropTypes.string,
   startsIn: PropTypes.number,
   endDate: PropTypes.string,
+  period: PropTypes.number,
   mustFilled: PropTypes.bool,
 };
 
