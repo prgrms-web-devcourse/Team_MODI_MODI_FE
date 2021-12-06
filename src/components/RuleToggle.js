@@ -13,7 +13,7 @@ const RuleToggle = ({ ruleId, ruleName, onSelectRule }) => {
   const [selected, setSelected] = useState(false);
 
   const handleClickRule = () => {
-    setSelected(!selected);
+    setSelected(prev => !prev);
     onSelectRule(ruleId);
   };
 
