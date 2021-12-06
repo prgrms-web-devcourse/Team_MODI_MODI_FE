@@ -96,9 +96,6 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
-          borderRadius: '22px / 50%',
-        },
         sizeSmall: {
           borderRadius: 16,
         },
