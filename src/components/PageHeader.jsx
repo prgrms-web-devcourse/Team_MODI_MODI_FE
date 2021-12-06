@@ -13,7 +13,9 @@ const PageHeader = ({ src, alt, title, children }) => {
           sx={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)' }}
         />
       )}
-      <Typography variant="large">{title}</Typography>
+      <Typography variant="large" component="h2">
+        {title}
+      </Typography>
       {children && children}
     </PageHeaderStyle>
   );
