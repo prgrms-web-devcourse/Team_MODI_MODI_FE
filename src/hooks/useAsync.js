@@ -43,26 +43,30 @@ const useAsync = (fn, deps = [], skip = false) => {
   const lastCallId = useRef(0);
   const [state, dispatch] = useReducer(asyncReducer, initialAsyncState);
 
-  const callback = useCallback(async (...args) => {
-    const callId = ++lastCallId.current;
-    dispatch({ type: 'loading' });
+  const callback = useCallback(
+    async (...args) => {
+      const callId = ++lastCallId.current;
+      dispatch({ type: 'loading' });
+      console.log(1);
+      try {
+        const value = await fn(...args);
 
-    try {
-      const value = await fn(...args);
-      callId === lastCallId.current &&
-        dispatch({
-          type: 'success',
-          payload: value,
-        });
-    } catch (e) {
-      callId === lastCallId.current &&
-        dispatch({
-          tyep: 'error',
-          error: e,
-        });
-    }
+        callId === lastCallId.current &&
+          dispatch({
+            type: 'success',
+            payload: value,
+          });
+      } catch (e) {
+        callId === lastCallId.current &&
+          dispatch({
+            tyep: 'error',
+            error: e,
+          });
+      }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+    [...deps],
+  );
 
   useEffect(() => {
     !skip && callback();
