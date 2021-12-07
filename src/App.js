@@ -3,7 +3,14 @@ import { Outlet } from 'react-router';
 function App() {
   return (
     <>
-      <h1>간이 헤더</h1>
+      <div
+        style={{
+          height: '48px',
+          border: '2px solid',
+        }}
+      >
+        간이 헤더
+      </div>
       <Outlet />
     </>
   );

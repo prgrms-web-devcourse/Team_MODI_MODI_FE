@@ -15,7 +15,10 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="recruiting" element={<RecrutingPartyPage />} />
+            <Route
+              path="recruiting/:ottServiceName"
+              element={<RecrutingPartyPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -2,19 +2,45 @@ import { Avatar, Typography, Box } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { styled } from '@mui/system';
 
-const PageHeader = ({ src, alt, title, children }) => {
+import logo from 'assets/logo-main.svg';
+
+const ottInfo = {
+  netflix: {
+    logo,
+    ottNameKr: '넷플릭스',
+  },
+  watcha: {
+    logo,
+    ottNameKr: '왓챠',
+  },
+  disneyPlus: {
+    logo,
+    ottNameKr: '디즈니 +',
+  },
+  wavve: {
+    logo,
+    ottNameKr: '웨이브',
+  },
+};
+
+const PageHeader = ({ ottServiceName, size = 72, children }) => {
+  const { [ottServiceName]: targetInfo } = ottInfo;
+  const { logo: logoSrc, ottNameKr } = targetInfo;
+
   return (
     <PageHeaderStyle>
-      {src && (
-        <Avatar
-          src={src}
-          alt={alt}
-          size={72}
-          sx={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)' }}
-        />
-      )}
+      <Avatar
+        src={logoSrc}
+        alt={`${ottServiceName}-logo`}
+        sx={{
+          width: size,
+          height: size,
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
+        }}
+      />
+
       <Typography variant="large" component="h2">
-        {title}
+        {ottNameKr}
       </Typography>
       {children && children}
     </PageHeaderStyle>
@@ -22,9 +48,9 @@ const PageHeader = ({ src, alt, title, children }) => {
 };
 
 PageHeader.propTypes = {
-  src: PropTypes.string,
-  alt: PropTypes.string,
-  title: PropTypes.string,
+  ottServiceName: PropTypes.oneOf(['netflix', 'watcha', 'disneyPlus', 'wavve'])
+    .isRequired,
+  size: PropTypes.number,
   children: PropTypes.node,
 };
 
