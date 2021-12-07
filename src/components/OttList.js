@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 
 const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
   const [selectedId, setSelectedId] = useState(0);
-  const handleSelectOtt = ottId => {
+  const handleSelectOtt = (ottId, ottName) => {
     setSelectedId(ottId);
-    onSelectOtt(ottId);
+    onSelectOtt(ottId, ottName);
   };
 
   useEffect(() => {

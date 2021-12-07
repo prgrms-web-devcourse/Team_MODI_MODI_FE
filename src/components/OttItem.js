@@ -22,7 +22,7 @@ const ottImage = {
 
 const OttItem = ({ ottId, ottName, selected, onSelectOtt }) => {
   const handleClickOtt = () => {
-    onSelectOtt(ottId);
+    onSelectOtt(ottId, ottName);
   };
 
   return (
