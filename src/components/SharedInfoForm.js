@@ -9,7 +9,7 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-const SharedInfoForm = () => {
+const SharedInfoForm = ({ onChangeInfo }) => {
   const [sharedInfo, setSharedInfo] = useState({
     sharedId: '',
     sharedPassword: '',
@@ -21,6 +21,10 @@ const SharedInfoForm = () => {
     setSharedInfo({
       ...sharedInfo,
       [name]: value,
+    });
+    onChangeInfo({
+      name,
+      value,
     });
   };
 
@@ -78,9 +82,7 @@ const SharedInfoForm = () => {
 };
 
 SharedInfoForm.propTypes = {
-  initialValues: PropTypes.object,
-  onSubmit: PropTypes.func,
-  validate: PropTypes.func,
+  onChangeInfo: PropTypes.func,
 };
 
 export default SharedInfoForm;
