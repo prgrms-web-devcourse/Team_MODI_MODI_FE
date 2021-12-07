@@ -1,16 +1,17 @@
+import { useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import PageHeader from 'components/PageHeader';
 import { Button, IconButton, Modal } from '@mui/material';
+import { Box } from '@mui/system';
+import { styled } from '@mui/system';
+import CloseIcon from '@mui/icons-material/Close';
+
+import PageHeader from 'components/PageHeader';
 import PageContainer from 'components/PageContainer';
 import PageContents from 'components/PageContents';
 import PartyList from 'components/PartyList';
-import { useState, useCallback } from 'react';
 import PartyDetail from 'components/PartyDetail';
-import { Box } from '@mui/system';
-import { styled } from '@mui/system';
 import { RECRUITING_PARTY_DUMMY_DATA } from 'constants/mockData/recruitingPartyDummy';
 import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
-import CloseIcon from '@mui/icons-material/Close';
 
 const RecrutingPartyPage = () => {
   const navigate = useNavigate();
@@ -42,11 +43,20 @@ const RecrutingPartyPage = () => {
     setOpen(false);
   }, []);
 
+  const handleNavigateCreatePage = useCallback(() => {
+    navigate(`/create?ott=${ottServiceName}`);
+  }, [navigate, ottServiceName]);
+
   return (
     <>
       <PageContainer>
         <PageHeader ottServiceName={ottServiceName} size={72}>
-          <Button type="button" size="small" variant="outlined">
+          <Button
+            type="button"
+            size="small"
+            variant="outlined"
+            onClick={handleNavigateCreatePage}
+          >
             +파티
           </Button>
         </PageHeader>

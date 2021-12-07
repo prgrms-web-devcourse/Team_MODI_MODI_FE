@@ -3,10 +3,25 @@ import PropTypes from 'prop-types';
 import RuleContainer from './Rule';
 import PartyInfo from './PartyInfo';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { useCallback } from 'react';
 
 const PartyDetail = ({ partyDetail }) => {
-  const { ottName, grade, monthlyFee, period, rules, startDate, endDate } =
-    partyDetail;
+  const {
+    partyId,
+    ottName,
+    grade,
+    monthlyFee,
+    period,
+    rules,
+    startDate,
+    endDate,
+  } = partyDetail;
+
+  const navigate = useNavigate();
+  const handleNavigatePaymentPage = useCallback(() => {
+    navigate(`/payment?partyId=${partyId}`);
+  }, [navigate, partyId]);
 
   return (
     <>
@@ -32,6 +47,7 @@ const PartyDetail = ({ partyDetail }) => {
           mt: 2,
         }}
         size="large"
+        onClick={handleNavigatePaymentPage}
       >
         파티 참여하기
       </Button>
