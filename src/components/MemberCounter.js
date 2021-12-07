@@ -7,13 +7,13 @@ const MemberCounter = ({ member, onClick }) => {
   const [count, setCount] = useState(member);
 
   const onDecrease = () => {
-    count > 1 && setCount((prevCount) => prevCount - 1);
-    onClick(count);
+    count > 1 && setCount(prevCount => prevCount - 1);
+    onClick(count - 1);
   };
 
   const onIncrease = () => {
-    count < 3 && setCount((prevCount) => prevCount + 1);
-    onClick(count);
+    count < 3 && setCount(prevCount => prevCount + 1);
+    onClick(count + 1);
   };
 
   return (
@@ -25,7 +25,8 @@ const MemberCounter = ({ member, onClick }) => {
         borderRadius: 20,
         alignItems: 'center',
         textAlign: 'center',
-        p: 2,
+        p: 4,
+        m: 4,
         width: 300,
         height: 100,
       }}
