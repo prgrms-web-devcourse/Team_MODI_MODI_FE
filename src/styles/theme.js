@@ -109,6 +109,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          overflow: 'hidden',
+          borderRadius: '10% / 50%',
+        },
+      },
+    },
   },
 });
 
