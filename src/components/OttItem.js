@@ -31,21 +31,33 @@ const OttItem = ({ ottId, ottName, selected, onSelectOtt }) => {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        p: 1,
-        m: 1,
         filter: `grayscale(${selected ? 0 : 100}%)`,
+        width: '25%',
+        cursor: 'pointer',
+        marginBottom: 4,
       }}
       onClick={handleClickOtt}
     >
       <Avatar
-        sx={{
-          m: 1,
-          cursor: 'pointer',
-        }}
         alt="OttName"
-        src={ottImage[ottId]} // 로고이미지 추가 후 수정.
+        src={ottImage[ottId]}
+        sx={{
+          width: 72,
+          height: 72,
+          marginBottom: 1,
+          border: '1px solid #ddd',
+        }}
       />
-      <Typography variant="p" align="center">
+      <Typography
+        variant="smallB"
+        color="text.primary"
+        align="center"
+        component="p"
+        sx={{
+          wordBreak: 'keep-all',
+          height: '2em',
+        }}
+      >
         {ottName}
       </Typography>
     </Button>

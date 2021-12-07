@@ -63,10 +63,12 @@ const theme = createTheme({
     small: {
       fontSize: 14,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     smallB: {
       fontSize: 14,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     base: {
       fontSize: 16,

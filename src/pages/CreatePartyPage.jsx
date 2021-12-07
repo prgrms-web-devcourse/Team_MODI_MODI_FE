@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Container, Button, Box, MobileStepper } from '@mui/material';
+import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { styled } from '@mui/system';
 import CreatePartyTitle from 'components/CreatePartyTitle';
@@ -50,7 +50,7 @@ const ottServices = [
   },
   {
     ottId: 7,
-    ottName: '쿠팡+',
+    ottName: '쿠팡 플레이',
     grade: '프리미엄',
     monthlyDeposit: 10000,
     maxMemberCapacity: 4,
@@ -161,58 +161,51 @@ const CreatePartyPage = () => {
   };
 
   return (
-    <Container
-      maxWidth="xs"
-      sx={{
-        position: 'relative',
-        minHeight: '100vh',
-      }}
-    >
-      <form onSubmit={handleSubmit}>
-        {activeStep !== 0 ? (
-          <StyledStepper
-            variant="progress"
-            steps={5}
-            position="static"
-            activeStep={activeStep}
-          />
-        ) : null}
+    <form onSubmit={handleSubmit}>
+      {activeStep !== 0 ? (
+        <StyledStepper
+          variant="progress"
+          steps={5}
+          position="static"
+          activeStep={activeStep}
+        />
+      ) : null}
 
-        {getStepContent(activeStep)}
-        <BottomButtonWrapper>
+      {getStepContent(activeStep)}
+
+      <BottomButtonWrapper>
+        <StepperButton
+          type="button"
+          size="large"
+          variant="outlined"
+          onClick={handleBack}
+          disabled={activeStep === 0}
+        >
+          <KeyboardArrowLeft />
+          이전
+        </StepperButton>
+        {activeStep !== 4 ? (
           <StepperButton
             type="button"
             size="large"
-            variant="outlined"
-            onClick={handleBack}
-            disabled={activeStep === 0}
+            variant="contained"
+            disabled={nextDisable}
+            onClick={handleNext}
           >
-            <KeyboardArrowLeft />
-            이전
+            다음 <KeyboardArrowRight />
           </StepperButton>
-          {activeStep !== 4 ? (
-            <StepperButton
-              type="button"
-              size="large"
-              variant="contained"
-              disabled={nextDisable}
-              onClick={handleNext}
-            >
-              다음 <KeyboardArrowRight />
-            </StepperButton>
-          ) : (
-            <StepperButton
-              type="submit"
-              size="large"
-              variant="contained"
-              disabled={nextDisable}
-            >
-              완료
-            </StepperButton>
-          )}
-        </BottomButtonWrapper>
-      </form>
-    </Container>
+        ) : (
+          <StepperButton
+            type="submit"
+            size="large"
+            variant="contained"
+            disabled={nextDisable}
+          >
+            완료
+          </StepperButton>
+        )}
+      </BottomButtonWrapper>
+    </form>
   );
 };
 
