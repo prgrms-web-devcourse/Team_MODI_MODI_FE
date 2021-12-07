@@ -2,23 +2,26 @@ import { Avatar, Typography, Box } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { styled } from '@mui/system';
 
-import logo from 'assets/logo-main.svg';
+import netflixLogo from 'assets/netflix.png';
+import watchaLogo from 'assets/watcha.png';
+import wavveLogo from 'assets/wavve.png';
+import disneyLogo from 'assets/disney.png';
 
 const ottInfo = {
   netflix: {
-    logo,
+    logo: netflixLogo,
     ottNameKr: '넷플릭스',
   },
   watcha: {
-    logo,
+    logo: watchaLogo,
     ottNameKr: '왓챠',
   },
   disneyPlus: {
-    logo,
+    logo: disneyLogo,
     ottNameKr: '디즈니 +',
   },
   wavve: {
-    logo,
+    logo: wavveLogo,
     ottNameKr: '웨이브',
   },
 };
