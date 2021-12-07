@@ -12,6 +12,16 @@ import MemberCounter from 'components/MemberCounter';
 import ConfirmDialog from 'components/ConfirmDialog';
 import SharedInfoForm from 'components/SharedInfoForm';
 
+const calcDate = (startDate, period) => {
+  const endDate = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth() + period,
+    startDate.getDate() - 1,
+  );
+
+  return endDate;
+};
+
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisable, setNextDisable] = useState(true);
@@ -22,7 +32,7 @@ const CreatePartyPage = () => {
     grade: '',
     memberCapacity: 1,
     startDate: new Date(),
-    endDate: new Date(),
+    endDate: calcDate(new Date(), 1),
     period: 1,
     mustFilled: null,
     ruleStateList: [],
@@ -76,20 +86,16 @@ const CreatePartyPage = () => {
   };
 
   const handleStartDate = startDate => {
+    const endDate = calcDate(startDate, newParty.period);
     setNewParty(current => ({
       ...current,
       startDate,
+      endDate,
     }));
   };
 
   const handlePeriod = period => {
-    const date = newParty.startDate;
-    console.log(date);
-    const endDate = new Date(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      date.getDate(),
-    );
+    const endDate = calcDate(newParty.startDate, period);
     setNewParty(current => ({
       ...current,
       period,
