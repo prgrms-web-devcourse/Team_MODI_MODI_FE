@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-
-import { Chip } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Chip } from '@mui/material';
+import styled from '@emotion/styled';
 
 const Button = styled.button`
   background-color: white;
@@ -14,14 +13,16 @@ const RuleToggle = ({ ruleId, ruleName, onClickRule }) => {
 
   const handleClickRule = () => {
     setSelected(prev => !prev);
+    const isSelected = !selected;
     onClickRule({
       ruleId,
       ruleName,
+      isSelected,
     });
   };
 
   return (
-    <Button>
+    <Button type="button">
       <Chip
         sx={{
           m: 0.5,

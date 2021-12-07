@@ -6,18 +6,23 @@ import { useState } from 'react';
 const RuleList = ({ rules, onSelectRule }) => {
   const [selectedRules, setSelectedRules] = useState([]);
 
-  const handleSelectRule = ({ ruleId, ruleName }) => {
+  const handleSelectRule = ({ ruleId, ruleName, isSelected }) => {
+    const currentRule = {
+      ruleId,
+      ruleName,
+    };
+
     let newSelectedRules = [];
-    if (selectedRules.some(({ currentId }) => currentId === ruleId)) {
+
+    if (!isSelected) {
+      console.log('dd', selectedRules);
       newSelectedRules = selectedRules.filter(
-        ({ currentId }) => currentId !== ruleId,
+        ({ ruleId }) => ruleId !== currentRule.ruleId,
       );
-      console.log(`야${newSelectedRules}`);
-      setSelectedRules(newSelectedRules);
     } else {
-      newSelectedRules = [...selectedRules, ruleId];
-      setSelectedRules(newSelectedRules);
+      newSelectedRules = [...selectedRules, currentRule];
     }
+    setSelectedRules(newSelectedRules);
     onSelectRule(newSelectedRules);
   };
 
@@ -26,9 +31,6 @@ const RuleList = ({ rules, onSelectRule }) => {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        p: 1,
-        m: 1,
-        maxWidth: 400,
       }}
     >
       {rules.map(({ ruleId, ruleName }) => (
