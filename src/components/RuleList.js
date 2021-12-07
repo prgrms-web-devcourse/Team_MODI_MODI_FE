@@ -15,7 +15,6 @@ const RuleList = ({ rules, onSelectRule }) => {
     let newSelectedRules = [];
 
     if (!isSelected) {
-      console.log('dd', selectedRules);
       newSelectedRules = selectedRules.filter(
         ({ ruleId }) => ruleId !== currentRule.ruleId,
       );
@@ -47,6 +46,7 @@ const RuleList = ({ rules, onSelectRule }) => {
 
 RuleList.propTypes = {
   rules: PropTypes.array,
+  initialRules: PropTypes.array,
   onSelectRule: PropTypes.func,
 };
 

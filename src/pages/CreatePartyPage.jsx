@@ -93,7 +93,12 @@ const CreatePartyPage = () => {
     console.log(newParty);
   };
 
-  const handleSelectRules = selectedRules => {};
+  const handleSelectRules = rules => {
+    setNewParty(current => ({
+      ...current,
+      rules,
+    }));
+  };
 
   const handleCounter = memberCapacity => {
     setNewParty(current => ({
