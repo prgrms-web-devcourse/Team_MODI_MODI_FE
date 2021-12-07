@@ -27,16 +27,32 @@ const RuleContainer = ({ rules }) => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 1,
-        mt: 1,
-        mb: 1,
+        pt: 2,
+        pb: 1,
+        borderBottom: '2px dashed #eeeeee',
       }}
     >
-      {rules.map(({ ruleId, ruleName }) => (
-        <Rule key={ruleId} ruleName={ruleName} />
-      ))}
+      <Typography
+        variant="small"
+        component="div"
+        color="text.secondary"
+        sx={{ textAlign: 'left' }}
+      >
+        파티 규칙
+      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 1,
+          mt: 1,
+          mb: 1,
+        }}
+      >
+        {rules.map(({ ruleId, ruleName }) => (
+          <Rule key={ruleId} ruleName={ruleName} />
+        ))}
+      </Box>
     </Box>
   );
 };

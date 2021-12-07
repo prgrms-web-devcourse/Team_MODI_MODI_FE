@@ -1,9 +1,12 @@
 import PartyTitle from './PartyTitle';
 import PropTypes from 'prop-types';
 import RuleContainer from './Rule';
+import PartyInfo from './PartyInfo';
+import { Button } from '@mui/material';
 
 const PartyDetail = ({ partyDetail }) => {
-  const { ottName, grade, monthlyFee, period, rules } = partyDetail;
+  const { ottName, grade, monthlyFee, period, rules, startDate, endDate } =
+    partyDetail;
 
   return (
     <>
@@ -13,7 +16,25 @@ const PartyDetail = ({ partyDetail }) => {
         monthlyPrice={monthlyFee}
         servicePeriod={period}
       />
+      <PartyInfo
+        ottName={ottName}
+        ottGrade={grade}
+        startDate={startDate}
+        endDate={endDate}
+        period={period}
+        monthlyFee={monthlyFee}
+      />
       <RuleContainer rules={rules} />
+      <Button
+        variant="contained"
+        sx={{
+          width: '100%',
+          mt: 2,
+        }}
+        size="large"
+      >
+        파티 참여하기
+      </Button>
     </>
   );
 };
