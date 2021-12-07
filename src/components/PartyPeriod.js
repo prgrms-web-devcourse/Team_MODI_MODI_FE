@@ -1,8 +1,9 @@
 import { Slider, Box, Typography } from '@mui/material';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const PartyPeriod = () => {
-  const [period, setPeriod] = useState(1);
+const PartyPeriod = ({ initialPeriod, onSelectPeriod }) => {
+  const [period, setPeriod] = useState(initialPeriod);
   const marks = [];
   for (let i = 1; i < 13; i++) {
     marks.push({
@@ -13,6 +14,7 @@ const PartyPeriod = () => {
 
   const handleDragStop = (event, value) => {
     setPeriod(value);
+    onSelectPeriod(value);
   };
 
   return (
@@ -35,6 +37,7 @@ const PartyPeriod = () => {
       <Slider
         aria-label="Party Period"
         defaultValue={1}
+        value={period}
         step={1}
         valueLabelDisplay="auto"
         marks={marks}
@@ -44,6 +47,11 @@ const PartyPeriod = () => {
       />
     </Box>
   );
+};
+
+PartyPeriod.propTypes = {
+  initialPeriod: PropTypes.number,
+  onSelectPeriod: PropTypes.func,
 };
 
 export default PartyPeriod;
