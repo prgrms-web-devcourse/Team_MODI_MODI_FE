@@ -6,11 +6,11 @@ import CreatePartyTitle from 'components/CreatePartyTitle';
 import OttList from 'components/OttList';
 import PartyStartDate from 'components/PartyStartDate';
 import PartyPeriod from 'components/PartyPeriod';
-import { dateFormater } from 'utils/formatting';
 import { ottServices, rules } from 'constants/dummyData';
 import RuleList from 'components/RuleList';
-
-// ott click -> nextDisable = false
+import MemberCounter from 'components/MemberCounter';
+import ConfirmDialog from 'components/ConfirmDialog';
+import SharedInfoForm from 'components/SharedInfoForm';
 
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -19,11 +19,11 @@ const CreatePartyPage = () => {
     ottId: undefined,
     ottName: '',
     grade: '',
-    memberCapacity: undefined,
+    memberCapacity: 1,
     startDate: new Date(),
     endDate: new Date(),
     period: 1,
-    mustFilled: false,
+    mustFilled: true,
     rules: [
       {
         ruleId: undefined,
@@ -36,6 +36,7 @@ const CreatePartyPage = () => {
     ],
     sharedId: '',
     sharedPassword: '',
+    sharedPasswordCheck: '',
   });
 
   useEffect(() => {
@@ -49,9 +50,10 @@ const CreatePartyPage = () => {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    if (activeStep !== 0) {
-      setNextDisable(true);
+    if (activeStep === 0 || activeStep === 1 || activeStep === 2) {
+      return;
     }
+    setNextDisable(true);
   };
 
   const nextStep = () => {
@@ -91,8 +93,32 @@ const CreatePartyPage = () => {
     console.log(newParty);
   };
 
-  const handleSelectRules = selectedRules => {
-    console.log(selectedRules);
+  const handleSelectRules = selectedRules => {};
+
+  const handleCounter = memberCapacity => {
+    setNewParty(current => ({
+      ...current,
+      memberCapacity,
+    }));
+  };
+
+  const handleConfirm = mustFilled => {
+    setNewParty(current => ({
+      ...current,
+      mustFilled,
+    }));
+  };
+
+  const handleChangeSharedInfo = ({ name, value }) => {
+    setNewParty(current => ({
+      ...current,
+      [name]: value,
+    }));
+    console.log(
+      newParty.sharedId,
+      newParty.sharedPassword,
+      newParty.sharedPasswordCheck,
+    );
   };
 
   const handleSubmit = e => {
@@ -138,10 +164,22 @@ const CreatePartyPage = () => {
           </>
         );
       case 3:
-        return <CreatePartyTitle subTitle="파티에 몇 명을 모집하고 싶나요?" />;
+        return (
+          <>
+            <CreatePartyTitle subTitle="파티에 몇 명을 모집하고 싶나요?" />
+            <MemberCounter
+              member={newParty.memberCapacity}
+              onClick={handleCounter}
+            />
+            <ConfirmDialog onConfirm={handleConfirm} />
+          </>
+        );
       case 4:
         return (
-          <CreatePartyTitle subTitle="파티에서 사용하실 서비스의 계정 정보를 입력해주세요." />
+          <>
+            <CreatePartyTitle subTitle="파티에서 사용하실 서비스의 계정 정보를 입력해주세요." />
+            <SharedInfoForm onChangeInfo={handleChangeSharedInfo} />
+          </>
         );
       default:
         return;
