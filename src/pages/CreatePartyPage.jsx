@@ -64,6 +64,8 @@ const ottServices = [
   },
 ];
 
+// ott click -> nextDisable = false
+
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisable, setNextDisable] = useState(true);
@@ -90,7 +92,10 @@ const CreatePartyPage = () => {
     sharedPassword: '',
   });
 
-  useEffect(() => console.log(activeStep, newParty), [activeStep, newParty]);
+  useEffect(() => {
+    console.log(activeStep, newParty);
+    nextStep();
+  }, [activeStep, newParty]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
@@ -99,7 +104,6 @@ const CreatePartyPage = () => {
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
     setNextDisable(true);
-    console.log('next');
   };
 
   const nextStep = () => {
@@ -107,7 +111,7 @@ const CreatePartyPage = () => {
   };
 
   const handleSelectedOtt = id => {
-    nextDisable && setNextDisable(false);
+    nextStep();
     setNewParty(current => ({
       ...current,
       ottId: id,
@@ -128,7 +132,11 @@ const CreatePartyPage = () => {
               sx={{ paddingTop: '94px' }}
               subTitle="어떤 서비스를 함께 이용하고 싶나요?"
             />
-            <OttList ottServices={ottServices} onClick={handleSelectedOtt} />
+            <OttList
+              ottServices={ottServices}
+              onSelectOtt={handleSelectedOtt}
+              currentOttId={newParty.ottId}
+            />
           </>
         );
       case 1:
@@ -171,12 +179,6 @@ const CreatePartyPage = () => {
         ) : null}
 
         {getStepContent(activeStep)}
-        <Box>
-          <Button type="button" size="medium" onClick={nextStep}>
-            선택완료
-          </Button>
-        </Box>
-
         <BottomButtonWrapper>
           <StepperButton
             type="button"
