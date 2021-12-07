@@ -84,17 +84,17 @@ const CreatePartyPage = () => {
   };
 
   const handlePeriod = period => {
-    // const date = newParty.startDate;
-    // const endDate = date.setMonth(date.getMonth() + 1);
-    // console.log(`야${new Date(endDate).getDate()}`);
-    // if (newParty.startDate === '') {
-    //   dateFormater(new Date());
-    // }
-    // const monthLater = new Date();
+    const date = newParty.startDate;
+    console.log(date);
+    const endDate = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+    );
     setNewParty(current => ({
       ...current,
       period,
-      // endDate,
+      endDate,
     }));
     console.log(newParty);
   };

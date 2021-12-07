@@ -10,7 +10,6 @@ const Button = styled.button`
 
 const RuleToggle = ({ ruleId, ruleName, isSelected, onClickRule }) => {
   const [selected, setSelected] = useState(isSelected);
-  console.log(ruleId, selected);
 
   const handleClickRule = () => {
     setSelected(prev => !prev);
