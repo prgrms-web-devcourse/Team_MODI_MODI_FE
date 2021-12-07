@@ -25,9 +25,9 @@ const MemberCounter = ({ member, onClick }) => {
         borderRadius: 20,
         alignItems: 'center',
         textAlign: 'center',
-        p: 4,
-        m: 4,
-        width: 300,
+        p: 1,
+        m: 1,
+        width: '90%',
         height: 100,
       }}
     >
