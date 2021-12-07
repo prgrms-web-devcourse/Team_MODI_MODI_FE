@@ -12,7 +12,7 @@ const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
 
   useEffect(() => {
     setSelectedId(currentOttId);
-  }, []);
+  }, [currentOttId]);
 
   return (
     <Box
