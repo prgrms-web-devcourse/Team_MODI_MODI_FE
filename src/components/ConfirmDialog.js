@@ -48,7 +48,13 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
       <CardActions>
         <StyledButton
           size="large"
-          color={mustFilled ? 'primary' : 'modiGray'}
+          color={
+            mustFilled !== null
+              ? mustFilled
+                ? 'primary'
+                : 'modiGray'
+              : 'modiGray'
+          }
           variant="contained"
           onClick={handleClickNo}
         >
@@ -57,7 +63,13 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
         <StyledButton
           size="large"
           variant="contained"
-          color={mustFilled ? 'modiGray' : 'primary'}
+          color={
+            mustFilled !== null
+              ? mustFilled
+                ? 'modiGray'
+                : 'primary'
+              : 'modiGray'
+          }
           onClick={handleClickYes}
         >
           예
