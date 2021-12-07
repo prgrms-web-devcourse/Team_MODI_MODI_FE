@@ -7,12 +7,21 @@ import { priceToString } from 'utils/priceToString';
 const COMMISSION_RATE = 0.05;
 
 const PaymentInfo = ({ totalPrice, myPoint }) => {
+  const toNumberNotation = useCallback(price => priceToString(price), []);
   const commission = useMemo(() => totalPrice * COMMISSION_RATE, [totalPrice]);
   const extraCharge = useMemo(
     () => totalPrice * (1 + COMMISSION_RATE),
     [totalPrice],
   );
-  const toNumberNotation = useCallback(price => priceToString(price), []);
+
+  const spaceBetweenSx = useMemo(
+    () => ({
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }),
+    [],
+  );
 
   return (
     <>
@@ -21,9 +30,7 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
       </Typography>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          ...spaceBetweenSx,
           mt: 1,
         }}
       >
@@ -37,15 +44,13 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
 
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          ...spaceBetweenSx,
           pb: 1,
           borderBottom: '2px dashed #DDDDDD',
         }}
       >
         <Typography variant="small" color="text.secondary">
-          수수료(이용료의 5%)
+          {`수수료(이용료의 ${COMMISSION_RATE * 100}%)`}
         </Typography>
         <Typography variant="small" color="text.primary">
           {toNumberNotation(commission)} P
@@ -62,22 +67,18 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
         <Typography mr="auto" variant="small" color="text.secondary">
           보유 포인트
         </Typography>
+
         <ChargeButton>
           <Typography variant="micro" color="common.white">
             충전
           </Typography>
         </ChargeButton>
+
         <Typography variant="small" color="text.primary">
           {toNumberNotation(myPoint)} P
         </Typography>
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
+      <Box sx={spaceBetweenSx}>
         <Typography variant="smallB" color="text.primary">
           결제 포인트
         </Typography>
@@ -104,7 +105,7 @@ const ChargeButton = styled('button')`
   outline: 0px;
   background-color: #87cccd;
   cursor: pointer;
-  margin-right: 8px;
+  margin-right: 4px;
 
   &:hover {
     background-color: #95c4c4;
