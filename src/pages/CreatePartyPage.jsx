@@ -94,11 +94,11 @@ const CreatePartyPage = () => {
 
   useEffect(() => {
     console.log(activeStep, newParty);
-    nextStep();
   }, [activeStep, newParty]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
+    nextStep();
   };
 
   const handleNext = () => {
