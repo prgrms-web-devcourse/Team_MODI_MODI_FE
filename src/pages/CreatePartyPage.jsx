@@ -39,6 +39,8 @@ const CreatePartyPage = () => {
         ruleName,
         isSelected: false,
       });
+
+      return false;
     });
     setNewParty(current => ({
       ...current,
@@ -81,16 +83,17 @@ const CreatePartyPage = () => {
   };
 
   const handlePeriod = period => {
-    // const date = newParty.startDate;
-    // const endDate = date.setMonth(date.getMonth() + 1);
-    // if (newParty.startDate === '') {
-    //   dateFormater(new Date());
-    // }
-    // const monthLater = new Date();
+    const date = newParty.startDate;
+    console.log(date);
+    const endDate = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      date.getDate(),
+    );
     setNewParty(current => ({
       ...current,
       period,
-      // endDate,
+      endDate,
     }));
   };
 
@@ -135,6 +138,7 @@ const CreatePartyPage = () => {
     } else {
       setComplete(false);
     }
+    console.log(newParty);
   }, [newParty]);
 
   const handleSubmit = e => {
