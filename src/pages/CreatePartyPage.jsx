@@ -4,65 +4,11 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { styled } from '@mui/system';
 import CreatePartyTitle from 'components/CreatePartyTitle';
 import OttList from 'components/OttList';
-
-const ottServices = [
-  {
-    ottId: 1,
-    ottName: '넷플릭스',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 2,
-    ottName: '왓챠',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 3,
-    ottName: '웨이브',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 4,
-    ottName: '티빙',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 5,
-    ottName: '디즈니+',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 6,
-    ottName: '라프텔',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 7,
-    ottName: '쿠팡 플레이',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-  {
-    ottId: 8,
-    ottName: '아마존 프라임',
-    grade: '프리미엄',
-    monthlyDeposit: 10000,
-    maxMemberCapacity: 4,
-  },
-];
+import PartyStartDate from 'components/PartyStartDate';
+import PartyPeriod from 'components/PartyPeriod';
+import { dateFormater } from 'utils/formatting';
+import { ottServices, rules } from 'constants/dummyData';
+import RuleList from 'components/RuleList';
 
 // ott click -> nextDisable = false
 
@@ -73,10 +19,10 @@ const CreatePartyPage = () => {
     ottId: undefined,
     ottName: '',
     grade: '',
-    monthlyDeposit: undefined,
-    maxMemberCapacity: undefined,
-    startDate: '',
-    endDate: '',
+    memberCapacity: undefined,
+    startDate: new Date(),
+    endDate: new Date(),
+    period: 1,
     mustFilled: false,
     rules: [
       {
@@ -103,19 +49,50 @@ const CreatePartyPage = () => {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setNextDisable(true);
+    if (activeStep !== 0) {
+      setNextDisable(true);
+    }
   };
 
   const nextStep = () => {
     nextDisable && setNextDisable(false);
   };
 
-  const handleSelectedOtt = id => {
+  const handleSelectedOtt = (ottId, ottName) => {
     nextStep();
     setNewParty(current => ({
       ...current,
-      ottId: id,
+      ottId,
+      ottName,
+      grade: '프리미엄',
     }));
+  };
+
+  const handleStartDate = startDate => {
+    setNewParty(current => ({
+      ...current,
+      startDate,
+    }));
+  };
+
+  const handlePeriod = period => {
+    // const date = newParty.startDate;
+    // const endDate = date.setMonth(date.getMonth() + 1);
+    // console.log(`야${new Date(endDate).getDate()}`);
+    // if (newParty.startDate === '') {
+    //   dateFormater(new Date());
+    // }
+    // const monthLater = new Date();
+    setNewParty(current => ({
+      ...current,
+      period,
+      // endDate,
+    }));
+    console.log(newParty);
+  };
+
+  const handleSelectRules = selectedRules => {
+    console.log(selectedRules);
   };
 
   const handleSubmit = e => {
@@ -143,11 +120,22 @@ const CreatePartyPage = () => {
         return (
           <>
             <CreatePartyTitle subTitle="얼마 동안 함께 이용하고 싶나요?" />
+            <PartyStartDate
+              initialStartDate={newParty.startDate}
+              onSelectStartDate={handleStartDate}
+            />
+            <PartyPeriod
+              initialPeriod={newParty.period}
+              onSelectPeriod={handlePeriod}
+            />
           </>
         );
       case 2:
         return (
-          <CreatePartyTitle subTitle="이 파티의 규칙은 어떻게 지정할까요?" />
+          <>
+            <CreatePartyTitle subTitle="이 파티의 규칙은 어떻게 지정할까요?" />
+            <RuleList rules={rules} onSelectRule={handleSelectRules} />
+          </>
         );
       case 3:
         return <CreatePartyTitle subTitle="파티에 몇 명을 모집하고 싶나요?" />;
