@@ -1,6 +1,6 @@
 import PartyTitle from './PartyTitle';
 import PropTypes from 'prop-types';
-import RuleList from './RuleList';
+import RuleContainer from './Rule';
 
 const PartyDetail = ({ partyDetail }) => {
   const { ottName, grade, monthlyFee, period, rules } = partyDetail;
@@ -13,13 +13,14 @@ const PartyDetail = ({ partyDetail }) => {
         monthlyPrice={monthlyFee}
         servicePeriod={period}
       />
-      <RuleList rules={rules} />
+      <RuleContainer rules={rules} />
     </>
   );
 };
 
 PartyDetail.propTypes = {
   partyDetail: PropTypes.object,
+  myPoint: PropTypes.number,
 };
 
 export default PartyDetail;
