@@ -9,12 +9,15 @@ const Button = styled.button`
   border: 0px;
 `;
 
-const RuleToggle = ({ ruleId, ruleName, onSelectRule }) => {
+const RuleToggle = ({ ruleId, ruleName, onClickRule }) => {
   const [selected, setSelected] = useState(false);
 
   const handleClickRule = () => {
     setSelected(prev => !prev);
-    onSelectRule(ruleId);
+    onClickRule({
+      ruleId,
+      ruleName,
+    });
   };
 
   return (
@@ -36,7 +39,7 @@ const RuleToggle = ({ ruleId, ruleName, onSelectRule }) => {
 RuleToggle.propTypes = {
   ruleId: PropTypes.number,
   ruleName: PropTypes.string,
-  onSelectRule: PropTypes.func,
+  onClickRule: PropTypes.func,
 };
 
 export default RuleToggle;

@@ -3,15 +3,22 @@ import { Box } from '@mui/material';
 import RuleToggle from './RuleToggle';
 import { useState } from 'react';
 
-const RuleList = ({ rules }) => {
+const RuleList = ({ rules, onSelectRule }) => {
   const [selectedRules, setSelectedRules] = useState([]);
 
-  const handleSelectRule = ruleId => {
-    if (selectedRules.some(rule => rule === ruleId)) {
-      setSelectedRules(selectedRules.filter(rule => rule !== ruleId));
+  const handleSelectRule = ({ ruleId, ruleName }) => {
+    let newSelectedRules = [];
+    if (selectedRules.some(({ currentId }) => currentId === ruleId)) {
+      newSelectedRules = selectedRules.filter(
+        ({ currentId }) => currentId !== ruleId,
+      );
+      console.log(`야${newSelectedRules}`);
+      setSelectedRules(newSelectedRules);
     } else {
-      setSelectedRules([...selectedRules, ruleId]);
+      newSelectedRules = [...selectedRules, ruleId];
+      setSelectedRules(newSelectedRules);
     }
+    onSelectRule(newSelectedRules);
   };
 
   return (
@@ -29,7 +36,7 @@ const RuleList = ({ rules }) => {
           key={ruleId}
           ruleId={ruleId}
           ruleName={ruleName}
-          onSelectRule={handleSelectRule}
+          onClickRule={handleSelectRule}
         />
       ))}
     </Box>
@@ -38,6 +45,7 @@ const RuleList = ({ rules }) => {
 
 RuleList.propTypes = {
   rules: PropTypes.array,
+  onSelectRule: PropTypes.func,
 };
 
 export default RuleList;
