@@ -103,6 +103,7 @@ const CreatePartyPage = () => {
   };
 
   const handleConfirm = mustFilled => {
+    console.log(mustFilled);
     setNewParty(current => ({
       ...current,
       mustFilled,
@@ -114,11 +115,7 @@ const CreatePartyPage = () => {
       ...current,
       [name]: value,
     }));
-    console.log(
-      newParty.sharedId,
-      newParty.sharedPassword,
-      newParty.sharedPasswordCheck,
-    );
+    nextStep();
   };
 
   const handleSubmit = e => {
@@ -171,14 +168,22 @@ const CreatePartyPage = () => {
               member={newParty.memberCapacity}
               onClick={handleCounter}
             />
-            <ConfirmDialog onConfirm={handleConfirm} />
+            <ConfirmDialog
+              initialMustFilled={newParty.mustFilled}
+              onConfirm={handleConfirm}
+            />
           </>
         );
       case 4:
         return (
           <>
             <CreatePartyTitle subTitle="파티에서 사용하실 서비스의 계정 정보를 입력해주세요." />
-            <SharedInfoForm onChangeInfo={handleChangeSharedInfo} />
+            <SharedInfoForm
+              sharedId={newParty.sharedId}
+              sharedPassword={newParty.sharedPassword}
+              sharedPasswordCheck={newParty.sharedPasswordCheck}
+              onChangeInfo={handleChangeSharedInfo}
+            />
           </>
         );
       default:

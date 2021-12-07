@@ -9,11 +9,16 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-const SharedInfoForm = ({ onChangeInfo }) => {
+const SharedInfoForm = ({
+  sharedId,
+  sharedPassword,
+  sharedPasswordCheck,
+  onChangeInfo,
+}) => {
   const [sharedInfo, setSharedInfo] = useState({
-    sharedId: '',
-    sharedPassword: '',
-    sharedPasswordCheck: '',
+    sharedId,
+    sharedPassword,
+    sharedPasswordCheck,
   });
 
   const handleChange = ({ target }) => {
@@ -48,8 +53,8 @@ const SharedInfoForm = ({ onChangeInfo }) => {
           name="sharedId"
           id="sharedId"
           label="아이디"
+          value={sharedId}
           variant="outlined"
-          autoComplete="off"
         />
         <StyledTextField
           sx={{
@@ -60,9 +65,9 @@ const SharedInfoForm = ({ onChangeInfo }) => {
           name="sharedPassword"
           id="sharedPassword"
           label="비밀번호"
+          value={sharedPassword}
           variant="outlined"
           type="password"
-          autoComplete="off"
         />
         <StyledTextField
           sx={{
@@ -73,6 +78,7 @@ const SharedInfoForm = ({ onChangeInfo }) => {
           name="sharedPasswordCheck"
           id="sharedPasswordCheck"
           label="비밀번호 확인"
+          value={sharedPasswordCheck}
           variant="outlined"
           type="password"
         />
@@ -82,6 +88,9 @@ const SharedInfoForm = ({ onChangeInfo }) => {
 };
 
 SharedInfoForm.propTypes = {
+  sharedId: PropTypes.string,
+  sharedPassword: PropTypes.string,
+  sharedPasswordCheck: PropTypes.string,
   onChangeInfo: PropTypes.func,
 };
 
