@@ -15,6 +15,7 @@ import SharedInfoForm from 'components/SharedInfoForm';
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisable, setNextDisable] = useState(true);
+  const [complete, setComplete] = useState(false);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
@@ -44,10 +45,6 @@ const CreatePartyPage = () => {
       ruleStateList,
     }));
   }, []);
-
-  useEffect(() => {
-    console.log(activeStep, newParty);
-  }, [activeStep, newParty]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
@@ -86,7 +83,6 @@ const CreatePartyPage = () => {
   const handlePeriod = period => {
     // const date = newParty.startDate;
     // const endDate = date.setMonth(date.getMonth() + 1);
-    // console.log(`야${new Date(endDate).getDate()}`);
     // if (newParty.startDate === '') {
     //   dateFormater(new Date());
     // }
@@ -96,7 +92,6 @@ const CreatePartyPage = () => {
       period,
       // endDate,
     }));
-    console.log(newParty);
   };
 
   const handleSelectRules = newRuleList => {
@@ -126,12 +121,25 @@ const CreatePartyPage = () => {
       ...current,
       [name]: value,
     }));
-    nextStep();
   };
+
+  useEffect(() => {
+    const { sharedId, sharedPassword, sharedPasswordCheck } = newParty;
+    if (
+      sharedId &&
+      sharedPassword &&
+      sharedPasswordCheck &&
+      sharedPassword === sharedPasswordCheck
+    ) {
+      setComplete(true);
+    } else {
+      setComplete(false);
+    }
+  }, [newParty]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('submit', e);
+    // TODO API POST
   };
 
   const getStepContent = stepNumber => {
@@ -242,7 +250,7 @@ const CreatePartyPage = () => {
             type="submit"
             size="large"
             variant="contained"
-            disabled={nextDisable}
+            disabled={!complete}
           >
             완료
           </StepperButton>
