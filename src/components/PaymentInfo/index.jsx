@@ -86,6 +86,17 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
           {toNumberNotation(extraCharge)} P
         </Typography>
       </Box>
+      {myPoint < totalPrice && (
+        <Typography
+          variant="microB"
+          color="error"
+          sx={{ textAlign: 'right' }}
+          component="div"
+        >
+          {' '}
+          현재 보유한 포인트가 부족합니다.
+        </Typography>
+      )}
     </>
   );
 };
