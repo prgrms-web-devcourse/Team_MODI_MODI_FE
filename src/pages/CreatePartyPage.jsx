@@ -23,7 +23,7 @@ const CreatePartyPage = () => {
     startDate: new Date(),
     endDate: new Date(),
     period: 1,
-    mustFilled: true,
+    mustFilled: null,
     ruleStateList: [],
     sharedId: '',
     sharedPassword: '',
@@ -56,7 +56,7 @@ const CreatePartyPage = () => {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    if (activeStep === 0 || activeStep === 1 || activeStep === 2) {
+    if (activeStep === 0 || activeStep === 1 || newParty.mustFilled !== null) {
       return;
     }
     setNextDisable(true);
@@ -114,7 +114,7 @@ const CreatePartyPage = () => {
   };
 
   const handleConfirm = mustFilled => {
-    console.log(mustFilled);
+    nextStep();
     setNewParty(current => ({
       ...current,
       mustFilled,
@@ -207,14 +207,12 @@ const CreatePartyPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {activeStep !== 0 ? (
-        <StyledStepper
-          variant="progress"
-          steps={5}
-          position="static"
-          activeStep={activeStep}
-        />
-      ) : null}
+      <StyledStepper
+        variant="progress"
+        steps={5}
+        position="static"
+        activeStep={activeStep}
+      />
 
       {getStepContent(activeStep)}
 
