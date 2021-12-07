@@ -8,16 +8,17 @@ const Button = styled.button`
   border: 0px;
 `;
 
-const RuleToggle = ({ ruleId, ruleName, onClickRule }) => {
-  const [selected, setSelected] = useState(false);
+const RuleToggle = ({ ruleId, ruleName, isSelected, onClickRule }) => {
+  const [selected, setSelected] = useState(isSelected);
+  console.log(ruleId, selected);
 
   const handleClickRule = () => {
     setSelected(prev => !prev);
-    const isSelected = !selected;
+
     onClickRule({
-      ruleId,
-      ruleName,
-      isSelected,
+      selectedId: ruleId,
+      selectedName: ruleName,
+      selected: !selected,
     });
   };
 
@@ -40,6 +41,7 @@ const RuleToggle = ({ ruleId, ruleName, onClickRule }) => {
 RuleToggle.propTypes = {
   ruleId: PropTypes.number,
   ruleName: PropTypes.string,
+  isSelected: PropTypes.bool,
   onClickRule: PropTypes.func,
 };
 

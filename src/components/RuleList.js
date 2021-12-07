@@ -4,25 +4,23 @@ import RuleToggle from './RuleToggle';
 import { useState } from 'react';
 
 const RuleList = ({ rules, onSelectRule }) => {
-  const [selectedRules, setSelectedRules] = useState([]);
+  const [ruleList, setRuleList] = useState(rules);
 
-  const handleSelectRule = ({ ruleId, ruleName, isSelected }) => {
-    const currentRule = {
-      ruleId,
-      ruleName,
-    };
+  const handleSelectRule = ({ selectedId }) => {
+    const newRuleList = ruleList.map(({ ruleId, ruleName, isSelected }) => {
+      if (ruleId === selectedId) {
+        isSelected = !isSelected;
+      }
 
-    let newSelectedRules = [];
+      return {
+        ruleId,
+        ruleName,
+        isSelected,
+      };
+    });
 
-    if (!isSelected) {
-      newSelectedRules = selectedRules.filter(
-        ({ ruleId }) => ruleId !== currentRule.ruleId,
-      );
-    } else {
-      newSelectedRules = [...selectedRules, currentRule];
-    }
-    setSelectedRules(newSelectedRules);
-    onSelectRule(newSelectedRules);
+    setRuleList(newRuleList);
+    onSelectRule(newRuleList);
   };
 
   return (
@@ -32,11 +30,12 @@ const RuleList = ({ rules, onSelectRule }) => {
         flexWrap: 'wrap',
       }}
     >
-      {rules.map(({ ruleId, ruleName }) => (
+      {ruleList.map(({ ruleId, ruleName, isSelected }) => (
         <RuleToggle
           key={ruleId}
           ruleId={ruleId}
           ruleName={ruleName}
+          isSelected={isSelected}
           onClickRule={handleSelectRule}
         />
       ))}

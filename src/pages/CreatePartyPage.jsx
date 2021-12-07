@@ -24,20 +24,26 @@ const CreatePartyPage = () => {
     endDate: new Date(),
     period: 1,
     mustFilled: true,
-    rules: [
-      {
-        ruleId: undefined,
-        ruleName: '',
-      },
-      {
-        ruleId: undefined,
-        ruleName: '',
-      },
-    ],
+    ruleStateList: [],
     sharedId: '',
     sharedPassword: '',
     sharedPasswordCheck: '',
   });
+
+  useEffect(() => {
+    const ruleStateList = [];
+    rules.map(({ ruleId, ruleName }) => {
+      ruleStateList.push({
+        ruleId,
+        ruleName,
+        isSelected: false,
+      });
+    });
+    setNewParty(current => ({
+      ...current,
+      ruleStateList,
+    }));
+  }, []);
 
   useEffect(() => {
     console.log(activeStep, newParty);
@@ -93,10 +99,10 @@ const CreatePartyPage = () => {
     console.log(newParty);
   };
 
-  const handleSelectRules = rules => {
+  const handleSelectRules = newRuleList => {
     setNewParty(current => ({
       ...current,
-      rules,
+      ruleStateList: newRuleList,
     }));
   };
 
@@ -162,7 +168,10 @@ const CreatePartyPage = () => {
         return (
           <>
             <CreatePartyTitle subTitle="이 파티의 규칙은 어떻게 지정할까요?" />
-            <RuleList rules={rules} onSelectRule={handleSelectRules} />
+            <RuleList
+              rules={newParty.ruleStateList}
+              onSelectRule={handleSelectRules}
+            />
           </>
         );
       case 3:
