@@ -5,6 +5,9 @@ import PageContainer from 'components/PageContainer';
 import PageContents from 'components/PageContents';
 import PartyList from 'components/PartyList';
 import { useState, useCallback } from 'react';
+import PartyDetail from 'components/PartyDetail';
+import { Box } from '@mui/system';
+import { styled } from '@mui/system';
 
 const DUMMY_DATA = [
   {
@@ -140,6 +143,7 @@ const PARTY_DETAIL_DUMMY = {
   currentMemberCapacity: 2,
   startDate: '2021-12-8',
   startsIn: 7,
+  period: 12,
   endDate: '2022-12-8',
   mustFilled: true,
   members: [
@@ -222,10 +226,25 @@ const RecrutingPartyPage = () => {
         </PageContents>
       </PageContainer>
       <Modal open={open} onClose={handleClose}>
-        <h1>open</h1>
+        <ModalBox>
+          <PartyDetail partyDetail={PARTY_DETAIL_DUMMY} />
+        </ModalBox>
       </Modal>
     </>
   );
 };
 
 export default RecrutingPartyPage;
+
+const ModalBox = styled(Box)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 24px;
+  width: 86%;
+  border-radius: 24px;
+  background-color: #fff;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.25);
+  text-align: center;
+`;
