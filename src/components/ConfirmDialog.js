@@ -30,7 +30,7 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
     <Card
       sx={{
         m: 2,
-        width: 351,
+        width: '90%',
         height: 190,
         backgroundColor: '#FFB5B5',
         borderRadius: '16px',
