@@ -7,27 +7,31 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const StyledButton = styled(Button)`
   width: 50%;
 `;
 
-const ConfirmDialog = () => {
-  const [mustFilled, setMustFilled] = useState(false);
+const ConfirmDialog = ({ onConfirm }) => {
+  const [mustFilled, setMustFilled] = useState(true);
 
   const handleClickNo = () => {
-    setMustFilled(false);
+    setMustFilled(true);
+    onConfirm(true);
   };
 
   const handleClickYes = () => {
-    setMustFilled(true);
+    setMustFilled(false);
+    onConfirm(false);
   };
 
   return (
     <Card
       sx={{
+        m: 2,
         width: 351,
-        height: 175,
+        height: 190,
         backgroundColor: '#FFB5B5',
         borderRadius: '16px',
       }}
@@ -44,7 +48,7 @@ const ConfirmDialog = () => {
       <CardActions>
         <StyledButton
           size="large"
-          color={mustFilled ? 'modiGray' : 'primary'}
+          color={mustFilled ? 'primary' : 'modiGray'}
           variant="contained"
           onClick={handleClickNo}
         >
@@ -53,7 +57,7 @@ const ConfirmDialog = () => {
         <StyledButton
           size="large"
           variant="contained"
-          color={mustFilled ? 'primary' : 'modiGray'}
+          color={mustFilled ? 'modiGray' : 'primary'}
           onClick={handleClickYes}
         >
           예
@@ -61,6 +65,10 @@ const ConfirmDialog = () => {
       </CardActions>
     </Card>
   );
+};
+
+ConfirmDialog.propTypes = {
+  onConfirm: PropTypes.func,
 };
 
 export default ConfirmDialog;
