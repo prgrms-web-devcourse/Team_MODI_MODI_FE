@@ -32,7 +32,7 @@ const MemberCounter = ({ member, onClick }) => {
       }}
     >
       <Grid item xs={4}>
-        <Button onClick={onDecrease}>
+        <Button disabled={count === 1} onClick={onDecrease}>
           <Remove />
         </Button>
       </Grid>
@@ -42,7 +42,7 @@ const MemberCounter = ({ member, onClick }) => {
         </Typography>
       </Grid>
       <Grid item xs={4}>
-        <Button onClick={onIncrease}>
+        <Button disabled={count === 3} onClick={onIncrease}>
           <Add />
         </Button>
       </Grid>
