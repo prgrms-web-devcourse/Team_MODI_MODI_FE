@@ -13,8 +13,8 @@ const StyledButton = styled(Button)`
   width: 50%;
 `;
 
-const ConfirmDialog = ({ onConfirm }) => {
-  const [mustFilled, setMustFilled] = useState(true);
+const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
+  const [mustFilled, setMustFilled] = useState(initialMustFilled);
 
   const handleClickNo = () => {
     setMustFilled(true);
@@ -68,6 +68,7 @@ const ConfirmDialog = ({ onConfirm }) => {
 };
 
 ConfirmDialog.propTypes = {
+  initialMustFilled: PropTypes.bool,
   onConfirm: PropTypes.func,
 };
 
