@@ -32,7 +32,7 @@ const MyPartySummary = ({
   monthlyReimbursement,
 }) => {
   return (
-    <Box>
+    <Box sx={{ marginBottom: 1 }}>
       <Divider />
       <Box
         sx={{
