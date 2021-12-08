@@ -1,11 +1,13 @@
 import { CssBaseline } from '@mui/material';
-import LoginPage from './pages/LoginPage';
+import MyPartyDetailPage from 'pages/MyPartyDetailPage';
+// import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <LoginPage />
+      {/* <LoginPage /> */}
+      <MyPartyDetailPage />
     </>
   );
 }
