@@ -12,7 +12,7 @@ import MemberCounter from 'components/MemberCounter';
 import ConfirmDialog from 'components/ConfirmDialog';
 import SharedInfoForm from 'components/SharedInfoForm';
 
-const calcDate = (startDate, period) => {
+const calculateEndDate = (startDate, period) => {
   const endDate = new Date(
     startDate.getFullYear(),
     startDate.getMonth() + period,
@@ -32,7 +32,7 @@ const CreatePartyPage = () => {
     grade: '',
     memberCapacity: 1,
     startDate: new Date(),
-    endDate: calcDate(new Date(), 1),
+    endDate: calculateEndDate(new Date(), 1),
     period: 1,
     mustFilled: null,
     ruleStateList: [],
@@ -86,7 +86,7 @@ const CreatePartyPage = () => {
   };
 
   const handleStartDate = startDate => {
-    const endDate = calcDate(startDate, newParty.period);
+    const endDate = calculateEndDate(startDate, newParty.period);
     setNewParty(current => ({
       ...current,
       startDate,
@@ -95,7 +95,7 @@ const CreatePartyPage = () => {
   };
 
   const handlePeriod = period => {
-    const endDate = calcDate(newParty.startDate, period);
+    const endDate = calculateEndDate(newParty.startDate, period);
     setNewParty(current => ({
       ...current,
       period,
@@ -157,10 +157,7 @@ const CreatePartyPage = () => {
       case 0:
         return (
           <>
-            <CreatePartyTitle
-              sx={{ paddingTop: '94px' }}
-              subTitle="어떤 서비스를 함께 이용하고 싶나요?"
-            />
+            <CreatePartyTitle subTitle="어떤 서비스를 함께 이용하고 싶나요?" />
             <OttList
               ottServices={ottServices}
               onSelectOtt={handleSelectedOtt}
@@ -289,6 +286,7 @@ const BottomButtonWrapper = styled(Box)`
   bottom: 0;
   padding: 2;
   width: 100%;
+  padding: 30px;
 `;
 
 export default CreatePartyPage;

@@ -1,7 +1,13 @@
 import { PropTypes } from 'prop-types';
 import { Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
-const CreatePartyTitle = ({ subTitle, sx = { paddingTop: '70px' } }) => {
+const CreatePartyTitle = ({
+  subTitle,
+  sx = {
+    paddingTop: '70px',
+    marginBottom: 8,
+  },
+}) => {
   return (
     <Box sx={sx}>
       <Typography variant="mediumB" color="text.secondary">
