@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import { Avatar, Box, Divider, Typography } from '@mui/material';
-import { StarRate } from '@mui/icons-material';
+import {
+  AddCircleOutline,
+  RemoveCircleOutline,
+  StarRate,
+} from '@mui/icons-material';
 import netflix from 'assets/netflix.png';
 import watcha from 'assets/watcha.png';
 import wavve from 'assets/wavve.png';
@@ -29,26 +33,68 @@ const MyPartySummary = ({
   startDate,
   endDate,
   isLeader,
-  monthlyReimbursement,
+  monthlyReimbursement = 0,
+  monthlyFee = 0,
+  totalFee = 0,
   onClickParty,
 }) => {
   const handleClickParty = () => {
     onClickParty(partyId);
   };
 
+  const feeRender = isLeader => {
+    if (isLeader) {
+      return (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <AddCircleOutline color="secondary" fontSize="small" />
+          <Typography variant="mediumB">
+            월 {priceToString(monthlyReimbursement)}원
+          </Typography>
+        </Box>
+      );
+    } else {
+      return (
+        <Box
+          sx={{
+            textAlign: 'right',
+          }}
+        >
+          <Typography variant="mediumB" component="p">
+            월 {priceToString(monthlyFee)}원
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <RemoveCircleOutline color="error" fontSize="small" />
+            <Typography variant="mediumB">
+              총 {priceToString(totalFee)}원
+            </Typography>
+          </Box>
+        </Box>
+      );
+    }
+  };
+
   return (
     <Box
       sx={{
-        marginBottom: 1,
+        marginBottom: 2,
         cursor: 'pointer',
       }}
       onClick={handleClickParty}
     >
-      <Divider />
       <Box
         sx={{
           display: 'flex',
-          marginTop: 2,
+          marginBottom: 2,
         }}
       >
         <Avatar
@@ -90,11 +136,10 @@ const MyPartySummary = ({
             marginTop: 2,
           }}
         >
-          <Typography variant="mediumB">
-            월 {priceToString(monthlyReimbursement)}원
-          </Typography>
+          {feeRender(isLeader)}
         </Box>
       </Box>
+      <Divider />
     </Box>
   );
 };
@@ -107,6 +152,8 @@ MyPartySummary.propTypes = {
   endDate: PropTypes.string,
   isLeader: PropTypes.bool,
   monthlyReimbursement: PropTypes.number,
+  monthlyFee: PropTypes.number,
+  totalFee: PropTypes.number,
   onClickParty: PropTypes.func,
 };
 
