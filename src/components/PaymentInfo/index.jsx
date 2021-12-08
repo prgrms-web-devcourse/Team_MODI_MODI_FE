@@ -6,7 +6,7 @@ import { priceToString } from 'utils/priceToString';
 
 const COMMISSION_RATE = 0.05;
 
-const PaymentInfo = ({ totalPrice, myPoint }) => {
+const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
   const toNumberNotation = useCallback(price => priceToString(price), []);
   const commission = useMemo(() => totalPrice * COMMISSION_RATE, [totalPrice]);
   const extraCharge = useMemo(
@@ -23,8 +23,12 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
     [],
   );
 
+  const handleClickChargeButton = useCallback(() => {
+    onClickChargeButton && onClickChargeButton();
+  }, [onClickChargeButton]);
+
   return (
-    <>
+    <Box mt={2}>
       <Typography variant="baseB" color="text.primary">
         결제정보
       </Typography>
@@ -46,7 +50,7 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
         sx={{
           ...spaceBetweenSx,
           pb: 1,
-          borderBottom: '2px dashed #DDDDDD',
+          borderBottom: '2px dashed #eeeeee',
         }}
       >
         <Typography variant="small" color="text.secondary">
@@ -68,7 +72,7 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
           보유 포인트
         </Typography>
 
-        <ChargeButton>
+        <ChargeButton onClick={handleClickChargeButton}>
           <Typography variant="micro" color="common.white">
             충전
           </Typography>
@@ -97,7 +101,7 @@ const PaymentInfo = ({ totalPrice, myPoint }) => {
           현재 보유한 포인트가 부족합니다.
         </Typography>
       )}
-    </>
+    </Box>
   );
 };
 
@@ -106,6 +110,7 @@ export default PaymentInfo;
 PaymentInfo.propTypes = {
   totalPrice: PropTypes.number.isRequired,
   myPoint: PropTypes.number.isRequired,
+  onClickChargeButton: PropTypes.func.isRequired,
 };
 
 const ChargeButton = styled('button')`
