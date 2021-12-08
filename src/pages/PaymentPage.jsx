@@ -13,7 +13,7 @@ import ModalBox from 'components/Modal/ModalBox';
 import PointChargeAlert from 'components/Modal/PointChargeAlert';
 import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
 
-const myPoint = 50000;
+const myPoint = 5000;
 
 const PaymentPage = () => {
   const [searchParams] = useSearchParams();
@@ -39,12 +39,12 @@ const PaymentPage = () => {
   } = PARTY_DETAIL_DUMMY;
   const [open, setOpen] = useState(!!(totalFee > myPoint));
 
-  const handleClosePointchargeAlert = useCallback(() => {
+  const handleClosePointChargeAlert = useCallback(() => {
     setOpen(false);
   }, []);
 
-  const handleOpenPointchargeAlert = useCallback(() => {
-    setOpen(open);
+  const handleOpenPointChargeAlert = useCallback(() => {
+    setOpen(true);
   }, []);
 
   const handleNavigateChargePage = useCallback(() => {
@@ -77,7 +77,7 @@ const PaymentPage = () => {
               mt: 2,
             }}
             size="large"
-            onClick={handleOpenPointchargeAlert}
+            onClick={handleOpenPointChargeAlert}
           >
             <Typography variant="baseB">결제하기</Typography>
           </Button>
@@ -87,7 +87,7 @@ const PaymentPage = () => {
         <ModalBox>
           <PointChargeAlert
             onNavigateChargePage={handleNavigateChargePage}
-            onClose={handleClosePointchargeAlert}
+            onClose={handleClosePointChargeAlert}
             paymentPoint={totalFee}
             myPoint={myPoint}
           />
