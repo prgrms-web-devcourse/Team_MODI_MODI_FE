@@ -1,5 +1,27 @@
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Container, Typography, Avatar, Button } from '@mui/material';
 import { styled } from '@mui/system';
+import { ottServices } from '../constants/dummyDate';
+import netflix from 'assets/netflix.png';
+import watcha from 'assets/watcha.png';
+import wavve from 'assets/wavve.png';
+import tving from 'assets/tving.png';
+import disney from 'assets/disney.png';
+import laftel from 'assets/laftel.png';
+import coupangPlay from 'assets/coupang-play.png';
+import primevideo from 'assets/primevideo.png';
+import CardSlide from './../components/CardSlide';
+
+const ottImage = {
+  1: netflix,
+  2: watcha,
+  3: wavve,
+  4: tving,
+  5: disney,
+  6: laftel,
+  7: coupangPlay,
+  8: primevideo,
+};
+
 const MainPage = () => {
   return (
     <Container disableGutters>
@@ -20,10 +42,64 @@ const MainPage = () => {
           세상 모든 OTT 서비스를 즐겨보세요
         </Typography>
       </VisualBox>
+
+      {/* slider */}
+      <Box
+        sx={{
+          position: 'relative',
+          top: '-100px',
+        }}
+      >
+        <CardSlide watingCount={46} ottName="디즈니 플러스" />
+      </Box>
+
+      {/* 전체서비스 보기 */}
       <Box sx={{ padding: '30px' }}>
-        <Typography variant="baseB" component="h2">
+        <Typography variant="baseB" component="h2" sx={{ mb: 2 }}>
           전체 서비스 보기
         </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+          }}
+        >
+          {ottServices.map(({ ottId, ottName }) => (
+            <Button
+              key={ottId}
+              sx={{
+                width: '25%',
+                textAlign: 'center',
+                mb: 2,
+                display: 'block',
+              }}
+            >
+              <Avatar
+                alt={`${ottName}logo`}
+                src={ottImage[ottId]}
+                sx={{
+                  width: 72,
+                  height: 72,
+                  m: 'auto',
+                  mb: 1,
+                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
+                }}
+              />
+              <Typography
+                variant="smallB"
+                component="p"
+                color="text.primary"
+                sx={{
+                  wordBreak: 'keep-all',
+                  height: '2em',
+                }}
+              >
+                {ottName}
+              </Typography>
+            </Button>
+          ))}
+        </Box>
       </Box>
     </Container>
   );
