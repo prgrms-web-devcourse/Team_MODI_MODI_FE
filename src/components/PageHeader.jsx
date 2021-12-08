@@ -1,4 +1,4 @@
-import { Avatar, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { styled } from '@mui/system';
 import OttLogo from './PartyTitle/OttLogo';
