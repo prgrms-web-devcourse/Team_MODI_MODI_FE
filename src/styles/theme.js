@@ -5,12 +5,18 @@ const theme = createTheme({
     primary: {
       main: '#BBCC4B',
       dark: '#AEBF3F',
+      contrastText: '#ffffff',
     },
     secondary: {
       main: '#87CCCD',
+      contrastText: '#ffffff',
     },
     thirdary: {
       main: '#FBEDA4',
+    },
+    divider: '#EEEEEE',
+    background: {
+      default: '#F7F8FA',
     },
     modiGray: {
       black: '#191A20',
@@ -18,10 +24,12 @@ const theme = createTheme({
       light: '#EEEEEE',
       semilight: '#F7F8FA',
       white: '#FFFFFF',
+      contrastText: '#FFFFFF',
     },
     text: {
       primary: '#343434',
       secondary: '#666666',
+      disabled: '#BBBBBB',
     },
     action: {
       active: '#BBBBBB',
@@ -83,6 +91,21 @@ const theme = createTheme({
     visual: {
       fontSize: 26,
       fontWeight: 700,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        sizeSmall: {
+          borderRadius: 16,
+        },
+        sizeMedium: {
+          borderRadius: 18,
+        },
+        sizeLarge: {
+          borderRadius: 21,
+        },
+      },
     },
   },
 });
