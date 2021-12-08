@@ -10,10 +10,10 @@ import PartyInfo from 'components/PartyInfo';
 import PaymentInfo from 'components/PaymentInfo';
 import Rule from 'components/Rule';
 import ModalBox from 'components/Modal/ModalBox';
-import PointChargeAlert from 'components/PointChargeAlert';
+import PointChargeAlert from 'components/Modal/PointChargeAlert';
 import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
 
-const myPoint = 5000;
+const myPoint = 50000;
 
 const PaymentPage = () => {
   const [searchParams] = useSearchParams();
@@ -21,7 +21,8 @@ const PaymentPage = () => {
   const partyId = searchParams.get('partyId');
   console.log(`partyId: ${partyId}`);
   /** API 호출 로직
-   * const [isLoading, state, error] = useAsync(getPartyDetail(`/parties/${partyId}`))
+   * const [partyDetailAPIState, fetchPartyDetailAPIState] = useAsync(getPartyDetail(`/parties/${partyId}`))
+   * const [partyDetailAPIState, fetchPartyDetailAPIState] = useAsync(post  PartyDetail(`/parties/${partyId}`))
    *
    *
    */
@@ -36,10 +37,14 @@ const PaymentPage = () => {
     endDate,
     totalFee,
   } = PARTY_DETAIL_DUMMY;
-  const [open, setOpen] = useState(totalFee > myPoint);
+  const [open, setOpen] = useState(!!(totalFee > myPoint));
 
-  const handleClosePointLackModal = useCallback(() => {
+  const handleClosePointchargeAlert = useCallback(() => {
     setOpen(false);
+  }, []);
+
+  const handleOpenPointchargeAlert = useCallback(() => {
+    setOpen(open);
   }, []);
 
   const handleNavigateChargePage = useCallback(() => {
@@ -72,6 +77,7 @@ const PaymentPage = () => {
               mt: 2,
             }}
             size="large"
+            onClick={handleOpenPointchargeAlert}
           >
             <Typography variant="baseB">결제하기</Typography>
           </Button>
@@ -81,7 +87,7 @@ const PaymentPage = () => {
         <ModalBox>
           <PointChargeAlert
             onNavigateChargePage={handleNavigateChargePage}
-            onClose={handleClosePointLackModal}
+            onClose={handleClosePointchargeAlert}
             paymentPoint={totalFee}
             myPoint={myPoint}
           />
