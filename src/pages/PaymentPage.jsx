@@ -1,23 +1,25 @@
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { useSearchParams } from 'react-router-dom';
+import { Button, Modal, Typography } from '@mui/material';
+
 import PageHeader from 'components/PageHeader';
 import PageContainer from 'components/PageContainer';
 import PageContents from 'components/PageContents';
 import PartyInfo from 'components/PartyInfo';
 import PaymentInfo from 'components/PaymentInfo';
 import Rule from 'components/Rule';
-import { Button, Modal, Typography } from '@mui/material';
-import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { useSearchParams } from 'react-router-dom';
-import { Box } from '@mui/system';
+import ModalBox from 'components/Modal/ModalBox';
+import PointChargeAlert from 'components/PointChargeAlert';
 import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
 
-const myPoint = 50000;
+const myPoint = 5000;
 
 const PaymentPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const partyId = searchParams.get('partyId');
-  console.log(partyId);
+  console.log(`partyId: ${partyId}`);
   /** API 호출 로직
    * const [isLoading, state, error] = useAsync(getPartyDetail(`/parties/${partyId}`))
    *
@@ -75,11 +77,15 @@ const PaymentPage = () => {
           </Button>
         </PageContents>
       </PageContainer>
-      <Modal open={open} onClose={handleClosePointLackModal}>
-        <Box>
-          <h1>{totalFee}</h1>
-          <h1>{myPoint}</h1>
-        </Box>
+      <Modal open={open}>
+        <ModalBox>
+          <PointChargeAlert
+            onNavigateChargePage={handleNavigateChargePage}
+            onClose={handleClosePointLackModal}
+            paymentPoint={totalFee}
+            myPoint={myPoint}
+          />
+        </ModalBox>
       </Modal>
     </>
   );

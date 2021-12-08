@@ -8,7 +8,7 @@ const PartyList = ({ parties, onClickParty }) => {
   };
 
   return (
-    <List>
+    <List sx={{ width: '100%' }}>
       {parties.map(
         ({
           partyId,
@@ -22,7 +22,13 @@ const PartyList = ({ parties, onClickParty }) => {
           period,
           mustFilled,
         }) => (
-          <ListItem key={partyId} sx={{ p: 0 }}>
+          <ListItem
+            key={partyId}
+            sx={{
+              p: 0,
+              width: '100%',
+            }}
+          >
             <PartySummary
               partyId={partyId}
               grade={grade}

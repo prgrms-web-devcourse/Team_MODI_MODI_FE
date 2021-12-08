@@ -45,7 +45,6 @@ const RecrutingPartyPage = () => {
   }, [additionalParties]);
 
   const handleOpen = useCallback(partyId => {
-    console.log(partyId);
     setOpen(true);
   }, []);
 

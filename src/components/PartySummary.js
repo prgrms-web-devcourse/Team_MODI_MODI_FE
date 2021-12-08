@@ -26,75 +26,84 @@ const PartySummary = ({
       elevation={3}
       sx={{
         display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
         borderRadius: '16px',
         cursor: 'pointer',
-        flexWrap: 'wrap',
         p: 2,
         mb: 1,
       }}
       onClick={handleClickParty}
     >
-      <Box sx={{ mr: 'auto' }}>
-        <Typography variant="mediumB" color="primary">
-          {startsIn}
-        </Typography>
-        <Typography variant="smallB"> 일 후 파티 시작</Typography>
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ mr: 'auto' }}>
+          <Typography variant="mediumB" color="primary">
+            {startsIn}
+          </Typography>
+          <Typography variant="smallB"> 일 후 파티 시작</Typography>
+          <Typography
+            variant="micro"
+            color="text.secondary"
+            component="div"
+            sx={{
+              wordBreak: 'keep-all',
+              textAlign: 'right',
+            }}
+          >
+            ~{endDate} 까지 ({period}개월)
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            textAlign: 'right',
+            mt: 0.5,
+          }}
+        >
+          <Typography variant="micro" component="div">
+            {grade}
+          </Typography>
+          <MonetizationOn
+            color="primary"
+            sx={{
+              fontSize: 16,
+              verticalAlign: 'sub',
+            }}
+          />
+          <Typography variant="micro">월 </Typography>
+          <Typography variant="microB"> {priceToString(price)}</Typography>
+          <Typography variant="micro">원</Typography>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+        }}
+      >
+        <Box mt={1.5} mr="auto">
+          {[1, 2, 3, 4].map(member => (
+            <AirlineSeatReclineExtra
+              fontSize="large"
+              key={member}
+              color={member <= currentMemberCapacity ? 'secondary' : 'modiGray'}
+            />
+          ))}
+        </Box>
         <Typography
-          variant="micro"
-          color="text.secondary"
+          color="text.disabled"
           component="div"
           sx={{
-            wordBreak: 'keep-all',
+            mt: 'auto',
+            ml: 0,
+            fontSize: '12px',
+            fontWeight: 500,
             textAlign: 'right',
           }}
         >
-          ~{endDate} 까지 ({period}개월)
+          {!mustFilled && '모집인원을 채워야 파티가 시작됩니다.'}
         </Typography>
       </Box>
-
-      <Box
-        sx={{
-          textAlign: 'right',
-          mt: 0.5,
-        }}
-      >
-        <Typography variant="micro" component="div">
-          {grade}
-        </Typography>
-        <MonetizationOn
-          color="primary"
-          sx={{
-            fontSize: 16,
-            verticalAlign: 'sub',
-          }}
-        />
-        <Typography variant="micro">월 </Typography>
-        {/* <Typography variant="micro" sx={{ textDecoration: 'line-through' }}>
-            {priceToString(price * 4)}원
-          </Typography> */}
-        <Typography variant="microB"> {priceToString(price)}</Typography>
-        <Typography variant="micro">원</Typography>
-      </Box>
-
-      <Box mt={1.5}>
-        {[1, 2, 3, 4].map(member => (
-          <AirlineSeatReclineExtra
-            fontSize="large"
-            key={member}
-            color={member <= currentMemberCapacity ? 'secondary' : 'modiGray'}
-          />
-        ))}
-      </Box>
-      <Typography
-        color="text.disabled"
-        sx={{
-          paddingLeft: 1,
-          fontSize: '12px',
-          fontWeight: 500,
-        }}
-      >
-        {!mustFilled && '모집인원을 채워야 파티가 시작됩니다.'}
-      </Typography>
     </Paper>
   );
 };

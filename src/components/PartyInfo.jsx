@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import InfoElement from './InfoElement';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
@@ -14,11 +15,16 @@ const PartyInfo = ({
   period,
   monthlyFee,
 }) => {
-  const parsedStartDate = ParseDate(startDate);
-  const parsedEndDate = ParseDate(endDate);
-  console.log(monthlyFee);
-  const parsedTotalPrice = priceToString(period * monthlyFee);
-  const parsedMonthlyFee = priceToString(monthlyFee);
+  const parsedStartDate = useMemo(() => ParseDate(startDate), [startDate]);
+  const parsedEndDate = useMemo(() => ParseDate(endDate), [endDate]);
+  const parsedTotalPrice = useMemo(
+    () => priceToString(period * monthlyFee),
+    [period, monthlyFee],
+  );
+  const parsedMonthlyFee = useMemo(
+    () => priceToString(monthlyFee),
+    [monthlyFee],
+  );
 
   return (
     <Box pt={2} pb={1} sx={{ borderBottom: '2px dashed #eeeeee' }}>
