@@ -23,6 +23,7 @@ const ottImage = {
 };
 
 const MyPartySummary = ({
+  partyId,
   ottId,
   ottName,
   startDate,
@@ -55,6 +56,7 @@ const MyPartySummary = ({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
+            flexGrow: 1,
           }}
         >
           <Typography variant="mediumB">
@@ -87,6 +89,7 @@ const MyPartySummary = ({
 };
 
 MyPartySummary.propTypes = {
+  partyId: PropTypes.number,
   ottId: PropTypes.number,
   ottName: PropTypes.string,
   startDate: PropTypes.string,
