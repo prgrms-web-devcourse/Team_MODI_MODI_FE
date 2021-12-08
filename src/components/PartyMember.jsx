@@ -7,7 +7,7 @@ const PartyMember = ({
   isWaiting = true,
   username = '',
   size = 'medium',
-  haveText = true,
+  hasText = true,
   fontSize = 'micro',
 }) => {
   return (
@@ -23,7 +23,7 @@ const PartyMember = ({
       }}
     >
       <AirlineSeatReclineExtra color="secondary" />
-      {haveText ? (
+      {hasText ? (
         <Typography
           variant={fontSize}
           color={isWaiting ? 'text.disabled' : 'text.secondary'}
@@ -41,7 +41,7 @@ PartyMember.propTypes = {
   isWaiting: PropTypes.bool,
   username: PropTypes.string,
   size: PropTypes.string,
-  haveText: PropTypes.bool,
+  hasText: PropTypes.bool,
   fontSize: PropTypes.string,
 };
 
