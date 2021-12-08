@@ -29,23 +29,20 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
   return (
     <Card
       sx={{
-        m: 2,
-        width: '90%',
-        height: 190,
         backgroundColor: '#FFB5B5',
         borderRadius: '16px',
       }}
     >
-      <CardContent>
-        <Typography variant="mediumB" component="p">
+      <CardContent sx={{ pb: 0 }}>
+        <Typography variant="mediumB" component="p" sx={{ mb: 1 }}>
           모집 인원이 충족되지 않아도 파티를 자동으로 시작할까요?
         </Typography>
-        <Typography variant="small" color="text.secondary">
+        <Typography variant="small" component="p" color="text.secondary">
           자동으로 시작하지 않는 경우, 모집 인원이 충족되지 못한 파티는
           파기됩니다.
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions sx={{ p: 2 }}>
         <StyledButton
           size="large"
           color={
@@ -55,14 +52,26 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
                 : 'modiGray'
               : 'modiGray'
           }
-          variant="contained"
+          variant={
+            mustFilled !== null
+              ? mustFilled
+                ? 'contained'
+                : 'outlined'
+              : 'contained'
+          }
           onClick={handleClickNo}
         >
           아니오
         </StyledButton>
         <StyledButton
           size="large"
-          variant="contained"
+          variant={
+            mustFilled !== null
+              ? mustFilled
+                ? 'outlined'
+                : 'contained'
+              : 'outlined'
+          }
           color={
             mustFilled !== null
               ? mustFilled

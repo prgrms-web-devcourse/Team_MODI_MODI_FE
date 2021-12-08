@@ -55,10 +55,12 @@ const theme = createTheme({
     micro: {
       fontSize: 12,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     microB: {
       fontSize: 12,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     small: {
       fontSize: 14,
@@ -73,29 +75,42 @@ const theme = createTheme({
     base: {
       fontSize: 16,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     baseB: {
       fontSize: 16,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     medium: {
       fontSize: 18,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     mediumB: {
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     large: {
       fontSize: 22,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     visual: {
       fontSize: 26,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
   },
   components: {
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#fff',
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         sizeSmall: {

@@ -20,15 +20,12 @@ const MemberCounter = ({ member, onClick }) => {
     <Grid
       container
       sx={{
-        color: 'black',
-        boxShadow: 1,
+        height: 96,
         borderRadius: 20,
+        border: '1px solid #bbb',
         alignItems: 'center',
         textAlign: 'center',
-        p: 1,
-        m: 1,
-        width: '90%',
-        height: 100,
+        mb: 3,
       }}
     >
       <Grid item xs={4}>
@@ -37,7 +34,7 @@ const MemberCounter = ({ member, onClick }) => {
         </Button>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="h5" align="center">
+        <Typography variant="large" align="center" color="text.primary">
           {count}명
         </Typography>
       </Grid>
