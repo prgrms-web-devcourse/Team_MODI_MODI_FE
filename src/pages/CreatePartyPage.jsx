@@ -11,6 +11,7 @@ import RuleList from 'components/RuleList';
 import MemberCounter from 'components/MemberCounter';
 import ConfirmDialog from 'components/ConfirmDialog';
 import SharedInfoForm from 'components/SharedInfoForm';
+import TermsList from './../components/TermsList';
 
 const calculateEndDate = (startDate, period) => {
   const endDate = new Date(
@@ -144,7 +145,6 @@ const CreatePartyPage = () => {
     } else {
       setComplete(false);
     }
-    console.log(newParty);
   }, [newParty]);
 
   const handleSubmit = e => {
@@ -213,6 +213,7 @@ const CreatePartyPage = () => {
               sharedPasswordCheck={newParty.sharedPasswordCheck}
               onChangeInfo={handleChangeSharedInfo}
             />
+            <TermsList />
           </>
         );
       default:

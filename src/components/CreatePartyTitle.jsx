@@ -4,8 +4,8 @@ import { styled } from '@mui/system';
 const CreatePartyTitle = ({
   subTitle,
   sx = {
-    paddingTop: '70px',
-    marginBottom: 8,
+    paddingTop: '32px',
+    marginBottom: 6,
   },
 }) => {
   return (

@@ -57,7 +57,7 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
               ? mustFilled
                 ? 'contained'
                 : 'outlined'
-              : 'contained'
+              : 'outlined'
           }
           onClick={handleClickNo}
         >

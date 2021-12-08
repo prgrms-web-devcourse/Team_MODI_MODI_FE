@@ -1,13 +1,6 @@
 import { TextField, Box } from '@mui/material';
-import { styled } from '@mui/system';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
-
-const StyledTextField = styled(TextField)`
-  fieldset {
-    border-radius: 56px;
-  }
-`;
+import { useEffect, useState } from 'react';
 
 const SharedInfoForm = ({
   sharedId,
@@ -21,6 +14,8 @@ const SharedInfoForm = ({
     sharedPasswordCheck,
   });
 
+  const [isError, setIsError] = useState(false);
+
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setSharedInfo({
@@ -33,34 +28,29 @@ const SharedInfoForm = ({
     });
   };
 
+  useEffect(() => {
+    if (sharedPassword !== sharedPasswordCheck) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [sharedPassword, sharedPasswordCheck]);
+
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          p: 1,
-          m: 1,
-        }}
-        onChange={handleChange}
-      >
-        <StyledTextField
-          sx={{
-            m: 1,
-            width: 300,
-          }}
+      <Box onChange={handleChange}>
+        <TextField
+          fullWidth
           required
           name="sharedId"
           id="sharedId"
           label="아이디"
           value={sharedId}
           variant="outlined"
+          sx={{ mb: 3 }}
         />
-        <StyledTextField
-          sx={{
-            m: 1,
-            width: 300,
-          }}
+        <TextField
+          fullWidth
           required
           name="sharedPassword"
           id="sharedPassword"
@@ -68,19 +58,20 @@ const SharedInfoForm = ({
           value={sharedPassword}
           variant="outlined"
           type="password"
+          sx={{ mb: 3 }}
         />
-        <StyledTextField
-          sx={{
-            m: 1,
-            width: 300,
-          }}
+        <TextField
+          fullWidth
+          error={isError}
           required
           name="sharedPasswordCheck"
           id="sharedPasswordCheck"
           label="비밀번호 확인"
+          helperText={isError ? '비밀번호가 일치하지 않습니다.' : null}
           value={sharedPasswordCheck}
           variant="outlined"
           type="password"
+          sx={{ mb: 3 }}
         />
       </Box>
     </Box>

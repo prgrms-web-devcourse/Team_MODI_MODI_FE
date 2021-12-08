@@ -13,7 +13,8 @@ const TermsList = () => {
   return (
     <ul
       style={{
-        width: 350,
+        paddingLeft: 16,
+        margin: 0,
         fontSize: 12,
         color: text.secondary,
         wordBreak: 'keep-all',
