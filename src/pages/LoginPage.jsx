@@ -4,6 +4,7 @@ import PageContainer from 'components/PageContainer';
 import PageContents from 'components/PageContents';
 import SocialLoginButton from 'components/SocialLoginButton';
 import Logo from 'components/Logo';
+import popcornLogoSrc from 'assets/popcorn-logo.svg';
 
 const LoginPage = () => {
   return (
@@ -47,6 +48,7 @@ const LoginPage = () => {
         >
           모디에서 세상의 모든 디지털 컨텐츠를 즐겨보세요!
         </Typography>
+        <PopCornLogo src={popcornLogoSrc} />
         <StyleCircularDiv />
       </Box>
 
@@ -68,6 +70,14 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const PopCornLogo = styled('img')`
+  position: absolute;
+  width: 192px;
+  height: 200px;
+  top: 250px;
+  right: 40px;
+`;
 
 const StyleCircularDiv = styled(Box)`
   position: absolute;
