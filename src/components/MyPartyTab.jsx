@@ -60,7 +60,7 @@ const PartyTab = ({ parties }) => {
 
       return false;
     });
-  }, []);
+  }, [parties, onGoing, waiting, closed]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
