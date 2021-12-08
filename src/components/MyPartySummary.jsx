@@ -30,9 +30,20 @@ const MyPartySummary = ({
   endDate,
   isLeader,
   monthlyReimbursement,
+  onClickParty,
 }) => {
+  const handleClickParty = () => {
+    onClickParty(partyId);
+  };
+
   return (
-    <Box sx={{ marginBottom: 1 }}>
+    <Box
+      sx={{
+        marginBottom: 1,
+        cursor: 'pointer',
+      }}
+      onClick={handleClickParty}
+    >
       <Divider />
       <Box
         sx={{
@@ -96,6 +107,7 @@ MyPartySummary.propTypes = {
   endDate: PropTypes.string,
   isLeader: PropTypes.bool,
   monthlyReimbursement: PropTypes.number,
+  onClickParty: PropTypes.func,
 };
 
 export default MyPartySummary;
