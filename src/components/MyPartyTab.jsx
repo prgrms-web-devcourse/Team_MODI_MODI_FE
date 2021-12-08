@@ -39,7 +39,7 @@ function a11yProps(index) {
   };
 }
 
-const PartyTab = () => {
+const PartyTab = ({ parties }) => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -77,34 +77,8 @@ const PartyTab = () => {
   );
 };
 
-export default PartyTab;
+PartyTab.propTypes = {
+  parties: PropTypes.array,
+};
 
-const parties = [
-  {
-    partyId: 1,
-    ottId: 1,
-    ottName: '넷플릭스',
-    startDate: '2021-11-18',
-    endDate: '2022-1-18',
-    isLeader: true,
-    monthlyReimbursement: 10000,
-  },
-  {
-    partyId: 2,
-    ottId: 2,
-    ottName: '왓챠',
-    startDate: '2021-11-18',
-    endDate: '2022-1-18',
-    isLeader: false,
-    monthlyReimbursement: 10000,
-  },
-  {
-    partyId: 3,
-    ottId: 3,
-    ottName: '웨이브',
-    startDate: '2021-11-18',
-    endDate: '2022-1-18',
-    isLeader: true,
-    monthlyReimbursement: 10000,
-  },
-];
+export default PartyTab;
