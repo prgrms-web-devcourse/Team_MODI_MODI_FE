@@ -12,6 +12,7 @@ const PartyTitle = ({ ottName, ottGrade, monthlyPrice, servicePeriod }) => {
         display: 'flex',
         alignItems: 'center',
         height: '80px',
+        mt: '24px',
       }}
     >
       <OttLogo ottName={ottName} size={72} />

@@ -7,6 +7,7 @@ import { CssBaseline } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import PaymentPage from 'pages/PaymentPage.jsx';
+import RecrutingPartyPage from 'pages/RecrutingPartyPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -15,8 +16,11 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="recruiting/:ottServiceName" />
             <Route path="payment" element={<PaymentPage />} />
+            <Route
+              path="recruiting/:ottServiceName"
+              element={<RecrutingPartyPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

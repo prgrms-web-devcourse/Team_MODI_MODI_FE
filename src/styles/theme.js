@@ -81,7 +81,7 @@ const theme = createTheme({
       fontWeight: 400,
     },
     mediumB: {
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: 700,
     },
     large: {

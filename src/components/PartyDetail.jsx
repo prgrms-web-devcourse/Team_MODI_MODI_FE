@@ -1,0 +1,63 @@
+import PartyTitle from './PartyTitle';
+import PropTypes from 'prop-types';
+import RuleContainer from './Rule';
+import PartyInfo from './PartyInfo';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { useCallback } from 'react';
+
+const PartyDetail = ({ partyDetail }) => {
+  const {
+    partyId,
+    ottName,
+    grade,
+    monthlyFee,
+    period,
+    rules,
+    startDate,
+    endDate,
+  } = partyDetail;
+
+  const navigate = useNavigate();
+  const handleNavigatePaymentPage = useCallback(() => {
+    navigate(`/payment?partyId=${partyId}`);
+  }, [navigate, partyId]);
+
+  return (
+    <>
+      <PartyTitle
+        ottName={ottName}
+        ottGrade={grade}
+        monthlyPrice={monthlyFee}
+        servicePeriod={period}
+      />
+      <PartyInfo
+        ottName={ottName}
+        ottGrade={grade}
+        startDate={startDate}
+        endDate={endDate}
+        period={period}
+        monthlyFee={monthlyFee}
+      />
+      <RuleContainer rules={rules} />
+      <Button
+        variant="contained"
+        sx={{
+          width: '100%',
+          mt: 2,
+        }}
+        size="large"
+        onClick={handleNavigatePaymentPage}
+      >
+        파티 참여하기
+      </Button>
+    </>
+  );
+};
+
+PartyDetail.propTypes = {
+  partyDetail: PropTypes.object,
+  myPoint: PropTypes.number,
+};
+
+export default PartyDetail;
