@@ -109,11 +109,13 @@ const theme = createTheme({
         },
       },
     },
-    MuiTextField: {
+    MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          overflow: 'hidden',
-          borderRadius: '10% / 50%',
+          borderRadius: 24,
+        },
+        input: {
+          padding: '13px 20px',
         },
       },
     },
