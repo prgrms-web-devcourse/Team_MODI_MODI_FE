@@ -14,11 +14,12 @@ const LoginPage = () => {
     >
       <Box
         sx={{
-          position: 'relative',
           display: 'flex',
+          position: 'relative',
           flex: 1,
           flexDirection: 'column',
           overflow: 'hidden',
+          padding: '0 30px',
         }}
       >
         <Typography
@@ -38,14 +39,20 @@ const LoginPage = () => {
             mt: 1,
           }}
         >
-          <LoginDescription>세상 모든 OTT</LoginDescription>
-          <LoginDescription>모두의 아이디 모디</LoginDescription>
+          <Typography variant="visual" component="h3" color="modiGray.white">
+            세상 모든 OTT
+            <br />
+            모두의 아이디 모디
+          </Typography>
         </Box>
         <Typography
           variant="subtitle2"
           textAlign="center"
           color="common.white"
           mb={3.5}
+          sx={{
+            wordBreak: 'keep-all',
+          }}
         >
           모디에서 세상의 모든 디지털 컨텐츠를 즐겨보세요!
         </Typography>
@@ -71,15 +78,9 @@ const LoginPage = () => {
 
 export default LoginPage;
 
-const LoginDescription = styled(Typography)`
-  font-size: 1.625rem;
-  font-weight: 600;
-  color: white;
-`;
-
 const StyleCircularDiv = styled(Box)`
   position: absolute;
-  left: 151px;
+  right: -12px;
   top: 185px;
   width: 272px;
   height: 272px;
