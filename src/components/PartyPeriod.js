@@ -18,13 +18,7 @@ const PartyPeriod = ({ initialPeriod, onSelectPeriod }) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        p: 1,
-        m: 1,
-      }}
-    >
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -32,7 +26,9 @@ const PartyPeriod = ({ initialPeriod, onSelectPeriod }) => {
         }}
       >
         <Typography variant="mediumB">기간</Typography>
-        <Typography variant="large">{period} 개월</Typography>
+        <Typography variant="mediumB">
+          <Typography variant="large">{period}</Typography> 개월
+        </Typography>
       </Box>
       <Slider
         aria-label="Party Period"

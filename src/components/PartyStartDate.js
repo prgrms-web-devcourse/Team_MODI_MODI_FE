@@ -1,18 +1,11 @@
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { TextField, Typography } from '@mui/material';
+import { TextField, Typography, InputAdornment } from '@mui/material';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import { MobileDatePicker } from '@mui/lab';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
-import { dateFormater } from 'utils/formatting';
-
-const StyledTextField = styled(TextField)`
-  fieldset {
-    border-radius: 56px;
-  }
-`;
 
 const PartyStartDate = ({ initialStartDate, onSelectStartDate }) => {
   const [startDate, setStartDate] = useState(initialStartDate);
@@ -23,12 +16,7 @@ const PartyStartDate = ({ initialStartDate, onSelectStartDate }) => {
   };
 
   return (
-    <Box
-      sx={{
-        p: 1,
-        m: 1,
-      }}
-    >
+    <Box sx={{ marginBottom: 7 }}>
       <Typography
         sx={{
           marginBottom: 2,
@@ -46,7 +34,20 @@ const PartyStartDate = ({ initialStartDate, onSelectStartDate }) => {
           disableCloseOnSelect={false}
           minDate={new Date()}
           onChange={handleChange}
-          renderInput={params => <StyledTextField {...params} />}
+          renderInput={params => (
+            <TextField
+              {...params}
+              fullWidth
+              size="small"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <CalendarTodayIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
         />
       </LocalizationProvider>
     </Box>
