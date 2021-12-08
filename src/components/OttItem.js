@@ -45,7 +45,7 @@ const OttItem = ({ ottId, ottName, selected, onSelectOtt }) => {
           width: 72,
           height: 72,
           marginBottom: 1,
-          border: '1px solid #ddd',
+          boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
         }}
       />
       <Typography

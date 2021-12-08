@@ -19,7 +19,6 @@ const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        marginTop: 8,
       }}
     >
       {ottServices.map(({ ottId, ottName }) => (
