@@ -9,29 +9,59 @@ const MyPartyList = ({ myParties }) => {
 
   return (
     <Box>
-      {myParties.map(
-        ({
-          partyId,
-          ottId,
-          ottName,
-          startDate,
-          endDate,
-          isLeader,
-          monthlyReimbursement,
-        }) => (
-          <MyPartySummary
-            key={partyId}
-            partyId={partyId}
-            ottId={ottId}
-            ottName={ottName}
-            startDate={startDate}
-            endDate={endDate}
-            isLeader={isLeader}
-            monthlyReimbursement={monthlyReimbursement}
-            onClickParty={handleClickParty}
-          />
-        ),
-      )}
+      {myParties.map(party => {
+        if (party.isLeader) {
+          const {
+            partyId,
+            ottId,
+            ottName,
+            startDate,
+            endDate,
+            isLeader,
+            monthlyReimbursement,
+          } = party;
+
+          return (
+            <MyPartySummary
+              key={partyId}
+              partyId={partyId}
+              ottId={ottId}
+              ottName={ottName}
+              startDate={startDate}
+              endDate={endDate}
+              isLeader={isLeader}
+              monthlyReimbursement={monthlyReimbursement}
+              onClickParty={handleClickParty}
+            />
+          );
+        } else {
+          const {
+            partyId,
+            ottId,
+            ottName,
+            startDate,
+            endDate,
+            isLeader,
+            monthlyFee,
+            totalFee,
+          } = party;
+
+          return (
+            <MyPartySummary
+              key={partyId}
+              partyId={partyId}
+              ottId={ottId}
+              ottName={ottName}
+              startDate={startDate}
+              endDate={endDate}
+              isLeader={isLeader}
+              monthlyFee={monthlyFee}
+              totalFee={totalFee}
+              onClickParty={handleClickParty}
+            />
+          );
+        }
+      })}
     </Box>
   );
 };
