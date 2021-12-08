@@ -22,18 +22,17 @@ const RuleToggle = ({ ruleId, ruleName, isSelected, onClickRule }) => {
   };
 
   return (
-    <Button type="button">
-      <Chip
-        sx={{
-          m: 0.5,
-          cursor: 'pointer',
-        }}
-        color={selected ? 'primary' : 'default'}
-        key={ruleId}
-        label={ruleName}
-        onClick={handleClickRule}
-      />
-    </Button>
+    <Chip
+      sx={{
+        cursor: 'pointer',
+        m: 0.5,
+      }}
+      color={selected ? 'primary' : 'default'}
+      key={ruleId}
+      label={ruleName}
+      onClick={handleClickRule}
+      component="button"
+    />
   );
 };
 

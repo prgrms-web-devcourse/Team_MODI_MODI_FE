@@ -221,7 +221,16 @@ const CreatePartyPage = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: 'block',
+        background: '#fff',
+        padding: '0 30px',
+        position: 'relative',
+        minHeight: '100vh',
+      }}
+    >
       <StyledStepper
         variant="progress"
         steps={5}
@@ -269,6 +278,7 @@ const CreatePartyPage = () => {
 
 const StyledStepper = styled(MobileStepper)`
   padding: 20px 0 0;
+  background-color: transparent;
   span {
     width: 100%;
   }

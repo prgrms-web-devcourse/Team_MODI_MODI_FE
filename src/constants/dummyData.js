@@ -8,10 +8,6 @@ export const rules = [
     ruleName: '1인 1기기',
   },
   {
-    ruleId: 3,
-    ruleName: '닉네임과 동일하게 프로필 네임 설정',
-  },
-  {
     ruleId: 4,
     ruleName: '개인사정 환불 불가',
   },
@@ -26,6 +22,10 @@ export const rules = [
   {
     ruleId: 7,
     ruleName: '19세 이상',
+  },
+  {
+    ruleId: 3,
+    ruleName: '닉네임과 동일하게 프로필 네임 설정',
   },
 ];
 
