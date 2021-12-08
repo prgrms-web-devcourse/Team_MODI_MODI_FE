@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Tabs, Tab, Typography, Box } from '@mui/material';
+import { Tabs, Tab, Box } from '@mui/material';
 import MyPartyList from './MyPartyList';
 
 function TabPanel(props) {
@@ -16,7 +16,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -44,6 +44,9 @@ const PartyTab = ({ parties }) => {
   const [closed, setClosed] = useState([]);
 
   useEffect(() => {
+    const newOnGoing = [];
+    const newWaiting = [];
+    const newClosed = [];
     const nowDate = new Date();
 
     parties.map(party => {
@@ -51,12 +54,16 @@ const PartyTab = ({ parties }) => {
       const formatEndDate = new Date(party.endDate);
 
       if (nowDate < formatStartDate) {
-        setWaiting([...waiting, party]);
+        newWaiting.push(party);
       } else if (nowDate > formatEndDate) {
-        setClosed([...closed, party]);
+        newClosed.push(party);
       } else {
-        setOnGoing([...onGoing, party]);
+        newOnGoing.push(party);
       }
+
+      setOnGoing(newOnGoing);
+      setWaiting(newWaiting);
+      setClosed(newClosed);
 
       return false;
     });
