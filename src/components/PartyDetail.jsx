@@ -5,6 +5,7 @@ import PartyInfo from './PartyInfo';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
+import PartyMemberList from './PartyMemberList';
 
 const PartyDetail = ({ partyDetail }) => {
   const {
@@ -16,6 +17,7 @@ const PartyDetail = ({ partyDetail }) => {
     rules,
     startDate,
     endDate,
+    members,
   } = partyDetail;
 
   const navigate = useNavigate();
@@ -40,6 +42,7 @@ const PartyDetail = ({ partyDetail }) => {
         monthlyFee={monthlyFee}
       />
       <RuleContainer rules={rules} />
+      <PartyMemberList members={members} />
       <Button
         variant="contained"
         sx={{

@@ -15,19 +15,19 @@ export const PARTY_DETAIL_DUMMY = {
   members: [
     {
       userId: 1,
-      username: '닉네임',
+      username: '행복한 코비',
       isLeader: true,
     },
     {
       userId: 2,
-      username: '닉네임',
+      username: '흥겨운 젠',
       isLeader: false,
     },
   ],
   rules: [
     {
       ruleId: 1,
-      ruleName: '1인 1회선',
+      ruleName: '즐거운 낸시',
     },
     {
       ruleId: 2,

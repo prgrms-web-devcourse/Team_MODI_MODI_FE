@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import PartyMember from './PartyMember';
 import PropTypes from 'prop-types';
 
@@ -13,16 +13,30 @@ const PartyMemberList = ({ members }) => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-      }}
-    >
-      {members.map(({ userId, username }) => (
-        <PartyMember key={userId} isWaiting={false} username={username} />
-      ))}
-      {waitingMemeber()}
-    </Box>
+    <>
+      <Typography
+        sx={{
+          textAlign: 'left',
+          mt: 2,
+        }}
+        variant="small"
+        component="div"
+      >
+        파티인원
+      </Typography>
+      <Box
+        sx={{
+          mt: 1,
+          display: 'flex',
+          alignItems: 'flex-start',
+        }}
+      >
+        {members.map(({ userId, username }) => (
+          <PartyMember key={userId} isWaiting={false} username={username} />
+        ))}
+        {waitingMemeber()}
+      </Box>
+    </>
   );
 };
 
