@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import PageContainer from 'components/PageContainer';
 import PageContents from 'components/PageContents';
 import SocialLoginButton from 'components/SocialLoginButton';
+import Logo from 'components/Logo';
 
 const LoginPage = () => {
   return (
@@ -19,24 +20,14 @@ const LoginPage = () => {
           flex: 1,
           flexDirection: 'column',
           overflow: 'hidden',
-          padding: '0 30px',
+          padding: '100px 30px 0 30px',
         }}
       >
-        <Typography
-          component="h1"
-          sx={{
-            mt: '100px',
-            fontSize: '2.75rem',
-            fontWeight: 700,
-            color: 'common.white',
-          }}
-        >
-          Mo;D
-        </Typography>
+        <Logo size={120} color />
         <Box
           sx={{
             flex: 1,
-            mt: 1,
+            mt: 3,
           }}
         >
           <Typography variant="visual" component="h3" color="modiGray.white">
