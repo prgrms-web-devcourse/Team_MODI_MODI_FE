@@ -1,9 +1,6 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { Tabs, Tab, Typography, Box } from '@mui/material';
 import MyPartyList from './MyPartyList';
 
 function TabPanel(props) {
@@ -40,7 +37,30 @@ function a11yProps(index) {
 }
 
 const PartyTab = ({ parties }) => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+
+  const [onGoing, setOnGoing] = useState([]);
+  const [waiting, setWaiting] = useState([]);
+  const [closed, setClosed] = useState([]);
+
+  useEffect(() => {
+    const nowDate = new Date();
+
+    parties.map(party => {
+      const formatStartDate = new Date(party.startDate);
+      const formatEndDate = new Date(party.endDate);
+
+      if (nowDate < formatStartDate) {
+        setWaiting([...waiting, party]);
+      } else if (nowDate > formatEndDate) {
+        setClosed([...closed, party]);
+      } else {
+        setOnGoing([...onGoing, party]);
+      }
+
+      return false;
+    });
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -65,13 +85,13 @@ const PartyTab = ({ parties }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList myParties={parties} />}
+        {<MyPartyList myParties={onGoing} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        대기중
+        {<MyPartyList myParties={waiting} />}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        종료
+        {<MyPartyList myParties={closed} />}
       </TabPanel>
     </Box>
   );
