@@ -4,10 +4,11 @@ import PageContents from 'components/PageContents';
 import PartyInfo from 'components/PartyInfo';
 import PaymentInfo from 'components/PaymentInfo';
 import Rule from 'components/Rule';
-import { Button, Typography } from '@mui/material';
-import { useCallback } from 'react';
+import { Button, Modal, Typography } from '@mui/material';
+import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
+import { Box } from '@mui/system';
 
 const PARTY_DETAIL_DUMMY = {
   partyId: 1,
@@ -66,6 +67,7 @@ const PARTY_DETAIL_DUMMY = {
     },
   ],
 };
+const myPoint = 50000;
 
 const PaymentPage = () => {
   const [searchParams] = useSearchParams();
@@ -88,6 +90,11 @@ const PaymentPage = () => {
     endDate,
     totalFee,
   } = PARTY_DETAIL_DUMMY;
+  const [open, setOpen] = useState(totalFee > myPoint);
+
+  const handleClosePointLackModal = useCallback(() => {
+    setOpen(false);
+  }, []);
 
   const handleNavigateChargePage = useCallback(() => {
     navigate('/charge');
@@ -109,7 +116,7 @@ const PaymentPage = () => {
           <Rule rules={rules} />
           <PaymentInfo
             totalPrice={totalFee}
-            myPoint={100000}
+            myPoint={myPoint}
             onClickChargeButton={handleNavigateChargePage}
           />
           <Button
@@ -124,6 +131,12 @@ const PaymentPage = () => {
           </Button>
         </PageContents>
       </PageContainer>
+      <Modal open={open} onClose={handleClosePointLackModal}>
+        <Box>
+          <h1>{totalFee}</h1>
+          <h1>{myPoint}</h1>
+        </Box>
+      </Modal>
     </>
   );
 };
