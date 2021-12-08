@@ -1,27 +1,24 @@
-import { Container, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import PageContainer from 'components/PageContainer';
+import PageContents from 'components/PageContents';
 import SocialLoginButton from 'components/SocialLoginButton';
 
 const LoginPage = () => {
   return (
-    <Container
-      maxWidth="xs"
+    <PageContainer
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
         background:
           'radial-gradient(53.14% 58.21% at 8.64% 19.43%, #C2D15D 0%, #9EC238 100%)',
       }}
-      disableGutters
     >
       <Box
         sx={{
-          position: 'static',
+          position: 'relative',
           display: 'flex',
           flex: 1,
           flexDirection: 'column',
-          m: '0 30px',
+          overflow: 'hidden',
         }}
       >
         <Typography
@@ -54,23 +51,21 @@ const LoginPage = () => {
         </Typography>
         <StyleCircularDiv />
       </Box>
-      <Box
+
+      <PageContents
         sx={{
           display: 'flex',
-          width: '100%',
           flexDirection: 'column',
           justifyContent: 'center',
+          flex: 0,
           alignItems: 'center',
           bgcolor: 'modiGray.semilight',
-          boxShadow: '0px -2px 8px rgba(0, 0, 0, 0.25)',
-          height: '224px',
-          borderRadius: ' 32px 32px 0 0',
         }}
       >
         <SocialLoginButton provider="naver" />
         <SocialLoginButton provider="kakao" />
-      </Box>
-    </Container>
+      </PageContents>
+    </PageContainer>
   );
 };
 

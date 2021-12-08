@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { styled } from '@mui/system';
 import naverLogoSrc from 'assets/naver-logo.png';
 import kakaoLogoSrc from 'assets/kakao-logo.png';
@@ -16,16 +16,15 @@ const SocialLoginButton = ({ provider }) => {
   return (
     <>
       <LoginButton href={loginUrl}>
-        <img
-          alt={`${provider}-logo`}
-          src={providerLogo[provider]}
-          style={{
-            margin: ' 0 32px',
-            height: '32px',
+        <ProviderLogo alt={`${provider}-logo`} src={providerLogo[provider]} />
+        <Typography
+          variant="smallB"
+          sx={{
+            wordBreak: 'keep-all',
+            textAlign: 'center',
           }}
-        />
-        {`${provider} 아이디로 로그인`}
-        <ArrowForwardIcon sx={{ m: '0 16px 0 auto' }} />
+        >{`${provider} 아이디로 로그인`}</Typography>
+        <ArrowForwardIcon sx={{ m: '0 16px' }} />
       </LoginButton>
     </>
   );
@@ -35,16 +34,21 @@ SocialLoginButton.propTypes = {
   provider: PropTypes.string,
 };
 
+const ProviderLogo = styled('img')`
+  margin: 0 16px;
+  height: 32px;
+`;
+
 const LoginButton = styled(Button)`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   background-color: white;
+  width: 100%;
   color: black;
   height: 64px;
-  width: 352px;
   margin: 0.5rem;
   border-radius: 32px;
-  font-weight: 600;
+
   box-shadow: 0px 4px 7px 2px rgba(66, 66, 66, 0.15);
 
   &:hover {
