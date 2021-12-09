@@ -13,8 +13,10 @@ const MyPartyDetailPage = () => {
       <PartyShareAccount
         fliped={fliped}
         onFlipCard={handleFlipCard}
-        sharedId="Modi@abc.com"
-        sharedPassword="12312314sdf"
+        sharedInfo={{
+          sharedId: 'Modi@abc.com',
+          sharedPassword: '12312314sdf',
+        }}
       />
     </>
   );
