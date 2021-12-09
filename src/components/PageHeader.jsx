@@ -1,18 +1,12 @@
-import { Avatar, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { PropTypes } from 'prop-types';
 import { styled } from '@mui/system';
+import OttLogo from './PartyTitle/OttLogo';
 
-const PageHeader = ({ src, alt, title, children }) => {
+const PageHeader = ({ title, hasLogo, size = 72, children }) => {
   return (
     <PageHeaderStyle>
-      {src && (
-        <Avatar
-          src={src}
-          alt={alt}
-          size={72}
-          sx={{ boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)' }}
-        />
-      )}
+      {hasLogo && <OttLogo ottName={title} size={size} />}
       <Typography variant="large" component="h2">
         {title}
       </Typography>
@@ -22,9 +16,9 @@ const PageHeader = ({ src, alt, title, children }) => {
 };
 
 PageHeader.propTypes = {
-  src: PropTypes.string,
-  alt: PropTypes.string,
   title: PropTypes.string,
+  hasLogo: PropTypes.bool,
+  size: PropTypes.number,
   children: PropTypes.node,
 };
 
