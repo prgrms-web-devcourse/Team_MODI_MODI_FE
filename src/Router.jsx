@@ -15,7 +15,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route path="maini" elemennt={<MainPage />} />
+          <Route index element={<MainPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route
             path="recruit/:ottServiceName"
