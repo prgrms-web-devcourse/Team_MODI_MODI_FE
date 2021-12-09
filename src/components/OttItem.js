@@ -28,6 +28,7 @@ const OttItem = ({ ottId, ottName, selected, onSelectOtt }) => {
         align="center"
         component="p"
         sx={{
+          mt: 1,
           wordBreak: 'keep-all',
           height: '2em',
         }}
