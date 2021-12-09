@@ -14,7 +14,11 @@ const MyPage = () => {
   };
 
   return (
-    <PageContainer bgcolor="secondary">
+    <PageContainer
+      sx={{
+        bgcolor: 'secondary.main',
+      }}
+    >
       <Box>
         <Box
           sx={{
