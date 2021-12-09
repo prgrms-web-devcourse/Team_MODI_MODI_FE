@@ -1,11 +1,14 @@
 import { CssBaseline } from '@mui/material';
-import LoginPage from './pages/LoginPage';
+import CreatePartyPage from './pages/CreatePartyPage';
+import PageContainer from './components/PageContainer';
 
 function App() {
   return (
     <>
       <CssBaseline />
-      <LoginPage />
+      <PageContainer>
+        <CreatePartyPage />
+      </PageContainer>
     </>
   );
 }
