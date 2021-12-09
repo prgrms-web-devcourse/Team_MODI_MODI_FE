@@ -55,49 +55,82 @@ const theme = createTheme({
     micro: {
       fontSize: 12,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     microB: {
       fontSize: 12,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     small: {
       fontSize: 14,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     smallB: {
       fontSize: 14,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     base: {
       fontSize: 16,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     baseB: {
       fontSize: 16,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     medium: {
       fontSize: 18,
       fontWeight: 400,
+      lineHeight: 1.3,
     },
     mediumB: {
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     large: {
       fontSize: 22,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
     visual: {
       fontSize: 26,
       fontWeight: 700,
+      lineHeight: 1.3,
     },
   },
   components: {
-    MuiButton: {
+    MuiButtonBase: {
       styleOverrides: {
         root: {
-          borderRadius: '22px / 50%',
+          backgroundColor: '#fff',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        sizeSmall: {
+          borderRadius: 16,
+        },
+        sizeMedium: {
+          borderRadius: 18,
+        },
+        sizeLarge: {
+          borderRadius: 21,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: 24,
+        },
+        input: {
+          padding: '13px 20px',
         },
       },
     },
