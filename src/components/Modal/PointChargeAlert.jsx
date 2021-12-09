@@ -1,14 +1,23 @@
 import { Typography, Box, Button, Divider } from '@mui/material';
-import { styled } from '@mui/system';
 import { PropTypes } from 'prop-types';
+import { useCallback } from 'react';
 
-const PointChargeAlert = ({ onClose, paymentPoint, myPoint }) => {
+const PointChargeAlert = ({
+  onNavigateChargePage,
+  onClose,
+  paymentPoint,
+  myPoint,
+}) => {
   const priceToString = price => {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
+  const handleNavigateChargePage = useCallback(() => {
+    onNavigateChargePage && onNavigateChargePage();
+  }, [onNavigateChargePage]);
+
   return (
-    <ModalBox>
+    <>
       <Typography
         variant="large"
         color="error"
@@ -72,6 +81,7 @@ const PointChargeAlert = ({ onClose, paymentPoint, myPoint }) => {
           width: '48%',
           marginRight: '4%',
         }}
+        onClick={handleNavigateChargePage}
       >
         충전하기
       </Button>
@@ -83,27 +93,15 @@ const PointChargeAlert = ({ onClose, paymentPoint, myPoint }) => {
       >
         취소
       </Button>
-    </ModalBox>
+    </>
   );
 };
 
 PointChargeAlert.propTypes = {
+  onNavigateChargePage: PropTypes.func,
   onClose: PropTypes.func,
   paymentPoint: PropTypes.number.isRequired,
   myPoint: PropTypes.number.isRequired,
 };
-
-const ModalBox = styled(Box)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 24px;
-  width: 86%;
-  border-radius: 24px;
-  background-color: #fff;
-  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.25);
-  text-align: center;
-`;
 
 export default PointChargeAlert;

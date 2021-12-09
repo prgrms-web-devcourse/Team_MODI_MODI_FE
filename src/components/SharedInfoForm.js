@@ -1,20 +1,20 @@
 import { TextField, Box } from '@mui/material';
-import { styled } from '@mui/system';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const StyledTextField = styled(TextField)`
-  fieldset {
-    border-radius: 56px;
-  }
-`;
-
-const SharedInfoForm = () => {
+const SharedInfoForm = ({
+  sharedId,
+  sharedPassword,
+  sharedPasswordCheck,
+  onChangeInfo,
+}) => {
   const [sharedInfo, setSharedInfo] = useState({
-    sharedId: '',
-    sharedPassword: '',
-    sharedPasswordCheck: '',
+    sharedId,
+    sharedPassword,
+    sharedPasswordCheck,
   });
+
+  const [isError, setIsError] = useState(false);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -22,55 +22,56 @@ const SharedInfoForm = () => {
       ...sharedInfo,
       [name]: value,
     });
+    onChangeInfo({
+      name,
+      value,
+    });
   };
+
+  useEffect(() => {
+    if (sharedPassword !== sharedPasswordCheck) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [sharedPassword, sharedPasswordCheck]);
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          p: 1,
-          m: 1,
-        }}
-        onChange={handleChange}
-      >
-        <StyledTextField
-          sx={{
-            m: 1,
-            width: 300,
-          }}
+      <Box onChange={handleChange}>
+        <TextField
+          fullWidth
           required
           name="sharedId"
           id="sharedId"
           label="아이디"
+          value={sharedId}
           variant="outlined"
-          autoComplete="off"
+          sx={{ mb: 3 }}
         />
-        <StyledTextField
-          sx={{
-            m: 1,
-            width: 300,
-          }}
+        <TextField
+          fullWidth
           required
           name="sharedPassword"
           id="sharedPassword"
           label="비밀번호"
+          value={sharedPassword}
           variant="outlined"
           type="password"
-          autoComplete="off"
+          sx={{ mb: 3 }}
         />
-        <StyledTextField
-          sx={{
-            m: 1,
-            width: 300,
-          }}
+        <TextField
+          fullWidth
+          error={isError}
           required
           name="sharedPasswordCheck"
           id="sharedPasswordCheck"
           label="비밀번호 확인"
+          helperText={isError ? '비밀번호가 일치하지 않습니다.' : null}
+          value={sharedPasswordCheck}
           variant="outlined"
           type="password"
+          sx={{ mb: 3 }}
         />
       </Box>
     </Box>
@@ -78,9 +79,10 @@ const SharedInfoForm = () => {
 };
 
 SharedInfoForm.propTypes = {
-  initialValues: PropTypes.object,
-  onSubmit: PropTypes.func,
-  validate: PropTypes.func,
+  sharedId: PropTypes.string,
+  sharedPassword: PropTypes.string,
+  sharedPasswordCheck: PropTypes.string,
+  onChangeInfo: PropTypes.func,
 };
 
 export default SharedInfoForm;

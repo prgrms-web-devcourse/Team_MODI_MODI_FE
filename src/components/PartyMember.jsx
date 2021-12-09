@@ -25,10 +25,11 @@ const PartyMember = ({
       <AirlineSeatReclineExtra color="secondary" />
       {hasText ? (
         <Typography
+          sx={{ wordBreak: 'keep-all' }}
           variant={fontSize}
           color={isWaiting ? 'text.disabled' : 'text.secondary'}
         >
-          {isWaiting ? '모집 대기중' : username}
+          {isWaiting ? '모집 중' : username}
         </Typography>
       ) : (
         ''

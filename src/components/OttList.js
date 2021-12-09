@@ -1,23 +1,24 @@
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import OttItem from './OttItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const OttList = ({ ottServices }) => {
+const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
   const [selectedId, setSelectedId] = useState(0);
-  const handleSelectOtt = ottId => {
+  const handleSelectOtt = (ottId, ottName) => {
     setSelectedId(ottId);
+    onSelectOtt(ottId, ottName);
   };
+
+  useEffect(() => {
+    setSelectedId(currentOttId);
+  }, [currentOttId]);
 
   return (
     <Box
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        p: 1,
-        m: 1,
-        bgcolor: 'background.paper',
-        maxWidth: 300,
       }}
     >
       {ottServices.map(({ ottId, ottName }) => (
@@ -35,6 +36,8 @@ const OttList = ({ ottServices }) => {
 
 OttList.propTypes = {
   ottServices: PropTypes.array,
+  onSelectOtt: PropTypes.func,
+  currentOttId: PropTypes.number,
 };
 
 export default OttList;

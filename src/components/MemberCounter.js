@@ -1,47 +1,42 @@
 import PropTypes from 'prop-types';
 import { Add, Remove } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
-import { useState } from 'react';
 
-const MemberCounter = ({ member, onClick }) => {
-  const [count, setCount] = useState(member);
+const MemberCounter = ({ memberCount, onClick }) => {
+  // const [count, setCount] = useState(member);
 
   const onDecrease = () => {
-    count > 1 && setCount(prevCount => prevCount - 1);
-    onClick(count);
+    memberCount > 1 && onClick(memberCount - 1);
   };
 
   const onIncrease = () => {
-    count < 3 && setCount(prevCount => prevCount + 1);
-    onClick(count);
+    memberCount < 3 && onClick(memberCount + 1);
   };
 
   return (
     <Grid
       container
       sx={{
-        color: 'black',
-        boxShadow: 1,
+        height: 96,
         borderRadius: 20,
+        border: '1px solid #bbb',
         alignItems: 'center',
         textAlign: 'center',
-        p: 2,
-        width: 300,
-        height: 100,
+        mb: 3,
       }}
     >
       <Grid item xs={4}>
-        <Button onClick={onDecrease}>
+        <Button disabled={memberCount === 1} onClick={onDecrease}>
           <Remove />
         </Button>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="h5" align="center">
-          {count}명
+        <Typography variant="large" align="center" color="text.primary">
+          {memberCount}명
         </Typography>
       </Grid>
       <Grid item xs={4}>
-        <Button onClick={onIncrease}>
+        <Button disabled={memberCount === 3} onClick={onIncrease}>
           <Add />
         </Button>
       </Grid>
@@ -50,7 +45,7 @@ const MemberCounter = ({ member, onClick }) => {
 };
 
 MemberCounter.propTypes = {
-  member: PropTypes.number.isRequired,
+  memberCount: PropTypes.number.isRequired,
   onClick: PropTypes.func,
 };
 

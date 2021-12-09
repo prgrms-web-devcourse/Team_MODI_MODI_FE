@@ -1,13 +1,17 @@
-import { CssBaseline } from '@mui/material';
-import MyPartyDetailPage from 'pages/MyPartyDetailPage';
-// import LoginPage from './pages/LoginPage';
+import { Outlet } from 'react-router';
 
 function App() {
   return (
     <>
-      <CssBaseline />
-      {/* <LoginPage /> */}
-      <MyPartyDetailPage />
+      <div
+        style={{
+          height: '48px',
+          border: '2px solid',
+        }}
+      >
+        간이 헤더
+      </div>
+      <Outlet />
     </>
   );
 }

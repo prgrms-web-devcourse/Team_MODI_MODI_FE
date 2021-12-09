@@ -3,15 +3,24 @@ import { Box } from '@mui/material';
 import RuleToggle from './RuleToggle';
 import { useState } from 'react';
 
-const RuleList = ({ rules }) => {
-  const [selectedRules, setSelectedRules] = useState([]);
+const RuleList = ({ rules, onSelectRule }) => {
+  const [ruleList, setRuleList] = useState(rules);
 
-  const handleSelectRule = ruleId => {
-    if (selectedRules.some(rule => rule === ruleId)) {
-      setSelectedRules(selectedRules.filter(rule => rule !== ruleId));
-    } else {
-      setSelectedRules([...selectedRules, ruleId]);
-    }
+  const handleSelectRule = ({ selectedId }) => {
+    const newRuleList = ruleList.map(({ ruleId, ruleName, isSelected }) => {
+      if (ruleId === selectedId) {
+        isSelected = !isSelected;
+      }
+
+      return {
+        ruleId,
+        ruleName,
+        isSelected,
+      };
+    });
+
+    setRuleList(newRuleList);
+    onSelectRule(newRuleList);
   };
 
   return (
@@ -19,17 +28,15 @@ const RuleList = ({ rules }) => {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
-        p: 1,
-        m: 1,
-        maxWidth: 400,
       }}
     >
-      {rules.map(({ ruleId, ruleName }) => (
+      {ruleList.map(({ ruleId, ruleName, isSelected }) => (
         <RuleToggle
           key={ruleId}
           ruleId={ruleId}
           ruleName={ruleName}
-          onSelectRule={handleSelectRule}
+          isSelected={isSelected}
+          onClickRule={handleSelectRule}
         />
       ))}
     </Box>
@@ -38,6 +45,8 @@ const RuleList = ({ rules }) => {
 
 RuleList.propTypes = {
   rules: PropTypes.array,
+  initialRules: PropTypes.array,
+  onSelectRule: PropTypes.func,
 };
 
 export default RuleList;
