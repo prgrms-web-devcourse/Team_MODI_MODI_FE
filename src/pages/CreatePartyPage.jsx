@@ -198,7 +198,7 @@ const CreatePartyPage = () => {
               onClick={handleCounter}
             />
             <ConfirmDialog
-              initialMustFilled={newParty.mustFilled}
+              mustFilled={newParty.mustFilled}
               onConfirm={handleConfirm}
             />
           </>

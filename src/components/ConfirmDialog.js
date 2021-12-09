@@ -6,23 +6,18 @@ import {
   Typography,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const StyledButton = styled(Button)`
   width: 50%;
 `;
 
-const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
-  const [mustFilled, setMustFilled] = useState(initialMustFilled);
-
+const ConfirmDialog = ({ mustFilled, onConfirm }) => {
   const handleClickNo = () => {
-    setMustFilled(true);
     onConfirm(true);
   };
 
   const handleClickYes = () => {
-    setMustFilled(false);
     onConfirm(false);
   };
 
@@ -89,7 +84,7 @@ const ConfirmDialog = ({ initialMustFilled, onConfirm }) => {
 };
 
 ConfirmDialog.propTypes = {
-  initialMustFilled: PropTypes.bool,
+  mustFilled: PropTypes.bool,
   onConfirm: PropTypes.func,
 };
 
