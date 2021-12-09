@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import LogoColorSvg from 'assets/logo-color.svg';
+import LogoColorSvg from 'assets/logo-main.svg';
 import LogoWhiteSvg from 'assets/logo-white.svg';
 
 const Logo = ({ size, color }) => {
