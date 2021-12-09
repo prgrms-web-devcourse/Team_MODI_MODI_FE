@@ -194,7 +194,7 @@ const CreatePartyPage = () => {
           <>
             <CreatePartyTitle subTitle="파티에 몇 명을 모집하고 싶나요?" />
             <MemberCounter
-              member={newParty.memberCapacity}
+              memberCount={newParty.memberCapacity}
               onClick={handleCounter}
             />
             <ConfirmDialog
