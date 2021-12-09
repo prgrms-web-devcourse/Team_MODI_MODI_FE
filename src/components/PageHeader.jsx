@@ -23,7 +23,7 @@ PageHeader.propTypes = {
 };
 
 const PageHeaderStyle = styled(Box)`
-  padding: 40px 30px;
+  padding: 96px 30px 40px;
   box-sizing: border-box;
   display: flex;
   align-items: center;

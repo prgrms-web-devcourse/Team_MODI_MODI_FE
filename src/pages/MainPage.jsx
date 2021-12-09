@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Avatar, Button } from '@mui/material';
 import { styled } from '@mui/system';
-import { ottServices } from '../constants/dummyDate';
+import { ottServices } from '../constants/dummyData';
 import netflix from 'assets/netflix.png';
 import watcha from 'assets/watcha.png';
 import wavve from 'assets/wavve.png';
