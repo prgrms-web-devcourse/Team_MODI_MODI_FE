@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import CardFlip from './CardFlip';
-import CardTemplate from './CardTemplate';
+import CardFlip from 'components/Common/CardFlip';
+import CardTemplate from 'components/Common/CardTemplate';
 
 const PartyShareAccount = ({ fliped, onFlipCard, sharedInfo }) => {
   const front = <CardTemplate />;

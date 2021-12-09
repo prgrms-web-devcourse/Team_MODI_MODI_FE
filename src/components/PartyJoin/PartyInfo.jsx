@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import InfoElement from './InfoElement';
+import InfoElement from 'components/Common/InfoElement';
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 

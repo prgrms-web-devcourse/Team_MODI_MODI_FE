@@ -1,4 +1,4 @@
-import PartyShareAccount from 'components/PartyShareAccount';
+import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 import { useCallback, useState } from 'react';
 
 const MyPartyDetailPage = () => {

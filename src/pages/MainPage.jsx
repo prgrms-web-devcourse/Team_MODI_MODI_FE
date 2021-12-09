@@ -9,7 +9,7 @@ import disney from 'assets/disney.png';
 import laftel from 'assets/laftel.png';
 import coupangPlay from 'assets/coupang-play.png';
 import primevideo from 'assets/primevideo.png';
-import CardSlide from './../components/CardSlide';
+import CardSlide from 'components/Common/CardSlide';
 
 const ottImage = {
   1: netflix,

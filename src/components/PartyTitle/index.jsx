@@ -1,7 +1,7 @@
 import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
 
-import OttLogo from './OttLogo';
+import OttLogo from 'components/Ott/OttLogo';
 import OttServiceName from './OttServiceName';
 import PricePanel from './PricePanel';
 

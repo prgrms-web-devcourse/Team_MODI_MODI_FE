@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Button, Typography } from '@mui/material';
-import OttLogo from './PartyTitle/OttLogo';
+import OttLogo from './OttLogo';
 
 const OttItem = ({ ottId, ottName, selected, onSelectOtt }) => {
   console.log(ottName);

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { AppBar, Box } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
-import Logo from '../Logo.js';
+import Logo from 'components/Common/Logo.jsx';
 
 const Header = ({ user, curPage }) => {
   const [isLogin, setIslogin] = useState(user);

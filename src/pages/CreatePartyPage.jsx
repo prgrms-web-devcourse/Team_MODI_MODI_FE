@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { styled } from '@mui/system';
-import CreatePartyTitle from 'components/CreatePartyTitle';
-import OttList from 'components/OttList';
-import PartyStartDate from 'components/PartyStartDate';
-import PartyPeriod from 'components/PartyPeriod';
+import CreatePartyTitle from 'components/PartyCreate/CreatePartyTitle';
+import OttList from 'components/Ott/OttList';
+import PartyStartDate from 'components/PartyCreate/PartyStartDate';
+import PartyPeriod from 'components/PartyCreate/PartyPeriod';
 import { ottServices, rules } from 'constants/dummyData';
-import RuleList from 'components/RuleList';
-import MemberCounter from 'components/MemberCounter';
-import ConfirmDialog from 'components/ConfirmDialog';
-import SharedInfoForm from 'components/SharedInfoForm';
-import TermsList from './../components/TermsList';
+import RuleList from 'components/Common/RuleList';
+import MemberCounter from 'components/PartyCreate/MemberCounter';
+import ConfirmDialog from 'components/PartyCreate/ConfirmDialog';
+import SharedInfoForm from 'components/PartyCreate/SharedInfoForm';
+import TermsList from 'components/PartyCreate/TermsList';
 
 const calculateEndDate = (startDate, period) => {
   const endDate = new Date(

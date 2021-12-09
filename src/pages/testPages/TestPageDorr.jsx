@@ -1,5 +1,5 @@
 import { CssBaseline } from '@mui/material';
-import PaymentInfo from 'components/PaymentInfo/index';
+import PaymentInfo from 'components/Payment/PaymentInfo/index';
 
 const TestPageDorr = () => {
   return (
