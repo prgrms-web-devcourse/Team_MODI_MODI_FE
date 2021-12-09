@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+import { styled } from '@mui/system';
 import {
   Button,
   Card,
@@ -5,8 +7,6 @@ import {
   CardContent,
   Typography,
 } from '@mui/material';
-import { styled } from '@mui/system';
-import PropTypes from 'prop-types';
 
 const StyledButton = styled(Button)`
   width: 50%;

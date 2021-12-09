@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   Card,
   CardContent,
@@ -5,9 +6,7 @@ import {
   Typography,
   Avatar,
   Button,
-  Box,
 } from '@mui/material';
-import { PropTypes } from 'prop-types';
 
 const CardSlide = ({ ottName, watingCount }) => {
   return (

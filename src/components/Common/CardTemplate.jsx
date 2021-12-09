@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Card, CardContent, Typography } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import { Card, CardContent, Typography, Box } from '@mui/material';
+import { styled } from '@mui/system';
 import MailIcon from '@mui/icons-material/Mail';
 import KeyIcon from '@mui/icons-material/Key';
 

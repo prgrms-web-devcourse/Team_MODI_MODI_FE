@@ -1,7 +1,6 @@
-import { AirlineSeatReclineExtra } from '@mui/icons-material';
-import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
+import { Typography, Box } from '@mui/material';
+import { AirlineSeatReclineExtra } from '@mui/icons-material';
 
 const PartyMember = ({
   isWaiting = true,

@@ -1,5 +1,5 @@
-import { Box } from '@mui/material';
 import { styled } from '@mui/system';
+import { Box } from '@mui/material';
 
 const PageContents = styled(Box)`
   border-radius: 24px 24px 0 0;

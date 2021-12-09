@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
-import { Fab } from '@mui/material';
 import theme from 'styles/theme';
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import PersonIcon from '@mui/icons-material/Person';
+import { Fab } from '@mui/material';
+import { LoginRounded, Person } from '@mui/icons-material';
 
 const HeaderFab = ({ user, curPage }) => {
   return (
@@ -22,7 +21,7 @@ const HeaderFab = ({ user, curPage }) => {
         }`,
       }}
     >
-      {user ? <PersonIcon sx={iconSx} /> : <LoginRoundedIcon sx={iconSx} />}
+      {user ? <Person sx={iconSx} /> : <LoginRounded sx={iconSx} />}
     </Fab>
   );
 };

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
-import MyPartySummary from 'components/MyParty/MyPartySummary';
+import MyPartySummary from './MyPartySummary';
 
 const MyPartyList = ({ myParties }) => {
   const handleClickParty = partyId => {

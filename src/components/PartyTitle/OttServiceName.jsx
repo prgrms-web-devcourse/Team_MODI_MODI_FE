@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 const OttServiceName = ({ ottName, ottGrade }) => {
   const OttServiceNameSx = useMemo(

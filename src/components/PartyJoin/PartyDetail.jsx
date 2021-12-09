@@ -1,11 +1,11 @@
-import PartyTitle from 'components/PartyTitle';
-import PropTypes from 'prop-types';
-import RuleContainer from 'components/Common/Rule';
-import PartyInfo from 'components/PartyJoin/PartyInfo';
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router';
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router';
+import PropTypes from 'prop-types';
+import { Button } from '@mui/material';
+import PartyTitle from 'components/PartyTitle';
+import RuleContainer from 'components/Common/Rule';
 import PartyMemberList from 'components/Common/PartyMemberList';
+import PartyInfo from 'components/PartyJoin/PartyInfo';
 
 const PartyDetail = ({ partyDetail }) => {
   const {

@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import { Box, Typography } from '@mui/material';
 import PartyMember from './PartyMember';
-import PropTypes from 'prop-types';
 
 const PartyMemberList = ({ members }) => {
   const waitingMemeber = () => {

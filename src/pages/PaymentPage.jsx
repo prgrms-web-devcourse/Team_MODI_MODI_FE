@@ -3,14 +3,15 @@ import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { Button, Modal, Typography } from '@mui/material';
 
-import PageHeader from 'components/Common/PageHeader';
-import PageContainer from 'components/Common/PageContainer';
-import PageContents from 'components/Common/PageContents';
+import {
+  PageHeader,
+  PageContainer,
+  PageContents,
+  Rule,
+  ModalBox,
+} from 'components/Common';
+import { PaymentInfo, PointChargeAlert } from 'components/Payment';
 import PartyInfo from 'components/PartyJoin/PartyInfo';
-import PaymentInfo from 'components/Payment/PaymentInfo';
-import Rule from 'components/Common/Rule';
-import ModalBox from 'components/Common/ModalBox';
-import PointChargeAlert from 'components/Payment/PointChargeAlert';
 import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
 
 const myPoint = 5000;

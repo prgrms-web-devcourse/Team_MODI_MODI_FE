@@ -1,6 +1,6 @@
-import { Typography, Box, Button, Divider } from '@mui/material';
-import { PropTypes } from 'prop-types';
 import { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { Typography, Box, Button, Divider } from '@mui/material';
 
 const PointChargeAlert = ({
   onNavigateChargePage,

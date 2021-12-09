@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
-
-import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
-import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import PropTypes from 'prop-types';
+
+import { Typography, Box } from '@mui/material';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { priceToString } from 'utils/priceToString';
 
 const PricePanel = ({ monthlyPrice, servicePeriod }) => {

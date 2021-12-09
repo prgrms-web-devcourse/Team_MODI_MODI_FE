@@ -1,6 +1,6 @@
-import { TextField, Box } from '@mui/material';
-import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { TextField, Box } from '@mui/material';
 
 const SharedInfoForm = ({
   sharedId,

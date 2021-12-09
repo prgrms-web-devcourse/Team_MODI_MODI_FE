@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
+
 import OttItem from './OttItem';
-import { useEffect, useState } from 'react';
 
 const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
   const [selectedId, setSelectedId] = useState(0);

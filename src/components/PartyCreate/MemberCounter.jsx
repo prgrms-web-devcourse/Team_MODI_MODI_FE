@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Add, Remove } from '@mui/icons-material';
 import { Button, Grid, Typography } from '@mui/material';
+import { Add, Remove } from '@mui/icons-material';
 
 const MemberCounter = ({ memberCount, onClick }) => {
   // const [count, setCount] = useState(member);

@@ -1,6 +1,5 @@
 import { Box, Container, Typography, Avatar, Button } from '@mui/material';
 import { styled } from '@mui/system';
-import { ottServices } from '../constants/dummyData';
 import netflix from 'assets/netflix.png';
 import watcha from 'assets/watcha.png';
 import wavve from 'assets/wavve.png';
@@ -10,6 +9,7 @@ import laftel from 'assets/laftel.png';
 import coupangPlay from 'assets/coupang-play.png';
 import primevideo from 'assets/primevideo.png';
 import CardSlide from 'components/Common/CardSlide';
+import { ottServices } from 'constants/dummyData';
 
 const ottImage = {
   1: netflix,

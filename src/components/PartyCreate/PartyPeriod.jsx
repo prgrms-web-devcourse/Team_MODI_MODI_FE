@@ -1,6 +1,6 @@
-import { Slider, Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Slider, Box, Typography } from '@mui/material';
 
 const PartyPeriod = ({ initialPeriod, onSelectPeriod }) => {
   const [period, setPeriod] = useState(initialPeriod);

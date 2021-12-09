@@ -1,14 +1,15 @@
 import { useState, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button, IconButton, Modal } from '@mui/material';
-import ModalBox from 'components/Common/ModalBox';
 import CloseIcon from '@mui/icons-material/Close';
 
-import PageHeader from 'components/Common/PageHeader';
-import PageContainer from 'components/Common/PageContainer';
-import PageContents from 'components/Common/PageContents';
-import PartyList from 'components/PartyJoin/PartyList';
-import PartyDetail from 'components/PartyJoin/PartyDetail';
+import {
+  PageHeader,
+  PageContainer,
+  PageContents,
+  ModalBox,
+} from 'components/Common';
+import { PartyList, PartyDetail } from 'components/PartyJoin';
 import { RECRUITING_PARTY_DUMMY_DATA } from 'constants/mockData/recruitingPartyDummy';
 import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
 

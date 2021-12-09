@@ -1,6 +1,7 @@
-import { PropTypes } from 'prop-types';
-import { Typography, Box } from '@mui/material';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
+import { Typography, Box } from '@mui/material';
+
 const CreatePartyTitle = ({
   subTitle,
   sx = {

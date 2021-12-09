@@ -1,5 +1,5 @@
-import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
+import { Box } from '@mui/material';
 
 import OttLogo from 'components/Ott/OttLogo';
 import OttServiceName from './OttServiceName';

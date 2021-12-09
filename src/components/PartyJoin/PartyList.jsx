@@ -1,5 +1,5 @@
-import { List, ListItem } from '@mui/material';
 import PropTypes from 'prop-types';
+import { List, ListItem } from '@mui/material';
 import PartySummary from './PartySummary';
 
 const PartyList = ({ parties, onClickParty }) => {

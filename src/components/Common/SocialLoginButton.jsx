@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { Button, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import { Button, Typography } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import naverLogoSrc from 'assets/naver-logo.png';
 import kakaoLogoSrc from 'assets/kakao-logo.png';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const providerLogo = {
   naver: naverLogoSrc,

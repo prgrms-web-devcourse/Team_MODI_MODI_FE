@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import RuleToggle from './RuleToggle';
-import { useState } from 'react';
 
 const RuleList = ({ rules, onSelectRule }) => {
   const [ruleList, setRuleList] = useState(rules);

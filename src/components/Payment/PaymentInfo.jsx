@@ -1,7 +1,7 @@
-import { Typography } from '@mui/material';
-import { Box, styled } from '@mui/system';
-import PropTypes from 'prop-types';
 import { useCallback, useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { styled } from '@mui/system';
+import { Typography, Box } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
 
 const COMMISSION_RATE = 0.05;

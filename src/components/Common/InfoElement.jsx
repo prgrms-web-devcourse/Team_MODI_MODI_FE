@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import { Typography, Box } from '@mui/material';
-import { PropTypes } from 'prop-types';
 
 const InfoElement = ({ name, info }) => {
   return (

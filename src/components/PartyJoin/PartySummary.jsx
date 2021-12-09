@@ -1,7 +1,6 @@
-import { AirlineSeatReclineExtra, MonetizationOn } from '@mui/icons-material';
-import { Paper, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import PropTypes from 'prop-types';
+import { Paper, Typography, Box } from '@mui/material';
+import { AirlineSeatReclineExtra, MonetizationOn } from '@mui/icons-material';
 import { priceToString } from 'utils/priceToString';
 
 const PartySummary = ({

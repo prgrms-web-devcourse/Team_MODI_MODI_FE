@@ -1,5 +1,5 @@
-import { Avatar } from '@mui/material';
 import PropTypes from 'prop-types';
+import { Avatar } from '@mui/material';
 
 import netflixLogo from 'assets/netflix.png';
 import watchaLogo from 'assets/watcha.png';
