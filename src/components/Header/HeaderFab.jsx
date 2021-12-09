@@ -10,33 +10,27 @@ const HeaderFab = ({ user, curPage }) => {
       disableRipple={true}
       aria-label="login"
       sx={{
-        marginLeft: 1.5,
         width: 28,
         height: 28,
         maxHeight: 28,
         minHeight: 28,
-        backgroundColor: `${curPage === 'main' ? theme.palette.modiGray.main : theme.palette.secondary.main}`,
+        ml: 1.5,
+        backgroundColor: `${
+          curPage === 'main'
+            ? theme.palette.modiGray.main
+            : theme.palette.secondary.main
+        }`,
       }}
     >
-      {user ? (
-        <PersonIcon
-          sx={{
-            color: 'white',
-            width: 20,
-            height: 20,
-          }}
-        />
-      ) : (
-        <LoginRoundedIcon
-          sx={{
-            color: 'white',
-            width: 20,
-            height: 20,
-          }}
-        />
-      )}
+      {user ? <PersonIcon sx={iconSx} /> : <LoginRoundedIcon sx={iconSx} />}
     </Fab>
   );
+};
+
+const iconSx = {
+  color: 'white',
+  width: 20,
+  height: 20,
 };
 
 HeaderFab.defaultProps = {
