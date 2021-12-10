@@ -1,28 +1,14 @@
-import { Box, Container, Typography, Avatar, Button } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import netflix from 'assets/netflix.png';
-import watcha from 'assets/watcha.png';
-import wavve from 'assets/wavve.png';
-import tving from 'assets/tving.png';
-import disney from 'assets/disney.png';
-import laftel from 'assets/laftel.png';
-import coupangPlay from 'assets/coupang-play.png';
-import primevideo from 'assets/primevideo.png';
-import CardSlide from 'components/Common/CardSlide';
+import { CardSlide } from 'components/Common';
+import OttItem from 'components/Ott/OttItem';
 import { ottServices } from 'constants/dummyData';
 
-const ottImage = {
-  1: netflix,
-  2: watcha,
-  3: wavve,
-  4: tving,
-  5: disney,
-  6: laftel,
-  7: coupangPlay,
-  8: primevideo,
-};
-
 const MainPage = () => {
+  const handleClickOtt = (ottId, ottName) => {
+    console.log(ottId, ottName);
+  };
+
   return (
     <Container disableGutters>
       <VisualBox>
@@ -66,38 +52,13 @@ const MainPage = () => {
           }}
         >
           {ottServices.map(({ ottId, ottName }) => (
-            <Button
+            <OttItem
               key={ottId}
-              sx={{
-                width: '25%',
-                textAlign: 'center',
-                mb: 2,
-                display: 'block',
-              }}
-            >
-              <Avatar
-                alt={`${ottName}logo`}
-                src={ottImage[ottId]}
-                sx={{
-                  width: 72,
-                  height: 72,
-                  m: 'auto',
-                  mb: 1,
-                  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
-                }}
-              />
-              <Typography
-                variant="smallB"
-                component="p"
-                color="text.primary"
-                sx={{
-                  wordBreak: 'keep-all',
-                  height: '2em',
-                }}
-              >
-                {ottName}
-              </Typography>
-            </Button>
+              ottId={ottId}
+              ottName={ottName}
+              onSelectOtt={handleClickOtt}
+              toggleable={false}
+            />
           ))}
         </Box>
       </Box>
