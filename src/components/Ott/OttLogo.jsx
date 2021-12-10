@@ -45,11 +45,12 @@ const ottInfoEn = {
   },
 };
 
-const OttLogo = ({ ottName, size = 72 }) => {
+const OttLogo = ({ ottName, size = 72, sx }) => {
   const ottLogoSx = {
     width: size,
     height: size,
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
+    ...sx,
   };
   const { logo: logoSrc } = ottInfoEn[ottName];
 
@@ -70,6 +71,7 @@ OttLogo.propTypes = {
     '티빙',
   ]).isRequired,
   size: PropTypes.number,
+  sx: PropTypes.object,
 };
 
 export default OttLogo;
