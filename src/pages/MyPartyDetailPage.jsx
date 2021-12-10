@@ -1,5 +1,5 @@
-import PartyShareAccount from 'components/PartyShareAccount';
 import { useCallback, useState } from 'react';
+import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
 const MyPartyDetailPage = () => {
   const [fliped, setFliped] = useState(false);

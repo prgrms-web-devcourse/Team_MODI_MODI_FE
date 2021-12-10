@@ -1,9 +1,11 @@
-import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import PageContainer from 'components/PageContainer';
-import PageContents from 'components/PageContents';
-import SocialLoginButton from 'components/SocialLoginButton';
-import Logo from 'components/Logo';
+import { Box, Typography } from '@mui/material';
+import {
+  PageContainer,
+  PageContents,
+  SocialLoginButton,
+  Logo,
+} from 'components/Common';
 import popcornLogoSrc from 'assets/popcorn-logo.svg';
 
 const LoginPage = () => {

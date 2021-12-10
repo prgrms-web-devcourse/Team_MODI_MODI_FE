@@ -1,9 +1,8 @@
 import { Box, Button, Typography } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
-import PageContents from 'components/PageContents';
-import MyPartyTab from 'components/MyPartyTab';
+import { PageContainer, PageContents } from 'components/Common';
+import MyPartyTab from 'components/MyParty/MyPartyTab';
 import { userInfo, parties } from 'constants/myPageDummyData';
-import PageContainer from 'components/PageContainer';
 
 const MyPage = () => {
   const { userId, username, points } = userInfo;
