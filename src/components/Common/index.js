@@ -1,5 +1,4 @@
 export { default as CardFlip } from './CardFlip';
-export { default as CardSlide } from './MainCarousel/CardSlide';
 export { default as CardTemplate } from './CardTemplate';
 export { default as InfoElement } from './InfoElement';
 export { default as Logo } from './Logo';
@@ -13,4 +12,3 @@ export { default as RuleList } from './RuleList';
 export { default as RuleToggle } from './RuleToggle';
 export { default as SocialLoginButton } from './SocialLoginButton';
 export { default as Rule } from './Rule';
-export { default as MainCarousel } from './MainCarousel';
