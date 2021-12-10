@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
 import { Avatar, Box, Divider, Typography } from '@mui/material';
-import {
-  AddCircleOutline,
-  RemoveCircleOutline,
-  StarRate,
-} from '@mui/icons-material';
+import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import netflix from 'assets/netflix.png';
 import watcha from 'assets/watcha.png';
 import wavve from 'assets/wavve.png';
@@ -14,6 +10,7 @@ import laftel from 'assets/laftel.png';
 import coupangPlay from 'assets/coupang-play.png';
 import primevideo from 'assets/primevideo.png';
 import { priceToString } from 'utils/priceToString';
+import crown from 'assets/crown.png';
 
 const ottImage = {
   1: netflix,
@@ -116,14 +113,22 @@ const MyPartySummary = ({
             flexGrow: 1,
           }}
         >
-          <Typography variant="mediumB">
+          <Typography
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+            variant="mediumB"
+          >
             {ottName}
             {isLeader && (
-              <StarRate
-                sx={{
-                  color: 'red',
+              <img
+                alt="crown"
+                src={crown}
+                style={{
+                  marginLeft: 5,
+                  width: 20,
                 }}
-                fontSize="small"
               />
             )}
           </Typography>
