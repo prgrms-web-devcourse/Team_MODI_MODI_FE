@@ -4,9 +4,9 @@ import {
   CardContent,
   CardActions,
   Typography,
-  Avatar,
   Button,
 } from '@mui/material';
+import OttLogo from 'components/Ott/OttLogo';
 
 const CardSlide = ({ ottName, watingCount }) => {
   return (
@@ -22,25 +22,20 @@ const CardSlide = ({ ottName, watingCount }) => {
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'baseline',
           p: 2,
         }}
       >
-        <Avatar
-          size="small"
-          sx={{
-            width: 24,
-            height: 24,
-            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
-            alignSelf: 'baseline',
-            mr: 1,
-            mt: '5px',
-          }}
-        />
+        <OttLogo ottName={ottName} size={24} />
         <Typography
           variant="baseB"
           component="p"
-          sx={{ verticalAlign: 'middle' }}
+          sx={{
+            verticalAlign: 'middle',
+            ml: 0.5,
+            position: 'relative',
+            top: -5,
+          }}
         >
           {ottName}에서 <Typography variant="large">{watingCount}</Typography>
           명이
@@ -48,7 +43,12 @@ const CardSlide = ({ ottName, watingCount }) => {
           파티를 기다리고 있어요🎉
         </Typography>
       </CardContent>
-      <CardActions sx={{ p: 2 }}>
+      <CardActions
+        sx={{
+          p: 2,
+          pt: 0,
+        }}
+      >
         <Button
           variant="contained"
           sx={[
@@ -57,7 +57,7 @@ const CardSlide = ({ ottName, watingCount }) => {
               color: 'text.primary',
               boxShadow: 'none',
               m: '0 auto',
-              p: '10px 40px',
+              p: '10px 30px',
               borderRadius: 30,
             },
             {
