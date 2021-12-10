@@ -60,7 +60,7 @@ export const ottServices = [
   },
   {
     ottId: 5,
-    ottName: '디즈니+',
+    ottName: '디즈니 플러스',
     grade: '프리미엄',
     monthlyDeposit: 10000,
     maxMemberCapacity: 4,
