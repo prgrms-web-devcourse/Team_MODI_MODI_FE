@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import RuleToggle from 'components/Common/RuleToggle';
+import { RuleList } from 'components/Common';
 
 const RuleContainer = ({ rules }) => {
   return (
@@ -20,18 +20,7 @@ const RuleContainer = ({ rules }) => {
       >
         파티 규칙
       </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          mt: 1,
-          mb: 1,
-        }}
-      >
-        {rules.map(({ ruleId, ruleName }) => (
-          <RuleToggle key={ruleId} ruleName={ruleName} clickable={false} />
-        ))}
-      </Box>
+      <RuleList rules={rules} clickable={false} />
     </Box>
   );
 };
