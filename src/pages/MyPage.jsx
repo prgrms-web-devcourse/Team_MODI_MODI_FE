@@ -6,7 +6,7 @@ import { userInfo, parties } from 'constants/myPageDummyData';
 
 const MyPage = () => {
   const { userId, username, points } = userInfo;
-
+  console.log(userId);
   const handleClickCharge = () => {
     console.log('충전');
     // 포인트 충전 페이지로 이동
