@@ -1,5 +1,4 @@
 export { default as CardFlip } from './CardFlip';
-export { default as CardSlide } from './CardSlide';
 export { default as CardTemplate } from './CardTemplate';
 export { default as InfoElement } from './InfoElement';
 export { default as Logo } from './Logo';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import RuleToggle from './RuleToggle';
 
-const RuleList = ({ rules, onSelectRule }) => {
+const RuleList = ({ rules, onSelectRule, clickable }) => {
   const [ruleList, setRuleList] = useState(rules);
 
   const handleSelectRule = ({ selectedId }) => {
@@ -20,7 +20,7 @@ const RuleList = ({ rules, onSelectRule }) => {
     });
 
     setRuleList(newRuleList);
-    onSelectRule(newRuleList);
+    onSelectRule && onSelectRule(newRuleList);
   };
 
   return (
@@ -37,16 +37,22 @@ const RuleList = ({ rules, onSelectRule }) => {
           ruleName={ruleName}
           isSelected={isSelected}
           onClickRule={handleSelectRule}
+          clickable={clickable}
         />
       ))}
     </Box>
   );
 };
 
+RuleList.defaultProps = {
+  clickable: true,
+};
+
 RuleList.propTypes = {
   rules: PropTypes.array,
   initialRules: PropTypes.array,
   onSelectRule: PropTypes.func,
+  clickable: PropTypes.bool,
 };
 
 export default RuleList;

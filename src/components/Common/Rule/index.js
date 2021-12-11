@@ -1,27 +1,7 @@
 import PropTypes from 'prop-types';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
-
-const Rule = ({ ruleName }) => {
-  return (
-    <Box
-      sx={{
-        height: '34px',
-        lineHeight: '34px',
-        borderRadius: '17px',
-        bgcolor: '#eeeeee',
-      }}
-    >
-      <Typography variant="small" color="text.primary" ml={1} mr={1}>
-        {ruleName}
-      </Typography>
-    </Box>
-  );
-};
-
-Rule.propTypes = {
-  ruleName: PropTypes.string,
-};
+import { RuleList } from 'components/Common';
 
 const RuleContainer = ({ rules }) => {
   return (
@@ -40,19 +20,7 @@ const RuleContainer = ({ rules }) => {
       >
         파티 규칙
       </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 1,
-          mt: 1,
-          mb: 1,
-        }}
-      >
-        {rules.map(({ ruleId, ruleName }) => (
-          <Rule key={ruleId} ruleName={ruleName} />
-        ))}
-      </Box>
+      <RuleList rules={rules} clickable={false} />
     </Box>
   );
 };
