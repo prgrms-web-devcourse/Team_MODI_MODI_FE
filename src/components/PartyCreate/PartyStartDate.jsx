@@ -1,15 +1,11 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Typography, InputAdornment, Box } from '@mui/material';
 import { MobileDatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
-const PartyStartDate = ({ initialStartDate, onSelectStartDate }) => {
-  const [startDate, setStartDate] = useState(initialStartDate);
-
+const PartyStartDate = ({ startDate, onSelectStartDate }) => {
   const handleChange = newstartDate => {
-    setStartDate(newstartDate);
     onSelectStartDate(newstartDate);
   };
 
@@ -53,7 +49,7 @@ const PartyStartDate = ({ initialStartDate, onSelectStartDate }) => {
 };
 
 PartyStartDate.propTypes = {
-  initialStartDate: PropTypes.instanceOf(Date),
+  startDate: PropTypes.instanceOf(Date),
   onSelectStartDate: PropTypes.func,
 };
 
