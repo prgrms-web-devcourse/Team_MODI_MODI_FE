@@ -10,20 +10,8 @@ import {
 import OttLogo from 'components/Ott/OttLogo';
 
 const CardSlide = ({ ottId, ottName, watingCount }) => {
-  const countDivide = count => {
-    const numbers = [];
-    do {
-      numbers.push(count % 10);
-      count = Math.floor(count / 10);
-    } while (count > 0);
-
-    return numbers;
-  };
-
   const handleClickRecruting = () => {
     // TODO 참여 클릭하면 해당 ott 파티 목록 보기 [링크]
-    // 여기서 링크이동을 하는게 맞을까? click 이벤트를 올려서 page에서 링크처리? 아냐 버튼이 여기있는데?
-    console.log(ottId, ottName);
   };
 
   return (
@@ -63,7 +51,7 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
             }}
           />
           {ottName}에서
-          {countDivide(watingCount).map((number, i) => (
+          {`${watingCount}`.split('').map((number, i) => (
             <CounterNumber key={i} variant="large">
               {number}
             </CounterNumber>

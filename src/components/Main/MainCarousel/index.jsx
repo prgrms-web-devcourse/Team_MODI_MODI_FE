@@ -18,17 +18,11 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   }, [activeSlide, slideGap]);
 
   const handleNextSlide = e => {
-    setActiveSlide(prevSlide => prevSlide + 1);
-    if (activeSlide === totalSlide) {
-      setActiveSlide(0);
-    }
+    setActiveSlide(prevSlide => (prevSlide === totalSlide ? 0 : prevSlide + 1));
   };
 
   const handlePrevSlide = e => {
-    setActiveSlide(prevSlide => prevSlide - 1);
-    if (activeSlide === 0) {
-      setActiveSlide(totalSlide);
-    }
+    setActiveSlide(prevSlide => (prevSlide === 0 ? totalSlide : prevSlide - 1));
   };
 
   return (

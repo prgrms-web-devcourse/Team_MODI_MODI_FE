@@ -14,7 +14,10 @@ const MainVisual = () => {
         variant="small"
         color="modiGray.white"
         component="p"
-        sx={{ opacity: 0.6 }}
+        sx={{
+          opacity: 0.6,
+          mt: '11px',
+        }}
       >
         안정적인 모디에서 구독료 부담없이
         <br />
