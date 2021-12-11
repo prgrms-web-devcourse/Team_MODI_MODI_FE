@@ -12,9 +12,10 @@ const MyPartySummary = ({
   startDate,
   endDate,
   isLeader,
-  monthlyReimbursement = 0,
-  monthlyFee = 0,
-  totalFee = 0,
+  monthlyReimbursement,
+  remainingReimbursement,
+  monthlyPrice,
+  totalPrice,
   onClickParty,
 }) => {
   const handleClickParty = () => {
@@ -44,7 +45,7 @@ const MyPartySummary = ({
           }}
         >
           <Typography variant="mediumB" component="p">
-            월 {priceToString(monthlyFee)}원
+            월 {priceToString(monthlyPrice)}원
           </Typography>
           <Box
             sx={{
@@ -54,7 +55,7 @@ const MyPartySummary = ({
           >
             <RemoveCircleOutline color="error" fontSize="small" />
             <Typography variant="mediumB">
-              총 {priceToString(totalFee)}원
+              총 {priceToString(totalPrice)}원
             </Typography>
           </Box>
         </Box>
@@ -83,6 +84,7 @@ const MyPartySummary = ({
             flexDirection: 'column',
             justifyContent: 'center',
             flexGrow: 1,
+            ml: 2,
           }}
         >
           <Typography
@@ -129,8 +131,9 @@ MyPartySummary.propTypes = {
   endDate: PropTypes.string,
   isLeader: PropTypes.bool,
   monthlyReimbursement: PropTypes.number,
-  monthlyFee: PropTypes.number,
-  totalFee: PropTypes.number,
+  remainingReimbursement: PropTypes.number,
+  monthlyPrice: PropTypes.number,
+  totalPrice: PropTypes.number,
   onClickParty: PropTypes.func,
 };
 
