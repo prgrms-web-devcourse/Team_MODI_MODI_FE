@@ -3,8 +3,6 @@ import { Button, Grid, Typography } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
 
 const MemberCounter = ({ memberCount, onClick }) => {
-  // const [count, setCount] = useState(member);
-
   const onDecrease = () => {
     memberCount > 1 && onClick(memberCount - 1);
   };
