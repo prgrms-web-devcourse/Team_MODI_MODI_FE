@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Chip } from '@mui/material';
-import styled from '@emotion/styled';
 
-const Button = styled.button`
-  background-color: white;
-  border: 0px;
-`;
-
-const RuleToggle = ({ ruleId, ruleName, isSelected, onClickRule }) => {
+const RuleToggle = ({
+  ruleId,
+  ruleName,
+  isSelected,
+  onClickRule,
+  clickable,
+}) => {
   const [selected, setSelected] = useState(isSelected);
 
   const handleClickRule = () => {
@@ -27,13 +27,22 @@ const RuleToggle = ({ ruleId, ruleName, isSelected, onClickRule }) => {
         cursor: 'pointer',
         m: 0.5,
       }}
+      style={{
+        opacity: 1,
+      }}
       color={selected ? 'primary' : 'default'}
       key={ruleId}
       label={ruleName}
+      disabled={!clickable}
       onClick={handleClickRule}
       component="button"
     />
   );
+};
+
+RuleToggle.defaultProps = {
+  isSelected: false,
+  clickable: true,
 };
 
 RuleToggle.propTypes = {
@@ -41,6 +50,7 @@ RuleToggle.propTypes = {
   ruleName: PropTypes.string,
   isSelected: PropTypes.bool,
   onClickRule: PropTypes.func,
+  clickable: PropTypes.bool,
 };
 
 export default RuleToggle;
