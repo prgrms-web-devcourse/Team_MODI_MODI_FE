@@ -3,16 +3,14 @@ import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { ottServices, rules } from 'constants/dummyData';
-import RuleList from 'components/Common/RuleList';
 import {
   CreatePartyTitle,
-  MemberCounter,
-  ConfirmDialog,
   SharedInfoForm,
   TermsList,
   StepOttSelect,
   StepPeriodSelect,
   StepRuleSelect,
+  StepMemberSelect,
 } from 'components/PartyCreate';
 
 const calculateEndDate = (startDate, period) => {
@@ -182,17 +180,12 @@ const CreatePartyPage = () => {
         );
       case 3:
         return (
-          <>
-            <CreatePartyTitle subTitle="파티에 몇 명을 모집하고 싶나요?" />
-            <MemberCounter
-              memberCount={newParty.memberCapacity}
-              onClick={handleCounter}
-            />
-            <ConfirmDialog
-              mustFilled={newParty.mustFilled}
-              onConfirm={handleConfirm}
-            />
-          </>
+          <StepMemberSelect
+            memberCount={newParty.memberCapacity}
+            onCounterClick={handleCounter}
+            mustFilled={newParty.mustFilled}
+            onConfirm={handleConfirm}
+          />
         );
       case 4:
         return (
