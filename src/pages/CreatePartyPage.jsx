@@ -13,6 +13,7 @@ import {
   SharedInfoForm,
   StepOttSelect,
   TermsList,
+  StepPartyPeriod,
 } from 'components/PartyCreate';
 
 const calculateEndDate = (startDate, period) => {
@@ -166,17 +167,12 @@ const CreatePartyPage = () => {
         );
       case 1:
         return (
-          <>
-            <CreatePartyTitle subTitle="얼마 동안 함께 이용하고 싶나요?" />
-            <PartyStartDate
-              startDate={newParty.startDate}
-              onSelectStartDate={handleStartDate}
-            />
-            <PartyPeriod
-              period={newParty.period}
-              onSelectPeriod={handlePeriod}
-            />
-          </>
+          <StepPartyPeriod
+            startDate={newParty.startDate}
+            onSelectStartDate={handleStartDate}
+            period={newParty.period}
+            onSelectPeriod={handlePeriod}
+          />
         );
       case 2:
         return (

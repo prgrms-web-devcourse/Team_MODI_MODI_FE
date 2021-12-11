@@ -6,3 +6,4 @@ export { default as PartyStartDate } from './PartyStartDate';
 export { default as SharedInfoForm } from './SharedInfoForm';
 export { default as TermsList } from './TermsList';
 export { default as StepOttSelect } from './StepOttSelect';
+export { default as StepPartyPeriod } from './StepPartyPeriod';
