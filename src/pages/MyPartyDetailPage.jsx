@@ -120,7 +120,7 @@ const MyPartyDetailPage = () => {
               perspective: '2000px',
             }}
           >
-            {status === 'RECRUITuNG' ? (
+            {status === 'RECRUITING' ? (
               <CardTemplate blur={true} />
             ) : (
               <PartyShareAccount
