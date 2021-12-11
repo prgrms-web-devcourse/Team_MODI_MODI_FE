@@ -6,14 +6,13 @@ import { ottServices, rules } from 'constants/dummyData';
 import RuleList from 'components/Common/RuleList';
 import {
   CreatePartyTitle,
-  PartyPeriod,
-  PartyStartDate,
   MemberCounter,
   ConfirmDialog,
   SharedInfoForm,
-  StepOttSelect,
   TermsList,
-  StepPartyPeriod,
+  StepOttSelect,
+  StepPeriodSelect,
+  StepRuleSelect,
 } from 'components/PartyCreate';
 
 const calculateEndDate = (startDate, period) => {
@@ -167,7 +166,7 @@ const CreatePartyPage = () => {
         );
       case 1:
         return (
-          <StepPartyPeriod
+          <StepPeriodSelect
             startDate={newParty.startDate}
             onSelectStartDate={handleStartDate}
             period={newParty.period}
@@ -176,13 +175,10 @@ const CreatePartyPage = () => {
         );
       case 2:
         return (
-          <>
-            <CreatePartyTitle subTitle="이 파티의 규칙은 어떻게 지정할까요?" />
-            <RuleList
-              rules={newParty.ruleStateList}
-              onSelectRule={handleSelectRules}
-            />
-          </>
+          <StepRuleSelect
+            rules={newParty.ruleStateList}
+            onSelectRule={handleSelectRules}
+          />
         );
       case 3:
         return (
