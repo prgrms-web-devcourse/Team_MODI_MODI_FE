@@ -4,13 +4,11 @@ import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { ottServices, rules } from 'constants/dummyData';
 import {
-  CreatePartyTitle,
-  SharedInfoForm,
-  TermsList,
   StepOttSelect,
   StepPeriodSelect,
   StepRuleSelect,
   StepMemberSelect,
+  StepShardInfoForm,
 } from 'components/PartyCreate';
 
 const calculateEndDate = (startDate, period) => {
@@ -189,16 +187,12 @@ const CreatePartyPage = () => {
         );
       case 4:
         return (
-          <>
-            <CreatePartyTitle subTitle="파티에서 사용하실 서비스의 계정 정보를 입력해주세요." />
-            <SharedInfoForm
-              sharedId={newParty.sharedId}
-              sharedPassword={newParty.sharedPassword}
-              sharedPasswordCheck={newParty.sharedPasswordCheck}
-              onChangeInfo={handleChangeSharedInfo}
-            />
-            <TermsList />
-          </>
+          <StepShardInfoForm
+            sharedId={newParty.sharedId}
+            sharedPassword={newParty.sharedPassword}
+            sharedPasswordCheck={newParty.sharedPasswordCheck}
+            onChangeInfo={handleChangeSharedInfo}
+          />
         );
       default:
         return;

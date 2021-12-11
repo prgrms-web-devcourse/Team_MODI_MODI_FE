@@ -9,3 +9,4 @@ export { default as StepOttSelect } from './StepOttSelect';
 export { default as StepPeriodSelect } from './StepPeriodSelect';
 export { default as StepRuleSelect } from './StepRuleSelect';
 export { default as StepMemberSelect } from './StepMemberSelect';
+export { default as StepShardInfoForm } from './StepShardInfoForm';
