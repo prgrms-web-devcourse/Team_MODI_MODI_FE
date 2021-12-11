@@ -40,34 +40,19 @@ const PartyTab = ({ parties }) => {
   const [value, setValue] = useState(0);
 
   const [onGoing, setOnGoing] = useState([]);
-  const [waiting, setWaiting] = useState([]);
-  const [closed, setClosed] = useState([]);
+  const [recruiting, setRecruiting] = useState([]);
+  const [finished, setFinished] = useState([]);
 
   useEffect(() => {
-    const newOnGoing = [];
-    const newWaiting = [];
-    const newClosed = [];
-    const nowDate = new Date();
-
-    parties.map(party => {
-      const formatStartDate = new Date(party.startDate);
-      const formatEndDate = new Date(party.endDate);
-
-      if (nowDate < formatStartDate) {
-        newWaiting.push(party);
-      } else if (nowDate > formatEndDate) {
-        newClosed.push(party);
-      } else {
-        newOnGoing.push(party);
-      }
-
-      setOnGoing(newOnGoing);
-      setWaiting(newWaiting);
-      setClosed(newClosed);
-
-      return false;
-    });
-  }, []);
+    const newOnGoing = parties.filter(({ status }) => status === 'ONGOING');
+    const newRecruiting = parties.filter(
+      ({ status }) => status === 'RECRUITING',
+    );
+    const newFinished = parties.filter(({ status }) => status === 'FINISHED');
+    setOnGoing(newOnGoing);
+    setRecruiting(newRecruiting);
+    setFinished(newFinished);
+  }, [parties]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -92,13 +77,13 @@ const PartyTab = ({ parties }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList myParties={onGoing} />}
+        {<MyPartyList parties={onGoing} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {<MyPartyList myParties={waiting} />}
+        {<MyPartyList parties={recruiting} />}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {<MyPartyList myParties={closed} />}
+        {<MyPartyList parties={finished} />}
       </TabPanel>
     </Box>
   );
