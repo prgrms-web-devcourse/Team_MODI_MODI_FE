@@ -6,6 +6,7 @@ import PartyTitle from 'components/PartyTitle';
 import RuleContainer from 'components/Common/Rule';
 import PartyMemberList from 'components/Common/PartyMemberList';
 import PartyInfo from 'components/PartyJoin/PartyInfo';
+import PricePanel from 'components/PartyTitle/PricePanel';
 
 const PartyDetail = ({ partyDetail }) => {
   const {
@@ -27,12 +28,9 @@ const PartyDetail = ({ partyDetail }) => {
 
   return (
     <>
-      <PartyTitle
-        ottName={ottName}
-        ottGrade={grade}
-        monthlyPrice={monthlyFee}
-        servicePeriod={period}
-      />
+      <PartyTitle ottName={ottName} ottGrade={grade}>
+        <PricePanel monthlyPrice={monthlyFee} servicePeriod={period} />
+      </PartyTitle>
       <PartyInfo
         ottName={ottName}
         ottGrade={grade}

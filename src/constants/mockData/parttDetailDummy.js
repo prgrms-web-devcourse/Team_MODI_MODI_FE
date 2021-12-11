@@ -5,13 +5,15 @@ export const PARTY_DETAIL_DUMMY = {
   grade: '프리미엄',
   monthlyFee: 2500,
   totalFee: 25000,
+  monthlyReimbursement: 30000,
   maxMemberCapacity: 4,
   currentMemberCapacity: 2,
-  startDate: '2021-12-8',
+  startDate: '2021-12-08',
   startsIn: 7,
   period: 12,
-  endDate: '2022-12-8',
+  endDate: '2021-12-09',
   mustFilled: true,
+  status: 'RECRUITING',
   members: [
     {
       userId: 1,
