@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { ottServices, rules } from 'constants/dummyData';
-import OttList from 'components/Ott/OttList';
 import RuleList from 'components/Common/RuleList';
 import {
   CreatePartyTitle,
@@ -12,6 +11,7 @@ import {
   MemberCounter,
   ConfirmDialog,
   SharedInfoForm,
+  StepOttSelect,
   TermsList,
 } from 'components/PartyCreate';
 
@@ -158,14 +158,11 @@ const CreatePartyPage = () => {
     switch (stepNumber) {
       case 0:
         return (
-          <>
-            <CreatePartyTitle subTitle="어떤 서비스를 함께 이용하고 싶나요?" />
-            <OttList
-              ottServices={ottServices}
-              onSelectOtt={handleSelectedOtt}
-              currentOttId={newParty.ottId}
-            />
-          </>
+          <StepOttSelect
+            ottServices={ottServices}
+            onSelectOtt={handleSelectedOtt}
+            ottId={newParty.ottId}
+          />
         );
       case 1:
         return (
