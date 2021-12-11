@@ -8,20 +8,10 @@ const SharedInfoForm = ({
   sharedPasswordCheck,
   onChangeInfo,
 }) => {
-  const [sharedInfo, setSharedInfo] = useState({
-    sharedId,
-    sharedPassword,
-    sharedPasswordCheck,
-  });
-
   const [isError, setIsError] = useState(false);
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
-    setSharedInfo({
-      ...sharedInfo,
-      [name]: value,
-    });
     onChangeInfo({
       name,
       value,
