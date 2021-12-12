@@ -15,7 +15,6 @@ const axiosRequest = (uri, requireToken, method = httpMethods.GET, data) => {
 
   data && args.push(data);
   requireToken && args.push({ headers: { Authorization: `Bearer ${TOKEN}` } });
-  console.log(args);
 
   return instance[method](...args).then(response => response.data);
 };
@@ -86,7 +85,6 @@ export const getAllMyParty = (status = 'RECEUITING', size = 5, lastPartyId) => {
 
   const searchParams = new URLSearchParams(searchParamObj);
   const stringifyParams = searchParams.toString();
-  console.log(searchParamObj);
 
   return () => get(`/users/me/parties?${stringifyParams}`, true);
 };
