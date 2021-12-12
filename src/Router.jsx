@@ -27,7 +27,7 @@ const Router = () => {
           <Route path="user/:userId" element={<MyPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="oauth/redirect" element={<OauthRedirectPage />} />
-          <Route path="myParty/:mypartyId" element={<MyPartyDetailPage />} />
+          <Route path="myParty/:myPartyId" element={<MyPartyDetailPage />} />
         </Route>
         <Route path="/test" element={<TestPageDorr />} />
       </Routes>

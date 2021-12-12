@@ -1,45 +1,62 @@
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Box, styled } from '@mui/system';
+import { styled } from '@mui/system';
 
 const CardFlip = ({ fliped, onFlipCard, front, back }) => {
+  const [isInitial, setIsInitial] = useState(true);
+
+  const handleClick = useCallback(() => {
+    onFlipCard && onFlipCard();
+    setIsInitial(false);
+  }, [onFlipCard]);
+
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        perspective: '2000px',
-      }}
-    >
-      <CardContainer fliped={!!fliped} onClick={onFlipCard}>
-        {front}
-      </CardContainer>
-      <CardContainer fliped={!fliped} onClick={onFlipCard}>
-        {back}
-      </CardContainer>
-    </Box>
+    <>
+      <>
+        <CardContainer
+          fliped={!fliped}
+          isInitial={isInitial}
+          onClick={handleClick}
+        >
+          {back}
+        </CardContainer>
+        <CardContainer
+          fliped={fliped}
+          isInitial={isInitial}
+          onClick={handleClick}
+        >
+          {front}
+        </CardContainer>
+      </>
+    </>
   );
 };
 
-const CardContainer = styled('div')`
+const CardContainer = styled('div', {
+  shouldForwardProp: prop => prop !== 'fliped' && prop !== 'isInitial',
+})`
   position: absolute;
   backface-visibility: hidden;
-  top: 0;
-  left: 0;
-  animation: ${({ fliped }) => {
-    return fliped
-      ? 'flip-scale-up 1s linear both'
-      : 'flip-scale-down 1s linear both';
+  margin: 0 auto;
+  animation: ${({ fliped, isInitial }) => {
+    if (isInitial) {
+      return '';
+    }
+
+    return !fliped
+      ? 'flip-scale-down .8s linear both'
+      : 'flip-scale-up .8s linear both';
   }};
+  }
+    
   transform-style: preserve-3d;
 
   @keyframes flip-scale-up {
     0% {
-      transform: scale(1) rotateY(0);
+      transform: scale(1) rotateY(0deg);
     }
-    30% {
-      transform: scale(1.2) rotateY(0);
-    }
-    70% {
-      transform: scale(1.2) rotateY(180deg);
+    50% {
+      transform: scale(0.8) rotateY(90deg);
     }
     100% {
       transform: scale(1) rotateY(180deg);
@@ -50,11 +67,8 @@ const CardContainer = styled('div')`
     0% {
       transform: scale(1) rotateY(180deg);
     }
-    30% {
-      transform: scale(1.2) rotateY(180deg);
-    }
-    70% {
-      transform: scale(1.2) rotateY(360deg);
+    50% {
+      transform: scale(0.8) rotateY(270deg);
     }
     100% {
       transform: scale(1) rotateY(360deg);

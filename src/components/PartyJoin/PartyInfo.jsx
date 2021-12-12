@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import InfoElement from 'components/Common/InfoElement';
 import { priceToString } from 'utils/priceToString';
-
-const ParseDate = dashedDate => dashedDate.replace(/-/g, '. ');
+import { ParseDate } from 'utils/ParseDate';
 
 const PartyInfo = ({
   ottName,
