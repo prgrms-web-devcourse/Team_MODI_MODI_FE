@@ -4,8 +4,10 @@ import * as httpMethods from 'constants/httpMethods';
 
 const BASE_URL = 'https://modi.pw/api/';
 
-const TOKEN = '토큰을 입력해주세요';
-
+const TOKEN = sessionStorage.getItem('KAKAO_TOKEN');
+// const TOKEN =
+//   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoibW9kaSIsImV4cCI6MTYzOTQ4ODA3MiwiaWF0IjoxNjM5MzE1MjcyLCJ1c2VySWQiOjd9.JonlJnPGOWtbh484IY_LC-Zp-W4vKIQBpaJea_aqaz_B8N1XKFDg_iDIE_rxPbIZWDI5cpv8c985XC8zmI_ImQ';
+console.log(TOKEN);
 const instance = axios.create({
   baseURL: BASE_URL,
 });
