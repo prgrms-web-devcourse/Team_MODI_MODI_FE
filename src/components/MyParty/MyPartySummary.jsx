@@ -1,30 +1,9 @@
 import PropTypes from 'prop-types';
-import { Avatar, Box, Divider, Typography } from '@mui/material';
-import {
-  AddCircleOutline,
-  RemoveCircleOutline,
-  StarRate,
-} from '@mui/icons-material';
-import netflix from 'assets/netflix.png';
-import watcha from 'assets/watcha.png';
-import wavve from 'assets/wavve.png';
-import tving from 'assets/tving.png';
-import disney from 'assets/disney.png';
-import laftel from 'assets/laftel.png';
-import coupangPlay from 'assets/coupang-play.png';
-import primevideo from 'assets/primevideo.png';
+import { Box, Divider, Typography } from '@mui/material';
+import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import { priceToString } from 'utils/priceToString';
-
-const ottImage = {
-  1: netflix,
-  2: watcha,
-  3: wavve,
-  4: tving,
-  5: disney,
-  6: laftel,
-  7: coupangPlay,
-  8: primevideo,
-};
+import crown from 'assets/crown.png';
+import OttLogo from 'components/Ott/OttLogo';
 
 const MyPartySummary = ({
   partyId,
@@ -33,26 +12,33 @@ const MyPartySummary = ({
   startDate,
   endDate,
   isLeader,
-  monthlyReimbursement = 0,
-  monthlyFee = 0,
-  totalFee = 0,
+  monthlyReimbursement,
+  remainingReimbursement,
+  monthlyPrice,
+  totalPrice,
   onClickParty,
 }) => {
   const handleClickParty = () => {
     onClickParty(partyId);
   };
 
-  const feeRender = isLeader => {
+  const PriceRender = isLeader => {
     if (isLeader) {
       return (
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
+            whiteSpace: 'nowrap',
           }}
         >
-          <AddCircleOutline color="secondary" fontSize="small" />
-          <Typography variant="mediumB">
+          <AddCircleOutline
+            color="secondary"
+            sx={{
+              width: 15,
+            }}
+          />
+          <Typography variant="smallB">
             월 {priceToString(monthlyReimbursement)}원
           </Typography>
         </Box>
@@ -62,20 +48,27 @@ const MyPartySummary = ({
         <Box
           sx={{
             textAlign: 'right',
+            whiteSpace: 'nowrap',
           }}
         >
-          <Typography variant="mediumB" component="p">
-            월 {priceToString(monthlyFee)}원
+          <Typography variant="smallB" component="p">
+            월 {priceToString(monthlyPrice)}원
           </Typography>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
+              whiteSpace: 'nowrap',
             }}
           >
-            <RemoveCircleOutline color="error" fontSize="small" />
-            <Typography variant="mediumB">
-              총 {priceToString(totalFee)}원
+            <RemoveCircleOutline
+              sx={{
+                width: 15,
+              }}
+              color="error"
+            />
+            <Typography variant="smallB">
+              총 {priceToString(totalPrice)}원
             </Typography>
           </Box>
         </Box>
@@ -97,38 +90,44 @@ const MyPartySummary = ({
           marginBottom: 2,
         }}
       >
-        <Avatar
-          alt="OttName"
-          src={ottImage[ottId]}
-          sx={{
-            width: 72,
-            height: 72,
-            marginBottom: 1,
-            marginRight: 2,
-            boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
-          }}
-        />
+        <OttLogo ottName={ottName} />
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             flexGrow: 1,
+            ml: 2,
           }}
         >
-          <Typography variant="mediumB">
+          <Typography
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              whiteSpace: 'nowrap',
+            }}
+            variant="smallB"
+          >
             {ottName}
             {isLeader && (
-              <StarRate
-                sx={{
-                  color: 'red',
+              <img
+                alt="crown"
+                src={crown}
+                style={{
+                  marginLeft: 5,
+                  width: 20,
                 }}
-                fontSize="small"
               />
             )}
           </Typography>
-          <Typography color="text.secondary">
-            {startDate} - {endDate}
+          <Typography
+            sx={{
+              fontSize: '14px',
+            }}
+            variant="small"
+            color="text.secondary"
+          >
+            {startDate} ~ {endDate}
           </Typography>
         </Box>
         <Box
@@ -136,7 +135,7 @@ const MyPartySummary = ({
             marginTop: 2,
           }}
         >
-          {feeRender(isLeader)}
+          {PriceRender(isLeader)}
         </Box>
       </Box>
       <Divider />
@@ -152,8 +151,9 @@ MyPartySummary.propTypes = {
   endDate: PropTypes.string,
   isLeader: PropTypes.bool,
   monthlyReimbursement: PropTypes.number,
-  monthlyFee: PropTypes.number,
-  totalFee: PropTypes.number,
+  remainingReimbursement: PropTypes.number,
+  monthlyPrice: PropTypes.number,
+  totalPrice: PropTypes.number,
   onClickParty: PropTypes.func,
 };
 
