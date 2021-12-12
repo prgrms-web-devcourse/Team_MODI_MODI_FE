@@ -23,7 +23,7 @@ const OttItem = ({
         filter: `grayscale(${toggleable ? (selected ? 0 : 70) : 0}% )`,
         width: '25%',
         cursor: 'pointer',
-        marginBottom: 4,
+        bgcolor: 'transparent',
       }}
       onClick={handleClickOtt}
     >
