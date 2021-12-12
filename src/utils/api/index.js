@@ -4,8 +4,7 @@ import * as httpMethods from 'constants/httpMethods';
 
 const BASE_URL = 'https://modi.pw/api/';
 
-const TOKEN =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoibW9kaSIsImV4cCI6MTYzOTQ3Nzg1NywiaWF0IjoxNjM5MzA1MDU3LCJ1c2VySWQiOjE1fQ.SfOeeZRrFQ4WxOFxI8uZ0QnJILszBPR39MWbTI9m_U8f1c2oD5omUobupqAHU95O0sLkng4KoG8VZdDcbbO4rw'; // 임시 토큰
+const TOKEN = '토큰을 입력해주세요';
 
 const instance = axios.create({
   baseURL: BASE_URL,
@@ -23,7 +22,7 @@ const axiosRequest = (uri, requireToken, method = httpMethods.GET, data) => {
 
 const get = (uri, requireToken = false) => axiosRequest(uri, requireToken);
 
-const post = (uri, requireToken = false, data) => {
+const post = (uri, requireToken = false, data = {}) => {
   return axiosRequest(uri, requireToken, httpMethods.POST, data);
 };
 
@@ -58,6 +57,10 @@ export const getRules = () => () => get(`/rules`);
 
 export const createNewParty = newPartyData => {
   return () => post(`/parties`, true, newPartyData);
+};
+
+export const requestPartyJoin = partyId => () => {
+  return post(`/parties/${partyId}/join`, true);
 };
 
 export const getSharedAccountInfo = partyId => {

@@ -1,9 +1,9 @@
 import { CssBaseline } from '@mui/material';
 import useAsync from 'hooks/useAsync';
-import { getMyPoint } from 'utils/api';
+import { getMyPartyById } from 'utils/api';
 
 const TestPageDorr = () => {
-  const [state, callback] = useAsync(getMyPoint());
+  const [state, callback] = useAsync(getMyPartyById(6));
   const { isLoading, value, error } = state;
 
   console.log(isLoading, value, error);
