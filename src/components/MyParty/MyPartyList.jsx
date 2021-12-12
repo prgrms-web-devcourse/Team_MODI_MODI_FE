@@ -7,35 +7,14 @@ const MyPartyList = ({ parties }) => {
 
   return (
     <Box>
-      {parties.map(
-        ({
-          partyId,
-          ottId,
-          ottName,
-          startDate,
-          endDate,
-          isLeader,
-          monthlyReimbursement,
-          remainingReimbursement,
-          monthlyPrice,
-          totalPrice,
-        }) => (
-          <MyPartySummary
-            key={partyId}
-            partyId={partyId}
-            ottId={ottId}
-            ottName={ottName}
-            startDate={startDate}
-            endDate={endDate}
-            isLeader={isLeader}
-            monthlyReimbursement={monthlyReimbursement}
-            remainingReimbursement={remainingReimbursement}
-            monthlyPrice={monthlyPrice}
-            totalPrice={totalPrice}
-            onClickParty={handleClickParty}
-          />
-        ),
-      )}
+      {parties.map(({ partyId, ...props }) => (
+        <MyPartySummary
+          key={partyId}
+          partyId={partyId}
+          {...props}
+          onClickParty={handleClickParty}
+        />
+      ))}
     </Box>
   );
 };
