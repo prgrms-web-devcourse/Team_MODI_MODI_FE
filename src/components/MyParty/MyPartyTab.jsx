@@ -31,27 +31,31 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `party-status-tab-${index}`,
+    'aria-controls': `party-status-tabpanel-${index}`,
   };
 }
 
 const PartyTab = ({ parties }) => {
   const [value, setValue] = useState(0);
 
-  const [onGoing, setOnGoing] = useState([]);
-  const [recruiting, setRecruiting] = useState([]);
-  const [finished, setFinished] = useState([]);
+  const [onGoingParties, setOnGoingParties] = useState([]);
+  const [recruitingParties, setRecruitingParties] = useState([]);
+  const [finishedParties, setFinishedParties] = useState([]);
 
   useEffect(() => {
-    const newOnGoing = parties.filter(({ status }) => status === 'ONGOING');
-    const newRecruiting = parties.filter(
+    const newOnGoingParties = parties.filter(
+      ({ status }) => status === 'ONGOING',
+    );
+    const newRecruitingParties = parties.filter(
       ({ status }) => status === 'RECRUITING',
     );
-    const newFinished = parties.filter(({ status }) => status === 'FINISHED');
-    setOnGoing(newOnGoing);
-    setRecruiting(newRecruiting);
-    setFinished(newFinished);
+    const newFinishedParties = parties.filter(
+      ({ status }) => status === 'FINISHED',
+    );
+    setOnGoingParties(newOnGoingParties);
+    setRecruitingParties(newRecruitingParties);
+    setFinishedParties(newFinishedParties);
   }, [parties]);
 
   const handleChange = (event, newValue) => {
@@ -69,7 +73,7 @@ const PartyTab = ({ parties }) => {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          aria-label="party-status-tab"
         >
           <Tab label="진행중" {...a11yProps(0)} />
           <Tab label="대기중" {...a11yProps(1)} />
@@ -77,13 +81,13 @@ const PartyTab = ({ parties }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList parties={onGoing} />}
+        {<MyPartyList parties={onGoingParties} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {<MyPartyList parties={recruiting} />}
+        {<MyPartyList parties={recruitingParties} />}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {<MyPartyList parties={finished} />}
+        {<MyPartyList parties={finishedParties} />}
       </TabPanel>
     </Box>
   );
