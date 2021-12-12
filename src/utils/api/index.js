@@ -50,7 +50,7 @@ export const getRecruitingParties = (ottId, size = 5, lastPartyId) => {
     return get(`/otts/${ottId}/parties?${stringifyParams}`);
   };
 };
-export const getPublicPartyDetail = partyId => () => get(`/parties/${partyId}`);
+export const getPartyDetail = partyId => () => get(`/parties/${partyId}`);
 export const getRules = () => () => get(`/rules`);
 
 export const createNewParty = newPartyData => {
