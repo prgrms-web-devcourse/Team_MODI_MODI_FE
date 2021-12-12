@@ -22,17 +22,23 @@ const MyPartySummary = ({
     onClickParty(partyId);
   };
 
-  const feeRender = isLeader => {
+  const PriceRender = isLeader => {
     if (isLeader) {
       return (
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
+            whiteSpace: 'nowrap',
           }}
         >
-          <AddCircleOutline color="secondary" fontSize="small" />
-          <Typography variant="mediumB">
+          <AddCircleOutline
+            color="secondary"
+            sx={{
+              width: 15,
+            }}
+          />
+          <Typography variant="smallB">
             월 {priceToString(monthlyReimbursement)}원
           </Typography>
         </Box>
@@ -42,19 +48,26 @@ const MyPartySummary = ({
         <Box
           sx={{
             textAlign: 'right',
+            whiteSpace: 'nowrap',
           }}
         >
-          <Typography variant="mediumB" component="p">
+          <Typography variant="smallB" component="p">
             월 {priceToString(monthlyPrice)}원
           </Typography>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
+              whiteSpace: 'nowrap',
             }}
           >
-            <RemoveCircleOutline color="error" fontSize="small" />
-            <Typography variant="mediumB">
+            <RemoveCircleOutline
+              sx={{
+                width: 15,
+              }}
+              color="error"
+            />
+            <Typography variant="smallB">
               총 {priceToString(totalPrice)}원
             </Typography>
           </Box>
@@ -91,8 +104,9 @@ const MyPartySummary = ({
             style={{
               display: 'flex',
               alignItems: 'center',
+              whiteSpace: 'nowrap',
             }}
-            variant="mediumB"
+            variant="smallB"
           >
             {ottName}
             {isLeader && (
@@ -106,8 +120,14 @@ const MyPartySummary = ({
               />
             )}
           </Typography>
-          <Typography color="text.secondary">
-            {startDate} - {endDate}
+          <Typography
+            sx={{
+              fontSize: '14px',
+            }}
+            variant="small"
+            color="text.secondary"
+          >
+            {startDate} ~ {endDate}
           </Typography>
         </Box>
         <Box
@@ -115,7 +135,7 @@ const MyPartySummary = ({
             marginTop: 2,
           }}
         >
-          {feeRender(isLeader)}
+          {PriceRender(isLeader)}
         </Box>
       </Box>
       <Divider />
