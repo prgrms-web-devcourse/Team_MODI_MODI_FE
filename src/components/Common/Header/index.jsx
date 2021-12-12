@@ -1,13 +1,21 @@
+/* eslint-disable react/prop-types */
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Box } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
+import { useEffect } from 'react';
 
 const Header = ({ user, curPage }) => {
   const [isLogin, setIslogin] = useState(user);
   const [thisPage, setThisPage] = useState(curPage);
+
+  const location = useLocation();
+  useEffect(() => {
+    location.pathname === '/' ? setThisPage('main') : setThisPage(null);
+  }, [location]);
 
   return (
     <AppBar
@@ -21,10 +29,19 @@ const Header = ({ user, curPage }) => {
         boxShadow: `${
           thisPage === 'main' ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.15)'
         }`,
+        transition: 'all .5s',
         position: 'fixed',
       }}
     >
-      <Logo color={thisPage === 'main' ? 'white' : 'color'} />
+      <Link
+        to="/"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Logo color={thisPage === 'main' ? 'white' : 'color'} />
+      </Link>
       <Box
         sx={{
           height: 56,
