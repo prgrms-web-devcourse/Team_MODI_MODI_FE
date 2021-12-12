@@ -1,7 +1,10 @@
 import PropTypes from 'prop-types';
 import { Typography, Box } from '@mui/material';
 
-const InfoElement = ({ name, info }) => {
+const InfoElement = ({ left, right }) => {
+  const { contentL, variantL = 'small', colorL = 'text.secondary' } = left;
+  const { contentR, variantR = 'small', colorR = 'text.secondary' } = right;
+
   return (
     <Box
       sx={{
@@ -13,19 +16,19 @@ const InfoElement = ({ name, info }) => {
       }}
       component="dl"
     >
-      <Typography color="text.secondary" variant="small" component="dt">
-        {name}
+      <Typography color={colorL} variant={variantL} component="dt">
+        {contentL}
       </Typography>
-      <Typography variant="small" component="dd">
-        {info}
+      <Typography color={colorR} variant={variantR} component="dd">
+        {contentR}
       </Typography>
     </Box>
   );
 };
 
 InfoElement.propTypes = {
-  name: PropTypes.string,
-  info: PropTypes.string,
+  left: PropTypes.object,
+  right: PropTypes.object,
 };
 
 export default InfoElement;

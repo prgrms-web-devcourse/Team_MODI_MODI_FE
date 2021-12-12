@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
 import { Typography, Box } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
+import InfoElement from 'components/Common/InfoElement';
 
 const COMMISSION_RATE = 0.05;
 
@@ -14,15 +15,6 @@ const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
     [totalPrice],
   );
 
-  const spaceBetweenSx = useMemo(
-    () => ({
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }),
-    [],
-  );
-
   const handleClickChargeButton = useCallback(() => {
     onClickChargeButton && onClickChargeButton();
   }, [onClickChargeButton]);
@@ -32,34 +24,22 @@ const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
       <Typography variant="baseB" color="text.primary">
         결제정보
       </Typography>
-      <Box
-        sx={{
-          ...spaceBetweenSx,
-          mt: 1,
-        }}
-      >
-        <Typography variant="small" color="text.secondary">
-          서비스 이용료
-        </Typography>
-        <Typography variant="small" color="text.primary">
-          {toNumberNotation(totalPrice)} P
-        </Typography>
-      </Box>
 
-      <Box
-        sx={{
-          ...spaceBetweenSx,
-          pb: 1,
-          borderBottom: '2px dashed #eeeeee',
+      <InfoElement
+        left={{ contentL: '서비스 이용료' }}
+        right={{
+          contentR: `${toNumberNotation(totalPrice)} P`,
+          colorR: 'text.primary',
         }}
-      >
-        <Typography variant="small" color="text.secondary">
-          {`수수료(이용료의 ${COMMISSION_RATE * 100}%)`}
-        </Typography>
-        <Typography variant="small" color="text.primary">
-          {toNumberNotation(commission)} P
-        </Typography>
-      </Box>
+      />
+      <InfoElement
+        left={{ contentL: `수수료(이용료의 ${COMMISSION_RATE * 100}%)` }}
+        right={{
+          contentR: `${toNumberNotation(commission)} P`,
+          colorR: 'text.primary',
+        }}
+      />
+
       <Box
         sx={{
           display: 'flex',
@@ -82,14 +62,19 @@ const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
           {toNumberNotation(myPoint)} P
         </Typography>
       </Box>
-      <Box sx={spaceBetweenSx}>
-        <Typography variant="smallB" color="text.primary">
-          결제 포인트
-        </Typography>
-        <Typography variant="visual" color="text.primary">
-          {toNumberNotation(extraCharge)} P
-        </Typography>
-      </Box>
+      <InfoElement
+        left={{
+          contentL: '결제 포인트',
+          variantL: 'smallB',
+          colorL: 'text.primary',
+        }}
+        right={{
+          contentR: `${toNumberNotation(extraCharge)} P`,
+          variantR: 'visual',
+          colorR: 'text.primary',
+        }}
+      />
+
       {myPoint < totalPrice && (
         <Typography
           variant="microB"
