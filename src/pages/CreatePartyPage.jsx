@@ -172,11 +172,11 @@ const CreatePartyPage = () => {
           <>
             <CreatePartyTitle subTitle="얼마 동안 함께 이용하고 싶나요?" />
             <PartyStartDate
-              initialStartDate={newParty.startDate}
+              startDate={newParty.startDate}
               onSelectStartDate={handleStartDate}
             />
             <PartyPeriod
-              initialPeriod={newParty.period}
+              period={newParty.period}
               onSelectPeriod={handlePeriod}
             />
           </>

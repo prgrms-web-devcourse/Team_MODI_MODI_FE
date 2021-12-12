@@ -9,7 +9,7 @@ import PaymentPage from 'pages/PaymentPage';
 import OauthRedirectPage from 'pages/OauthRedirectPage';
 import MyPartyDetailPage from 'pages/MyPartyDetailPage';
 import MainPage from 'pages/MainPage';
-import CardDesign from 'components/Common/CardDesign';
+import TestPageDorr from 'pages/testPages/TestPageDorr';
 
 const Router = () => {
   return (
@@ -29,7 +29,7 @@ const Router = () => {
           <Route path="oauth/redirect" element={<OauthRedirectPage />} />
           <Route path="myParty/:myPartyId" element={<MyPartyDetailPage />} />
         </Route>
-        <Route path="/test" element={<CardDesign />} />
+        <Route path="/test" element={<TestPageDorr />} />
       </Routes>
     </BrowserRouter>
   );

@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 
 import OttItem from './OttItem';
 
-const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
+const OttList = ({ ottServices, currentOttId, onSelectOtt, toggleable }) => {
   const [selectedId, setSelectedId] = useState(0);
   const handleSelectOtt = (ottId, ottName) => {
     setSelectedId(ottId);
@@ -29,6 +29,7 @@ const OttList = ({ ottServices, currentOttId, onSelectOtt }) => {
           ottName={ottName}
           selected={ottId === selectedId}
           onSelectOtt={handleSelectOtt}
+          toggleable={toggleable}
         />
       ))}
     </Box>
@@ -39,6 +40,7 @@ OttList.propTypes = {
   ottServices: PropTypes.array,
   onSelectOtt: PropTypes.func,
   currentOttId: PropTypes.number,
+  toggleable: PropTypes.bool,
 };
 
 export default OttList;
