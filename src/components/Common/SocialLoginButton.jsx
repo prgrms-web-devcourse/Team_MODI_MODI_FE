@@ -4,6 +4,7 @@ import { Button, Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import naverLogoSrc from 'assets/naver-logo.png';
 import kakaoLogoSrc from 'assets/kakao-logo.png';
+import { LOGIN_URL, REDIRECT_URL } from 'constants/environment';
 
 const providerLogo = {
   naver: naverLogoSrc,
@@ -11,11 +12,11 @@ const providerLogo = {
 };
 
 const SocialLoginButton = ({ provider }) => {
-  const loginUrl = `http://modi.pw/oauth2/authorization/${provider}?redirect_uri=http://localhost:3000/oauth/redirect `;
-
   return (
     <>
-      <LoginButton href={loginUrl}>
+      <LoginButton
+        href={`${LOGIN_URL}${provider}?redirect_uri=${REDIRECT_URL}`}
+      >
         <ProviderLogo alt={`${provider}-logo`} src={providerLogo[provider]} />
         <Typography
           variant="smallB"
