@@ -10,16 +10,7 @@ import {
   StepMemberSelect,
   StepShardInfoForm,
 } from 'components/PartyCreate';
-
-const calculateEndDate = (startDate, period) => {
-  const endDate = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() + period,
-    startDate.getDate() - 1,
-  );
-
-  return endDate;
-};
+import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
 
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -30,7 +21,7 @@ const CreatePartyPage = () => {
     ottName: '',
     grade: '',
     memberCapacity: 1,
-    startDate: new Date(),
+    startDate: calculateNextDate(),
     endDate: calculateEndDate(new Date(), 1),
     period: 1,
     mustFilled: null,
