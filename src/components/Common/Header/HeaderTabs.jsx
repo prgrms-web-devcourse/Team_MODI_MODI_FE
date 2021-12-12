@@ -10,7 +10,11 @@ const HeaderTabs = ({ curPage }) => {
   return (
     <Tabs
       value={0}
-      indicatorColor="transparent"
+      TabIndicatorProps={{
+        style: {
+          display: 'none',
+        },
+      }}
       aria-label="nav tabs"
       sx={{
         minHeight: 56,
