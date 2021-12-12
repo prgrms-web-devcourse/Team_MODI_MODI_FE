@@ -1,17 +1,13 @@
 import { CssBaseline } from '@mui/material';
 import useAsync from 'hooks/useAsync';
-import { getRecruitingParties } from 'utils/api';
+import { getMyPoint } from 'utils/api';
 
 const TestPageDorr = () => {
-  const [state, callback] = useAsync(
-    getRecruitingParties(1, {
-      size: 2,
-      lastPartyId: 6,
-    }),
-  );
-
+  const [state, callback] = useAsync(getMyPoint());
   const { isLoading, value, error } = state;
-  console.log(value);
+
+  console.log(isLoading, value, error);
+
   if (isLoading) {
     return <div>로딩중...</div>;
   }
