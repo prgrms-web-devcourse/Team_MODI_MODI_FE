@@ -43,6 +43,5 @@ export const getRecruitingParties = (ottId, searchParamObj) => {
   };
 };
 
-export const createNewParty = data => () => post(`/parties`, true, data);
 export const getPublicPartyDetail = partyId => () => get(`/parties/${partyId}`);
 export const getRules = () => () => get(`/rules`);
