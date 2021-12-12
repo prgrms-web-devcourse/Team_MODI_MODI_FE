@@ -11,14 +11,12 @@ import { useEffect } from 'react';
 const Header = ({ user, curPage }) => {
   const [isLogin, setIslogin] = useState(user);
   const [thisPage, setThisPage] = useState(curPage);
-  console.log(setIslogin, setThisPage);
-
   const location = useLocation();
   useEffect(() => {
     location.pathname === '/' ? setThisPage('main') : setThisPage(null);
   }, [location]);
 
-  return (
+  return location.pathname !== '/login' ? (
     <AppBar
       sx={{
         background: `${thisPage === 'main' ? 'transparent' : '#fff'}`,
@@ -41,7 +39,7 @@ const Header = ({ user, curPage }) => {
           alignItems: 'center',
         }}
       >
-        <Logo color={thisPage === 'main' ? 'white' : 'color'} />
+        <Logo color={thisPage === 'main' ? false : true} />
       </Link>
       <Box
         sx={{
@@ -56,7 +54,7 @@ const Header = ({ user, curPage }) => {
         <HeaderFab user={isLogin} curPage={thisPage} />
       </Box>
     </AppBar>
-  );
+  ) : null;
 };
 
 Header.defaultProps = {
