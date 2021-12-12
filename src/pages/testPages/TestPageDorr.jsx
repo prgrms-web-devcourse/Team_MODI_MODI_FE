@@ -1,11 +1,11 @@
 import { CssBaseline } from '@mui/material';
-import PaymentInfo from 'components/Payment/PaymentInfo/index';
+import CardDesign from 'components/Common/CardDesign';
 
 const TestPageDorr = () => {
   return (
     <>
       <CssBaseline />
-      <PaymentInfo totalPrice={9000} myPoint={1000} />
+      <CardDesign />
     </>
   );
 };
