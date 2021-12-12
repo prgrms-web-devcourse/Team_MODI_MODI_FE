@@ -1,11 +1,20 @@
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import OttLogo from 'components/Ott/OttLogo';
 import OttServiceName from './OttServiceName';
-import PricePanel from './PricePanel';
+import { ParseDate } from 'utils/ParseDate';
 
-const PartyTitle = ({ ottName, ottGrade, monthlyPrice, servicePeriod }) => {
+const PartyTitle = ({
+  ottName,
+  ottGrade,
+  startDate,
+  endDate,
+  period,
+  children,
+}) => {
+  const hasDateInfo = startDate && endDate && period;
+
   return (
     <Box
       sx={{
@@ -16,8 +25,38 @@ const PartyTitle = ({ ottName, ottGrade, monthlyPrice, servicePeriod }) => {
       }}
     >
       <OttLogo ottName={ottName} size={72} />
-      <OttServiceName ottName={ottName} ottGrade={ottGrade} />
-      <PricePanel monthlyPrice={monthlyPrice} servicePeriod={servicePeriod} />
+      <Box
+        sx={{
+          display: 'flex',
+          flex: 1,
+          flexDirection: 'column',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'flex-end',
+          }}
+        >
+          <OttServiceName ottName={ottName} ottGrade={ottGrade} />
+          {children}
+        </Box>
+
+        {hasDateInfo && (
+          <Typography
+            variant="microB"
+            color="text.disabled"
+            ml="10px"
+            mt={1}
+            align="right"
+            sx={{
+              wordBreak: 'keep-all',
+            }}
+          >
+            {`${ParseDate(startDate)} ~ ${ParseDate(endDate)} (${period}개월)`}
+          </Typography>
+        )}
+      </Box>
     </Box>
   );
 };
@@ -30,4 +69,8 @@ PartyTitle.propTypes = {
   ottGrade: PropTypes.string,
   monthlyPrice: PropTypes.number,
   servicePeriod: PropTypes.number,
+  startDate: PropTypes.string,
+  endDate: PropTypes.string,
+  period: PropTypes.number,
+  children: PropTypes.node,
 };

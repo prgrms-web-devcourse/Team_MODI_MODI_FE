@@ -15,10 +15,10 @@ const OttServiceName = ({ ottName, ottGrade }) => {
 
   return (
     <Box sx={OttServiceNameSx}>
-      <Typography variant="microB" color="text.secondary">
+      <Typography variant="microB" color="text.secondary" align="left">
         {ottName}
       </Typography>
-      <Typography variant="baseB" color="text.primary">
+      <Typography variant="baseB" color="text.primary" align="left">
         {ottGrade}
       </Typography>
     </Box>

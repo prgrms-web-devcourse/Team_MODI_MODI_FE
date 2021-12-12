@@ -3,17 +3,19 @@ import CardFlip from 'components/Common/CardFlip';
 import CardTemplate from 'components/Common/CardTemplate';
 
 const PartyShareAccount = ({ fliped, onFlipCard, sharedInfo }) => {
-  const front = <CardTemplate />;
+  const front = <CardTemplate isFront={true} />;
 
   const back = <CardTemplate sharedInfo={sharedInfo} />;
 
   return (
-    <CardFlip
-      fliped={fliped}
-      onFlipCard={onFlipCard}
-      front={front}
-      back={back}
-    />
+    <>
+      <CardFlip
+        fliped={fliped}
+        onFlipCard={onFlipCard}
+        front={front}
+        back={back}
+      />
+    </>
   );
 };
 

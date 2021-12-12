@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 const Header = ({ user, curPage }) => {
   const [isLogin, setIslogin] = useState(user);
   const [thisPage, setThisPage] = useState(curPage);
+  console.log(setIslogin, setThisPage);
 
   const location = useLocation();
   useEffect(() => {

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import InfoElement from 'components/Common/InfoElement';
 import { priceToString } from 'utils/priceToString';
-
-const ParseDate = dashedDate => dashedDate.replace(/-/g, '. ');
+import { ParseDate } from 'utils/ParseDate';
 
 const PartyInfo = ({
   ottName,
@@ -27,14 +26,21 @@ const PartyInfo = ({
 
   return (
     <Box pt={2} pb={1} sx={{ borderBottom: '2px dashed #eeeeee' }}>
-      <InfoElement name="서비스" info={`${ottName} ${ottGrade}`} />
       <InfoElement
-        name="기간"
-        info={`${parsedStartDate} ~ ${parsedEndDate} (${period}개월)`}
+        left={{ contentL: '서비스' }}
+        right={{ contentR: `${ottName} ${ottGrade}` }}
       />
       <InfoElement
-        name="서비스 이용료 (월)"
-        info={`${parsedTotalPrice} (${parsedMonthlyFee})P`}
+        left={{ contentL: '기간' }}
+        right={{
+          contentR: `${parsedStartDate} ~ ${parsedEndDate} (${period}개월)`,
+        }}
+      />
+      <InfoElement
+        left={{ contentL: '서비스 이용료 (월)' }}
+        right={{
+          contentR: `${parsedTotalPrice} (${parsedMonthlyFee})P`,
+        }}
       />
     </Box>
   );

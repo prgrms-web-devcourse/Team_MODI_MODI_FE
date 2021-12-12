@@ -81,11 +81,11 @@ const PartySummary = ({
         }}
       >
         <Box mt={1.5} mr="auto">
-          {[1, 2, 3, 4].map(member => (
+          {Array.from({ length: maxMemberCapacity }, (_, i) => i).map(index => (
             <AirlineSeatReclineExtra
               fontSize="large"
-              key={member}
-              color={member <= currentMemberCapacity ? 'secondary' : 'modiGray'}
+              key={index}
+              color={index < currentMemberCapacity ? 'secondary' : 'modiGray'}
             />
           ))}
         </Box>
