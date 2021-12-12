@@ -47,7 +47,7 @@ const useAsync = (fn, deps = [], skip = false) => {
     async (...args) => {
       const callId = ++lastCallId.current;
       dispatch({ type: 'loading' });
-      console.log(1);
+
       try {
         const value = await fn(...args);
 
@@ -57,9 +57,10 @@ const useAsync = (fn, deps = [], skip = false) => {
             payload: value,
           });
       } catch (e) {
+        console.error(e);
         callId === lastCallId.current &&
           dispatch({
-            tyep: 'error',
+            type: 'error',
             error: e,
           });
       }

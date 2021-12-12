@@ -8,6 +8,7 @@ import Logo from 'components/Common/Logo.jsx';
 const Header = ({ user, curPage }) => {
   const [isLogin, setIslogin] = useState(user);
   const [thisPage, setThisPage] = useState(curPage);
+  console.log(setIslogin, setThisPage);
 
   return (
     <AppBar
