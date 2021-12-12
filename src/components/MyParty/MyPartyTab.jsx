@@ -31,43 +31,32 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `party-status-tab-${index}`,
+    'aria-controls': `party-status-tabpanel-${index}`,
   };
 }
 
 const PartyTab = ({ parties }) => {
   const [value, setValue] = useState(0);
 
-  const [onGoing, setOnGoing] = useState([]);
-  const [waiting, setWaiting] = useState([]);
-  const [closed, setClosed] = useState([]);
+  const [onGoingParties, setOnGoingParties] = useState([]);
+  const [recruitingParties, setRecruitingParties] = useState([]);
+  const [finishedParties, setFinishedParties] = useState([]);
 
   useEffect(() => {
-    const newOnGoing = [];
-    const newWaiting = [];
-    const newClosed = [];
-    const nowDate = new Date();
-
-    parties.map(party => {
-      const formatStartDate = new Date(party.startDate);
-      const formatEndDate = new Date(party.endDate);
-
-      if (nowDate < formatStartDate) {
-        newWaiting.push(party);
-      } else if (nowDate > formatEndDate) {
-        newClosed.push(party);
-      } else {
-        newOnGoing.push(party);
-      }
-
-      setOnGoing(newOnGoing);
-      setWaiting(newWaiting);
-      setClosed(newClosed);
-
-      return false;
-    });
-  }, []);
+    const newOnGoingParties = parties.filter(
+      ({ status }) => status === 'ONGOING',
+    );
+    const newRecruitingParties = parties.filter(
+      ({ status }) => status === 'RECRUITING',
+    );
+    const newFinishedParties = parties.filter(
+      ({ status }) => status === 'FINISHED',
+    );
+    setOnGoingParties(newOnGoingParties);
+    setRecruitingParties(newRecruitingParties);
+    setFinishedParties(newFinishedParties);
+  }, [parties]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -84,7 +73,7 @@ const PartyTab = ({ parties }) => {
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="basic tabs example"
+          aria-label="party-status-tab"
         >
           <Tab label="진행중" {...a11yProps(0)} />
           <Tab label="대기중" {...a11yProps(1)} />
@@ -92,13 +81,13 @@ const PartyTab = ({ parties }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList myParties={onGoing} />}
+        {<MyPartyList parties={onGoingParties} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {<MyPartyList myParties={waiting} />}
+        {<MyPartyList parties={recruitingParties} />}
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {<MyPartyList myParties={closed} />}
+        {<MyPartyList parties={finishedParties} />}
       </TabPanel>
     </Box>
   );
