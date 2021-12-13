@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
-import { useReducer, createContext, useContext } from 'react';
+import { useCallback, useReducer, createContext, useContext } from 'react';
 
-const getUserId = () => JSON.stringify(sessionStorage.getItem('userId'));
+const getUserId = () => JSON.parse(sessionStorage.getItem('userId'));
 
-const getToken = () => JSON.stringify(sessionStorage.getItem('TOKEN'));
+const getToken = () => JSON.parse(sessionStorage.getItem('TOKEN'));
 
 const isLoggedIn = !!(getUserId() && getToken());
 
@@ -53,16 +53,16 @@ const AuthDispatch = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
-  const handleUpdate = newValue => {
+  const handleUpdate = useCallback(newValue => {
     dispatch({
       type: ACTION_TYPES.UPDATE,
       payload: newValue,
     });
-  };
+  }, []);
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     dispatch({ type: ACTION_TYPES.LOGIN });
-  };
+  }, []);
 
   const handleLogout = () => {
     sessionStorage.clear();

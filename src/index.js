@@ -6,12 +6,15 @@ import theme from './styles/theme';
 import { CssBaseline } from '@mui/material';
 
 import Router from './Router';
+import { AuthProvider } from 'contexts/authContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router />
+      <AuthProvider>
+        <CssBaseline />
+        <Router />
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),
