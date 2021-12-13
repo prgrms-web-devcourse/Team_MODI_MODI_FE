@@ -9,29 +9,37 @@ import { useNavigate } from 'react-router';
 import { finishedParties, onGoingParties } from 'constants/myPageDummyData';
 import { useEffect, useState } from 'react';
 
-const LIMIT = 5;
+const LIMIT = 2;
+
+const initialState = {
+  parties: [],
+  lastPartyId: undefined,
+  buttonDisabled: false,
+};
 
 const MyPage = () => {
-  const [lastPartyId, setLastPartyId] = useState();
+  const [recruiting, setRecruiting] = useState(initialState);
+
   const [userState] = useAsync(getMyInfo());
   const [recruitingState] = useAsync(
-    getAllMyParty('RECRUITING', LIMIT, lastPartyId),
-    [lastPartyId],
+    getAllMyParty('RECRUITING', LIMIT, recruiting.lastPartyId),
+    [recruiting.lastPartyId],
   );
-  const [recruitingParties, setRecruitingParties] = useState([]);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (recruitingState.value) {
       if (recruitingState.value.parties.length < LIMIT) {
-        setButtonDisabled(true);
+        setRecruiting({
+          ...recruiting,
+          buttonDisabled: true,
+        });
       }
-      setRecruitingParties([
-        ...recruitingParties,
-        ...recruitingState.value.parties,
-      ]);
+      setRecruiting({
+        ...recruiting,
+        parties: [...recruiting.parties, ...recruitingState.value.parties],
+      });
     }
   }, [recruitingState.value]);
 
@@ -53,8 +61,11 @@ const MyPage = () => {
   };
 
   const handleClickMoreButton = () => {
-    const newLastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
-    setLastPartyId(newLastPartyId);
+    const lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
+    setRecruiting({
+      ...recruiting,
+      lastPartyId,
+    });
   };
 
   return (
@@ -166,16 +177,15 @@ const MyPage = () => {
 
         <MyPartyTab
           onGoingParties={onGoingParties}
-          recruitingParties={recruitingParties}
+          recruitingParties={recruiting.parties}
           finishedParties={finishedParties}
           onClickParty={handleClickParty}
         />
-
         <Button
           variant="contained"
           size="small"
           color="modiGray"
-          disabled={buttonDisabled}
+          disabled={recruiting.buttonDisabled}
           onClick={handleClickMoreButton}
         >
           더보기

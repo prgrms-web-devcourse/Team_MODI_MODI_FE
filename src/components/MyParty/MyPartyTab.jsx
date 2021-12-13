@@ -67,18 +67,13 @@ const PartyTab = ({
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList parties={onGoingParties} onClickParty={onClickParty} />}
+        <MyPartyList parties={onGoingParties} onClickParty={onClickParty} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {
-          <MyPartyList
-            parties={recruitingParties}
-            onClickParty={onClickParty}
-          />
-        }
+        <MyPartyList parties={recruitingParties} onClickParty={onClickParty} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {<MyPartyList parties={finishedParties} onClickParty={onClickParty} />}
+        <MyPartyList parties={finishedParties} onClickParty={onClickParty} />
       </TabPanel>
     </Box>
   );
