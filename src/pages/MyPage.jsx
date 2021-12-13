@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import { finishedParties, onGoingParties } from 'constants/myPageDummyData';
 import { useEffect, useState } from 'react';
 
-const LIMIT = 4;
+const LIMIT = 5;
 
 const MyPage = () => {
   const [lastPartyId, setLastPartyId] = useState();
@@ -19,12 +19,15 @@ const MyPage = () => {
     [lastPartyId],
   );
   const [recruitingParties, setRecruitingParties] = useState([]);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (recruitingState.value) {
-      console.log(recruitingState.value.parties);
+      if (recruitingState.value.parties.length < LIMIT) {
+        setButtonDisabled(true);
+      }
       setRecruitingParties([
         ...recruitingParties,
         ...recruitingState.value.parties,
@@ -172,6 +175,7 @@ const MyPage = () => {
           variant="contained"
           size="small"
           color="modiGray"
+          disabled={buttonDisabled}
           onClick={handleClickMoreButton}
         >
           더보기
