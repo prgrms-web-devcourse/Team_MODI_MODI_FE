@@ -41,6 +41,7 @@ const PartyTab = ({
   recruitingParties,
   finishedParties,
   onClickParty,
+  onClickMoreButton,
 }) => {
   const [value, setValue] = useState(0);
 
@@ -67,13 +68,28 @@ const PartyTab = ({
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <MyPartyList parties={onGoingParties} onClickParty={onClickParty} />
+        <MyPartyList
+          status={'onGoing'}
+          parties={onGoingParties}
+          onClickParty={onClickParty}
+          onClickMoreButton={onClickMoreButton}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <MyPartyList parties={recruitingParties} onClickParty={onClickParty} />
+        <MyPartyList
+          status={'recruiting'}
+          parties={recruitingParties}
+          onClickParty={onClickParty}
+          onClickMoreButton={onClickMoreButton}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <MyPartyList parties={finishedParties} onClickParty={onClickParty} />
+        <MyPartyList
+          status={'finished'}
+          parties={finishedParties}
+          onClickParty={onClickParty}
+          onClickMoreButton={onClickMoreButton}
+        />
       </TabPanel>
     </Box>
   );
@@ -84,6 +100,7 @@ PartyTab.propTypes = {
   recruitingParties: PropTypes.array,
   finishedParties: PropTypes.array,
   onClickParty: PropTypes.func,
+  onClickMoreButton: PropTypes.func,
 };
 
 export default PartyTab;
