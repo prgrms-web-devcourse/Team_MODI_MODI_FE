@@ -6,42 +6,55 @@ import { LogoutOutlined } from '@mui/icons-material';
 import useAsync from 'hooks/useAsync';
 import { getAllMyParty, getMyInfo } from 'utils/api';
 import { useNavigate } from 'react-router';
-import { finishedParties, onGoingParties } from 'constants/myPageDummyData';
 import { useEffect, useState } from 'react';
 
-const LIMIT = 2;
+const LIMIT = 3;
 
 const initialState = {
   parties: [],
   lastPartyId: undefined,
-  buttonDisabled: false,
+  // buttonDisabled: false,
 };
 
 const MyPage = () => {
+  const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
+  const [finished, setFinished] = useState(initialState);
 
   const [userState] = useAsync(getMyInfo());
+
+  const [onGoingState] = useAsync(
+    getAllMyParty('ONGOING', LIMIT, onGoing.lastPartyId),
+    [recruiting.lastPartyId],
+  );
   const [recruitingState] = useAsync(
     getAllMyParty('RECRUITING', LIMIT, recruiting.lastPartyId),
+    [recruiting.lastPartyId],
+  );
+  const [finishedState] = useAsync(
+    getAllMyParty('FINISHED', LIMIT, recruiting.lastPartyId),
     [recruiting.lastPartyId],
   );
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (recruitingState.value) {
-      if (recruitingState.value.parties.length < LIMIT) {
-        setRecruiting({
-          ...recruiting,
-          buttonDisabled: true,
-        });
-      }
+    if (recruitingState.value && onGoingState.value && finishedState.value) {
+      console.log(onGoingState.value.parties, finishedState.value.parties);
+      setOnGoing({
+        ...onGoing,
+        parties: [...onGoing.parties, ...onGoingState.value.parties],
+      });
       setRecruiting({
         ...recruiting,
         parties: [...recruiting.parties, ...recruitingState.value.parties],
       });
+      setFinished({
+        ...finished,
+        parties: [...finished.parties, ...finishedState.value.parties],
+      });
     }
-  }, [recruitingState.value]);
+  }, [onGoingState.value, recruitingState.value, finishedState.value]);
 
   if (!userState.value) {
     return <></>;
@@ -60,12 +73,17 @@ const MyPage = () => {
     navigate(`/myParty/${partyId}`);
   };
 
-  const handleClickMoreButton = () => {
-    const lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
-    setRecruiting({
-      ...recruiting,
-      lastPartyId,
-    });
+  const handleClickMoreButton = status => {
+    console.log(status);
+    // const partiesLength = recruitingState.value.parties.length;
+
+    // if (partiesLength && partiesLength === LIMIT) {
+    //   const lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
+    //   setRecruiting({
+    //     ...recruiting,
+    //     lastPartyId,
+    //   });
+    // }
   };
 
   return (
@@ -168,20 +186,14 @@ const MyPage = () => {
           bgcolor: 'white',
         }}
       >
-        {/* <MyPartyTab
-          onGoingParties={onGoingState.value.parties}
-          recruitingParties={recruitingState.value.parties}
-          finishedParties={finishedState.value.parties}
-          onClickParty={handleClickParty}
-        /> */}
-
         <MyPartyTab
-          onGoingParties={onGoingParties}
+          onGoingParties={onGoing.parties}
           recruitingParties={recruiting.parties}
-          finishedParties={finishedParties}
+          finishedParties={finished.parties}
           onClickParty={handleClickParty}
+          onClickMoreButton={handleClickMoreButton}
         />
-        <Button
+        {/* <Button
           variant="contained"
           size="small"
           color="modiGray"
@@ -189,7 +201,7 @@ const MyPage = () => {
           onClick={handleClickMoreButton}
         >
           더보기
-        </Button>
+        </Button> */}
       </PageContents>
     </PageContainer>
   );
