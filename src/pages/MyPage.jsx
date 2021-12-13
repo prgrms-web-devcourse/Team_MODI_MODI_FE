@@ -2,19 +2,45 @@ import { Avatar, Box, Button, Typography } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
 import { PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
-import { userInfo, parties } from 'constants/myPageDummyData';
 import { LogoutOutlined } from '@mui/icons-material';
+import useAsync from 'hooks/useAsync';
+import { getAllMyParty, getMyInfo } from 'utils/api';
+import { useNavigate } from 'react-router';
 
+const LIMIT = 5;
 const MyPage = () => {
-  const { userId, username, points } = userInfo;
-  console.log(userId);
+  const [userState] = useAsync(getMyInfo());
+  const [onGoingState] = useAsync(getAllMyParty('ONGOING', LIMIT));
+  const [recruitingState] = useAsync(getAllMyParty('RECRUITING', LIMIT));
+  const [finishedState] = useAsync(getAllMyParty('FINISHED', LIMIT));
+
+  const navigate = useNavigate();
+
+  if (
+    !userState.value ||
+    !onGoingState.value ||
+    !recruitingState.value ||
+    !finishedState.value
+  ) {
+    return <></>;
+  }
+
+  const { userId, username, points = 0 } = userState.value || [];
+
   const handleClickCharge = () => {
-    console.log('충전');
-    // 포인트 충전 페이지로 이동
+    navigate(`/charge`);
   };
 
   const handleLogOut = () => {
-    console.log('logout');
+    // context API 적용 후 onLogout 을 통해 상태 관리 예정
+  };
+
+  const handleClickParty = partyId => {
+    navigate(`/myParty/${partyId}`);
+  };
+
+  const handleClickMoreButton = () => {
+    console.log('더보기!');
   };
 
   return (
@@ -117,7 +143,21 @@ const MyPage = () => {
           bgcolor: 'white',
         }}
       >
-        <MyPartyTab parties={parties} />
+        <MyPartyTab
+          onGoingParties={onGoingState.value.parties}
+          recruitingParties={recruitingState.value.parties}
+          finishedParties={finishedState.value.parties}
+          onClickParty={handleClickParty}
+        />
+
+        <Button
+          variant="contained"
+          size="small"
+          color="modiGray"
+          onClick={handleClickMoreButton}
+        >
+          더보기
+        </Button>
       </PageContents>
     </PageContainer>
   );
