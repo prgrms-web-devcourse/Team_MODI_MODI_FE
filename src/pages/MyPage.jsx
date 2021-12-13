@@ -83,15 +83,43 @@ const MyPage = () => {
   };
 
   const handleClickMoreButton = status => {
-    console.log(status);
-    const partiesLength = recruitingState.value.parties.length;
+    let partiesLength = 0;
+    let lastPartyId = 0;
+    switch (status) {
+      case 'onGoing':
+        partiesLength = onGoingState.value.parties.length;
 
-    if (partiesLength && partiesLength === LIMIT) {
-      const lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
-      setRecruiting({
-        ...recruiting,
-        lastPartyId,
-      });
+        if (partiesLength && partiesLength === LIMIT) {
+          lastPartyId = onGoingState.value.parties[LIMIT - 1].partyId;
+          setOnGoing({
+            ...onGoing,
+            lastPartyId,
+          });
+        }
+        break;
+      case 'recruiting':
+        partiesLength = recruitingState.value.parties.length;
+
+        if (partiesLength && partiesLength === LIMIT) {
+          lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
+          setRecruiting({
+            ...recruiting,
+            lastPartyId,
+          });
+        }
+        break;
+      case 'finished':
+        partiesLength = finishedState.value.parties.length;
+
+        if (partiesLength && partiesLength === LIMIT) {
+          lastPartyId = finishedState.value.parties[LIMIT - 1].partyId;
+          setFinished({
+            ...finished,
+            lastPartyId,
+          });
+        }
+        break;
+      default:
     }
   };
 
