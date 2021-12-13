@@ -1,13 +1,20 @@
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { Tabs } from '@mui/material';
 import theme from 'styles/theme.js';
 import HeaderTab from './HeaderTab.jsx';
 
 const HeaderTabs = ({ curPage }) => {
+  const navigate = useNavigate();
+
   return (
     <Tabs
       value={0}
-      indicatorColor={curPage === 'main' ? 'inherit' : 'secondary'}
+      TabIndicatorProps={{
+        style: {
+          display: 'none',
+        },
+      }}
       aria-label="nav tabs"
       sx={{
         minHeight: 56,
@@ -18,7 +25,11 @@ const HeaderTabs = ({ curPage }) => {
       }}
     >
       <HeaderTab label="파티찾기" curPage={curPage} />
-      <HeaderTab label="파티만들기" curPage={curPage} />
+      <HeaderTab
+        label="파티만들기"
+        curPage={curPage}
+        onClick={() => navigate('/create')}
+      />
     </Tabs>
   );
 };

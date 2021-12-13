@@ -1,24 +1,23 @@
 import PropTypes from 'prop-types';
-import theme from 'styles/theme';
+import { Link } from 'react-router-dom';
 import { Fab } from '@mui/material';
 import { LoginRounded, Person } from '@mui/icons-material';
 
-const HeaderFab = ({ user, curPage }) => {
+const HeaderFab = ({ user, curPage, userId }) => {
   return (
     <Fab
       disableRipple={true}
-      aria-label="login"
+      aria-label={user ? 'User Page' : 'Login'}
+      component={Link}
+      to={user ? `user/${userId}` : '/login'}
+      color={curPage === 'main' ? 'default' : 'secondary'}
       sx={{
         width: 28,
         height: 28,
         maxHeight: 28,
         minHeight: 28,
         ml: 1.5,
-        backgroundColor: `${
-          curPage === 'main'
-            ? theme.palette.modiGray.main
-            : theme.palette.secondary.main
-        }`,
+        boxShadow: 'none',
       }}
     >
       {user ? <Person sx={iconSx} /> : <LoginRounded sx={iconSx} />}
@@ -28,8 +27,8 @@ const HeaderFab = ({ user, curPage }) => {
 
 const iconSx = {
   color: 'white',
-  width: 20,
-  height: 20,
+  width: 18,
+  height: 18,
 };
 
 HeaderFab.defaultProps = {
@@ -40,6 +39,7 @@ HeaderFab.defaultProps = {
 HeaderFab.propTypes = {
   user: PropTypes.bool,
   curPage: PropTypes.string,
+  userId: PropTypes.number,
 };
 
 export default HeaderFab;

@@ -25,7 +25,7 @@ const CardTemplate = ({ sharedInfo, isFront, blur }) => {
           right: 18,
         }}
       >
-        <Logo color={isFront ? '' : 'color'} />
+        <Logo color={isFront ? false : true} />
       </Box>
 
       <CardHeader
