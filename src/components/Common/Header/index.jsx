@@ -1,65 +1,59 @@
-/* eslint-disable react/prop-types */
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Box } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
-import { useEffect } from 'react';
 
-const Header = ({ user, curPage }) => {
-  const [isLogin, setIslogin] = useState(user);
-  const [thisPage, setThisPage] = useState(curPage);
+const Header = ({ user }) => {
   const location = useLocation();
-  useEffect(() => {
-    location.pathname === '/' ? setThisPage('main') : setThisPage(null);
-  }, [location]);
+  const [isLogin, setIslogin] = useState(user);
+  const isMainPage = useMemo(() => location.pathname === '/', [location]);
+  const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
 
-  return location.pathname !== '/login' ? (
-    <AppBar
-      sx={{
-        background: `${thisPage === 'main' ? 'transparent' : '#fff'}`,
-        height: 56,
-        display: 'flex',
-        flexFlow: 'row nowrap',
-        justifyContent: 'space-between',
-        padding: '0 20px',
-        boxShadow: `${
-          thisPage === 'main' ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.15)'
-        }`,
-        transition: 'all .5s',
-        position: 'fixed',
-      }}
-    >
-      <Link
-        to="/"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <Logo color={thisPage === 'main' ? false : true} />
-      </Link>
-      <Box
+  return (
+    !isLoginPage && (
+      <AppBar
         sx={{
+          background: `${isMainPage ? 'transparent' : '#fff'}`,
           height: 56,
           display: 'flex',
           flexFlow: 'row nowrap',
-          justifyContent: 'center',
-          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 20px',
+          boxShadow: `${isMainPage ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.15)'}`,
+          position: 'fixed',
         }}
       >
-        <HeaderTabs curPage={thisPage} />
-        <HeaderFab user={isLogin} curPage={thisPage} />
-      </Box>
-    </AppBar>
-  ) : null;
+        <Link
+          to="/"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <Logo color={isMainPage ? false : true} />
+        </Link>
+        <Box
+          sx={{
+            height: 56,
+            display: 'flex',
+            flexFlow: 'row nowrap',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <HeaderTabs isMainPage={isMainPage} />
+          <HeaderFab user={isLogin} isMainPage={isMainPage} />
+        </Box>
+      </AppBar>
+    )
+  );
 };
 
 Header.defaultProps = {
   user: false,
-  curPage: 'main',
 };
 
 Header.propTypes = {

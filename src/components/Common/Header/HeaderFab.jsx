@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { Fab } from '@mui/material';
 import { LoginRounded, Person } from '@mui/icons-material';
 
-const HeaderFab = ({ user, curPage, userId }) => {
+const HeaderFab = ({ user, isMainPage, userId }) => {
   return (
     <Fab
       disableRipple={true}
       aria-label={user ? 'User Page' : 'Login'}
       component={Link}
       to={user ? `user/${userId}` : '/login'}
-      color={curPage === 'main' ? 'default' : 'secondary'}
+      color={isMainPage ? 'default' : 'secondary'}
       sx={{
         width: 28,
         height: 28,
@@ -33,12 +33,12 @@ const iconSx = {
 
 HeaderFab.defaultProps = {
   user: false,
-  curPage: 'main',
+  isMainPage: false,
 };
 
 HeaderFab.propTypes = {
   user: PropTypes.bool,
-  curPage: PropTypes.string,
+  isMainPage: PropTypes.bool,
   userId: PropTypes.number,
 };
 

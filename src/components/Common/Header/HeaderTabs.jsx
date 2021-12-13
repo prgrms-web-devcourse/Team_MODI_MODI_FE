@@ -4,7 +4,7 @@ import { Tabs } from '@mui/material';
 import theme from 'styles/theme.js';
 import HeaderTab from './HeaderTab.jsx';
 
-const HeaderTabs = ({ curPage }) => {
+const HeaderTabs = ({ isMainPage }) => {
   const navigate = useNavigate();
 
   return (
@@ -21,13 +21,13 @@ const HeaderTabs = ({ curPage }) => {
         minWidth: 70,
         lineHeight: 1,
         padding: 0,
-        color: `${curPage === 'main' ? '#fff' : theme.palette.text.secondary}`,
+        color: `${isMainPage ? '#fff' : theme.palette.text.secondary}`,
       }}
     >
-      <HeaderTab label="파티찾기" curPage={curPage} />
+      <HeaderTab label="파티찾기" isMain={isMainPage} />
       <HeaderTab
         label="파티만들기"
-        curPage={curPage}
+        isMainPage={isMainPage}
         onClick={() => navigate('/create')}
       />
     </Tabs>
@@ -35,11 +35,11 @@ const HeaderTabs = ({ curPage }) => {
 };
 
 HeaderTabs.defaultProps = {
-  curPage: 'main',
+  isMainPage: false,
 };
 
 HeaderTabs.propTypes = {
-  curPage: PropTypes.string,
+  isMainPage: PropTypes.bool,
 };
 
 export default HeaderTabs;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Tab } from '@mui/material';
 
-const HeaderTab = ({ label, curPage, onClick }) => {
+const HeaderTab = ({ label, isMainPage, onClick }) => {
   return (
     <Tab
       label={label}
@@ -16,7 +16,7 @@ const HeaderTab = ({ label, curPage, onClick }) => {
           background: 'transparent',
         },
         {
-          '&:hover': curPage === 'main' ? null : hoverDefault,
+          '&:hover': isMainPage ? null : hoverDefault,
         },
       ]}
       onClick={onClick}
@@ -26,12 +26,12 @@ const HeaderTab = ({ label, curPage, onClick }) => {
 
 HeaderTab.defaultProps = {
   label: '',
-  curPage: 'main',
+  isMainPage: false,
 };
 
 HeaderTab.propTypes = {
   label: PropTypes.string,
-  curPage: PropTypes.string,
+  isMainPage: PropTypes.bool,
   onClick: PropTypes.func,
 };
 
