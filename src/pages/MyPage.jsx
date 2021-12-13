@@ -25,36 +25,45 @@ const MyPage = () => {
 
   const [onGoingState] = useAsync(
     getAllMyParty('ONGOING', LIMIT, onGoing.lastPartyId),
-    [recruiting.lastPartyId],
+    [onGoing.lastPartyId],
   );
   const [recruitingState] = useAsync(
     getAllMyParty('RECRUITING', LIMIT, recruiting.lastPartyId),
     [recruiting.lastPartyId],
   );
   const [finishedState] = useAsync(
-    getAllMyParty('FINISHED', LIMIT, recruiting.lastPartyId),
-    [recruiting.lastPartyId],
+    getAllMyParty('FINISHED', LIMIT, finished.lastPartyId),
+    [finished.lastPartyId],
   );
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (recruitingState.value && onGoingState.value && finishedState.value) {
-      console.log(onGoingState.value.parties, finishedState.value.parties);
+    if (onGoingState.value) {
       setOnGoing({
         ...onGoing,
         parties: [...onGoing.parties, ...onGoingState.value.parties],
       });
+    }
+  }, [onGoingState.value]);
+
+  useEffect(() => {
+    if (recruitingState.value) {
       setRecruiting({
         ...recruiting,
         parties: [...recruiting.parties, ...recruitingState.value.parties],
       });
+    }
+  }, [recruitingState.value]);
+
+  useEffect(() => {
+    if (finishedState.value) {
       setFinished({
         ...finished,
         parties: [...finished.parties, ...finishedState.value.parties],
       });
     }
-  }, [onGoingState.value, recruitingState.value, finishedState.value]);
+  }, [finishedState.value]);
 
   if (!userState.value) {
     return <></>;
@@ -75,15 +84,15 @@ const MyPage = () => {
 
   const handleClickMoreButton = status => {
     console.log(status);
-    // const partiesLength = recruitingState.value.parties.length;
+    const partiesLength = recruitingState.value.parties.length;
 
-    // if (partiesLength && partiesLength === LIMIT) {
-    //   const lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
-    //   setRecruiting({
-    //     ...recruiting,
-    //     lastPartyId,
-    //   });
-    // }
+    if (partiesLength && partiesLength === LIMIT) {
+      const lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
+      setRecruiting({
+        ...recruiting,
+        lastPartyId,
+      });
+    }
   };
 
   return (
