@@ -19,14 +19,20 @@ const MyPartyList = ({ status, parties, onClickParty, onClickMoreButton }) => {
           />
         ))}
       </Box>
-      <Button
-        variant="contained"
-        size="small"
-        color="modiGray"
-        onClick={handleClickMoreButton}
+      <Box
+        style={{
+          textAlign: 'center',
+        }}
       >
-        더보기
-      </Button>
+        <Button
+          variant="contained"
+          size="small"
+          color="modiGray"
+          onClick={handleClickMoreButton}
+        >
+          더보기
+        </Button>
+      </Box>
     </>
   );
 };
