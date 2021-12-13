@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import MyPartySummary from './MyPartySummary';
 
-const MyPartyList = ({ parties }) => {
-  const handleClickParty = partyId => {};
-
+const MyPartyList = ({ parties, onClickParty }) => {
   return (
     <Box>
       {parties.map(({ partyId, ...props }) => (
@@ -12,7 +10,7 @@ const MyPartyList = ({ parties }) => {
           key={partyId}
           partyId={partyId}
           {...props}
-          onClickParty={handleClickParty}
+          onClickParty={onClickParty}
         />
       ))}
     </Box>
@@ -21,6 +19,7 @@ const MyPartyList = ({ parties }) => {
 
 MyPartyList.propTypes = {
   parties: PropTypes.array,
+  onClickParty: PropTypes.func,
 };
 
 export default MyPartyList;
