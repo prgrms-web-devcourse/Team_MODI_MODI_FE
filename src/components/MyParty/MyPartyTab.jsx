@@ -36,27 +36,13 @@ function a11yProps(index) {
   };
 }
 
-const PartyTab = ({ parties }) => {
+const PartyTab = ({
+  onGoingParties,
+  recruitingParties,
+  finishedParties,
+  onClickParty,
+}) => {
   const [value, setValue] = useState(0);
-
-  const [onGoingParties, setOnGoingParties] = useState([]);
-  const [recruitingParties, setRecruitingParties] = useState([]);
-  const [finishedParties, setFinishedParties] = useState([]);
-
-  useEffect(() => {
-    const newOnGoingParties = parties.filter(
-      ({ status }) => status === 'ONGOING',
-    );
-    const newRecruitingParties = parties.filter(
-      ({ status }) => status === 'RECRUITING',
-    );
-    const newFinishedParties = parties.filter(
-      ({ status }) => status === 'FINISHED',
-    );
-    setOnGoingParties(newOnGoingParties);
-    setRecruitingParties(newRecruitingParties);
-    setFinishedParties(newFinishedParties);
-  }, [parties]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,20 +67,28 @@ const PartyTab = ({ parties }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList parties={onGoingParties} />}
+        {<MyPartyList parties={onGoingParties} onClickParty={onClickParty} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {<MyPartyList parties={recruitingParties} />}
+        {
+          <MyPartyList
+            parties={recruitingParties}
+            onClickParty={onClickParty}
+          />
+        }
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {<MyPartyList parties={finishedParties} />}
+        {<MyPartyList parties={finishedParties} onClickParty={onClickParty} />}
       </TabPanel>
     </Box>
   );
 };
 
 PartyTab.propTypes = {
-  parties: PropTypes.array,
+  onGoingParties: PropTypes.array,
+  recruitingParties: PropTypes.array,
+  finishedParties: PropTypes.array,
+  onClickParty: PropTypes.func,
 };
 
 export default PartyTab;
