@@ -3,8 +3,6 @@ import { API_END_POINT } from 'constants/environment';
 
 import * as httpMethods from 'constants/httpMethods';
 
-const TOKEN = JSON.parse(sessionStorage.getItem('TOKEN'));
-
 const instance = axios.create({
   baseURL: API_END_POINT,
 });
@@ -13,7 +11,11 @@ const axiosRequest = (uri, requireToken, method = httpMethods.GET, data) => {
   const args = [uri];
 
   data && args.push(data);
-  requireToken && args.push({ headers: { Authorization: `Bearer ${TOKEN}` } });
+
+  if (requireToken) {
+    const TOKEN = JSON.parse(sessionStorage.getItem('TOKEN'));
+    args.push({ headers: { Authorization: `Bearer ${TOKEN}` } });
+  }
 
   return instance[method](...args).then(response => response.data);
 };
