@@ -1,25 +1,41 @@
 import PropTypes from 'prop-types';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import MyPartySummary from './MyPartySummary';
 
-const MyPartyList = ({ parties, onClickParty }) => {
+const MyPartyList = ({ status, parties, onClickParty, onClickMoreButton }) => {
+  const handleClickMoreButton = () => {
+    onClickMoreButton(status);
+  };
+
   return (
-    <Box>
-      {parties.map(({ partyId, ...props }) => (
-        <MyPartySummary
-          key={partyId}
-          partyId={partyId}
-          {...props}
-          onClickParty={onClickParty}
-        />
-      ))}
-    </Box>
+    <>
+      <Box>
+        {parties.map(({ partyId, ...props }) => (
+          <MyPartySummary
+            key={partyId}
+            partyId={partyId}
+            {...props}
+            onClickParty={onClickParty}
+          />
+        ))}
+      </Box>
+      <Button
+        variant="contained"
+        size="small"
+        color="modiGray"
+        onClick={handleClickMoreButton}
+      >
+        더보기
+      </Button>
+    </>
   );
 };
 
 MyPartyList.propTypes = {
+  status: PropTypes.string,
   parties: PropTypes.array,
   onClickParty: PropTypes.func,
+  onClickMoreButton: PropTypes.func,
 };
 
 export default MyPartyList;
