@@ -6,26 +6,36 @@ import { LogoutOutlined } from '@mui/icons-material';
 import useAsync from 'hooks/useAsync';
 import { getAllMyParty, getMyInfo } from 'utils/api';
 import { useNavigate } from 'react-router';
+import { finishedParties, onGoingParties } from 'constants/myPageDummyData';
+import { useEffect, useState } from 'react';
 
-const LIMIT = 5;
+const LIMIT = 4;
+
 const MyPage = () => {
+  const [lastPartyId, setLastPartyId] = useState();
   const [userState] = useAsync(getMyInfo());
-  const [onGoingState] = useAsync(getAllMyParty('ONGOING', LIMIT));
-  const [recruitingState] = useAsync(getAllMyParty('RECRUITING', LIMIT));
-  const [finishedState] = useAsync(getAllMyParty('FINISHED', LIMIT));
+  const [recruitingState] = useAsync(
+    getAllMyParty('RECRUITING', LIMIT, lastPartyId),
+    [lastPartyId],
+  );
+  const [recruitingParties, setRecruitingParties] = useState([]);
 
   const navigate = useNavigate();
 
-  if (
-    !userState.value ||
-    !onGoingState.value ||
-    !recruitingState.value ||
-    !finishedState.value
-  ) {
+  useEffect(() => {
+    if (recruitingState.value) {
+      console.log(recruitingState.value.parties);
+      setRecruitingParties([
+        ...recruitingParties,
+        ...recruitingState.value.parties,
+      ]);
+    }
+  }, [recruitingState.value]);
+
+  if (!userState.value) {
     return <></>;
   }
-
-  const { userId, username, points = 0 } = userState.value || [];
+  const { username, points = 0 } = userState.value;
 
   const handleClickCharge = () => {
     navigate(`/charge`);
@@ -40,7 +50,8 @@ const MyPage = () => {
   };
 
   const handleClickMoreButton = () => {
-    console.log('더보기!');
+    const newLastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
+    setLastPartyId(newLastPartyId);
   };
 
   return (
@@ -143,10 +154,17 @@ const MyPage = () => {
           bgcolor: 'white',
         }}
       >
-        <MyPartyTab
+        {/* <MyPartyTab
           onGoingParties={onGoingState.value.parties}
           recruitingParties={recruitingState.value.parties}
           finishedParties={finishedState.value.parties}
+          onClickParty={handleClickParty}
+        /> */}
+
+        <MyPartyTab
+          onGoingParties={onGoingParties}
+          recruitingParties={recruitingParties}
+          finishedParties={finishedParties}
           onClickParty={handleClickParty}
         />
 
