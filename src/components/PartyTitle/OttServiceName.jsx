@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 const OttServiceName = ({ ottName, ottGrade }) => {
   const OttServiceNameSx = useMemo(
@@ -16,10 +15,10 @@ const OttServiceName = ({ ottName, ottGrade }) => {
 
   return (
     <Box sx={OttServiceNameSx}>
-      <Typography variant="microB" color="text.secondary">
+      <Typography variant="microB" color="text.secondary" align="left">
         {ottName}
       </Typography>
-      <Typography variant="baseB" color="text.primary">
+      <Typography variant="baseB" color="text.primary" align="left">
         {ottGrade}
       </Typography>
     </Box>

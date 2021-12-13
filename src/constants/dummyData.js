@@ -60,7 +60,7 @@ export const ottServices = [
   },
   {
     ottId: 5,
-    ottName: '디즈니+',
+    ottName: '디즈니 플러스',
     grade: '프리미엄',
     monthlyDeposit: 10000,
     maxMemberCapacity: 4,
@@ -85,5 +85,38 @@ export const ottServices = [
     grade: '프리미엄',
     monthlyDeposit: 10000,
     maxMemberCapacity: 4,
+  },
+];
+
+export const waitingOtts = [
+  {
+    ottId: 1,
+    ottName: '넷플릭스',
+    waitingForMatch: 3,
+    monthlyPrice: 2500,
+  },
+  {
+    ottId: 2,
+    ottName: '디즈니 플러스',
+    waitingForMatch: 25,
+    monthlyPrice: 2500,
+  },
+  {
+    ottId: 3,
+    ottName: '웨이브',
+    waitingForMatch: 0,
+    monthlyPrice: 2500,
+  },
+  {
+    ottId: 4,
+    ottName: '왓챠',
+    waitingForMatch: 6,
+    monthlyPrice: 2500,
+  },
+  {
+    ottId: 5,
+    ottName: '티빙',
+    waitingForMatch: 88,
+    monthlyPrice: 2500,
   },
 ];
