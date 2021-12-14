@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@mui/material';
 import RuleToggle from './RuleToggle';
 
 const RuleList = ({ rules, onSelectRule, clickable }) => {
   const [ruleList, setRuleList] = useState(rules);
+
+  useEffect(() => {
+    setRuleList(rules);
+  }, [rules]);
 
   const handleSelectRule = ({ selectedId }) => {
     const newRuleList = ruleList.map(({ ruleId, ruleName, isSelected }) => {
@@ -44,13 +48,8 @@ const RuleList = ({ rules, onSelectRule, clickable }) => {
   );
 };
 
-RuleList.defaultProps = {
-  clickable: true,
-};
-
 RuleList.propTypes = {
   rules: PropTypes.array,
-  initialRules: PropTypes.array,
   onSelectRule: PropTypes.func,
   clickable: PropTypes.bool,
 };
