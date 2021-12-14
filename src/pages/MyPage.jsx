@@ -1,8 +1,5 @@
-import { Avatar, Box, Button, Typography } from '@mui/material';
-import { priceToString } from 'utils/priceToString';
 import { PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
-import { LogoutOutlined } from '@mui/icons-material';
 import useAsync from 'hooks/useAsync';
 import { getAllMyParty, getMyInfo } from 'utils/api';
 import { useNavigate } from 'react-router';
