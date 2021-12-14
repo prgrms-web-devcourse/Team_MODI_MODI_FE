@@ -171,7 +171,7 @@ const CreatePartyPage = () => {
     const submitData = partyCreateFormater(newParty);
     console.log(submitData);
     const { partyId } = await createNewParty(submitData);
-    // navigate(`/myParty/${partyId}`);
+    navigate(`/myParty/${partyId}`);
   };
 
   const steps = [
