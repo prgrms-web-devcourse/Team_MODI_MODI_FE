@@ -1,9 +1,15 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs } from '@mui/material';
 import theme from 'styles/theme.js';
 import HeaderTab from './HeaderTab.jsx';
+import HeaderModal from './HeaderModal.jsx';
 
 const HeaderTabs = ({ curPage }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Tabs
       value={0}
@@ -17,7 +23,8 @@ const HeaderTabs = ({ curPage }) => {
         color: `${curPage === 'main' ? '#fff' : theme.palette.text.secondary}`,
       }}
     >
-      <HeaderTab label="파티찾기" curPage={curPage} />
+      <HeaderModal open={open} onClose={handleClose} />
+      <HeaderTab label="파티찾기" curPage={curPage} onClick={handleOpen} />
       <HeaderTab label="파티만들기" curPage={curPage} />
     </Tabs>
   );
