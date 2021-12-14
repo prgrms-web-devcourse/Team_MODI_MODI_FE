@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { ottServices, rules } from 'constants/dummyData';
+import { ottServices } from 'constants/dummyData';
 import {
   StepOttSelect,
   StepPeriodSelect,
@@ -11,8 +11,11 @@ import {
   StepShardInfoForm,
 } from 'components/PartyCreate';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
+import useAsync from 'hooks/useAsync';
+import { getRules } from 'utils/api';
 
 const CreatePartyPage = () => {
+  const [rules] = useAsync(getRules);
   const [activeStep, setActiveStep] = useState(0);
   const [nextDisable, setNextDisable] = useState(true);
   const [complete, setComplete] = useState(false);
@@ -33,20 +36,21 @@ const CreatePartyPage = () => {
 
   useEffect(() => {
     const ruleStateList = [];
-    rules.map(({ ruleId, ruleName }) => {
-      ruleStateList.push({
-        ruleId,
-        ruleName,
-        isSelected: false,
-      });
+    rules.value &&
+      rules.value.rules.map(({ ruleId, ruleName }) => {
+        ruleStateList.push({
+          ruleId,
+          ruleName,
+          isSelected: false,
+        });
 
-      return false;
-    });
+        return false;
+      });
     setNewParty(current => ({
       ...current,
       ruleStateList,
     }));
-  }, []);
+  }, [rules.value]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
