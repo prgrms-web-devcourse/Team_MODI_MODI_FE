@@ -11,14 +11,13 @@ import {
   StepShardInfoForm,
 } from 'components/PartyCreate';
 import useAsync from 'hooks/useAsync';
-import { getOtt } from 'utils/api';
+import { getOtt, getRules } from 'utils/api';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
 
-import { rules } from 'constants/dummyData';
-
 const CreatePartyPage = () => {
   const { ottServices } = useOttInfoState();
+  const [rules] = useAsync(getRules);
   const [activeStep, setActiveStep] = useState(0);
   const [stepComplete, setStepComplete] = useState(true);
   const [complete, setComplete] = useState(false);
@@ -31,7 +30,7 @@ const CreatePartyPage = () => {
     endDate: calculateEndDate(new Date(), 1),
     period: 1,
     mustFilled: null,
-    ruleStateList: [],
+    ruleList: [],
     sharedId: '',
     sharedPassword: '',
     sharedPasswordCheck: '',
@@ -45,32 +44,28 @@ const CreatePartyPage = () => {
   );
 
   useEffect(() => {
-    const ruleStateList = [];
-    rules.map(({ ruleId, ruleName }) => {
-      ruleStateList.push({
-        ruleId,
-        ruleName,
+    if (rules.value) {
+      const ruleList = rules.value.rules.map(rule => ({
+        ...rule,
         isSelected: false,
-      });
-
-      return false;
-    });
-    setNewParty(current => ({
-      ...current,
-      ruleStateList,
-    }));
-  }, []);
-
-  useEffect(() => {
-    console.log(ottServices);
-    if (location.search && !ottServices.length) {
-      const currentOtt = location.search.split('=')[1];
-      console.log(currentOtt, ottServices.length);
-      const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
-      const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
-      handleSelectedOtt(ottId, ottName);
+      }));
+      setNewParty(current => ({
+        ...current,
+        ruleList,
+      }));
     }
-  }, [ottServices]);
+  }, [rules.value]);
+
+  // useEffect(() => {
+  //   console.log(ottServices);
+  //   if (location.search && !ottServices.length) {
+  //     const currentOtt = location.search.split('=')[1];
+  //     console.log(currentOtt, ottServices.length);
+  //     const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
+  //     const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
+  //     handleSelectedOtt(ottId, ottName);
+  //   }
+  // }, [ottServices]);
 
   useEffect(() => {
     currentOtt.value &&
@@ -106,14 +101,6 @@ const CreatePartyPage = () => {
   const handleSelectedOtt = selectOttId => {
     nextStep();
     loadOttInfo(selectOttId);
-    console.log(currentOtt);
-    // const { ottId, ottName, grade } = currentOtt.value;
-    // setNewParty(current => ({
-    //   ...current,
-    //   ottId,
-    //   ottName,
-    //   grade,
-    // }));
   };
 
   const handleStartDate = startDate => {
@@ -205,7 +192,7 @@ const CreatePartyPage = () => {
     {
       step: (
         <StepRuleSelect
-          rules={newParty.ruleStateList}
+          rules={newParty.ruleList}
           onSelectRule={handleSelectRules}
         />
       ),
