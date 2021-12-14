@@ -15,8 +15,6 @@ const MainPage = () => {
     navigate(`recruit/${ottId}`);
   };
 
-  console.log(ottServices);
-
   return (
     <Container disableGutters>
       <MainVisual />
