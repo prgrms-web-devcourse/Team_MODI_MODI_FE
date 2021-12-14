@@ -61,10 +61,7 @@ const CreatePartyPage = () => {
   useEffect(() => {
     if (location.search && ottServices.length) {
       const currentOtt = location.search.split('=')[1];
-      console.log(currentOtt, ottServices);
-      const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
-      const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
-      handleSelectedOtt(ottId, ottName);
+      handleSelectedOtt(currentOtt);
     }
   }, [ottServices]);
 
