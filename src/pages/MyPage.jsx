@@ -230,15 +230,6 @@ const MyPage = () => {
           onClickParty={handleClickParty}
           onClickMoreButton={handleClickMoreButton}
         />
-        {/* <Button
-          variant="contained"
-          size="small"
-          color="modiGray"
-          disabled={recruiting.buttonDisabled}
-          onClick={handleClickMoreButton}
-        >
-          더보기
-        </Button> */}
       </PageContents>
     </PageContainer>
   );
