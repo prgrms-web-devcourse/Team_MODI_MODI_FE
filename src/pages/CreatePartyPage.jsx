@@ -56,16 +56,16 @@ const CreatePartyPage = () => {
     }
   }, [rules.value]);
 
-  // useEffect(() => {
-  //   console.log(ottServices);
-  //   if (location.search && !ottServices.length) {
-  //     const currentOtt = location.search.split('=')[1];
-  //     console.log(currentOtt, ottServices.length);
-  //     const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
-  //     const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
-  //     handleSelectedOtt(ottId, ottName);
-  //   }
-  // }, [ottServices]);
+  useEffect(() => {
+    console.log(ottServices);
+    if (location.search && !ottServices.length) {
+      const currentOtt = location.search.split('=')[1];
+      console.log(currentOtt, ottServices.length);
+      const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
+      const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
+      handleSelectedOtt(ottId, ottName);
+    }
+  }, [ottServices]);
 
   useEffect(() => {
     currentOtt.value &&
@@ -128,10 +128,10 @@ const CreatePartyPage = () => {
     }));
   };
 
-  const handleCounter = memberCapacity => {
+  const handleCounter = partyMemberCapacity => {
     setNewParty(current => ({
       ...current,
-      memberCapacity,
+      partyMemberCapacity,
     }));
   };
 
@@ -200,7 +200,7 @@ const CreatePartyPage = () => {
     {
       step: (
         <StepMemberSelect
-          memberCount={newParty.memberCapacity}
+          memberCount={newParty.partyMemberCapacity}
           onCounterClick={handleCounter}
           mustFilled={newParty.mustFilled}
           onConfirm={handleConfirm}
