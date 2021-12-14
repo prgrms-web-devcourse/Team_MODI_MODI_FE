@@ -64,8 +64,15 @@ const PartyTitle = ({
 export default PartyTitle;
 
 PartyTitle.propTypes = {
-  ottName: PropTypes.oneOf(['넷플릭스', '왓챠', '디즈니 플러스', '웨이브'])
-    .isRequired,
+  ottName: PropTypes.oneOf([
+    '넷플릭스',
+    '왓챠',
+    '웨이브',
+    '티빙',
+    '디즈니 플러스',
+    '라프텔',
+    '쿠팡 플레이',
+  ]).isRequired,
   ottGrade: PropTypes.string,
   monthlyPrice: PropTypes.number,
   servicePeriod: PropTypes.number,
