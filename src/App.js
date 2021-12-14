@@ -15,7 +15,6 @@ function App() {
   const { ottServices } = useOttInfoState();
   const { onUpdate: onUpdateOttInfo } = useOttInfoDispatch();
   const { onUpdate: onUpdateUserInfo, onLogout } = useAuthDispatch();
-
   const [storedOttInfo, setOttInfo] = useStorage(OTT_INFO_KEY, null, 'session');
 
   const [storedUserInfo, setUserInfo] = useStorage(
@@ -67,7 +66,6 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn && !storedUserInfo) {
-      console.log(1);
       fetchGetMyInfoApiState();
     } else if (isLoggedIn && storedUserInfo) {
       onUpdateUserInfo(storedUserInfo);
