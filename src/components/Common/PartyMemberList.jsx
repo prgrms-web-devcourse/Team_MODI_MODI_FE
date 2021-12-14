@@ -19,14 +19,15 @@ const PartyMemberList = ({ members }) => {
           textAlign: 'left',
           mt: 2,
         }}
-        variant="small"
+        variant="baseB"
+        color="text.secondary"
         component="div"
       >
         파티인원
       </Typography>
       <Box
         sx={{
-          mt: 1,
+          mt: 3,
           display: 'flex',
           alignItems: 'flex-start',
         }}

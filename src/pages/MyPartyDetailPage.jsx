@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box } from '@mui/system';
-import { Divider, Typography } from '@mui/material';
+import { Box, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import { AuthProvider } from 'contexts/authContext';
 import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
@@ -42,14 +41,15 @@ const MyPartyDetailPage = () => {
     endDate: '',
     totalFee: 0,
     monthlyReimbursement: 0,
-    status: '',
+    status: '', // RECRUITING, ONGOING, FINISHED
   });
 
   useEffect(() => {
     if (value) {
+      console.log(value.members);
       setPartyDetail(value);
     }
-  }, [value, partyDetail]);
+  }, [value]);
 
   useEffect(() => {
     setSharedInfo(sharedInfoState.value);
@@ -114,17 +114,32 @@ const MyPartyDetailPage = () => {
   return !isLoading ? (
     <>
       <PageContainer>
-        <PageHeader title="파티 확인하기" />
-        <PageContents>
+        <PageHeader>
           <PartyTitle
             ottName={partyDetail.ottName}
             ottGrade={partyDetail.grade}
-            startDate={partyDetail.startDate}
-            endDate={partyDetail.endDate}
-            period={partyDetail.period}
+          />
+          {feeRender(checkLeader)}
+        </PageHeader>
+        <PageContents>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
           >
-            {feeRender(checkLeader)}
-          </PartyTitle>
+            <Chip
+              label={partyDetail.status === 'RECRUITING' ? '모집중' : '진행중'}
+              color={
+                partyDetail.status === 'RECRUITING' ? 'primary' : 'secondary'
+              }
+              size="small"
+              sx={{ mr: 1 }}
+            />
+            <Typography variant="small" color="text.secondary">
+              {`${partyDetail.startDate}~${partyDetail.endDate}(${partyDetail.period}개월)`}
+            </Typography>
+          </Box>
           <Box
             sx={{
               mt: 2,

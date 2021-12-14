@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Typography, Box } from '@mui/material';
-import { AirlineSeatReclineExtra } from '@mui/icons-material';
+import { AirlineSeatReclineExtra, Face } from '@mui/icons-material';
 import crown from 'assets/crown.png';
 
 const PartyMember = ({
@@ -23,24 +23,25 @@ const PartyMember = ({
         width: '25%',
       }}
     >
-      <AirlineSeatReclineExtra color="secondary" />
+      {leader && (
+        <img
+          alt="crown"
+          src={crown}
+          style={{
+            position: 'absolute',
+            zIndex: 1,
+            top: '-6px',
+            width: 15,
+          }}
+        />
+      )}
+      <Face color="secondary" fontSize="large" />
       {hasText ? (
         <Typography
           sx={{ wordBreak: 'keep-all' }}
           variant={fontSize}
           color={isWaiting ? 'text.disabled' : 'text.secondary'}
         >
-          {leader && (
-            <img
-              alt="crown"
-              src={crown}
-              style={{
-                marginTop: 1,
-                marginRight: 1,
-                width: 10,
-              }}
-            />
-          )}
           {isWaiting ? '모집 중' : username}
         </Typography>
       ) : (
