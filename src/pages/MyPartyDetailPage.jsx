@@ -1,5 +1,5 @@
 import { Box } from '@mui/system';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 import { PageContainer, PageContents, PageHeader } from 'components/Common';
 import PartyTitle from 'components/PartyTitle';
@@ -11,13 +11,38 @@ import { useParams } from 'react-router-dom';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import { priceToString } from 'utils/priceToString';
 import CardTemplate from 'components/Common/CardTemplate';
+import { getMyPartyById } from 'utils/api';
+import useAsync from 'hooks/useAsync';
+import PartyDetail from 'components/PartyJoin/PartyDetail';
+import { AuthProvider } from 'contexts/authContext';
 
-const MY_USER_ID = 2;
+const MY_USER_ID = 7;
 
 const MyPartyDetailPage = () => {
+  // const { userName } = AuthProvider();
   const params = useParams();
   const { myPartyId } = params;
-  console.log(`myPartyId: ${myPartyId}`);
+  const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
+  const [partyDetail, setPartyDetail] = useState({
+    ottName: '넷플릭스',
+    grade: '',
+    monthlyFee: 0,
+    period: 0,
+    members: [],
+    rules: [],
+    startDate: '',
+    endDate: '',
+    totalFee: 0,
+    monthlyReimbursement: 0,
+    status: '',
+  });
+
+  useEffect(() => {
+    if (partyDetailstate.value) {
+      console.log(partyDetailstate.value);
+      setPartyDetail(partyDetailstate.value);
+    }
+  }, [partyDetailstate.value]);
 
   /**
    * API처리 로직
@@ -25,21 +50,7 @@ const MyPartyDetailPage = () => {
    * getSharedInfo()
    */
 
-  const {
-    ottName,
-    grade,
-    monthlyFee,
-    period,
-    members,
-    rules,
-    startDate,
-    endDate,
-    totalFee,
-    monthlyReimbursement,
-    status,
-  } = PARTY_DETAIL_DUMMY;
-
-  const checkLeader = members.find(
+  const checkLeader = partyDetail.members.find(
     ({ userId }) => userId === MY_USER_ID,
   )?.isLeader;
 
@@ -55,7 +66,7 @@ const MyPartyDetailPage = () => {
         >
           <AddCircleOutline color="secondary" fontSize="small" />
           <Typography variant="baseB">
-            월 {priceToString(monthlyReimbursement)}원
+            월 {priceToString(partyDetail.monthlyReimbursement)}원
           </Typography>
         </Box>
       );
@@ -70,7 +81,7 @@ const MyPartyDetailPage = () => {
           }}
         >
           <Typography variant="smallB" component="p">
-            월 {priceToString(monthlyFee)}원
+            월 {priceToString(partyDetail.monthlyFee)}원
           </Typography>
           <Box
             sx={{
@@ -81,7 +92,7 @@ const MyPartyDetailPage = () => {
           >
             <RemoveCircleOutline color="error" fontSize="small" />
             <Typography variant="smallB">
-              총 {priceToString(totalFee)}원
+              총 {priceToString(partyDetail.totalFee)}원
             </Typography>
           </Box>
         </Box>
@@ -101,11 +112,11 @@ const MyPartyDetailPage = () => {
         <PageHeader title="파티 확인하기" />
         <PageContents>
           <PartyTitle
-            ottName={ottName}
-            ottGrade={grade}
-            startDate={startDate}
-            endDate={endDate}
-            period={period}
+            ottName={partyDetail.ottName}
+            ottGrade={partyDetail.grade}
+            startDate={partyDetail.startDate}
+            endDate={partyDetail.endDate}
+            period={partyDetail.period}
           >
             {feeRender(checkLeader)}
           </PartyTitle>
@@ -120,7 +131,7 @@ const MyPartyDetailPage = () => {
               perspective: '2000px',
             }}
           >
-            {status === 'RECRUITING' ? (
+            {partyDetail.status === 'RECRUITING' ? (
               <CardTemplate blur={true} />
             ) : (
               <PartyShareAccount
@@ -130,19 +141,19 @@ const MyPartyDetailPage = () => {
                   sharedId: 'Modi@abc.com',
                   sharedPassword: '12312314sdf',
                 }}
-                partyStatus={status}
+                partyStatus={partyDetail.status}
               />
             )}
           </Box>
           <Divider />
-          <PartyMemberList members={members} />
+          <PartyMemberList members={partyDetail.members} />
           <Divider
             sx={{
               mt: 2,
               mb: 1,
             }}
           />
-          <RuleContainer rules={rules} sx={{ borderBottom: '0' }} />
+          <RuleContainer rules={partyDetail.rules} sx={{ borderBottom: '0' }} />
         </PageContents>
       </PageContainer>
     </>
