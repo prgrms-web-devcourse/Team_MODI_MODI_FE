@@ -12,7 +12,6 @@ function App() {
 
   useEffect(() => {
     if (ottInfoList.value && !ottServices.length) {
-      console.log(ottInfoList, ottServices);
       onUpdate(ottInfoList.value);
     }
   }, [ottInfoList.value]);
