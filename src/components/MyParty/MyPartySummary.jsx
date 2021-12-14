@@ -115,6 +115,7 @@ const MyPartySummary = ({
                 src={crown}
                 style={{
                   marginLeft: 5,
+                  marginBottom: 2.5,
                   width: 20,
                 }}
               />
