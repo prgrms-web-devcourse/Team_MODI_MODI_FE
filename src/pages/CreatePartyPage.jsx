@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
@@ -11,18 +11,10 @@ import {
   StepShardInfoForm,
 } from 'components/PartyCreate';
 import useAsync from 'hooks/useAsync';
-import { getOtt, getRules } from 'utils/api';
+import { createNewParty, getOtt, getRules } from 'utils/api';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
-
-// TODO
-/*
-  - OttList 가져오기
-  - 쿼리스트링 체크해서 ott 선택된 상태로 페이지 로드
-  - ott선택된 ott 정보 불러오기
-  - Rule 목록 가져오기
-  - submit post 보내기 
-*/
+import { partyCreateFormater } from 'utils/formatting';
 
 const CreatePartyPage = () => {
   const { ottServices } = useOttInfoState();
@@ -45,6 +37,7 @@ const CreatePartyPage = () => {
     sharedPasswordCheck: '',
   });
   const location = useLocation();
+  const navigate = useNavigate();
   const [currentOtt, loadOttInfo] = useAsync(
     getOtt,
     [newParty.ottId],
@@ -85,10 +78,6 @@ const CreatePartyPage = () => {
       }));
   }, [currentOtt.value]);
 
-  useEffect(() => {
-    console.log('new', newParty);
-  }, [newParty]);
-
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
     nextStep();
@@ -96,7 +85,7 @@ const CreatePartyPage = () => {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    if (activeStep === 0 || activeStep === 1 || newParty.mustFilled !== null) {
+    if (activeStep === 0 || newParty.mustFilled !== null) {
       return;
     }
     setStepComplete(true);
@@ -130,9 +119,14 @@ const CreatePartyPage = () => {
   };
 
   const handleSelectRules = newRuleList => {
+    if (newRuleList.some(({ isSelected }) => isSelected)) {
+      nextStep();
+    } else {
+      setStepComplete(true);
+    }
     setNewParty(current => ({
       ...current,
-      ruleStateList: newRuleList,
+      ruleList: newRuleList,
     }));
   };
 
@@ -172,9 +166,11 @@ const CreatePartyPage = () => {
     }
   }, [newParty]);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // TODO API POST
+    const submitData = partyCreateFormater(newParty);
+    const { partyId } = await createNewParty(submitData);
+    navigate(`/myParty/${partyId}`);
   };
 
   const steps = [
