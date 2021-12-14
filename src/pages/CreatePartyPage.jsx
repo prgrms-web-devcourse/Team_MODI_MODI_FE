@@ -28,7 +28,7 @@ const CreatePartyPage = () => {
     grade: '',
     partyMemberCapacity: 1,
     startDate: calculateNextDate(),
-    endDate: calculateEndDate(new Date(), 1),
+    endDate: calculateEndDate(calculateNextDate(), 1),
     period: 1,
     mustFilled: null,
     ruleList: [],
@@ -169,8 +169,9 @@ const CreatePartyPage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     const submitData = partyCreateFormater(newParty);
+    console.log(submitData);
     const { partyId } = await createNewParty(submitData);
-    navigate(`/myParty/${partyId}`);
+    // navigate(`/myParty/${partyId}`);
   };
 
   const steps = [
