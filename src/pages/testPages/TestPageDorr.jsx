@@ -1,9 +1,9 @@
 import { CssBaseline } from '@mui/material';
 import useAsync from 'hooks/useAsync';
-import { getMyInfo } from 'utils/api';
+import { getOtt, getOttList } from 'utils/api';
 
 const TestPageDorr = () => {
-  const [state, callback] = useAsync(getMyInfo());
+  const [state, callback] = useAsync(getOtt, [1]);
   const { isLoading, value, error } = state;
 
   console.log(isLoading, value, error);
@@ -23,6 +23,8 @@ const TestPageDorr = () => {
     <>
       <CssBaseline />
       <button onClick={() => callback()}>불러오기</button>
+      <button onClick={() => callback(5)}>불러오기</button>
+      <button onClick={() => callback(4)}>불러오기</button>
     </>
   );
 };

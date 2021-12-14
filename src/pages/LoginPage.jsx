@@ -26,7 +26,7 @@ const LoginPage = () => {
           padding: '100px 30px 0 30px',
         }}
       >
-        <Logo size={120} color />
+        <Logo size={120} color={false} />
         <Box
           sx={{
             flex: 1,
