@@ -39,15 +39,15 @@ const asyncReducer = (_state, action) => {
   }
 };
 
-const useAsync = (fn, deps = [], skip = false) => {
+const useAsync = (fn, initialArgs = [], deps = [], skip = false) => {
   const lastCallId = useRef(0);
   const [state, dispatch] = useReducer(asyncReducer, initialAsyncState);
 
   const callback = useCallback(
-    async (...args) => {
+    async (...newArgs) => {
       const callId = ++lastCallId.current;
       dispatch({ type: 'loading' });
-
+      const args = newArgs.length ? newArgs : initialArgs;
       try {
         const value = await fn(...args);
 
@@ -70,8 +70,9 @@ const useAsync = (fn, deps = [], skip = false) => {
   );
 
   useEffect(() => {
-    !skip && callback();
-  }, [skip, callback]);
+    !skip && callback(...initialArgs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...initialArgs, skip, callback]);
 
   return [state, callback];
 };

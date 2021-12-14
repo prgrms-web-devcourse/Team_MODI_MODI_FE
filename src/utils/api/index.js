@@ -32,9 +32,9 @@ const post = (uri, requireToken = false, data = {}) => {
 
 // const _delete = (uri, requireToken) => axiosRequest(uri, requireToken);
 
-export const getOttList = () => () => get('/otts');
-export const getOtt = ottId => () => get(`/otts/${ottId}`);
-export const getOttWaitings = () => () => get('/otts/waitings');
+export const getOttList = () => get('/otts');
+export const getOtt = ottId => get(`/otts/${ottId}`);
+export const getOttWaitings = () => get('/otts/waitings');
 export const getRecruitingParties = (ottId, size = 5, lastPartyId) => {
   let searchParamObj = { size };
 
@@ -48,29 +48,27 @@ export const getRecruitingParties = (ottId, size = 5, lastPartyId) => {
   const searchParams = new URLSearchParams(searchParamObj);
   const stringifyParams = searchParams.toString();
 
-  return () => {
-    return get(`/otts/${ottId}/parties?${stringifyParams}`);
-  };
+  return get(`/otts/${ottId}/parties?${stringifyParams}`);
 };
-export const getPartyDetail = partyId => () => get(`/parties/${partyId}`);
-export const getRules = () => () => get(`/rules`);
+export const getPartyDetail = partyId => get(`/parties/${partyId}`);
+export const getRules = () => get(`/rules`);
 
 export const createNewParty = newPartyData => {
-  return () => post(`/parties`, true, newPartyData);
+  return post(`/parties`, true, newPartyData);
 };
 
-export const requestPartyJoin = partyId => () => {
+export const requestPartyJoin = partyId => {
   return post(`/parties/${partyId}/join`, true);
 };
 
 export const getSharedAccountInfo = partyId => {
-  return () => get(`/parties/${partyId}/sharedAccount`, true);
+  return get(`/parties/${partyId}/sharedAccount`, true);
 };
 
-export const chargePoint = point => () => post(`/points/add`, true, point);
-export const getMyPoint = () => () => get(`/users/me/points`, true);
+export const chargePoint = point => post(`/points/add`, true, point);
+export const getMyPoint = () => get(`/users/me/points`, true);
 
-export const getMyInfo = () => () => get(`/users/me`, true);
+export const getMyInfo = () => get(`/users/me`, true);
 export const getAllMyParty = (status = 'RECEUITING', size = 5, lastPartyId) => {
   let searchParamObj = {
     status,
@@ -87,8 +85,8 @@ export const getAllMyParty = (status = 'RECEUITING', size = 5, lastPartyId) => {
   const searchParams = new URLSearchParams(searchParamObj);
   const stringifyParams = searchParams.toString();
 
-  return () => get(`/users/me/parties?${stringifyParams}`, true);
+  return get(`/users/me/parties?${stringifyParams}`, true);
 };
-export const getMyPartyById = partyId => () => {
+export const getMyPartyById = partyId => {
   return get(`/users/me/parties/${partyId}`, true);
 };
