@@ -7,6 +7,7 @@ import useAsync from 'hooks/useAsync';
 import { getAllMyParty, getMyInfo } from 'utils/api';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
+import MyPageTitle from 'components/MyParty/MyPageTitle';
 
 const LIMIT = 3;
 
@@ -75,6 +76,7 @@ const MyPage = () => {
   };
 
   const handleLogOut = () => {
+    console.log('logout');
     // context API 적용 후 onLogout 을 통해 상태 관리 예정
   };
 
@@ -130,91 +132,12 @@ const MyPage = () => {
         bgcolor: 'secondary.main',
       }}
     >
-      <Box>
-        <Box
-          sx={{
-            p: 1,
-            m: 1,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Typography color="primary.contrastText" variant="mediumB">
-              안녕하세요, {username}님
-            </Typography>
-            <LogoutOutlined
-              style={{
-                color: 'white',
-                cursor: 'pointer',
-              }}
-              onClick={handleLogOut}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            marginTop: 2,
-            textAlign: 'center',
-          }}
-        >
-          <Typography
-            color="primary.contrastText"
-            variant="microB"
-            component="p"
-          >
-            나의 포인트
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Typography
-              variant="visual"
-              style={{
-                marginRight: 10,
-                fontSize: 50,
-                color: '#F0E07E',
-              }}
-            >
-              {priceToString(points)}
-            </Typography>
-            <Avatar
-              style={{
-                paddingLeft: 2,
-                width: 25,
-                height: 25,
-                fontSize: 15,
-                fontWeight: 700,
-                backgroundColor: '#668F90',
-              }}
-            >
-              P
-            </Avatar>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{
-              m: 2,
-            }}
-            style={{
-              backgroundColor: '#7FBDBE',
-              minWidth: '40%',
-              height: 40,
-            }}
-            onClick={handleClickCharge}
-          >
-            충전하기
-          </Button>
-        </Box>
-      </Box>
+      <MyPageTitle
+        username={username}
+        points={points}
+        onClickLogout={handleLogOut}
+        onClickCharge={handleClickCharge}
+      />
       <PageContents
         sx={{
           display: 'flex',
