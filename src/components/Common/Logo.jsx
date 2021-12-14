@@ -3,7 +3,7 @@ import LogoMainSvg from 'assets/logo-main.svg';
 import LogoWhiteSvg from 'assets/logo-white.svg';
 
 const Logo = ({ size, color }) => {
-  return color === 'color' ? (
+  return color ? (
     <img src={LogoMainSvg} alt="" style={{ width: size }} />
   ) : (
     <img src={LogoWhiteSvg} alt="" style={{ width: size }} />
@@ -12,12 +12,12 @@ const Logo = ({ size, color }) => {
 
 Logo.defaultProps = {
   size: 56,
-  color: 'color',
+  color: true,
 };
 
 Logo.propTypes = {
   size: PropTypes.number,
-  color: PropTypes.string,
+  color: PropTypes.bool,
 };
 
 export default Logo;
