@@ -15,6 +15,15 @@ import { getOtt, getRules } from 'utils/api';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
 
+// TODO
+/*
+  - OttList 가져오기
+  - 쿼리스트링 체크해서 ott 선택된 상태로 페이지 로드
+  - ott선택된 ott 정보 불러오기
+  - Rule 목록 가져오기
+  - submit post 보내기 
+*/
+
 const CreatePartyPage = () => {
   const { ottServices } = useOttInfoState();
   const [rules] = useAsync(getRules);
@@ -57,10 +66,9 @@ const CreatePartyPage = () => {
   }, [rules.value]);
 
   useEffect(() => {
-    console.log(ottServices);
-    if (location.search && !ottServices.length) {
+    if (location.search && ottServices.length) {
       const currentOtt = location.search.split('=')[1];
-      console.log(currentOtt, ottServices.length);
+      console.log(currentOtt, ottServices);
       const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
       const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
       handleSelectedOtt(ottId, ottName);
