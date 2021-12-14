@@ -1,21 +1,31 @@
-import { Typography, Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Divider } from '@mui/material';
 import { PageContainer, PageContents, PageHeader } from 'components/Common';
 import InfoElement from 'components/Common/InfoElement';
 import { AuthProvider } from 'contexts/authContext';
 import useAsync from 'hooks/useAsync';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { chargePoint } from 'utils/api';
+
+// TODO
+// authProvider에서 보유 포인트 받아와서 처리
 
 const PointChargePage = () => {
   const points = 1000;
-  const totalPoints = 1000;
   // const { points } = AuthProvider();
-  const [chargePoint, setChargePoint] = useState(0);
-  const [pointState] = useAsync(chargePoint, [chargePoint], [], true);
+  const [chargeInput, setChargeInput] = useState(0);
+  const [pointState, chargeCallback] = useAsync(
+    chargePoint,
+    [chargePoint],
+    [],
+    true,
+  );
 
   const handleChargePoint = ({ target }) => {
-    console.log(target.value);
-    setChargePoint(target.value);
+    setChargeInput(target.value);
+  };
+
+  const handleChargeClick = () => {
+    chargeCallback({ points: Number(chargeInput) });
   };
 
   return (
@@ -29,34 +39,40 @@ const PointChargePage = () => {
               flexDirection: 'column',
             }}
           >
+            <TextField
+              fullWidth
+              placeholder="금액을 입력해 주세요"
+              value={chargeInput}
+              onChange={handleChargePoint}
+              type="number"
+              sx={{
+                mb: 6,
+              }}
+            />
             <Box
               sx={{
-                flexGrow: 1,
+                mb: 3,
               }}
             >
-              <TextField
-                fullWidth
-                value={chargePoint}
-                onChange={handleChargePoint}
-              />
               <InfoElement
                 left={{ contentL: '보유 포인트' }}
                 right={{ contentR: points }}
               />
+              <Divider />
               <InfoElement
                 left={{
                   contentL: '충전 후 예상 포인트',
                   colorL: 'secondary',
                 }}
                 right={{
-                  contentR: totalPoints,
+                  contentR: Number(chargeInput) + points,
                   variantR: 'large',
                   colorR: 'text.primary',
                 }}
               />
             </Box>
 
-            <Button variant="contained" onClick={handleChargePoint}>
+            <Button variant="contained" onClick={handleChargeClick}>
               충전하기
             </Button>
           </Box>
