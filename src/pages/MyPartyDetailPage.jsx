@@ -1,20 +1,22 @@
-import { Box } from '@mui/system';
 import { useCallback, useEffect, useState } from 'react';
-import PartyShareAccount from 'components/MyParty/PartyShareAccount';
-import { PageContainer, PageContents, PageHeader } from 'components/Common';
-import PartyTitle from 'components/PartyTitle';
-import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
-import PartyMemberList from 'components/Common/PartyMemberList';
-import RuleContainer from 'components/Common/Rule';
-import { Divider, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { Box } from '@mui/system';
+import { Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
-import { priceToString } from 'utils/priceToString';
-import CardTemplate from 'components/Common/CardTemplate';
-import { getMyPartyById } from 'utils/api';
-import useAsync from 'hooks/useAsync';
-import PartyDetail from 'components/PartyJoin/PartyDetail';
 import { AuthProvider } from 'contexts/authContext';
+import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
+import useAsync from 'hooks/useAsync';
+import PartyTitle from 'components/PartyTitle';
+import {
+  PageContainer,
+  PageContents,
+  PageHeader,
+  PartyMemberList,
+  CardTemplate,
+} from 'components/Common';
+import RuleContainer from 'components/Common/Rule';
+import { priceToString } from 'utils/priceToString';
+import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
 const MY_USER_ID = 7;
 
@@ -23,6 +25,12 @@ const MyPartyDetailPage = () => {
   const params = useParams();
   const { myPartyId } = params;
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
+  const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
+  const { isLoading, value } = partyDetailstate;
+  const [sharedInfo, setSharedInfo] = useState({
+    sharedId: '',
+    sharedPassword: '',
+  });
   const [partyDetail, setPartyDetail] = useState({
     ottName: '넷플릭스',
     grade: '',
@@ -38,17 +46,14 @@ const MyPartyDetailPage = () => {
   });
 
   useEffect(() => {
-    if (partyDetailstate.value) {
-      console.log(partyDetailstate.value);
-      setPartyDetail(partyDetailstate.value);
+    if (value) {
+      setPartyDetail(value);
     }
-  }, [partyDetailstate.value]);
+  }, [value, partyDetail]);
 
-  /**
-   * API처리 로직
-   * getMyPartyDetail(myPartyId)
-   * getSharedInfo()
-   */
+  useEffect(() => {
+    setSharedInfo(sharedInfoState.value);
+  }, [sharedInfoState.value]);
 
   const checkLeader = partyDetail.members.find(
     ({ userId }) => userId === MY_USER_ID,
@@ -81,7 +86,7 @@ const MyPartyDetailPage = () => {
           }}
         >
           <Typography variant="smallB" component="p">
-            월 {priceToString(partyDetail.monthlyFee)}원
+            월 {priceToString(partyDetail.monthlyPrice)}원
           </Typography>
           <Box
             sx={{
@@ -92,7 +97,7 @@ const MyPartyDetailPage = () => {
           >
             <RemoveCircleOutline color="error" fontSize="small" />
             <Typography variant="smallB">
-              총 {priceToString(partyDetail.totalFee)}원
+              총 {priceToString(partyDetail.totalPrice)}원
             </Typography>
           </Box>
         </Box>
@@ -106,7 +111,7 @@ const MyPartyDetailPage = () => {
     setFliped(prev => !prev);
   }, []);
 
-  return (
+  return !isLoading ? (
     <>
       <PageContainer>
         <PageHeader title="파티 확인하기" />
@@ -138,8 +143,8 @@ const MyPartyDetailPage = () => {
                 fliped={fliped}
                 onFlipCard={handleFlipCard}
                 sharedInfo={{
-                  sharedId: 'Modi@abc.com',
-                  sharedPassword: '12312314sdf',
+                  sharedId: sharedInfo.sharedId,
+                  sharedPassword: sharedInfo.sharedPassword,
                 }}
                 partyStatus={partyDetail.status}
               />
@@ -157,6 +162,8 @@ const MyPartyDetailPage = () => {
         </PageContents>
       </PageContainer>
     </>
+  ) : (
+    <p>로딩중</p>
   );
 };
 
