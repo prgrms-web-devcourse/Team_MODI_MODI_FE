@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { ottServices, rules } from 'constants/dummyData';
 import {
   StepOttSelect,
   StepPeriodSelect,
@@ -10,17 +10,23 @@ import {
   StepMemberSelect,
   StepShardInfoForm,
 } from 'components/PartyCreate';
+import useAsync from 'hooks/useAsync';
+import { getOtt } from 'utils/api';
+import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
 
+import { rules } from 'constants/dummyData';
+
 const CreatePartyPage = () => {
+  const { ottServices } = useOttInfoState();
   const [activeStep, setActiveStep] = useState(0);
-  const [nextDisable, setNextDisable] = useState(true);
+  const [stepComplete, setStepComplete] = useState(true);
   const [complete, setComplete] = useState(false);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
     grade: '',
-    memberCapacity: 1,
+    partyMemberCapacity: 1,
     startDate: calculateNextDate(),
     endDate: calculateEndDate(new Date(), 1),
     period: 1,
@@ -30,6 +36,13 @@ const CreatePartyPage = () => {
     sharedPassword: '',
     sharedPasswordCheck: '',
   });
+  const location = useLocation();
+  const [currentOtt, loadOttInfo] = useAsync(
+    getOtt,
+    [newParty.ottId],
+    [],
+    true,
+  );
 
   useEffect(() => {
     const ruleStateList = [];
@@ -48,6 +61,31 @@ const CreatePartyPage = () => {
     }));
   }, []);
 
+  useEffect(() => {
+    console.log(ottServices);
+    if (location.search && !ottServices.length) {
+      const currentOtt = location.search.split('=')[1];
+      console.log(currentOtt, ottServices.length);
+      const { ottId } = ottServices.find(ott => ott.ottNameEn === currentOtt);
+      const { ottName } = ottServices.find(ott => ott.ottNameEn === currentOtt);
+      handleSelectedOtt(ottId, ottName);
+    }
+  }, [ottServices]);
+
+  useEffect(() => {
+    currentOtt.value &&
+      setNewParty(current => ({
+        ...current,
+        ottId: currentOtt.value.ottId,
+        ottName: currentOtt.value.ottName,
+        grade: currentOtt.value.grade,
+      }));
+  }, [currentOtt.value]);
+
+  useEffect(() => {
+    console.log('new', newParty);
+  }, [newParty]);
+
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
     nextStep();
@@ -58,21 +96,24 @@ const CreatePartyPage = () => {
     if (activeStep === 0 || activeStep === 1 || newParty.mustFilled !== null) {
       return;
     }
-    setNextDisable(true);
+    setStepComplete(true);
   };
 
   const nextStep = () => {
-    nextDisable && setNextDisable(false);
+    stepComplete && setStepComplete(false);
   };
 
-  const handleSelectedOtt = (ottId, ottName) => {
+  const handleSelectedOtt = selectOttId => {
     nextStep();
-    setNewParty(current => ({
-      ...current,
-      ottId,
-      ottName,
-      grade: '프리미엄',
-    }));
+    loadOttInfo(selectOttId);
+    console.log(currentOtt);
+    // const { ottId, ottName, grade } = currentOtt.value;
+    // setNewParty(current => ({
+    //   ...current,
+    //   ottId,
+    //   ottName,
+    //   grade,
+    // }));
   };
 
   const handleStartDate = startDate => {
@@ -197,7 +238,7 @@ const CreatePartyPage = () => {
       style={{
         display: 'block',
         background: '#fff',
-        padding: '0 30px',
+        padding: '60px 30px 0',
         position: 'relative',
         minHeight: '100vh',
       }}
@@ -227,7 +268,7 @@ const CreatePartyPage = () => {
             type="button"
             size="large"
             variant="contained"
-            disabled={nextDisable}
+            disabled={stepComplete}
             onClick={handleNext}
           >
             다음 <KeyboardArrowRight />
