@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import useStorage from 'hooks/useStorage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuthDispatch } from 'contexts/authContext';

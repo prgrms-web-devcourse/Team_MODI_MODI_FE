@@ -13,7 +13,7 @@ const PartyDetail = ({ partyDetail }) => {
     partyId,
     ottName,
     grade,
-    monthlyFee,
+    monthlyPrice,
     period,
     rules,
     startDate,
@@ -29,7 +29,7 @@ const PartyDetail = ({ partyDetail }) => {
   return (
     <>
       <PartyTitle ottName={ottName} ottGrade={grade}>
-        <PricePanel monthlyPrice={monthlyFee} servicePeriod={period} />
+        <PricePanel monthlyPrice={monthlyPrice} servicePeriod={period} />
       </PartyTitle>
       <PartyInfo
         ottName={ottName}
@@ -37,7 +37,7 @@ const PartyDetail = ({ partyDetail }) => {
         startDate={startDate}
         endDate={endDate}
         period={period}
-        monthlyFee={monthlyFee}
+        monthlyFee={monthlyPrice}
       />
       <RuleContainer rules={rules} />
       <PartyMemberList members={members} />
