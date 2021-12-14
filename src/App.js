@@ -2,11 +2,11 @@ import Header from 'components/Common/Header';
 import { useOttInfoDispatch } from 'contexts/OttInfoProvider';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import useAsync from 'hooks/useAsync';
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet } from 'react-router';
 import { getMyInfo, getOttList } from 'utils/api';
 import { useEffect } from 'react';
 import useStorage from 'hooks/useStorage';
-import { OTT_INFO_KEY, TOKEN_KEY, USER_INFO_KEY } from 'constants/keys';
+import { OTT_INFO_KEY, USER_INFO_KEY } from 'constants/keys';
 import { useAuthDispatch } from 'contexts/authContext';
 import { useAuthState } from 'contexts/authContext';
 
@@ -15,9 +15,9 @@ function App() {
   const { ottServices } = useOttInfoState();
   const { onUpdate: onUpdateOttInfo } = useOttInfoDispatch();
   const { onUpdate: onUpdateUserInfo, onLogout } = useAuthDispatch();
-  const navigate = useNavigate();
+
   const [storedOttInfo, setOttInfo] = useStorage(OTT_INFO_KEY, null, 'session');
-  const [storedToken] = useStorage(TOKEN_KEY, null, 'session');
+
   const [storedUserInfo, setUserInfo] = useStorage(
     USER_INFO_KEY,
     null,
