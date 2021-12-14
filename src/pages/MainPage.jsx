@@ -3,44 +3,19 @@ import useAsync from 'hooks/useAsync';
 import OttList from 'components/Ott/OttList';
 import MainCarousel from 'components/Main/MainCarousel';
 import MainVisual from 'components/Main/MainVisual';
-import { getOttList, getOttWaitings } from 'utils/api/index';
+import { getOttWaitings } from 'utils/api/index';
 import { useNavigate } from 'react-router-dom';
-
-const ottInfoEn = {
-  넷플릭스: {
-    ottNameEn: 'netflix',
-  },
-  왓챠: {
-    ottNameEn: 'watcha',
-  },
-  '디즈니 플러스': {
-    ottNameEn: 'disneyPlus',
-  },
-  웨이브: {
-    ottNameEn: 'wavve',
-  },
-  티빙: {
-    ottNameEn: 'tving',
-  },
-  라프텔: {
-    ottNameEn: 'laftel',
-  },
-  '쿠팡 플레이': {
-    ottNameEn: 'coupangPlay',
-  },
-  '아마존 프라임': {
-    ottNameEn: 'amazonPrime',
-  },
-};
+import { useOttInfoState } from 'contexts/OttInfoProvider';
 
 const MainPage = () => {
-  const [ottList] = useAsync(getOttList());
-  const [waitings] = useAsync(getOttWaitings());
+  const [waitings] = useAsync(getOttWaitings);
+  const { ottServices } = useOttInfoState();
   const navigate = useNavigate();
-
-  const handleClickOtt = (ottId, ottName) => {
-    navigate(`recruit/${ottInfoEn[ottName].ottNameEn}`);
+  const handleClickOtt = ottId => {
+    navigate(`recruit/${ottId}`);
   };
+
+  console.log(ottServices);
 
   return (
     <Container disableGutters>
@@ -61,9 +36,9 @@ const MainPage = () => {
           <Typography variant="baseB" component="h2" sx={{ mb: 2 }}>
             전체 서비스 보기
           </Typography>
-          {ottList.value ? (
+          {ottServices.length ? (
             <OttList
-              ottServices={ottList.value.ottServices}
+              ottServices={ottServices}
               onSelectOtt={handleClickOtt}
               toggleable={false}
             />

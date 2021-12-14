@@ -10,37 +10,10 @@ import {
 import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
 
-const ottInfoEn = {
-  넷플릭스: {
-    ottNameEn: 'netflix',
-  },
-  왓챠: {
-    ottNameEn: 'watcha',
-  },
-  '디즈니 플러스': {
-    ottNameEn: 'disneyPlus',
-  },
-  웨이브: {
-    ottNameEn: 'wavve',
-  },
-  티빙: {
-    ottNameEn: 'tving',
-  },
-  라프텔: {
-    ottNameEn: 'laftel',
-  },
-  '쿠팡 플레이': {
-    ottNameEn: 'coupangPlay',
-  },
-  '아마존 프라임': {
-    ottNameEn: 'amazonPrime',
-  },
-};
-
 const CardSlide = ({ ottId, ottName, watingCount }) => {
   const navigate = useNavigate();
   const handleClickRecruting = () => {
-    navigate(`recruit/${ottInfoEn[ottName].ottNameEn}`);
+    navigate(`recruit/${ottId}`);
   };
 
   return (
