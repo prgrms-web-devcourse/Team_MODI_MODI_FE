@@ -31,8 +31,13 @@ const PartyMemberList = ({ members }) => {
           alignItems: 'flex-start',
         }}
       >
-        {members.map(({ userId, username }) => (
-          <PartyMember key={userId} isWaiting={false} username={username} />
+        {members.map(({ userId, username, leader }) => (
+          <PartyMember
+            key={userId}
+            isWaiting={false}
+            username={username}
+            leader={leader}
+          />
         ))}
         {waitingMemeber()}
       </Box>
