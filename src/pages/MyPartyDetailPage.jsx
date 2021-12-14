@@ -157,10 +157,7 @@ const MyPartyDetailPage = () => {
               <PartyShareAccount
                 fliped={fliped}
                 onFlipCard={handleFlipCard}
-                sharedInfo={{
-                  sharedId: sharedInfo.sharedId,
-                  sharedPassword: sharedInfo.sharedPassword,
-                }}
+                sharedInfo={sharedInfo}
                 partyStatus={partyDetail.status}
               />
             )}
