@@ -1,7 +1,7 @@
 import { PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import useAsync from 'hooks/useAsync';
-import { getAllMyParty, getMyInfo } from 'utils/api';
+import { getAllMyParty } from 'utils/api';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
@@ -12,8 +12,8 @@ const LIMIT = 3;
 const initialState = {
   parties: [],
   lastPartyId: undefined,
-  loadedSize: 3,
-  buttonDisabled: false,
+  loadedSize: LIMIT,
+  buttonDisabled: true,
 };
 
 const MyPage = () => {
@@ -24,7 +24,8 @@ const MyPage = () => {
 
   const [onGoingState] = useAsync(
     getAllMyParty,
-    ['ONGOING', LIMIT, onGoing.lastPartyId][onGoing.lastPartyId],
+    ['ONGOING', LIMIT, onGoing.lastPartyId],
+    [onGoing.lastPartyId],
   );
   const [recruitingState] = useAsync(
     getAllMyParty,
@@ -41,7 +42,6 @@ const MyPage = () => {
 
   useEffect(() => {
     if (onGoingState.value) {
-      console.log(onGoingState.value);
       setOnGoing({
         ...onGoing,
         parties: [...onGoing.parties, ...onGoingState.value.parties],
@@ -51,11 +51,11 @@ const MyPage = () => {
 
   useEffect(() => {
     if (recruitingState.value) {
-      console.log(recruitingState.value);
-
+      const { totalSize, parties } = recruitingState.value;
       setRecruiting({
         ...recruiting,
-        parties: [...recruiting.parties, ...recruitingState.value.parties],
+        parties: [...recruiting.parties, ...parties],
+        buttonDisabled: !totalSize,
       });
     }
   }, [recruitingState.value]);
@@ -74,7 +74,6 @@ const MyPage = () => {
   };
 
   const handleLogOut = () => {
-    console.log('logout');
     // context API 적용 후 onLogout 을 통해 상태 관리 예정
   };
 
@@ -84,10 +83,7 @@ const MyPage = () => {
   const handleClickMoreButton = status => {
     switch (status) {
       case 'onGoing':
-        console.log(onGoing.loadedSize);
         if (onGoing.loadedSize + LIMIT > onGoingState.value.totalSize) {
-          console.log('버튼 삭제');
-          // 버튼 없애기
           setOnGoing({
             ...onGoing,
             buttonDisabled: true,
@@ -101,12 +97,7 @@ const MyPage = () => {
         }
         break;
       case 'recruiting':
-        console.log(recruiting.loadedSize);
-
         if (recruiting.loadedSize + LIMIT > recruitingState.value.totalSize) {
-          console.log('버튼 삭제');
-
-          // 버튼 없애기
           setRecruiting({
             ...recruiting,
             buttonDisabled: true,
@@ -121,8 +112,6 @@ const MyPage = () => {
         break;
       case 'finished':
         if (finished.loadedSize + LIMIT > finishedState.value.totalSize) {
-          console.log('버튼 삭제');
-
           setFinished({
             ...recruiting,
             buttonDisabled: true,
@@ -164,6 +153,9 @@ const MyPage = () => {
           onGoingParties={onGoing.parties}
           recruitingParties={recruiting.parties}
           finishedParties={finished.parties}
+          onGoingButtonState={onGoing.buttonDisabled}
+          recruitingButtonState={recruiting.buttonDisabled}
+          finishedButtonState={finished.buttonDisabled}
           onClickParty={handleClickParty}
           onClickMoreButton={handleClickMoreButton}
         />
