@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import { useEffect } from 'react';
-import useStorage from 'hooks/useStorage';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-
-const OauthRedirectPage = () => {
-=======
 import { useEffect, useLayoutEffect } from 'react';
 import useStorage from 'hooks/useStorage';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -14,23 +7,10 @@ import useAsync from 'hooks/useAsync';
 
 const OauthRedirectPage = () => {
   const { onUpdate, onLogin } = useAuthDispatch();
->>>>>>> 2ec2f0247d0d1b8d0cf7f210f3feb2887ebff99a
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const jwtToken = searchParams.get('token');
 
-<<<<<<< HEAD
-  const [storedValue, setValue] = useStorage('TOKEN', '', 'session');
-
-  useEffect(() => {
-    setValue(() => {
-      sessionStorage.removeItem('TOKEN');
-
-      return jwtToken;
-    });
-    navigate('/');
-  }, [storedValue, setValue, navigate, jwtToken]);
-=======
   const [, setValue] = useStorage('TOKEN', jwtToken, 'session');
 
   const [getMyInfoAPIState, fetchGetMyInfoAPIState] = useAsync(
@@ -64,7 +44,6 @@ const OauthRedirectPage = () => {
   if (error) {
     <h1>에러</h1>;
   }
->>>>>>> 2ec2f0247d0d1b8d0cf7f210f3feb2887ebff99a
 
   return (
     <>
