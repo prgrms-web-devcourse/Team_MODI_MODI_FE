@@ -1,15 +1,15 @@
+import { TOKEN_KEY, USER_INFO_KEY } from 'constants/keys';
 import PropTypes from 'prop-types';
 import { useCallback, useReducer, createContext, useContext } from 'react';
 
-const getUserId = () => JSON.parse(sessionStorage.getItem('userId'));
+// const getUserId = () => JSON.parse(sessionStorage.getItem('userId'));
 
-const getToken = () => JSON.parse(sessionStorage.getItem('TOKEN'));
-
-const isLoggedIn = !!(getUserId() && getToken());
+const getToken = () => JSON.parse(sessionStorage.getItem(TOKEN_KEY));
 
 const INITIAL_STATE = {
-  isLoggedIn,
-  userName: '',
+  isLoggedIn: !!getToken(),
+  userId: null,
+  username: null,
   points: null,
   myparties: [],
 };
@@ -64,10 +64,11 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: ACTION_TYPES.LOGIN });
   }, []);
 
-  const handleLogout = () => {
-    sessionStorage.clear();
+  const handleLogout = useCallback(() => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(USER_INFO_KEY);
     dispatch({ type: ACTION_TYPES.LOGOUT });
-  };
+  }, []);
 
   const actions = {
     onUpdate: handleUpdate,
