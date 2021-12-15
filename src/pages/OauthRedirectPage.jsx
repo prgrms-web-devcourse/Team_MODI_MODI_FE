@@ -1,27 +1,23 @@
-import { useEffect } from 'react';
-import useStorage from 'hooks/useStorage';
+import { useMemo, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuthDispatch } from 'contexts/authContext';
+import { TOKEN_KEY } from 'constants/keys';
 
 const OauthRedirectPage = () => {
+  const { onLogin } = useAuthDispatch();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
-  const jwtToken = searchParams.get('token');
-
-  const [storedValue, setValue] = useStorage('TOKEN', '', 'session');
+  const jwtToken = useMemo(() => searchParams.get(TOKEN_KEY), [searchParams]);
 
   useEffect(() => {
-    setValue(() => {
-      sessionStorage.removeItem('TOKEN');
-
-      return jwtToken;
-    });
+    sessionStorage.setItem(TOKEN_KEY, JSON.stringify(jwtToken));
     navigate('/');
-  }, [storedValue, setValue, navigate, jwtToken]);
+    onLogin();
+  }, [jwtToken, navigate, onLogin]);
 
   return (
     <>
-      <div>리다이렉트 페이지입니다.</div>
+      <div>스켈레톤~~~~~</div>
     </>
   );
 };
