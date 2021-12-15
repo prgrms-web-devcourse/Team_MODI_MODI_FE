@@ -2,7 +2,13 @@ import PropTypes from 'prop-types';
 import { Box, Button } from '@mui/material';
 import MyPartySummary from './MyPartySummary';
 
-const MyPartyList = ({ status, parties, onClickParty, onClickMoreButton }) => {
+const MyPartyList = ({
+  status,
+  parties,
+  onClickParty,
+  onClickMoreButton,
+  buttonDisabled,
+}) => {
   const handleClickMoreButton = () => {
     onClickMoreButton(status);
   };
@@ -24,14 +30,16 @@ const MyPartyList = ({ status, parties, onClickParty, onClickMoreButton }) => {
           textAlign: 'center',
         }}
       >
-        <Button
-          variant="contained"
-          size="small"
-          color="modiGray"
-          onClick={handleClickMoreButton}
-        >
-          더보기
-        </Button>
+        {!buttonDisabled && (
+          <Button
+            variant="contained"
+            size="small"
+            color="modiGray"
+            onClick={handleClickMoreButton}
+          >
+            더보기
+          </Button>
+        )}
       </Box>
     </>
   );
@@ -42,6 +50,7 @@ MyPartyList.propTypes = {
   parties: PropTypes.array,
   onClickParty: PropTypes.func,
   onClickMoreButton: PropTypes.func,
+  buttonDisabled: PropTypes.bool,
 };
 
 export default MyPartyList;

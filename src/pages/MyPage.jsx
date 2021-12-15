@@ -11,7 +11,8 @@ const LIMIT = 3;
 const initialState = {
   parties: [],
   lastPartyId: undefined,
-  // buttonDisabled: false,
+  loadedSize: 3,
+  buttonDisabled: false,
 };
 
 const MyPage = () => {
@@ -38,6 +39,7 @@ const MyPage = () => {
 
   useEffect(() => {
     if (onGoingState.value) {
+      console.log(onGoingState.value);
       setOnGoing({
         ...onGoing,
         parties: [...onGoing.parties, ...onGoingState.value.parties],
@@ -47,6 +49,8 @@ const MyPage = () => {
 
   useEffect(() => {
     if (recruitingState.value) {
+      console.log(recruitingState.value);
+
       setRecruiting({
         ...recruiting,
         parties: [...recruiting.parties, ...recruitingState.value.parties],
@@ -63,10 +67,7 @@ const MyPage = () => {
     }
   }, [finishedState.value]);
 
-  if (!userState.value) {
-    return <></>;
-  }
-  const { username, points = 0 } = userState.value;
+  const { username, points = 0 } = userState.value || [];
 
   const handleClickCharge = () => {
     navigate(`/charge`);
@@ -80,41 +81,57 @@ const MyPage = () => {
   const handleClickParty = partyId => {
     navigate(`/myParty/${partyId}`);
   };
-
   const handleClickMoreButton = status => {
-    let partiesLength = 0;
-    let lastPartyId = 0;
     switch (status) {
       case 'onGoing':
-        partiesLength = onGoingState.value.parties.length;
-
-        if (partiesLength && partiesLength === LIMIT) {
-          lastPartyId = onGoingState.value.parties[LIMIT - 1].partyId;
+        console.log(onGoing.loadedSize);
+        if (onGoing.loadedSize + LIMIT > onGoingState.value.totalSize) {
+          console.log('버튼 삭제');
+          // 버튼 없애기
           setOnGoing({
             ...onGoing,
-            lastPartyId,
+            buttonDisabled: true,
+          });
+        } else {
+          setOnGoing({
+            ...onGoing,
+            loadedSize: onGoing.loadedSize + LIMIT,
+            lastPartyId: onGoingState.value.parties[LIMIT - 1].partyId,
           });
         }
         break;
       case 'recruiting':
-        partiesLength = recruitingState.value.parties.length;
+        console.log(recruiting.loadedSize);
 
-        if (partiesLength && partiesLength === LIMIT) {
-          lastPartyId = recruitingState.value.parties[LIMIT - 1].partyId;
+        if (recruiting.loadedSize + LIMIT > recruitingState.value.totalSize) {
+          console.log('버튼 삭제');
+
+          // 버튼 없애기
           setRecruiting({
             ...recruiting,
-            lastPartyId,
+            buttonDisabled: true,
+          });
+        } else {
+          setRecruiting({
+            ...recruiting,
+            loadedSize: recruiting.loadedSize + LIMIT,
+            lastPartyId: recruitingState.value.parties[LIMIT - 1].partyId,
           });
         }
         break;
       case 'finished':
-        partiesLength = finishedState.value.parties.length;
+        if (finished.loadedSize + LIMIT > finishedState.value.totalSize) {
+          console.log('버튼 삭제');
 
-        if (partiesLength && partiesLength === LIMIT) {
-          lastPartyId = finishedState.value.parties[LIMIT - 1].partyId;
+          setFinished({
+            ...recruiting,
+            buttonDisabled: true,
+          });
+        } else {
           setFinished({
             ...finished,
-            lastPartyId,
+            loadedSize: onGoing.loadedSize + LIMIT,
+            lastPartyId: finishedState.value.parties[LIMIT - 1].pargyId,
           });
         }
         break;
