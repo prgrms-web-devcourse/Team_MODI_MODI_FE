@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { ottServices, rules } from 'constants/dummyData';
 import {
   StepOttSelect,
   StepPeriodSelect,
@@ -10,43 +10,71 @@ import {
   StepMemberSelect,
   StepShardInfoForm,
 } from 'components/PartyCreate';
+import useAsync from 'hooks/useAsync';
+import { createNewParty, getOtt, getRules } from 'utils/api';
+import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
+import { partyCreateFormater } from 'utils/formatting';
 
 const CreatePartyPage = () => {
+  const { ottServices } = useOttInfoState();
+  const [rules] = useAsync(getRules);
   const [activeStep, setActiveStep] = useState(0);
-  const [nextDisable, setNextDisable] = useState(true);
+  const [stepComplete, setStepComplete] = useState(true);
   const [complete, setComplete] = useState(false);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
     grade: '',
-    memberCapacity: 1,
+    partyMemberCapacity: 1,
     startDate: calculateNextDate(),
-    endDate: calculateEndDate(new Date(), 1),
+    endDate: calculateEndDate(calculateNextDate(), 1),
     period: 1,
     mustFilled: null,
-    ruleStateList: [],
+    ruleList: [],
     sharedId: '',
     sharedPassword: '',
     sharedPasswordCheck: '',
   });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [currentOtt, loadOttInfo] = useAsync(
+    getOtt,
+    [newParty.ottId],
+    [],
+    true,
+  );
 
   useEffect(() => {
-    const ruleStateList = [];
-    rules.map(({ ruleId, ruleName }) => {
-      ruleStateList.push({
-        ruleId,
-        ruleName,
+    if (rules.value) {
+      const ruleList = rules.value.rules.map(rule => ({
+        ...rule,
         isSelected: false,
-      });
+      }));
+      setNewParty(current => ({
+        ...current,
+        ruleList,
+      }));
+    }
+  }, [rules.value]);
 
-      return false;
-    });
-    setNewParty(current => ({
-      ...current,
-      ruleStateList,
-    }));
-  }, []);
+  useEffect(() => {
+    if (location.search && ottServices.length) {
+      const currentOtt = location.search.split('=')[1];
+      handleSelectedOtt(currentOtt);
+
+    }
+  }, [ottServices]);
+
+  useEffect(() => {
+    currentOtt.value &&
+      setNewParty(current => ({
+        ...current,
+        ottId: currentOtt.value.ottId,
+        ottName: currentOtt.value.ottName,
+        grade: currentOtt.value.grade,
+      }));
+  }, [currentOtt.value]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
@@ -55,24 +83,19 @@ const CreatePartyPage = () => {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    if (activeStep === 0 || activeStep === 1 || newParty.mustFilled !== null) {
+    if (activeStep === 0 || newParty.mustFilled !== null) {
       return;
     }
-    setNextDisable(true);
+    setStepComplete(true);
   };
 
   const nextStep = () => {
-    nextDisable && setNextDisable(false);
+    stepComplete && setStepComplete(false);
   };
 
-  const handleSelectedOtt = (ottId, ottName) => {
+  const handleSelectedOtt = selectOttId => {
     nextStep();
-    setNewParty(current => ({
-      ...current,
-      ottId,
-      ottName,
-      grade: '프리미엄',
-    }));
+    loadOttInfo(selectOttId);
   };
 
   const handleStartDate = startDate => {
@@ -94,16 +117,21 @@ const CreatePartyPage = () => {
   };
 
   const handleSelectRules = newRuleList => {
+    if (newRuleList.some(({ isSelected }) => isSelected)) {
+      nextStep();
+    } else {
+      setStepComplete(true);
+    }
     setNewParty(current => ({
       ...current,
-      ruleStateList: newRuleList,
+      ruleList: newRuleList,
     }));
   };
 
-  const handleCounter = memberCapacity => {
+  const handleCounter = partyMemberCapacity => {
     setNewParty(current => ({
       ...current,
-      memberCapacity,
+      partyMemberCapacity,
     }));
   };
 
@@ -136,9 +164,12 @@ const CreatePartyPage = () => {
     }
   }, [newParty]);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // TODO API POST
+    const submitData = partyCreateFormater(newParty);
+    console.log(submitData);
+    const { partyId } = await createNewParty(submitData);
+    navigate(`/myParty/${partyId}`);
   };
 
   const steps = [
@@ -164,7 +195,7 @@ const CreatePartyPage = () => {
     {
       step: (
         <StepRuleSelect
-          rules={newParty.ruleStateList}
+          rules={newParty.ruleList}
           onSelectRule={handleSelectRules}
         />
       ),
@@ -172,7 +203,7 @@ const CreatePartyPage = () => {
     {
       step: (
         <StepMemberSelect
-          memberCount={newParty.memberCapacity}
+          memberCount={newParty.partyMemberCapacity}
           onCounterClick={handleCounter}
           mustFilled={newParty.mustFilled}
           onConfirm={handleConfirm}
@@ -197,7 +228,7 @@ const CreatePartyPage = () => {
       style={{
         display: 'block',
         background: '#fff',
-        padding: '0 30px',
+        padding: '60px 30px 0',
         position: 'relative',
         minHeight: '100vh',
       }}
@@ -227,7 +258,7 @@ const CreatePartyPage = () => {
             type="button"
             size="large"
             variant="contained"
-            disabled={nextDisable}
+            disabled={stepComplete}
             onClick={handleNext}
           >
             다음 <KeyboardArrowRight />
