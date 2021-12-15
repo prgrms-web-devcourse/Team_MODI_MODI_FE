@@ -5,6 +5,7 @@ import { getAllMyParty, getMyInfo } from 'utils/api';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
+import { useAuthState } from 'contexts/authContext';
 
 const LIMIT = 3;
 
@@ -16,22 +17,23 @@ const initialState = {
 };
 
 const MyPage = () => {
+  const { username, points } = useAuthState();
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
 
-  const [userState] = useAsync(getMyInfo());
-
   const [onGoingState] = useAsync(
-    getAllMyParty('ONGOING', LIMIT, onGoing.lastPartyId),
-    [onGoing.lastPartyId],
+    getAllMyParty,
+    ['ONGOING', LIMIT, onGoing.lastPartyId][onGoing.lastPartyId],
   );
   const [recruitingState] = useAsync(
-    getAllMyParty('RECRUITING', LIMIT, recruiting.lastPartyId),
+    getAllMyParty,
+    ['RECRUITING', LIMIT, recruiting.lastPartyId],
     [recruiting.lastPartyId],
   );
   const [finishedState] = useAsync(
-    getAllMyParty('FINISHED', LIMIT, finished.lastPartyId),
+    getAllMyParty,
+    ['FINISHED', LIMIT, finished.lastPartyId],
     [finished.lastPartyId],
   );
 
@@ -66,8 +68,6 @@ const MyPage = () => {
       });
     }
   }, [finishedState.value]);
-
-  const { username, points = 0 } = userState.value || [];
 
   const handleClickCharge = () => {
     navigate(`/charge`);
