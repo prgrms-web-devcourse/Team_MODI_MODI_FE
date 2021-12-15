@@ -1,65 +1,80 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
-import { ottServices, rules } from 'constants/dummyData';
-import OttList from 'components/Ott/OttList';
-import RuleList from 'components/Common/RuleList';
 import {
-  CreatePartyTitle,
-  PartyPeriod,
-  PartyStartDate,
-  MemberCounter,
-  ConfirmDialog,
-  SharedInfoForm,
-  TermsList,
+  StepOttSelect,
+  StepPeriodSelect,
+  StepRuleSelect,
+  StepMemberSelect,
+  StepShardInfoForm,
 } from 'components/PartyCreate';
-
-const calculateEndDate = (startDate, period) => {
-  const endDate = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() + period,
-    startDate.getDate() - 1,
-  );
-
-  return endDate;
-};
+import useAsync from 'hooks/useAsync';
+import { createNewParty, getOtt, getRules } from 'utils/api';
+import { useOttInfoState } from 'contexts/OttInfoProvider';
+import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
+import { partyCreateFormater } from 'utils/formatting';
 
 const CreatePartyPage = () => {
+  const { ottServices } = useOttInfoState();
+  const [rules] = useAsync(getRules);
   const [activeStep, setActiveStep] = useState(0);
-  const [nextDisable, setNextDisable] = useState(true);
+  const [stepComplete, setStepComplete] = useState(true);
   const [complete, setComplete] = useState(false);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
     grade: '',
-    memberCapacity: 1,
-    startDate: new Date(),
-    endDate: calculateEndDate(new Date(), 1),
+    partyMemberCapacity: 1,
+    startDate: calculateNextDate(),
+    endDate: calculateEndDate(calculateNextDate(), 1),
     period: 1,
     mustFilled: null,
-    ruleStateList: [],
+    ruleList: [],
     sharedId: '',
     sharedPassword: '',
     sharedPasswordCheck: '',
   });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [currentOtt, loadOttInfo] = useAsync(
+    getOtt,
+    [newParty.ottId],
+    [],
+    true,
+  );
 
   useEffect(() => {
-    const ruleStateList = [];
-    rules.map(({ ruleId, ruleName }) => {
-      ruleStateList.push({
-        ruleId,
-        ruleName,
+    if (rules.value) {
+      const ruleList = rules.value.rules.map(rule => ({
+        ...rule,
         isSelected: false,
-      });
+      }));
+      setNewParty(current => ({
+        ...current,
+        ruleList,
+      }));
+    }
+  }, [rules.value]);
 
-      return false;
-    });
-    setNewParty(current => ({
-      ...current,
-      ruleStateList,
-    }));
-  }, []);
+  useEffect(() => {
+    if (location.search && ottServices.length) {
+      const currentOtt = location.search.split('=')[1];
+      handleSelectedOtt(currentOtt);
+
+    }
+  }, [ottServices]);
+
+  useEffect(() => {
+    currentOtt.value &&
+      setNewParty(current => ({
+        ...current,
+        ottId: currentOtt.value.ottId,
+        ottName: currentOtt.value.ottName,
+        grade: currentOtt.value.grade,
+      }));
+  }, [currentOtt.value]);
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
@@ -68,24 +83,19 @@ const CreatePartyPage = () => {
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    if (activeStep === 0 || activeStep === 1 || newParty.mustFilled !== null) {
+    if (activeStep === 0 || newParty.mustFilled !== null) {
       return;
     }
-    setNextDisable(true);
+    setStepComplete(true);
   };
 
   const nextStep = () => {
-    nextDisable && setNextDisable(false);
+    stepComplete && setStepComplete(false);
   };
 
-  const handleSelectedOtt = (ottId, ottName) => {
+  const handleSelectedOtt = selectOttId => {
     nextStep();
-    setNewParty(current => ({
-      ...current,
-      ottId,
-      ottName,
-      grade: '프리미엄',
-    }));
+    loadOttInfo(selectOttId);
   };
 
   const handleStartDate = startDate => {
@@ -107,16 +117,21 @@ const CreatePartyPage = () => {
   };
 
   const handleSelectRules = newRuleList => {
+    if (newRuleList.some(({ isSelected }) => isSelected)) {
+      nextStep();
+    } else {
+      setStepComplete(true);
+    }
     setNewParty(current => ({
       ...current,
-      ruleStateList: newRuleList,
+      ruleList: newRuleList,
     }));
   };
 
-  const handleCounter = memberCapacity => {
+  const handleCounter = partyMemberCapacity => {
     setNewParty(current => ({
       ...current,
-      memberCapacity,
+      partyMemberCapacity,
     }));
   };
 
@@ -149,79 +164,63 @@ const CreatePartyPage = () => {
     }
   }, [newParty]);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // TODO API POST
+    const submitData = partyCreateFormater(newParty);
+    console.log(submitData);
+    const { partyId } = await createNewParty(submitData);
+    navigate(`/myParty/${partyId}`);
   };
 
-  const getStepContent = stepNumber => {
-    switch (stepNumber) {
-      case 0:
-        return (
-          <>
-            <CreatePartyTitle subTitle="어떤 서비스를 함께 이용하고 싶나요?" />
-            <OttList
-              ottServices={ottServices}
-              onSelectOtt={handleSelectedOtt}
-              currentOttId={newParty.ottId}
-            />
-          </>
-        );
-      case 1:
-        return (
-          <>
-            <CreatePartyTitle subTitle="얼마 동안 함께 이용하고 싶나요?" />
-            <PartyStartDate
-              startDate={newParty.startDate}
-              onSelectStartDate={handleStartDate}
-            />
-            <PartyPeriod
-              period={newParty.period}
-              onSelectPeriod={handlePeriod}
-            />
-          </>
-        );
-      case 2:
-        return (
-          <>
-            <CreatePartyTitle subTitle="이 파티의 규칙은 어떻게 지정할까요?" />
-            <RuleList
-              rules={newParty.ruleStateList}
-              onSelectRule={handleSelectRules}
-            />
-          </>
-        );
-      case 3:
-        return (
-          <>
-            <CreatePartyTitle subTitle="파티에 몇 명을 모집하고 싶나요?" />
-            <MemberCounter
-              memberCount={newParty.memberCapacity}
-              onClick={handleCounter}
-            />
-            <ConfirmDialog
-              mustFilled={newParty.mustFilled}
-              onConfirm={handleConfirm}
-            />
-          </>
-        );
-      case 4:
-        return (
-          <>
-            <CreatePartyTitle subTitle="파티에서 사용하실 서비스의 계정 정보를 입력해주세요." />
-            <SharedInfoForm
-              sharedId={newParty.sharedId}
-              sharedPassword={newParty.sharedPassword}
-              sharedPasswordCheck={newParty.sharedPasswordCheck}
-              onChangeInfo={handleChangeSharedInfo}
-            />
-            <TermsList />
-          </>
-        );
-      default:
-        return;
-    }
-  };
+  const steps = [
+    {
+      step: (
+        <StepOttSelect
+          ottServices={ottServices}
+          onSelectOtt={handleSelectedOtt}
+          ottId={newParty.ottId}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepPeriodSelect
+          startDate={newParty.startDate}
+          onSelectStartDate={handleStartDate}
+          period={newParty.period}
+          onSelectPeriod={handlePeriod}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepRuleSelect
+          rules={newParty.ruleList}
+          onSelectRule={handleSelectRules}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepMemberSelect
+          memberCount={newParty.partyMemberCapacity}
+          onCounterClick={handleCounter}
+          mustFilled={newParty.mustFilled}
+          onConfirm={handleConfirm}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepShardInfoForm
+          sharedId={newParty.sharedId}
+          sharedPassword={newParty.sharedPassword}
+          sharedPasswordCheck={newParty.sharedPasswordCheck}
+          onChangeInfo={handleChangeSharedInfo}
+        />
+      ),
+    },
+  ];
 
   return (
     <form
@@ -229,7 +228,7 @@ const CreatePartyPage = () => {
       style={{
         display: 'block',
         background: '#fff',
-        padding: '0 30px',
+        padding: '60px 30px 0',
         position: 'relative',
         minHeight: '100vh',
       }}
@@ -241,7 +240,7 @@ const CreatePartyPage = () => {
         activeStep={activeStep}
       />
 
-      {getStepContent(activeStep)}
+      {steps[activeStep].step}
 
       <BottomButtonWrapper>
         <StepperButton
@@ -259,7 +258,7 @@ const CreatePartyPage = () => {
             type="button"
             size="large"
             variant="contained"
-            disabled={nextDisable}
+            disabled={stepComplete}
             onClick={handleNext}
           >
             다음 <KeyboardArrowRight />

@@ -1,10 +1,9 @@
 import { CssBaseline } from '@mui/material';
 import useAsync from 'hooks/useAsync';
-import { getRecruitingParties } from 'utils/api';
-const SIZE = 5;
-const OTT_ID = 1;
+import { getOtt } from 'utils/api';
+
 const TestPageDorr = () => {
-  const [state, callback] = useAsync(getRecruitingParties, [OTT_ID, SIZE]);
+  const [state, callback] = useAsync(getOtt);
   const { isLoading, value, error } = state;
 
   console.log(isLoading, value, error);
