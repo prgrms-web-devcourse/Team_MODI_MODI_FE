@@ -10,10 +10,11 @@ import {
 import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
 
-const CardSlide = ({ ottId, ottName, watingCount }) => {
+const CardSlide = ({ ottId, ottName, waitingCount }) => {
   const navigate = useNavigate();
   const handleClickRecruting = () => {
-    navigate(`recruit/${ottId}`);
+    waitingCount && navigate(`recruit/${ottId}`);
+    !waitingCount && navigate(`create?ottId=${ottId}`);
   };
 
   return (
@@ -53,14 +54,28 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
             }}
           />
           {ottName}에서
-          {`${watingCount}`.split('').map((number, i) => (
-            <CounterNumber key={i} variant="large">
-              {number}
-            </CounterNumber>
-          ))}
-          명이
-          <br />
-          파티를 기다리고 있어요🎉
+          {!waitingCount && (
+            <div
+              style={{
+                paddingTop: '10px',
+              }}
+            >
+              파티가 만들어지기를 기다리고 있어요 <br />
+              파티장이 되어 파티원을 모아 보세요
+            </div>
+          )}
+          {waitingCount && (
+            <>
+              {`${waitingCount}`.split('').map((number, i) => (
+                <CounterNumber key={i} variant="large">
+                  {number}
+                </CounterNumber>
+              ))}
+              명이
+              <br />
+              파티를 기다리고 있어요🎉
+            </>
+          )}
         </Typography>
       </CardContent>
       <CardActions
@@ -88,7 +103,8 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
             },
           ]}
         >
-          그렇다면 내가 빠질 수 없지 😎
+          {waitingCount && '🎊 길을 비켜라 파티장 나가신다 🎊'}
+          {!waitingCount && '그렇다면 내가 빠질 수 없지 😎'}
         </Button>
       </CardActions>
     </Card>
@@ -98,7 +114,7 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
 CardSlide.propTypes = {
   ottId: PropTypes.number,
   ottName: PropTypes.string,
-  watingCount: PropTypes.number,
+  waitingCount: PropTypes.number,
   onClick: PropTypes.func,
 };
 
