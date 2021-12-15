@@ -40,6 +40,9 @@ const PartyTab = ({
   onGoingParties,
   recruitingParties,
   finishedParties,
+  onGoingButtonState,
+  recruitingButtonState,
+  finishedButtonState,
   onClickParty,
   onClickMoreButton,
 }) => {
@@ -71,6 +74,7 @@ const PartyTab = ({
         <MyPartyList
           status={'onGoing'}
           parties={onGoingParties}
+          buttonDisabled={onGoingButtonState}
           onClickParty={onClickParty}
           onClickMoreButton={onClickMoreButton}
         />
@@ -79,6 +83,7 @@ const PartyTab = ({
         <MyPartyList
           status={'recruiting'}
           parties={recruitingParties}
+          buttonDisabled={recruitingButtonState}
           onClickParty={onClickParty}
           onClickMoreButton={onClickMoreButton}
         />
@@ -87,6 +92,7 @@ const PartyTab = ({
         <MyPartyList
           status={'finished'}
           parties={finishedParties}
+          buttonDisabled={finishedButtonState}
           onClickParty={onClickParty}
           onClickMoreButton={onClickMoreButton}
         />
@@ -99,6 +105,9 @@ PartyTab.propTypes = {
   onGoingParties: PropTypes.array,
   recruitingParties: PropTypes.array,
   finishedParties: PropTypes.array,
+  onGoingButtonState: PropTypes.bool,
+  recruitingButtonState: PropTypes.bool,
+  finishedButtonState: PropTypes.bool,
   onClickParty: PropTypes.func,
   onClickMoreButton: PropTypes.func,
 };
