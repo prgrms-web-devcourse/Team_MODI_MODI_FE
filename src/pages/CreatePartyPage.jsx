@@ -62,6 +62,7 @@ const CreatePartyPage = () => {
     if (location.search && ottServices.length) {
       const currentOtt = location.search.split('=')[1];
       handleSelectedOtt(currentOtt);
+
     }
   }, [ottServices]);
 

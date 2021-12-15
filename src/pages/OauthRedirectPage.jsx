@@ -14,7 +14,8 @@ const OauthRedirectPage = () => {
   const [, setValue] = useStorage('TOKEN', jwtToken, 'session');
 
   const [getMyInfoAPIState, fetchGetMyInfoAPIState] = useAsync(
-    getMyInfo(),
+    getMyInfo,
+    [],
     [],
     true,
   );
