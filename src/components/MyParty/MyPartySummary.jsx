@@ -79,7 +79,7 @@ const MyPartySummary = ({
   return (
     <Box
       sx={{
-        marginBottom: 2,
+        mb: 2,
         cursor: 'pointer',
       }}
       onClick={handleClickParty}

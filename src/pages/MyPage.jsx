@@ -73,10 +73,6 @@ const MyPage = () => {
     navigate(`/charge`);
   };
 
-  const handleLogOut = () => {
-    // context API 적용 후 onLogout 을 통해 상태 관리 예정
-  };
-
   const handleClickParty = partyId => {
     navigate(`/myParty/${partyId}`);
   };
@@ -138,7 +134,6 @@ const MyPage = () => {
       <MyPageTitle
         username={username}
         points={points}
-        onClickLogout={handleLogOut}
         onClickCharge={handleClickCharge}
       />
       <PageContents

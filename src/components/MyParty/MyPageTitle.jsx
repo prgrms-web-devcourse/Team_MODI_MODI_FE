@@ -1,43 +1,24 @@
 import PropTypes from 'prop-types';
-import { LogoutOutlined } from '@mui/icons-material';
 import { Avatar, Box, Button, Typography } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
 
-const MyPageTitle = ({ username, points, onClickLogout, onClickCharge }) => {
+const MyPageTitle = ({ username, points, onClickCharge }) => {
   return (
-    <Box>
+    <Box
+      sx={{
+        textAlign: 'center',
+        mt: 1,
+      }}
+    >
+      <Typography color="primary.contrastText" variant="mediumB">
+        안녕하세요, {username}님
+      </Typography>
       <Box
         sx={{
-          p: 1,
-          m: 1,
+          mt: 2,
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Typography color="primary.contrastText" variant="mediumB">
-            안녕하세요, {username}님
-          </Typography>
-          <LogoutOutlined
-            style={{
-              color: 'white',
-              cursor: 'pointer',
-            }}
-            onClick={onClickLogout}
-          />
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          marginTop: 2,
-          textAlign: 'center',
-        }}
-      >
-        <Typography color="primary.contrastText" variant="microB" component="p">
+        <Typography color="primary.contrastText" variant="smallB" component="p">
           나의 포인트
         </Typography>
         <Box
@@ -49,8 +30,8 @@ const MyPageTitle = ({ username, points, onClickLogout, onClickCharge }) => {
         >
           <Typography
             variant="visual"
-            style={{
-              marginRight: 10,
+            sx={{
+              marginRight: 1,
               fontSize: 50,
               color: '#F0E07E',
             }}
@@ -58,8 +39,8 @@ const MyPageTitle = ({ username, points, onClickLogout, onClickCharge }) => {
             {priceToString(points)}
           </Typography>
           <Avatar
-            style={{
-              paddingLeft: 2,
+            sx={{
+              pl: 0.3,
               width: 25,
               height: 25,
               fontSize: 15,
@@ -76,7 +57,6 @@ const MyPageTitle = ({ username, points, onClickLogout, onClickCharge }) => {
             m: 2,
           }}
           style={{
-            backgroundColor: '#7FBDBE',
             minWidth: '40%',
             height: 40,
           }}
@@ -92,7 +72,6 @@ const MyPageTitle = ({ username, points, onClickLogout, onClickCharge }) => {
 MyPageTitle.propTypes = {
   username: PropTypes.string,
   points: PropTypes.number,
-  onClickLogout: PropTypes.func,
   onClickCharge: PropTypes.func,
 };
 

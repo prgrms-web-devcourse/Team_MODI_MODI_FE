@@ -15,7 +15,7 @@ const MyPartyList = ({
 
   return (
     <>
-      <Box>
+      <Box sx={{ mt: 2 }}>
         {parties.map(({ partyId, ...props }) => (
           <MyPartySummary
             key={partyId}
