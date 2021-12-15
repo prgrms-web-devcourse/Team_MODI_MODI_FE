@@ -7,13 +7,16 @@ import { CssBaseline } from '@mui/material';
 
 import Router from './Router';
 import { AuthProvider } from 'contexts/authContext';
+import { OttInfoProvider } from 'contexts/OttInfoProvider';
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <CssBaseline />
-        <Router />
+        <OttInfoProvider>
+          <CssBaseline />
+          <Router />
+        </OttInfoProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>,
