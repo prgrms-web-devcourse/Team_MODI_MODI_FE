@@ -4,9 +4,9 @@ import { useOttInfoState } from 'contexts/OttInfoProvider';
 import useAsync from 'hooks/useAsync';
 import { Outlet } from 'react-router';
 import { getMyInfo, getOttList } from 'utils/api';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import useStorage from 'hooks/useStorage';
-import { OTT_INFO_KEY, USER_INFO_KEY } from 'constants/keys';
+import { OTT_INFO_KEY, TOKEN_KEY, USER_INFO_KEY } from 'constants/keys';
 import { useAuthDispatch } from 'contexts/authContext';
 import { useAuthState } from 'contexts/authContext';
 
@@ -48,6 +48,32 @@ function App() {
     value: ottListValue,
     error: ottListError,
   } = getOttListApiState;
+
+  const handleCheckStorage = useCallback(
+    ({ key, newValue, storageArea }) => {
+      // if (e.url !==  baseUrl) return
+      const { token: storedToken } = storageArea;
+      if (key === TOKEN_KEY && newValue === null) {
+        sessionStorage.removeItem(USER_INFO_KEY);
+        onLogout();
+      }
+      if (key === USER_INFO_KEY && newValue === null && storedToken) {
+        fetchGetMyInfoApiState();
+      }
+      if (key === OTT_INFO_KEY && newValue === null) {
+        fetchOttListApiState();
+      }
+    },
+    [onLogout, fetchGetMyInfoApiState, fetchOttListApiState],
+  );
+
+  useEffect(() => {
+    window.addEventListener('storage', handleCheckStorage);
+
+    return () => {
+      window.removeEventListener('storage', handleCheckStorage);
+    };
+  }, [handleCheckStorage]);
 
   useEffect(() => {
     if (storedOttInfo === null) {
