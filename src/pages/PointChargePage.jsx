@@ -1,17 +1,16 @@
-import { Box, Button, TextField, Divider } from '@mui/material';
+import { Box, Button, TextField, Divider, Typography } from '@mui/material';
 import { PageContainer, PageContents, PageHeader } from 'components/Common';
 import InfoElement from 'components/Common/InfoElement';
-import { AuthProvider } from 'contexts/authContext';
+import { USER_INFO_KEY } from 'constants/keys';
+import { useAuthState } from 'contexts/authContext';
 import useAsync from 'hooks/useAsync';
-import { useState, useEffect } from 'react';
+import useStorage from 'hooks/useStorage';
+import { useState } from 'react';
 import { chargePoint } from 'utils/api';
-
-// TODO
-// authProvider에서 보유 포인트 받아와서 처리
+import { pointFormatter } from 'utils/formatting';
 
 const PointChargePage = () => {
-  const points = 1000;
-  // const { points } = AuthProvider();
+  const { points } = useAuthState();
   const [chargeInput, setChargeInput] = useState(0);
   const [pointState, chargeCallback] = useAsync(
     chargePoint,
@@ -19,13 +18,22 @@ const PointChargePage = () => {
     [],
     true,
   );
+  const [storedUserInfo, setUserInfo] = useStorage(
+    USER_INFO_KEY,
+    null,
+    'session',
+  );
 
   const handleChargePoint = ({ target }) => {
-    setChargeInput(target.value);
+    setChargeInput(Number(target.value));
   };
 
   const handleChargeClick = () => {
-    chargeCallback({ points: Number(chargeInput) });
+    chargeCallback({ points: chargeInput });
+    setUserInfo({
+      ...storedUserInfo,
+      points: chargeInput + points,
+    });
   };
 
   return (
@@ -42,7 +50,6 @@ const PointChargePage = () => {
             <TextField
               fullWidth
               placeholder="금액을 입력해 주세요"
-              value={chargeInput}
               onChange={handleChargePoint}
               type="number"
               sx={{
@@ -55,17 +62,28 @@ const PointChargePage = () => {
               }}
             >
               <InfoElement
-                left={{ contentL: '보유 포인트' }}
-                right={{ contentR: points }}
+                left={{
+                  contentL: '보유 포인트',
+                  variantL: 'smallB',
+                }}
+                right={{ contentR: pointFormatter(points) }}
+              />
+              <InfoElement
+                left={{
+                  contentL: '충전 포인트',
+                  variantL: 'smallB',
+                }}
+                right={{ contentR: pointFormatter(chargeInput) }}
               />
               <Divider />
               <InfoElement
                 left={{
                   contentL: '충전 후 예상 포인트',
+                  variantL: 'smallB',
                   colorL: 'secondary',
                 }}
                 right={{
-                  contentR: Number(chargeInput) + points,
+                  contentR: pointFormatter(chargeInput + points, 25),
                   variantR: 'large',
                   colorR: 'text.primary',
                 }}

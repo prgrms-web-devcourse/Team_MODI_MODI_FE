@@ -38,3 +38,20 @@ export const partyCreateFormater = newParty => {
     startDate: dateFormater(startDate),
   };
 };
+
+export const pointFormatter = (points, fontSize = 15) => {
+  return (
+    <>
+      {points}
+      <span
+        style={{
+          marginLeft: '5px',
+          fontSize: `${fontSize}px`,
+          fontWeight: 700,
+        }}
+      >
+        P
+      </span>
+    </>
+  );
+};
