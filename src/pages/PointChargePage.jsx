@@ -5,7 +5,7 @@ import { USER_INFO_KEY } from 'constants/keys';
 import { useAuthState } from 'contexts/authContext';
 import useAsync from 'hooks/useAsync';
 import useStorage from 'hooks/useStorage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { chargePoint } from 'utils/api';
 import { pointFormatter } from 'utils/formatting';
 
@@ -30,11 +30,15 @@ const PointChargePage = () => {
 
   const handleChargeClick = () => {
     chargeCallback({ points: chargeInput });
-    setUserInfo({
-      ...storedUserInfo,
-      points: chargeInput + points,
-    });
   };
+
+  useEffect(() => {
+    pointState.value &&
+      setUserInfo({
+        ...storedUserInfo,
+        points: pointState.value.points,
+      });
+  }, [pointState.value]);
 
   return (
     <>
