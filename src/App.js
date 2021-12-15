@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 function App() {
   return (
     <>
-      <Header user={true} curPage="sdfa" />
+      <Header user={false} />
       <Outlet />
     </>
   );

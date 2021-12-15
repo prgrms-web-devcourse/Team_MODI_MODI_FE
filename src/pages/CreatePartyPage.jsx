@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import { ottServices, rules } from 'constants/dummyData';
+<<<<<<< HEAD
 import OttList from 'components/Ott/OttList';
 import RuleList from 'components/Common/RuleList';
 import {
@@ -24,6 +25,16 @@ const calculateEndDate = (startDate, period) => {
 
   return endDate;
 };
+=======
+import {
+  StepOttSelect,
+  StepPeriodSelect,
+  StepRuleSelect,
+  StepMemberSelect,
+  StepShardInfoForm,
+} from 'components/PartyCreate';
+import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
+>>>>>>> 2ec2f0247d0d1b8d0cf7f210f3feb2887ebff99a
 
 const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -34,7 +45,7 @@ const CreatePartyPage = () => {
     ottName: '',
     grade: '',
     memberCapacity: 1,
-    startDate: new Date(),
+    startDate: calculateNextDate(),
     endDate: calculateEndDate(new Date(), 1),
     period: 1,
     mustFilled: null,
@@ -154,6 +165,7 @@ const CreatePartyPage = () => {
     // TODO API POST
   };
 
+<<<<<<< HEAD
   const getStepContent = stepNumber => {
     switch (stepNumber) {
       case 0:
@@ -222,6 +234,57 @@ const CreatePartyPage = () => {
         return;
     }
   };
+=======
+  const steps = [
+    {
+      step: (
+        <StepOttSelect
+          ottServices={ottServices}
+          onSelectOtt={handleSelectedOtt}
+          ottId={newParty.ottId}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepPeriodSelect
+          startDate={newParty.startDate}
+          onSelectStartDate={handleStartDate}
+          period={newParty.period}
+          onSelectPeriod={handlePeriod}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepRuleSelect
+          rules={newParty.ruleStateList}
+          onSelectRule={handleSelectRules}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepMemberSelect
+          memberCount={newParty.memberCapacity}
+          onCounterClick={handleCounter}
+          mustFilled={newParty.mustFilled}
+          onConfirm={handleConfirm}
+        />
+      ),
+    },
+    {
+      step: (
+        <StepShardInfoForm
+          sharedId={newParty.sharedId}
+          sharedPassword={newParty.sharedPassword}
+          sharedPasswordCheck={newParty.sharedPasswordCheck}
+          onChangeInfo={handleChangeSharedInfo}
+        />
+      ),
+    },
+  ];
+>>>>>>> 2ec2f0247d0d1b8d0cf7f210f3feb2887ebff99a
 
   return (
     <form
@@ -241,7 +304,7 @@ const CreatePartyPage = () => {
         activeStep={activeStep}
       />
 
-      {getStepContent(activeStep)}
+      {steps[activeStep].step}
 
       <BottomButtonWrapper>
         <StepperButton

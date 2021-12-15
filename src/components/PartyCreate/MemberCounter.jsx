@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import { Button, Grid, Typography } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
 
-const MemberCounter = ({ memberCount, onClick }) => {
+const MemberCounter = ({ memberCount, onCounterClick }) => {
   const onDecrease = () => {
-    memberCount > 1 && onClick(memberCount - 1);
+    memberCount > 1 && onCounterClick(memberCount - 1);
   };
 
   const onIncrease = () => {
-    memberCount < 3 && onClick(memberCount + 1);
+    memberCount < 3 && onCounterClick(memberCount + 1);
   };
 
   return (
@@ -44,7 +44,7 @@ const MemberCounter = ({ memberCount, onClick }) => {
 
 MemberCounter.propTypes = {
   memberCount: PropTypes.number.isRequired,
-  onClick: PropTypes.func,
+  onCounterClick: PropTypes.func,
 };
 
 export default MemberCounter;
