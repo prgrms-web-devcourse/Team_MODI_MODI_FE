@@ -8,10 +8,12 @@ import {
   Button,
 } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
+import { useNavigate } from 'react-router-dom';
 
 const CardSlide = ({ ottId, ottName, watingCount }) => {
+  const navigate = useNavigate();
   const handleClickRecruting = () => {
-    // TODO 참여 클릭하면 해당 ott 파티 목록 보기 [링크]
+    navigate(`recruit/${ottId}`);
   };
 
   return (

@@ -12,7 +12,7 @@ export const calculateEndDate = (startDate, period) => {
   const endDate = new Date(
     startDate.getFullYear(),
     startDate.getMonth() + period,
-    startDate.getDate() - 1,
+    startDate.getDate(),
   );
 
   return endDate;

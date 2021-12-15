@@ -8,7 +8,7 @@ import Logo from 'components/Common/Logo.jsx';
 
 const Header = ({ user }) => {
   const location = useLocation();
-  const [isLogin, setIslogin] = useState(user);
+  const [isLogin] = useState(user);
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
 
