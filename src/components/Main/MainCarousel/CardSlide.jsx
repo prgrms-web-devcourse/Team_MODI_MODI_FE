@@ -11,6 +11,7 @@ import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
 
 const CardSlide = ({ ottId, ottName, waitingCount }) => {
+  console.log(ottName, waitingCount);
   const navigate = useNavigate();
   const handleClickRecruting = () => {
     waitingCount && navigate(`recruit/${ottId}`);
@@ -103,8 +104,8 @@ const CardSlide = ({ ottId, ottName, waitingCount }) => {
             },
           ]}
         >
-          {waitingCount && '🎊 길을 비켜라 파티장 나가신다 🎊'}
-          {!waitingCount && '그렇다면 내가 빠질 수 없지 😎'}
+          {!waitingCount && '🎊 길을 비켜라 파티장 나가신다 🎊'}
+          {waitingCount && '그렇다면 내가 빠질 수 없지 😎'}
         </Button>
       </CardActions>
     </Card>
