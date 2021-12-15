@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Typography, Box } from '@mui/material';
-import { AirlineSeatReclineExtra, Face } from '@mui/icons-material';
+import { Face } from '@mui/icons-material';
 import crown from 'assets/crown.png';
 
 const PartyMember = ({
