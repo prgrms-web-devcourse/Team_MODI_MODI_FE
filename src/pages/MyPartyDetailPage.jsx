@@ -19,15 +19,15 @@ import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
 const MyPartyDetailPage = () => {
   const { userId } = useAuthState();
+  const MY_USER_ID = userId;
+
   const params = useParams();
   const { myPartyId } = params;
+
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
-  const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
   const { isLoading: isPartyLoading, value: PartyDetail } = partyDetailstate;
-  const [sharedInfo, setSharedInfo] = useState({
-    sharedId: '',
-    sharedPassword: '',
-  });
+  const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
+  const { value: sharedInfo } = sharedInfoState;
 
   const {
     ottName = '',
@@ -42,12 +42,6 @@ const MyPartyDetailPage = () => {
     monthlyReimbursement = 0,
     status = '',
   } = PartyDetail || {};
-
-  const MY_USER_ID = userId;
-
-  useEffect(() => {
-    setSharedInfo(sharedInfoState.value);
-  }, [sharedInfoState.value]);
 
   const checkLeader = members.find(
     ({ userId }) => userId === MY_USER_ID,
