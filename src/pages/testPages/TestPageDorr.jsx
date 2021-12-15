@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material';
 import useAsync from 'hooks/useAsync';
-import { getOtt } from 'utils/api';
+import { getOtt, getOttList } from 'utils/api';
 
 const TestPageDorr = () => {
   const [state, callback] = useAsync(getOtt, [1]);
