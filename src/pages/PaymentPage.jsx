@@ -16,6 +16,7 @@ import PartyInfo from 'components/PartyJoin/PartyInfo';
 import { getPartyDetail, requestPartyJoin } from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import { useAuthState } from 'contexts/authContext';
+import { COMMISSION_RATE } from 'constants/commissionRate';
 
 const PaymentPage = () => {
   const { points: myPoint } = useAuthState();
@@ -45,8 +46,14 @@ const PaymentPage = () => {
   } = partyJoinApiState;
 
   useEffect(() => {
-    (PartyJoinValue || PartyJoinError) && setOpenPaymentResult(true);
-  }, [PartyJoinValue, PartyJoinError]);
+    if (partyId === null) {
+      navigate('/');
+    }
+  }, [partyId, navigate]);
+
+  useEffect(() => {
+    PartyJoinLoading && setOpenPaymentResult(true);
+  }, [PartyJoinLoading]);
 
   const {
     ottName = '',
@@ -60,7 +67,7 @@ const PaymentPage = () => {
   } = partyDetailValue || {};
 
   const paymentAvailable = useMemo(
-    () => myPoint ?? 10000 > totalPrice,
+    () => myPoint > totalPrice,
     [myPoint, totalPrice],
   );
 
@@ -108,7 +115,7 @@ const PaymentPage = () => {
               <Rule rules={rules} />
               <PaymentInfo
                 totalPrice={totalPrice}
-                myPoint={myPoint || 10000}
+                myPoint={myPoint}
                 onClickChargeButton={handleNavigateChargePage}
               />
               {paymentAvailable && (
@@ -146,21 +153,21 @@ const PaymentPage = () => {
           <PointChargeAlert
             onNavigateChargePage={handleNavigateChargePage}
             onClose={handleClosePointChargeAlert}
-            paymentPoint={totalPrice}
-            myPoint={myPoint || 10000}
+            paymentPoint={totalPrice * (1 + COMMISSION_RATE)}
+            myPoint={myPoint}
           />
         </ModalBox>
       </Modal>
       <Modal open={openPaymentResult}>
         <ModalBox>
           {PartyJoinLoading && <h1>로딩중</h1>}
-          {PartyJoinValue && (
+          {PartyJoinError && (
             <>
               <h1>결제실패</h1>
               <button onClick={handleClosePaymentResultAlert}> 닫기</button>
             </>
           )}
-          {PartyJoinError && (
+          {PartyJoinValue && (
             <>
               <div>결제 성공!</div>
               <button onClick={handleNavigateMyPartyDetailPage}>
