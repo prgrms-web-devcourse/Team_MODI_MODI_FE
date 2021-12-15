@@ -12,6 +12,7 @@ const PartyTitle = ({
   endDate,
   period,
   children,
+  isLeader,
 }) => {
   const hasDateInfo = startDate && endDate && period;
 
@@ -37,7 +38,11 @@ const PartyTitle = ({
             alignItems: 'flex-end',
           }}
         >
-          <OttServiceName ottName={ottName} ottGrade={ottGrade} />
+          <OttServiceName
+            ottName={ottName}
+            ottGrade={ottGrade}
+            isLeader={isLeader}
+          />
           {children}
         </Box>
 
@@ -71,6 +76,7 @@ PartyTitle.propTypes = {
     '디즈니 플러스',
     '라프텔',
     '쿠팡 플레이',
+    '',
   ]).isRequired,
   ottGrade: PropTypes.string,
   monthlyPrice: PropTypes.number,
@@ -79,4 +85,5 @@ PartyTitle.propTypes = {
   endDate: PropTypes.string,
   period: PropTypes.number,
   children: PropTypes.node,
+  isLeader: PropTypes.bool,
 };

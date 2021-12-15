@@ -2,9 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
-import { AuthProvider } from 'contexts/authContext';
 import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
 import useAsync from 'hooks/useAsync';
+import { useAuthState } from 'contexts/authContext';
+import { priceToString } from 'utils/priceToString';
 import PartyTitle from 'components/PartyTitle';
 import {
   PageContainer,
@@ -14,50 +15,43 @@ import {
   CardTemplate,
 } from 'components/Common';
 import RuleContainer from 'components/Common/Rule';
-import { priceToString } from 'utils/priceToString';
 import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
-const MY_USER_ID = 7;
-
 const MyPartyDetailPage = () => {
-  // const { userName } = AuthProvider();
+  const { userId } = useAuthState();
   const params = useParams();
   const { myPartyId } = params;
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
   const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
-  const { isLoading, value } = partyDetailstate;
+  const { isLoading: isPartyLoading, value: PartyDetail } = partyDetailstate;
   const [sharedInfo, setSharedInfo] = useState({
     sharedId: '',
     sharedPassword: '',
   });
-  const [partyDetail, setPartyDetail] = useState({
-    ottName: '넷플릭스',
-    grade: '',
-    monthlyFee: 0,
-    period: 0,
-    members: [],
-    rules: [],
-    startDate: '',
-    endDate: '',
-    totalFee: 0,
-    monthlyReimbursement: 0,
-    status: '', // RECRUITING, ONGOING, FINISHED
-  });
 
-  useEffect(() => {
-    if (value) {
-      console.log(value.members);
-      setPartyDetail(value);
-    }
-  }, [value]);
+  const {
+    ottName = '',
+    grade = '',
+    monthlyPrice = 0,
+    period = 0,
+    members = [],
+    rules = [],
+    startDate = '',
+    endDate = '',
+    totalPrice = 0,
+    monthlyReimbursement = 0,
+    status = '',
+  } = PartyDetail || {};
+
+  const MY_USER_ID = userId;
 
   useEffect(() => {
     setSharedInfo(sharedInfoState.value);
   }, [sharedInfoState.value]);
 
-  const checkLeader = partyDetail.members.find(
+  const checkLeader = members.find(
     ({ userId }) => userId === MY_USER_ID,
-  )?.isLeader;
+  )?.leader;
 
   const feeRender = isLeader => {
     if (isLeader) {
@@ -71,7 +65,7 @@ const MyPartyDetailPage = () => {
         >
           <AddCircleOutline color="secondary" fontSize="small" />
           <Typography variant="baseB">
-            월 {priceToString(partyDetail.monthlyReimbursement)}원
+            월 {priceToString(monthlyReimbursement)}원
           </Typography>
         </Box>
       );
@@ -86,7 +80,7 @@ const MyPartyDetailPage = () => {
           }}
         >
           <Typography variant="smallB" component="p">
-            월 {priceToString(partyDetail.monthlyPrice)}원
+            월 {priceToString(monthlyPrice)}원
           </Typography>
           <Box
             sx={{
@@ -97,7 +91,7 @@ const MyPartyDetailPage = () => {
           >
             <RemoveCircleOutline color="error" fontSize="small" />
             <Typography variant="smallB">
-              총 {priceToString(partyDetail.totalPrice)}원
+              총 {priceToString(totalPrice)}원
             </Typography>
           </Box>
         </Box>
@@ -111,13 +105,14 @@ const MyPartyDetailPage = () => {
     setFliped(prev => !prev);
   }, []);
 
-  return !isLoading ? (
+  return !isPartyLoading ? (
     <>
       <PageContainer>
         <PageHeader>
           <PartyTitle
-            ottName={partyDetail.ottName}
-            ottGrade={partyDetail.grade}
+            ottName={ottName}
+            ottGrade={grade}
+            isLeader={checkLeader}
           />
           {feeRender(checkLeader)}
         </PageHeader>
@@ -129,15 +124,13 @@ const MyPartyDetailPage = () => {
             }}
           >
             <Chip
-              label={partyDetail.status === 'RECRUITING' ? '모집중' : '진행중'}
-              color={
-                partyDetail.status === 'RECRUITING' ? 'primary' : 'secondary'
-              }
+              label={status === 'RECRUITING' ? '모집중' : '진행중'}
+              color={status === 'RECRUITING' ? 'primary' : 'secondary'}
               size="small"
               sx={{ mr: 1 }}
             />
             <Typography variant="small" color="text.secondary">
-              {`${partyDetail.startDate}~${partyDetail.endDate}(${partyDetail.period}개월)`}
+              {`${startDate}~${endDate}(${period}개월)`}
             </Typography>
           </Box>
           <Box
@@ -151,31 +144,31 @@ const MyPartyDetailPage = () => {
               perspective: '2000px',
             }}
           >
-            {partyDetail.status === 'RECRUITING' ? (
+            {status === 'RECRUITING' ? (
               <CardTemplate blur={true} />
             ) : (
               <PartyShareAccount
                 fliped={fliped}
                 onFlipCard={handleFlipCard}
                 sharedInfo={sharedInfo}
-                partyStatus={partyDetail.status}
+                partyStatus={status}
               />
             )}
           </Box>
           <Divider />
-          <PartyMemberList members={partyDetail.members} />
+          <PartyMemberList members={members} />
           <Divider
             sx={{
               mt: 2,
               mb: 1,
             }}
           />
-          <RuleContainer rules={partyDetail.rules} sx={{ borderBottom: '0' }} />
+          <RuleContainer rules={rules} sx={{ borderBottom: '0' }} />
         </PageContents>
       </PageContainer>
     </>
   ) : (
-    <p>로딩중</p>
+    <p>로딩스피너?</p>
   );
 };
 
