@@ -13,22 +13,33 @@ import {
 import { PaymentInfo, PointChargeAlert } from 'components/Payment';
 import PartyInfo from 'components/PartyJoin/PartyInfo';
 
-import { getPartyDetail, requestPartyJoin } from 'utils/api';
+import { getPartyDetail, requestPartyJoin, getMyInfo } from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import { useAuthState } from 'contexts/authContext';
 import { COMMISSION_RATE } from 'constants/commissionRate';
+import { useAuthDispatch } from 'contexts/authContext';
+import { USER_INFO_KEY } from 'constants/keys';
 
 const PaymentPage = () => {
   const { points: myPoint } = useAuthState();
   const [searchParams] = useSearchParams();
+  const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const navigate = useNavigate();
   const partyId = useMemo(() => searchParams.get('partyId'), [searchParams]);
   const [open, setOpen] = useState(false);
   const [openPaymentResult, setOpenPaymentResult] = useState(false);
+
   const [partyDetailAPIState] = useAsync(getPartyDetail, [partyId]);
   const [partyJoinApiState, fetchPartyJoinApiState] = useAsync(
     requestPartyJoin,
     [partyId],
+    [],
+    true,
+  );
+
+  const [getMyInfoApiState, fetchGetMyInfoApiState] = useAsync(
+    getMyInfo,
+    [],
     [],
     true,
   );
@@ -40,10 +51,12 @@ const PaymentPage = () => {
   } = partyDetailAPIState;
 
   const {
-    isLoading: PartyJoinLoading,
-    value: PartyJoinValue,
-    error: PartyJoinError,
+    isLoading: partyJoinLoading,
+    value: partyJoinValue,
+    error: partyJoinError,
   } = partyJoinApiState;
+
+  const { value: myInfoValue } = getMyInfoApiState;
 
   useEffect(() => {
     if (partyId === null) {
@@ -52,9 +65,19 @@ const PaymentPage = () => {
   }, [partyId, navigate]);
 
   useEffect(() => {
-    PartyJoinLoading && setOpenPaymentResult(true);
-  }, [PartyJoinLoading]);
+    partyJoinLoading && setOpenPaymentResult(true);
+  }, [partyJoinLoading]);
 
+  useEffect(() => {
+    partyJoinValue && fetchGetMyInfoApiState();
+  }, [partyJoinValue, fetchGetMyInfoApiState]);
+
+  useEffect(() => {
+    if (myInfoValue) {
+      sessionStorage.setItem(USER_INFO_KEY, JSON.stringify(myInfoValue));
+      onUpdateUserInfo(myInfoValue);
+    }
+  }, [myInfoValue, onUpdateUserInfo]);
   const {
     ottName = '',
     grade = '',
@@ -160,14 +183,14 @@ const PaymentPage = () => {
       </Modal>
       <Modal open={openPaymentResult}>
         <ModalBox>
-          {PartyJoinLoading && <h1>로딩중</h1>}
-          {PartyJoinError && (
+          {partyJoinLoading && <h1>로딩중</h1>}
+          {partyJoinError && (
             <>
               <h1>결제실패</h1>
               <button onClick={handleClosePaymentResultAlert}> 닫기</button>
             </>
           )}
-          {PartyJoinValue && (
+          {partyJoinValue && (
             <>
               <div>결제 성공!</div>
               <button onClick={handleNavigateMyPartyDetailPage}>
