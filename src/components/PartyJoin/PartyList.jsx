@@ -13,9 +13,9 @@ const PartyList = ({ parties, onClickParty }) => {
         ({
           partyId,
           grade,
-          price,
-          maxMemberCapacity,
-          currentMemberCapacity,
+          totalPrice,
+          partyMemberCapacity,
+          currentMember,
           startDate,
           startsIn,
           endDate,
@@ -32,9 +32,9 @@ const PartyList = ({ parties, onClickParty }) => {
             <PartySummary
               partyId={partyId}
               grade={grade}
-              price={price}
-              maxMemberCapacity={maxMemberCapacity}
-              currentMemberCapacity={currentMemberCapacity}
+              price={totalPrice}
+              maxMemberCapacity={partyMemberCapacity}
+              currentMemberCapacity={currentMember}
               startDate={startDate}
               startsIn={startsIn}
               endDate={endDate}

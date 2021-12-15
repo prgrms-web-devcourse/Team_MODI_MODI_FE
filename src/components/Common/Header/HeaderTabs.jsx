@@ -1,10 +1,16 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import { Tabs } from '@mui/material';
 import theme from 'styles/theme.js';
 import HeaderTab from './HeaderTab.jsx';
+import HeaderModal from './HeaderModal.jsx';
 
 const HeaderTabs = ({ isMainPage }) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const navigate = useNavigate();
 
   return (
@@ -24,7 +30,8 @@ const HeaderTabs = ({ isMainPage }) => {
         color: `${isMainPage ? '#fff' : theme.palette.text.secondary}`,
       }}
     >
-      <HeaderTab label="파티찾기" isMain={isMainPage} />
+      <HeaderModal open={open} onClose={handleClose} />
+      <HeaderTab label="파티찾기" isMain={isMainPage} onClick={handleOpen} />
       <HeaderTab
         label="파티만들기"
         isMainPage={isMainPage}

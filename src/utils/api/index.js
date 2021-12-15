@@ -2,6 +2,7 @@ import axios from 'axios';
 import { API_END_POINT } from 'constants/environment';
 
 import * as httpMethods from 'constants/httpMethods';
+import { TOKEN_KEY } from 'constants/keys';
 
 const instance = axios.create({
   baseURL: API_END_POINT,
@@ -13,7 +14,7 @@ const axiosRequest = (uri, requireToken, method = httpMethods.GET, data) => {
   data && args.push(data);
 
   if (requireToken) {
-    const TOKEN = JSON.parse(sessionStorage.getItem('TOKEN'));
+    const TOKEN = JSON.parse(sessionStorage.getItem(TOKEN_KEY));
     args.push({ headers: { Authorization: `Bearer ${TOKEN}` } });
   }
 

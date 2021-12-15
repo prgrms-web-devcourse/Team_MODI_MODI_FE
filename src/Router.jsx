@@ -20,7 +20,7 @@ const Router = () => {
           <Route index element={<MainPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route
-            path="recruit/:ottServiceName"
+            path="recruit/:ottServiceId"
             element={<RecrutingPartyPage />}
           />
           <Route path="create" element={<CreatePartyPage />} />
