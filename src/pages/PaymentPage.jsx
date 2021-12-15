@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import { Button, Modal, Typography } from '@mui/material';
@@ -13,23 +13,40 @@ import {
 import { PaymentInfo, PointChargeAlert } from 'components/Payment';
 import PartyInfo from 'components/PartyJoin/PartyInfo';
 
-import { getPartyDetail } from 'utils/api';
+import { getPartyDetail, requestPartyJoin } from 'utils/api';
 import useAsync from 'hooks/useAsync';
-
-const myPoint = 5000;
+import { useAuthState } from 'contexts/authContext';
 
 const PaymentPage = () => {
+  const { points: myPoint } = useAuthState();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const partyId = useMemo(() => searchParams.get('partyId'), [searchParams]);
   const [open, setOpen] = useState(false);
+  const [openPaymentResult, setOpenPaymentResult] = useState(false);
   const [partyDetailAPIState] = useAsync(getPartyDetail, [partyId]);
+  const [partyJoinApiState, fetchPartyJoinApiState] = useAsync(
+    requestPartyJoin,
+    [partyId],
+    [],
+    true,
+  );
 
   const {
     isLoading: partyDetailLoading,
     value: partyDetailValue,
     error: partyDetailError,
   } = partyDetailAPIState;
+
+  const {
+    isLoading: PartyJoinLoading,
+    value: PartyJoinValue,
+    error: PartyJoinError,
+  } = partyJoinApiState;
+
+  useEffect(() => {
+    (PartyJoinValue || PartyJoinError) && setOpenPaymentResult(true);
+  }, [PartyJoinValue, PartyJoinError]);
 
   const {
     ottName = '',
@@ -42,6 +59,11 @@ const PaymentPage = () => {
     totalPrice = 0,
   } = partyDetailValue || {};
 
+  const paymentAvailable = useMemo(
+    () => myPoint ?? 10000 > totalPrice,
+    [myPoint, totalPrice],
+  );
+
   const handleClosePointChargeAlert = useCallback(() => {
     setOpen(false);
   }, []);
@@ -53,6 +75,18 @@ const PaymentPage = () => {
   const handleNavigateChargePage = useCallback(() => {
     navigate('/charge');
   }, [navigate]);
+
+  const handleNavigateMyPartyDetailPage = useCallback(() => {
+    navigate(`/myParty/${partyId}`);
+  }, [navigate, partyId]);
+
+  const handleRequestJoinParty = useCallback(() => {
+    fetchPartyJoinApiState(partyId);
+  }, [partyId, fetchPartyJoinApiState]);
+
+  const handleClosePaymentResultAlert = useCallback(() => {
+    setOpenPaymentResult(false);
+  }, []);
 
   return (
     <>
@@ -74,20 +108,35 @@ const PaymentPage = () => {
               <Rule rules={rules} />
               <PaymentInfo
                 totalPrice={totalPrice}
-                myPoint={myPoint}
+                myPoint={myPoint || 10000}
                 onClickChargeButton={handleNavigateChargePage}
               />
-              <Button
-                variant="contained"
-                sx={{
-                  width: '100%',
-                  mt: 2,
-                }}
-                size="large"
-                onClick={handleOpenPointChargeAlert}
-              >
-                <Typography variant="baseB">결제하기</Typography>
-              </Button>
+              {paymentAvailable && (
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: '100%',
+                    mt: 2,
+                  }}
+                  size="large"
+                  onClick={handleRequestJoinParty}
+                >
+                  <Typography variant="baseB">결제하기</Typography>
+                </Button>
+              )}
+              {!paymentAvailable && (
+                <Button
+                  variant="contained"
+                  sx={{
+                    width: '100%',
+                    mt: 2,
+                  }}
+                  size="large"
+                  onClick={handleOpenPointChargeAlert}
+                >
+                  <Typography variant="baseB">충전하기</Typography>
+                </Button>
+              )}
             </>
           )}
         </PageContents>
@@ -98,8 +147,27 @@ const PaymentPage = () => {
             onNavigateChargePage={handleNavigateChargePage}
             onClose={handleClosePointChargeAlert}
             paymentPoint={totalPrice}
-            myPoint={myPoint}
+            myPoint={myPoint || 10000}
           />
+        </ModalBox>
+      </Modal>
+      <Modal open={openPaymentResult}>
+        <ModalBox>
+          {PartyJoinLoading && <h1>로딩중</h1>}
+          {PartyJoinValue && (
+            <>
+              <h1>결제실패</h1>
+              <button onClick={handleClosePaymentResultAlert}> 닫기</button>
+            </>
+          )}
+          {PartyJoinError && (
+            <>
+              <div>결제 성공!</div>
+              <button onClick={handleNavigateMyPartyDetailPage}>
+                파티정보 확인하기
+              </button>
+            </>
+          )}
         </ModalBox>
       </Modal>
     </>
