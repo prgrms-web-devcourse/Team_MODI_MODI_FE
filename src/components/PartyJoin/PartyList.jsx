@@ -6,6 +6,7 @@ const PartyList = ({ parties, onClickParty }) => {
   const handleClickParty = partyId => {
     onClickParty && onClickParty(partyId);
   };
+  console.log(parties);
 
   return (
     <List sx={{ width: '100%' }}>
@@ -32,7 +33,7 @@ const PartyList = ({ parties, onClickParty }) => {
             <PartySummary
               partyId={partyId}
               grade={grade}
-              price={totalPrice}
+              price={totalPrice / period}
               maxMemberCapacity={partyMemberCapacity}
               currentMemberCapacity={currentMember}
               startDate={startDate}
