@@ -70,7 +70,7 @@ export const chargePoint = point => post(`/points/add`, true, point);
 export const getMyPoint = () => get(`/users/me/points`, true);
 
 export const getMyInfo = () => get(`/users/me`, true);
-export const getAllMyParty = (status = 'RECEUITING', size = 5, lastPartyId) => {
+export const getAllMyParty = (status = 'RECRUITING', size = 5, lastPartyId) => {
   let searchParamObj = {
     status,
     size,
