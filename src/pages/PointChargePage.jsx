@@ -34,13 +34,14 @@ const PointChargePage = () => {
   };
 
   useEffect(() => {
-    pointState.value &&
-      setUserInfo({
-        ...storedUserInfo,
+    if (pointState.value) {
+      setUserInfo(prevUserInfo => ({
+        ...prevUserInfo,
         points: pointState.value.points,
-      });
-    onUpdateUserInfo(pointState.value);
-  }, [pointState.value]);
+      }));
+      onUpdateUserInfo(pointState.value);
+    }
+  }, [pointState.value, onUpdateUserInfo]);
 
   return (
     <>
