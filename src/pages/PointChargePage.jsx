@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Divider, Typography } from '@mui/material';
+import { Box, Button, TextField, Divider } from '@mui/material';
 import { PageContainer, PageContents, PageHeader } from 'components/Common';
 import InfoElement from 'components/Common/InfoElement';
 import { USER_INFO_KEY } from 'constants/keys';
@@ -13,17 +13,9 @@ const PointChargePage = () => {
   const { points } = useAuthState();
   const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const [chargeInput, setChargeInput] = useState(0);
-  const [pointState, chargeCallback] = useAsync(
-    chargePoint,
-    [chargePoint],
-    [],
-    true,
-  );
-  const [storedUserInfo, setUserInfo] = useStorage(
-    USER_INFO_KEY,
-    null,
-    'session',
-  );
+  const [pointState, chargeCallback] = useAsync(chargePoint, [], [], true);
+
+  const [, setUserInfo] = useStorage(USER_INFO_KEY, null, 'session');
 
   const handleChargePoint = ({ target }) => {
     setChargeInput(Number(target.value));
@@ -41,7 +33,7 @@ const PointChargePage = () => {
       }));
       onUpdateUserInfo(pointState.value);
     }
-  }, [pointState.value, onUpdateUserInfo]);
+  }, [pointState.value, onUpdateUserInfo, setUserInfo]);
 
   return (
     <>
