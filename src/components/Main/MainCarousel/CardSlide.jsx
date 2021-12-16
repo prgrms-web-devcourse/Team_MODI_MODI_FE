@@ -6,6 +6,7 @@ import {
   CardActions,
   Typography,
   Button,
+  Box,
 } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
@@ -23,14 +24,10 @@ const cardTitleRender = waitingCount => {
       파티를 기다리고 있어요🎉
     </>
   ) : (
-    <div
-      style={{
-        paddingTop: '10px',
-      }}
-    >
+    <Box sx={{ pt: 2 }}>
       파티가 만들어지기를 기다리고 있어요 <br />
       파티장이 되어 파티원을 모아 보세요
-    </div>
+    </Box>
   );
 };
 
