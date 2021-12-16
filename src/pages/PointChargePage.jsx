@@ -2,7 +2,7 @@ import { Box, Button, TextField, Divider, Typography } from '@mui/material';
 import { PageContainer, PageContents, PageHeader } from 'components/Common';
 import InfoElement from 'components/Common/InfoElement';
 import { USER_INFO_KEY } from 'constants/keys';
-import { useAuthState } from 'contexts/authContext';
+import { useAuthState, useAuthDispatch } from 'contexts/authContext';
 import useAsync from 'hooks/useAsync';
 import useStorage from 'hooks/useStorage';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { pointFormatter } from 'utils/formatting';
 
 const PointChargePage = () => {
   const { points } = useAuthState();
+  const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const [chargeInput, setChargeInput] = useState(0);
   const [pointState, chargeCallback] = useAsync(
     chargePoint,
@@ -38,6 +39,7 @@ const PointChargePage = () => {
         ...storedUserInfo,
         points: pointState.value.points,
       });
+    onUpdateUserInfo(pointState.value);
   }, [pointState.value]);
 
   return (
