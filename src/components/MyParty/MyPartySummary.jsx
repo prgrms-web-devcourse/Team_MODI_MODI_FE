@@ -79,7 +79,7 @@ const MyPartySummary = ({
   return (
     <Box
       sx={{
-        marginBottom: 2,
+        mb: 2,
         cursor: 'pointer',
       }}
       onClick={handleClickParty}
@@ -115,6 +115,7 @@ const MyPartySummary = ({
                 src={crown}
                 style={{
                   marginLeft: 5,
+                  marginBottom: 2.5,
                   width: 20,
                 }}
               />
