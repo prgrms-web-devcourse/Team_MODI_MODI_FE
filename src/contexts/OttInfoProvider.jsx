@@ -11,7 +11,7 @@ const OttInfoState = createContext(null);
 const OttInfoDispatch = createContext(null);
 
 const INITIAL_STATE = {
-  ottList: [],
+  ottServices: [],
 };
 
 const ACTION_TYPES = {
