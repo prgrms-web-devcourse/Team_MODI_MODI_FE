@@ -47,7 +47,16 @@ const PartyInfo = ({
 };
 
 PartyInfo.propTypes = {
-  ottName: PropTypes.oneOf(['넷플릭스', '왓챠', '디즈니 플러스', '웨이브']),
+  ottName: PropTypes.oneOf([
+    '넷플릭스',
+    '왓챠',
+    '웨이브',
+    '티빙',
+    '디즈니 플러스',
+    '라프텔',
+    '쿠팡 플레이',
+    '아마존 프라임',
+  ]),
   ottGrade: PropTypes.string,
   startDate: PropTypes.string,
   endDate: PropTypes.string,
