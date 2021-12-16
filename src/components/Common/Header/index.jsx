@@ -1,14 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { AppBar, Box } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
+import { useAuthState } from 'contexts/authContext.jsx';
 
 const Header = ({ user }) => {
   const location = useLocation();
-  const [isLogin] = useState(user);
+  const { isLoggedIn } = useAuthState();
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
 
@@ -45,7 +46,7 @@ const Header = ({ user }) => {
           }}
         >
           <HeaderTabs isMainPage={isMainPage} />
-          <HeaderFab user={isLogin} isMainPage={isMainPage} />
+          <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
         </Box>
       </AppBar>
     )

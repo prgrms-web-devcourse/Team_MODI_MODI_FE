@@ -3,9 +3,18 @@ import { Modal, Box, Typography, Container, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import theme from 'styles/theme.js';
 import OttList from 'components/Ott/OttList';
-import { ottServices } from 'constants/dummyData';
+import { useOttInfoState } from 'contexts/OttInfoProvider';
+import { useNavigate } from 'react-router';
 
 const HeaderModal = ({ open, onClose }) => {
+  const { ottServices } = useOttInfoState();
+  const navigate = useNavigate();
+
+  const handleClickOtt = ottId => {
+    navigate(`/recruit/${ottId}`);
+    onClose && onClose();
+  };
+
   return (
     <Modal
       open={open}
@@ -26,7 +35,7 @@ const HeaderModal = ({ open, onClose }) => {
         </Container>
         <OttList
           ottServices={ottServices}
-          //onSelectOtt={handleClickOtt}
+          onSelectOtt={handleClickOtt}
           toggleable={false}
         />
       </Box>

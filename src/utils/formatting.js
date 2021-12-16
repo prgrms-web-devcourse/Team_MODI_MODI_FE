@@ -31,10 +31,27 @@ export const partyCreateFormater = newParty => {
     mustFilled,
     ottId,
     ottName,
-    partyMemberCapacity,
+    partyMemberCapacity: partyMemberCapacity + 1,
     rules,
     sharedId,
     sharedPassword,
     startDate: dateFormater(startDate),
   };
+};
+
+export const pointFormatter = (points, fontSize = 15) => {
+  return (
+    <>
+      {points}
+      <span
+        style={{
+          marginLeft: '5px',
+          fontSize: `${fontSize}px`,
+          fontWeight: 700,
+        }}
+      >
+        P
+      </span>
+    </>
+  );
 };
