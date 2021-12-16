@@ -52,7 +52,7 @@ const OttLogo = ({ ottName, size = 72, sx }) => {
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.15)',
     ...sx,
   };
-  const { logo: logoSrc } = ottInfoEn[ottName];
+  const { logo: logoSrc } = ottInfoEn[ottName] || '';
 
   return (
     <Avatar alt={`${ottInfoEn[ottName]}-logo`} sx={ottLogoSx} src={logoSrc} />
@@ -69,7 +69,8 @@ OttLogo.propTypes = {
     '아마존 프라임',
     '라프텔',
     '티빙',
-  ]).isRequired,
+    '',
+  ]),
   size: PropTypes.number,
   sx: PropTypes.object,
 };

@@ -35,19 +35,19 @@ const Circle = styled('span')`
     return `rotate(calc(${Deg}deg))`;
   }};
 
-  &: nth-child(1) {
+  &: nth-of-type(1) {
     background: #01b2fe;
   }
 
-  &: nth-child(2) {
+  &: nth-of-type(2) {
     background: #ff008c;
   }
 
-  &: nth-child(3) {
+  &: nth-of-type(3) {
     background: #ffcd00;
   }
 
-  &: nth-child(4) {
+  &: nth-of-type(4) {
     background: #00c456;
   }
 `;

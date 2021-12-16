@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Paper, Typography, Box } from '@mui/material';
-import { AirlineSeatReclineExtra, MonetizationOn } from '@mui/icons-material';
+import { Face, MonetizationOn } from '@mui/icons-material';
 import { priceToString } from 'utils/priceToString';
 
 const PartySummary = ({
@@ -82,7 +82,7 @@ const PartySummary = ({
       >
         <Box mt={1.5} mr="auto">
           {Array.from({ length: maxMemberCapacity }, (_, i) => i).map(index => (
-            <AirlineSeatReclineExtra
+            <Face
               fontSize="large"
               key={index}
               color={index < currentMemberCapacity ? 'secondary' : 'modiGray'}

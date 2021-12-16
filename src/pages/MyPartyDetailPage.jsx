@@ -1,47 +1,50 @@
-import { Box } from '@mui/system';
 import { useCallback, useState } from 'react';
-import PartyShareAccount from 'components/MyParty/PartyShareAccount';
-import { PageContainer, PageContents, PageHeader } from 'components/Common';
-import PartyTitle from 'components/PartyTitle';
-import { PARTY_DETAIL_DUMMY } from 'constants/mockData/parttDetailDummy';
-import PartyMemberList from 'components/Common/PartyMemberList';
-import RuleContainer from 'components/Common/Rule';
-import { Divider, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { Box, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
+import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
+import useAsync from 'hooks/useAsync';
+import { useAuthState } from 'contexts/authContext';
 import { priceToString } from 'utils/priceToString';
-import CardTemplate from 'components/Common/CardTemplate';
-
-const MY_USER_ID = 2;
+import PartyTitle from 'components/PartyTitle';
+import {
+  PageContainer,
+  PageContents,
+  PageHeader,
+  PartyMemberList,
+  CardTemplate,
+} from 'components/Common';
+import RuleContainer from 'components/Common/Rule';
+import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
 const MyPartyDetailPage = () => {
+  const { userId: loginUserId } = useAuthState();
+
   const params = useParams();
   const { myPartyId } = params;
-  console.log(`myPartyId: ${myPartyId}`);
 
-  /**
-   * API처리 로직
-   * getMyPartyDetail(myPartyId)
-   * getSharedInfo()
-   */
+  const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
+  const { isLoading: isPartyLoading, value: PartyDetail } = partyDetailstate;
+  const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
+  const { value: sharedInfo } = sharedInfoState;
 
   const {
-    ottName,
-    grade,
-    monthlyFee,
-    period,
-    members,
-    rules,
-    startDate,
-    endDate,
-    totalFee,
-    monthlyReimbursement,
-    status,
-  } = PARTY_DETAIL_DUMMY;
+    ottName = '',
+    grade = '',
+    monthlyPrice = 0,
+    period = 0,
+    members = [],
+    rules = [],
+    startDate = '',
+    endDate = '',
+    totalPrice = 0,
+    monthlyReimbursement = 0,
+    status = '',
+  } = PartyDetail || {};
 
   const checkLeader = members.find(
-    ({ userId }) => userId === MY_USER_ID,
-  )?.isLeader;
+    ({ userId }) => userId === loginUserId,
+  )?.leader;
 
   const feeRender = isLeader => {
     if (isLeader) {
@@ -70,7 +73,7 @@ const MyPartyDetailPage = () => {
           }}
         >
           <Typography variant="smallB" component="p">
-            월 {priceToString(monthlyFee)}원
+            월 {priceToString(monthlyPrice)}원
           </Typography>
           <Box
             sx={{
@@ -81,7 +84,7 @@ const MyPartyDetailPage = () => {
           >
             <RemoveCircleOutline color="error" fontSize="small" />
             <Typography variant="smallB">
-              총 {priceToString(totalFee)}원
+              총 {priceToString(totalPrice)}원
             </Typography>
           </Box>
         </Box>
@@ -95,20 +98,34 @@ const MyPartyDetailPage = () => {
     setFliped(prev => !prev);
   }, []);
 
-  return (
+  return !isPartyLoading ? (
     <>
       <PageContainer>
-        <PageHeader title="파티 확인하기" />
-        <PageContents>
+        <PageHeader>
           <PartyTitle
             ottName={ottName}
             ottGrade={grade}
-            startDate={startDate}
-            endDate={endDate}
-            period={period}
+            isLeader={checkLeader}
+          />
+          {feeRender(checkLeader)}
+        </PageHeader>
+        <PageContents>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
           >
-            {feeRender(checkLeader)}
-          </PartyTitle>
+            <Chip
+              label={status === 'RECRUITING' ? '모집중' : '진행중'}
+              color={status === 'RECRUITING' ? 'primary' : 'secondary'}
+              size="small"
+              sx={{ mr: 1 }}
+            />
+            <Typography variant="small" color="text.secondary">
+              {`${startDate}~${endDate}(${period}개월)`}
+            </Typography>
+          </Box>
           <Box
             sx={{
               mt: 2,
@@ -126,10 +143,7 @@ const MyPartyDetailPage = () => {
               <PartyShareAccount
                 fliped={fliped}
                 onFlipCard={handleFlipCard}
-                sharedInfo={{
-                  sharedId: 'Modi@abc.com',
-                  sharedPassword: '12312314sdf',
-                }}
+                sharedInfo={sharedInfo}
                 partyStatus={status}
               />
             )}
@@ -146,6 +160,8 @@ const MyPartyDetailPage = () => {
         </PageContents>
       </PageContainer>
     </>
+  ) : (
+    <p>로딩스피너?</p>
   );
 };
 

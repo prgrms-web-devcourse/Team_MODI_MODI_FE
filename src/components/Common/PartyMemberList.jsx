@@ -19,20 +19,26 @@ const PartyMemberList = ({ members }) => {
           textAlign: 'left',
           mt: 2,
         }}
-        variant="small"
+        variant="baseB"
+        color="text.secondary"
         component="div"
       >
         파티인원
       </Typography>
       <Box
         sx={{
-          mt: 1,
+          mt: 3,
           display: 'flex',
           alignItems: 'flex-start',
         }}
       >
-        {members.map(({ userId, username }) => (
-          <PartyMember key={userId} isWaiting={false} username={username} />
+        {members.map(({ userId, username, leader }) => (
+          <PartyMember
+            key={userId}
+            isWaiting={false}
+            username={username}
+            leader={leader}
+          />
         ))}
         {waitingMemeber()}
       </Box>
