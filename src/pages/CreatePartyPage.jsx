@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper } from '@mui/material';
@@ -45,6 +45,18 @@ const CreatePartyPage = () => {
     true,
   );
 
+  const nextStep = useCallback(() => {
+    stepComplete && setStepComplete(false);
+  }, [stepComplete]);
+
+  const handleSelectedOtt = useCallback(
+    selectOttId => {
+      nextStep();
+      loadOttInfo(selectOttId);
+    },
+    [loadOttInfo, nextStep],
+  );
+
   useEffect(() => {
     if (rules.value) {
       const ruleList = rules.value.rules.map(rule => ({
@@ -63,7 +75,7 @@ const CreatePartyPage = () => {
       const currentOtt = location.search.split('=')[1];
       handleSelectedOtt(currentOtt);
     }
-  }, [ottServices]);
+  }, [ottServices, handleSelectedOtt, location.search]);
 
   useEffect(() => {
     currentOtt.value &&
@@ -86,15 +98,6 @@ const CreatePartyPage = () => {
       return;
     }
     setStepComplete(true);
-  };
-
-  const nextStep = () => {
-    stepComplete && setStepComplete(false);
-  };
-
-  const handleSelectedOtt = selectOttId => {
-    nextStep();
-    loadOttInfo(selectOttId);
   };
 
   const handleStartDate = startDate => {
