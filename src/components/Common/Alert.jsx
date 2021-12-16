@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import lottie from 'lottie-web';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, Modal } from '@mui/material';
 import { styled } from '@mui/system';
 import paymentSuccess from 'assets/pay-success-lottie.json';
 import paymentFail from 'assets/pay-fail-lottie.json';
@@ -27,7 +27,7 @@ const lottieTypes = {
   },
 };
 
-const Alert = ({ type, messege, helperText, onClose }) => {
+const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
   const lottieIcon = useRef();
   useEffect(() => {
     type &&
@@ -41,41 +41,43 @@ const Alert = ({ type, messege, helperText, onClose }) => {
   }, [type]);
 
   return (
-    <AlertBox>
-      <Box
-        sx={{
-          flexGrow: 1,
-          mb: 2,
-        }}
-      >
-        <AlertIcon ref={lottieIcon} />
-        <Typography
-          variant="large"
-          component="p"
-          color="text.primary"
-          sx={{ mb: 0.5 }}
+    <Modal open={isOpen}>
+      <AlertBox>
+        <Box
+          sx={{
+            flexGrow: 1,
+            mb: 2,
+          }}
         >
-          {messege}
-        </Typography>
-        <Typography variant="base" component="p" color="text.secondary">
-          {helperText}
-        </Typography>
-      </Box>
-      <Button
-        type="button"
-        variant="contained"
-        size="small"
-        sx={{
-          fontSize: 16,
-          borderRadius: 20,
-          width: '40%',
-          margin: '0 auto',
-        }}
-        onClick={onClose}
-      >
-        확인
-      </Button>
-    </AlertBox>
+          <AlertIcon ref={lottieIcon} />
+          <Typography
+            variant="large"
+            component="p"
+            color="text.primary"
+            sx={{ mb: 0.5 }}
+          >
+            {messege}
+          </Typography>
+          <Typography variant="base" component="p" color="text.secondary">
+            {helperText}
+          </Typography>
+        </Box>
+        <Button
+          type="button"
+          variant="contained"
+          size="small"
+          sx={{
+            fontSize: 16,
+            borderRadius: 20,
+            width: '40%',
+            margin: '0 auto',
+          }}
+          onClick={onClose}
+        >
+          확인
+        </Button>
+      </AlertBox>
+    </Modal>
   );
 };
 
@@ -108,6 +110,7 @@ Alert.propTypes = {
   messege: PropTypes.string,
   helperText: PropTypes.string,
   onClose: PropTypes.func,
+  isOpen: PropTypes.bool,
 };
 
 export default Alert;
