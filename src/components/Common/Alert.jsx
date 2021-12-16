@@ -1,16 +1,59 @@
-import { Box, Button, Typography } from '@mui/material';
+import { useRef, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
+import lottie from 'lottie-web';
+import { Box, Button, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import paymentSuccess from 'assets/pay-success-lottie.json';
+import paymentFail from 'assets/pay-fail-lottie.json';
+import success from 'assets/success-lottie.json';
+import fail from 'assets/fail-lottie.json';
+
+const lottieTypes = {
+  success: {
+    lottie: success,
+    loop: false,
+  },
+  paymentSuccess: {
+    lottie: paymentSuccess,
+    loop: true,
+  },
+  paymentFail: {
+    lottie: paymentFail,
+    loop: true,
+  },
+  fail: {
+    lottie: fail,
+    loop: false,
+  },
+};
+
 const Alert = ({ type, messege, helperText, onClose }) => {
+  const lottieIcon = useRef();
+  useEffect(() => {
+    type &&
+      lottie.loadAnimation({
+        container: lottieIcon.current,
+        render: 'svg',
+        loop: lottieTypes[type].loop,
+        autoplay: true,
+        animationData: lottieTypes[type].lottie,
+      });
+  }, [type]);
+
   return (
     <AlertBox>
-      <Box sx={{ flexGrow: 1 }}>
-        {/* 아이콘영역 타입에 따라 맞는 아이콘 컴포넌트 가져오기 */}
+      <Box
+        sx={{
+          flexGrow: 1,
+          mb: 2,
+        }}
+      >
+        <AlertIcon ref={lottieIcon} />
         <Typography
           variant="large"
           component="p"
           color="text.primary"
-          sx={{ mb: 1 }}
+          sx={{ mb: 0.5 }}
         >
           {messege}
         </Typography>
@@ -21,6 +64,7 @@ const Alert = ({ type, messege, helperText, onClose }) => {
       <Button
         type="button"
         variant="contained"
+        size="small"
         sx={{
           fontSize: 16,
           borderRadius: 20,
@@ -34,6 +78,11 @@ const Alert = ({ type, messege, helperText, onClose }) => {
     </AlertBox>
   );
 };
+
+const AlertIcon = styled(Box)`
+  margin: 0 auto;
+  height: 200px;
+`;
 
 const AlertBox = styled(Box)`
   position: absolute;
