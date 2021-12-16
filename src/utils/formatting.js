@@ -31,7 +31,7 @@ export const partyCreateFormater = newParty => {
     mustFilled,
     ottId,
     ottName,
-    partyMemberCapacity,
+    partyMemberCapacity: partyMemberCapacity + 1,
     rules,
     sharedId,
     sharedPassword,
