@@ -6,14 +6,42 @@ import {
   CardActions,
   Typography,
   Button,
+  Box,
 } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
 
-const CardSlide = ({ ottId, ottName, watingCount }) => {
+const CardSlide = ({ ottId, ottName, waitingCount }) => {
   const navigate = useNavigate();
-  const handleClickRecruting = () => {
-    navigate(`recruit/${ottId}`);
+  const handleClickCarouselButton = () => {
+    waitingCount && navigate(`recruit/${ottId}`);
+    !waitingCount && navigate(`create?ottId=${ottId}`);
+  };
+
+  const cardTitleRender = () => {
+    return waitingCount ? (
+      <>
+        {`${waitingCount}`.split('').map((number, i) => (
+          <CounterNumber key={i} variant="large">
+            {number}
+          </CounterNumber>
+        ))}
+        명이
+        <br />
+        파티를 기다리고 있어요🎉
+      </>
+    ) : (
+      <Box sx={{ pt: 2 }}>
+        파티가 만들어지기를 기다리고 있어요 <br />
+        파티장이 되어 파티원을 모아 보세요
+      </Box>
+    );
+  };
+
+  const cardButtonRender = () => {
+    return waitingCount
+      ? '그렇다면 내가 빠질 수 없지 😎'
+      : '🎊 길을 비켜라 파티장 나가신다 🎊';
   };
 
   return (
@@ -53,14 +81,7 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
             }}
           />
           {ottName}에서
-          {`${watingCount}`.split('').map((number, i) => (
-            <CounterNumber key={i} variant="large">
-              {number}
-            </CounterNumber>
-          ))}
-          명이
-          <br />
-          파티를 기다리고 있어요🎉
+          {cardTitleRender()}
         </Typography>
       </CardContent>
       <CardActions
@@ -70,7 +91,7 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
         }}
       >
         <Button
-          onClick={handleClickRecruting}
+          onClick={handleClickCarouselButton}
           variant="contained"
           sx={[
             {
@@ -88,7 +109,7 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
             },
           ]}
         >
-          그렇다면 내가 빠질 수 없지 😎
+          {cardButtonRender()}
         </Button>
       </CardActions>
     </Card>
@@ -98,8 +119,7 @@ const CardSlide = ({ ottId, ottName, watingCount }) => {
 CardSlide.propTypes = {
   ottId: PropTypes.number,
   ottName: PropTypes.string,
-  watingCount: PropTypes.number,
-  onClick: PropTypes.func,
+  waitingCount: PropTypes.number,
 };
 
 const CounterNumber = styled(Typography)`

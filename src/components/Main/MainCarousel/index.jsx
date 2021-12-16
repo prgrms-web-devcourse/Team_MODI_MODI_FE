@@ -52,7 +52,7 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
               key={ottId}
               ottId={ottId}
               ottName={ottName}
-              watingCount={waitingForMatch}
+              waitingCount={waitingForMatch}
             />
           ))}
         </Box>

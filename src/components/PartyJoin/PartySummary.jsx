@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Paper, Typography, Box } from '@mui/material';
-import { AirlineSeatReclineExtra, MonetizationOn } from '@mui/icons-material';
+import { Face, MonetizationOn } from '@mui/icons-material';
 import { priceToString } from 'utils/priceToString';
 
 const PartySummary = ({
@@ -34,29 +34,35 @@ const PartySummary = ({
       }}
       onClick={handleClickParty}
     >
-      <Box sx={{ display: 'flex' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <Box sx={{ mr: 'auto' }}>
-          <Typography variant="mediumB" color="primary">
+          <Typography variant="large" color="primary">
             {startsIn}
           </Typography>
-          <Typography variant="smallB"> 일 후 파티 시작</Typography>
+          <Typography variant="baseB"> 일 후 파티 시작</Typography>
           <Typography
             variant="micro"
             color="text.secondary"
             component="div"
+            align="left"
+            mt={0.5}
             sx={{
               wordBreak: 'keep-all',
-              textAlign: 'right',
             }}
           >
-            ~{endDate} 까지 ({period}개월)
+            {endDate} 까지 ({period}개월)
           </Typography>
         </Box>
 
         <Box
           sx={{
+            mt: 1.3,
             textAlign: 'right',
-            mt: 0.5,
           }}
         >
           <Typography variant="micro" component="div">
@@ -69,9 +75,10 @@ const PartySummary = ({
               verticalAlign: 'sub',
             }}
           />
-          <Typography variant="micro">월 </Typography>
-          <Typography variant="microB"> {priceToString(price)}</Typography>
-          <Typography variant="micro">원</Typography>
+          <Typography variant="micro">
+            월<Typography variant="microB"> {priceToString(price)}</Typography>
+            원
+          </Typography>
         </Box>
       </Box>
       <Box
@@ -82,7 +89,7 @@ const PartySummary = ({
       >
         <Box mt={1.5} mr="auto">
           {Array.from({ length: maxMemberCapacity }, (_, i) => i).map(index => (
-            <AirlineSeatReclineExtra
+            <Face
               fontSize="large"
               key={index}
               color={index < currentMemberCapacity ? 'secondary' : 'modiGray'}

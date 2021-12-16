@@ -1,20 +1,127 @@
-import { Avatar, Box, Button, Typography } from '@mui/material';
-import { priceToString } from 'utils/priceToString';
 import { PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
-import { userInfo, parties } from 'constants/myPageDummyData';
-import { LogoutOutlined } from '@mui/icons-material';
+import useAsync from 'hooks/useAsync';
+import { getAllMyParty } from 'utils/api';
+import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
+import MyPageTitle from 'components/MyParty/MyPageTitle';
+import { useAuthState } from 'contexts/authContext';
+
+const LIMIT = 3;
+
+const initialState = {
+  parties: [],
+  lastPartyId: undefined,
+  loadedSize: LIMIT,
+  buttonDisabled: true,
+};
 
 const MyPage = () => {
-  const { userId, username, points } = userInfo;
-  console.log(userId);
+  const { username, points } = useAuthState();
+  const [onGoing, setOnGoing] = useState(initialState);
+  const [recruiting, setRecruiting] = useState(initialState);
+  const [finished, setFinished] = useState(initialState);
+
+  const [onGoingState] = useAsync(
+    getAllMyParty,
+    ['ONGOING', LIMIT, onGoing.lastPartyId],
+    [onGoing.lastPartyId],
+  );
+  const [recruitingState] = useAsync(
+    getAllMyParty,
+    ['RECRUITING', LIMIT, recruiting.lastPartyId],
+    [recruiting.lastPartyId],
+  );
+  const [finishedState] = useAsync(
+    getAllMyParty,
+    ['FINISHED', LIMIT, finished.lastPartyId],
+    [finished.lastPartyId],
+  );
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (onGoingState.value) {
+      setOnGoing({
+        ...onGoing,
+        parties: [...onGoing.parties, ...onGoingState.value.parties],
+      });
+    }
+  }, [onGoingState.value]);
+
+  useEffect(() => {
+    if (recruitingState.value) {
+      const { totalSize, parties } = recruitingState.value;
+      setRecruiting({
+        ...recruiting,
+        parties: [...recruiting.parties, ...parties],
+        buttonDisabled: !totalSize,
+      });
+    }
+  }, [recruitingState.value]);
+
+  useEffect(() => {
+    if (finishedState.value) {
+      setFinished({
+        ...finished,
+        parties: [...finished.parties, ...finishedState.value.parties],
+      });
+    }
+  }, [finishedState.value]);
+
   const handleClickCharge = () => {
-    console.log('충전');
-    // 포인트 충전 페이지로 이동
+    navigate(`/charge`);
   };
 
-  const handleLogOut = () => {
-    console.log('logout');
+  const handleClickParty = partyId => {
+    navigate(`/myParty/${partyId}`);
+  };
+  const handleClickMoreButton = status => {
+    switch (status) {
+      case 'onGoing':
+        if (onGoing.loadedSize + LIMIT > onGoingState.value.totalSize) {
+          setOnGoing({
+            ...onGoing,
+            buttonDisabled: true,
+          });
+        } else {
+          setOnGoing({
+            ...onGoing,
+            loadedSize: onGoing.loadedSize + LIMIT,
+            lastPartyId: onGoingState.value.parties[LIMIT - 1].partyId,
+          });
+        }
+        break;
+      case 'recruiting':
+        if (recruiting.loadedSize + LIMIT > recruitingState.value.totalSize) {
+          setRecruiting({
+            ...recruiting,
+            buttonDisabled: true,
+          });
+        } else {
+          setRecruiting({
+            ...recruiting,
+            loadedSize: recruiting.loadedSize + LIMIT,
+            lastPartyId: recruitingState.value.parties[LIMIT - 1].partyId,
+          });
+        }
+        break;
+      case 'finished':
+        if (finished.loadedSize + LIMIT > finishedState.value.totalSize) {
+          setFinished({
+            ...recruiting,
+            buttonDisabled: true,
+          });
+        } else {
+          setFinished({
+            ...finished,
+            loadedSize: onGoing.loadedSize + LIMIT,
+            lastPartyId: finishedState.value.parties[LIMIT - 1].pargyId,
+          });
+        }
+        break;
+      default:
+    }
   };
 
   return (
@@ -24,91 +131,11 @@ const MyPage = () => {
         bgcolor: 'secondary.main',
       }}
     >
-      <Box>
-        <Box
-          sx={{
-            p: 1,
-            m: 1,
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <Typography color="primary.contrastText" variant="mediumB">
-              안녕하세요, {username}님
-            </Typography>
-            <LogoutOutlined
-              style={{
-                color: 'white',
-                cursor: 'pointer',
-              }}
-              onClick={handleLogOut}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            marginTop: 2,
-            textAlign: 'center',
-          }}
-        >
-          <Typography
-            color="primary.contrastText"
-            variant="microB"
-            component="p"
-          >
-            나의 포인트
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Typography
-              variant="visual"
-              style={{
-                marginRight: 10,
-                fontSize: 50,
-                color: '#F0E07E',
-              }}
-            >
-              {priceToString(points)}
-            </Typography>
-            <Avatar
-              style={{
-                paddingLeft: 2,
-                width: 25,
-                height: 25,
-                fontSize: 15,
-                fontWeight: 700,
-                backgroundColor: '#668F90',
-              }}
-            >
-              P
-            </Avatar>
-          </Box>
-          <Button
-            variant="contained"
-            sx={{
-              m: 2,
-            }}
-            style={{
-              backgroundColor: '#7FBDBE',
-              minWidth: '40%',
-              height: 40,
-            }}
-            onClick={handleClickCharge}
-          >
-            충전하기
-          </Button>
-        </Box>
-      </Box>
+      <MyPageTitle
+        username={username}
+        points={points}
+        onClickCharge={handleClickCharge}
+      />
       <PageContents
         sx={{
           display: 'flex',
@@ -117,7 +144,16 @@ const MyPage = () => {
           bgcolor: 'white',
         }}
       >
-        <MyPartyTab parties={parties} />
+        <MyPartyTab
+          onGoingParties={onGoing.parties}
+          recruitingParties={recruiting.parties}
+          finishedParties={finished.parties}
+          onGoingButtonState={onGoing.buttonDisabled}
+          recruitingButtonState={recruiting.buttonDisabled}
+          finishedButtonState={finished.buttonDisabled}
+          onClickParty={handleClickParty}
+          onClickMoreButton={handleClickMoreButton}
+        />
       </PageContents>
     </PageContainer>
   );

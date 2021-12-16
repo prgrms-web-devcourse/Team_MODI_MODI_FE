@@ -7,9 +7,11 @@ const PageHeader = ({ title, hasLogo, size = 72, children }) => {
   return (
     <PageHeaderStyle>
       {hasLogo && <OttLogo ottName={title} size={size} />}
-      <Typography variant="large" component="h2">
-        {title}
-      </Typography>
+      {title && (
+        <Typography variant="large" component="h2">
+          {title}
+        </Typography>
+      )}
       {children && children}
     </PageHeaderStyle>
   );

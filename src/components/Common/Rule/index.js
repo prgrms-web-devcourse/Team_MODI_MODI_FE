@@ -13,10 +13,13 @@ const RuleContainer = ({ rules }) => {
       }}
     >
       <Typography
-        variant="small"
+        variant="baseB"
         component="div"
         color="text.secondary"
-        sx={{ textAlign: 'left' }}
+        sx={{
+          textAlign: 'left',
+          mb: 2,
+        }}
       >
         파티 규칙
       </Typography>

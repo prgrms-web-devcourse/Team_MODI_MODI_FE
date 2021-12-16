@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Box } from '@mui/material';
 import MyPartyList from './MyPartyList';
@@ -15,7 +15,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Box>{children}</Box>
         </Box>
       )}
@@ -36,27 +36,17 @@ function a11yProps(index) {
   };
 }
 
-const PartyTab = ({ parties }) => {
+const PartyTab = ({
+  onGoingParties,
+  recruitingParties,
+  finishedParties,
+  onGoingButtonState,
+  recruitingButtonState,
+  finishedButtonState,
+  onClickParty,
+  onClickMoreButton,
+}) => {
   const [value, setValue] = useState(0);
-
-  const [onGoingParties, setOnGoingParties] = useState([]);
-  const [recruitingParties, setRecruitingParties] = useState([]);
-  const [finishedParties, setFinishedParties] = useState([]);
-
-  useEffect(() => {
-    const newOnGoingParties = parties.filter(
-      ({ status }) => status === 'ONGOING',
-    );
-    const newRecruitingParties = parties.filter(
-      ({ status }) => status === 'RECRUITING',
-    );
-    const newFinishedParties = parties.filter(
-      ({ status }) => status === 'FINISHED',
-    );
-    setOnGoingParties(newOnGoingParties);
-    setRecruitingParties(newRecruitingParties);
-    setFinishedParties(newFinishedParties);
-  }, [parties]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,20 +71,45 @@ const PartyTab = ({ parties }) => {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        {<MyPartyList parties={onGoingParties} />}
+        <MyPartyList
+          status={'onGoing'}
+          parties={onGoingParties}
+          buttonDisabled={onGoingButtonState}
+          onClickParty={onClickParty}
+          onClickMoreButton={onClickMoreButton}
+        />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {<MyPartyList parties={recruitingParties} />}
+        <MyPartyList
+          status={'recruiting'}
+          parties={recruitingParties}
+          buttonDisabled={recruitingButtonState}
+          onClickParty={onClickParty}
+          onClickMoreButton={onClickMoreButton}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {<MyPartyList parties={finishedParties} />}
+        <MyPartyList
+          status={'finished'}
+          parties={finishedParties}
+          buttonDisabled={finishedButtonState}
+          onClickParty={onClickParty}
+          onClickMoreButton={onClickMoreButton}
+        />
       </TabPanel>
     </Box>
   );
 };
 
 PartyTab.propTypes = {
-  parties: PropTypes.array,
+  onGoingParties: PropTypes.array,
+  recruitingParties: PropTypes.array,
+  finishedParties: PropTypes.array,
+  onGoingButtonState: PropTypes.bool,
+  recruitingButtonState: PropTypes.bool,
+  finishedButtonState: PropTypes.bool,
+  onClickParty: PropTypes.func,
+  onClickMoreButton: PropTypes.func,
 };
 
 export default PartyTab;

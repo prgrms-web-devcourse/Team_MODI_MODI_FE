@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, Box, Button, Divider } from '@mui/material';
+import { priceToString } from 'utils/priceToString';
 
 const PointChargeAlert = ({
   onNavigateChargePage,
@@ -8,10 +9,6 @@ const PointChargeAlert = ({
   paymentPoint,
   myPoint,
 }) => {
-  const priceToString = price => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  };
-
   const handleNavigateChargePage = useCallback(() => {
     onNavigateChargePage && onNavigateChargePage();
   }, [onNavigateChargePage]);

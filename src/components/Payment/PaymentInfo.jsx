@@ -4,8 +4,7 @@ import { styled } from '@mui/system';
 import { Typography, Box } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
 import InfoElement from 'components/Common/InfoElement';
-
-const COMMISSION_RATE = 0.05;
+import { COMMISSION_RATE } from 'constants/commissionRate';
 
 const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
   const toNumberNotation = useCallback(price => priceToString(price), []);
