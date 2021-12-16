@@ -18,8 +18,7 @@ import RuleContainer from 'components/Common/Rule';
 import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
 const MyPartyDetailPage = () => {
-  const { userId } = useAuthState();
-  const MY_USER_ID = userId;
+  const { userId: loginUserId } = useAuthState();
 
   const params = useParams();
   const { myPartyId } = params;
@@ -44,7 +43,7 @@ const MyPartyDetailPage = () => {
   } = PartyDetail || {};
 
   const checkLeader = members.find(
-    ({ userId }) => userId === MY_USER_ID,
+    ({ userId }) => userId === loginUserId,
   )?.leader;
 
   const feeRender = isLeader => {
