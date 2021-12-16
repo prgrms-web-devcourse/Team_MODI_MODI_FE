@@ -50,7 +50,7 @@ OttServiceName.propTypes = {
     '디즈니 플러스',
     '라프텔',
     '쿠팡 플레이',
-    '',
+    '아마존 프라임',
   ]).isRequired,
   ottGrade: PropTypes.string.isRequired,
   isLeader: PropTypes.bool,
