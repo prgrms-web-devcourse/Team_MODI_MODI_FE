@@ -56,6 +56,7 @@ PartyInfo.propTypes = {
     '라프텔',
     '쿠팡 플레이',
     '아마존 프라임',
+    '',
   ]),
   ottGrade: PropTypes.string,
   startDate: PropTypes.string,
