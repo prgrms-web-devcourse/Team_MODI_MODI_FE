@@ -21,17 +21,18 @@ const useStorage = (key, initialValue, storageType = 'local') => {
   const setValue = useCallback(
     value => {
       try {
-        const valueToStore =
-          typeof value === 'function' ? value(storedValue) : value;
+        setStoredValue(storedValue => {
+          const valueToStore =
+            typeof value === 'function' ? value(storedValue) : value;
+          storage.setItem(key, JSON.stringify(valueToStore));
 
-        setStoredValue(valueToStore);
-
-        storage.setItem(key, JSON.stringify(valueToStore));
+          return valueToStore;
+        });
       } catch (error) {
         console.error(error);
       }
     },
-    [storedValue, key, storage],
+    [key, storage],
   );
 
   return [storedValue, setValue];

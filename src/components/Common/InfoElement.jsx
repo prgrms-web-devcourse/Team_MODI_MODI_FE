@@ -10,6 +10,7 @@ const InfoElement = ({ left, right }) => {
       sx={{
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         pt: 1,
         pb: 1,
         m: 0,
