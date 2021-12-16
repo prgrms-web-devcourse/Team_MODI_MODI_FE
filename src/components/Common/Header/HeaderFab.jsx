@@ -9,7 +9,7 @@ const HeaderFab = ({ user, isMainPage, userId }) => {
       disableRipple={true}
       aria-label={user ? 'User Page' : 'Login'}
       component={Link}
-      to={user ? `user/${userId}` : '/login'}
+      to={user ? `/user` : '/login'}
       color={isMainPage ? 'default' : 'secondary'}
       sx={{
         width: 28,
