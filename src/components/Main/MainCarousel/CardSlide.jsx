@@ -38,9 +38,8 @@ const cardButtonRender = waitingCount => {
 };
 
 const CardSlide = ({ ottId, ottName, waitingCount }) => {
-  console.log(ottName, waitingCount);
   const navigate = useNavigate();
-  const handleClickRecruting = () => {
+  const handleClickCarouselButton = () => {
     waitingCount && navigate(`recruit/${ottId}`);
     !waitingCount && navigate(`create?ottId=${ottId}`);
   };
@@ -92,7 +91,7 @@ const CardSlide = ({ ottId, ottName, waitingCount }) => {
         }}
       >
         <Button
-          onClick={handleClickRecruting}
+          onClick={handleClickCarouselButton}
           variant="contained"
           sx={[
             {
@@ -121,7 +120,6 @@ CardSlide.propTypes = {
   ottId: PropTypes.number,
   ottName: PropTypes.string,
   waitingCount: PropTypes.number,
-  onClick: PropTypes.func,
 };
 
 const CounterNumber = styled(Typography)`
