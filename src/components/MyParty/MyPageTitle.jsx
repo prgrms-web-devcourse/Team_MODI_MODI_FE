@@ -55,8 +55,6 @@ const MyPageTitle = ({ username, points, onClickCharge }) => {
           variant="contained"
           sx={{
             m: 2,
-          }}
-          style={{
             minWidth: '40%',
             height: 40,
           }}
