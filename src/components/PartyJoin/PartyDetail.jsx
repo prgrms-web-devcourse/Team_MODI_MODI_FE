@@ -19,6 +19,7 @@ const PartyDetail = ({ partyDetail }) => {
     startDate,
     endDate,
     members,
+    partyMemberCapacity,
   } = partyDetail;
 
   const navigate = useNavigate();
@@ -40,7 +41,10 @@ const PartyDetail = ({ partyDetail }) => {
         monthlyFee={monthlyPrice}
       />
       <RuleContainer rules={rules} />
-      <PartyMemberList members={members} />
+      <PartyMemberList
+        members={members}
+        partyMemberCapacity={partyMemberCapacity}
+      />
       <Button
         variant="contained"
         sx={{

@@ -39,6 +39,7 @@ const MyPartyDetailPage = () => {
     endDate = '',
     totalPrice = 0,
     monthlyReimbursement = 0,
+    partyMemberCapacity = 0,
     status = '',
   } = PartyDetail || {};
 
@@ -149,7 +150,10 @@ const MyPartyDetailPage = () => {
             )}
           </Box>
           <Divider />
-          <PartyMemberList members={members} />
+          <PartyMemberList
+            members={members}
+            partyMemberCapacity={partyMemberCapacity}
+          />
           <Divider
             sx={{
               mt: 2,

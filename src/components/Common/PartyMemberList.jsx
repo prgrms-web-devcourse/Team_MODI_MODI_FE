@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import { Box, Typography } from '@mui/material';
 import PartyMember from './PartyMember';
 
-const PartyMemberList = ({ members }) => {
+const PartyMemberList = ({ members, partyMemberCapacity }) => {
   const waitingMemeber = () => {
     const waitingMemberList = [];
-    for (let i = members.length + 1; i <= 4; i++) {
+    for (let i = members.length + 1; i <= partyMemberCapacity; i++) {
       waitingMemberList.push(<PartyMember key={i} isWaiting={true} />);
     }
 
@@ -48,6 +48,7 @@ const PartyMemberList = ({ members }) => {
 
 PartyMemberList.propTypes = {
   members: PropTypes.array,
+  partyMemberCapacity: PropTypes.number,
 };
 
 export default PartyMemberList;

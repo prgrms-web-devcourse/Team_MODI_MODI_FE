@@ -6,7 +6,6 @@ const PartyList = ({ parties, onClickParty }) => {
   const handleClickParty = partyId => {
     onClickParty && onClickParty(partyId);
   };
-  console.log(parties);
 
   return (
     <List sx={{ width: '100%' }}>
