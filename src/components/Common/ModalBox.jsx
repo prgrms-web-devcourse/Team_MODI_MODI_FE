@@ -1,5 +1,4 @@
-import { Box } from '@mui/system';
-import { styled } from '@mui/system';
+import { Box, styled } from '@mui/system';
 
 const ModalBox = styled(Box)`
   position: absolute;
