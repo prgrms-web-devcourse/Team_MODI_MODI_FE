@@ -1,45 +1,9 @@
-import { useRef, useEffect } from 'react';
-import { PropTypes } from 'prop-types';
-import lottie from 'lottie-web';
-import { Box, Button, Typography, Modal } from '@mui/material';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
-import paymentSuccess from 'assets/pay-success-lottie.json';
-import paymentFail from 'assets/pay-fail-lottie.json';
-import success from 'assets/success-lottie.json';
-import fail from 'assets/fail-lottie.json';
-
-const lottieTypes = {
-  success: {
-    lottie: success,
-    loop: false,
-  },
-  paymentSuccess: {
-    lottie: paymentSuccess,
-    loop: true,
-  },
-  paymentFail: {
-    lottie: paymentFail,
-    loop: true,
-  },
-  fail: {
-    lottie: fail,
-    loop: false,
-  },
-};
+import { Box, Button, Typography, Modal } from '@mui/material';
+import LottieIcon from './LottieIcon';
 
 const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
-  const lottieIcon = useRef();
-  useEffect(() => {
-    type &&
-      lottie.loadAnimation({
-        container: lottieIcon.current,
-        render: 'svg',
-        loop: lottieTypes[type].loop,
-        autoplay: true,
-        animationData: lottieTypes[type].lottie,
-      });
-  }, [type]);
-
   return (
     <Modal open={isOpen}>
       <AlertBox>
@@ -49,7 +13,7 @@ const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
             mb: 2,
           }}
         >
-          <AlertIcon ref={lottieIcon} />
+          <LottieIcon type={type} />
           <Typography
             variant="large"
             component="p"
@@ -80,11 +44,6 @@ const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
     </Modal>
   );
 };
-
-const AlertIcon = styled(Box)`
-  margin: 0 auto;
-  height: 200px;
-`;
 
 const AlertBox = styled(Box)`
   position: absolute;
