@@ -11,37 +11,37 @@ import {
 import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
 
-const cardTitleRender = waitingCount => {
-  return waitingCount ? (
-    <>
-      {`${waitingCount}`.split('').map((number, i) => (
-        <CounterNumber key={i} variant="large">
-          {number}
-        </CounterNumber>
-      ))}
-      명이
-      <br />
-      파티를 기다리고 있어요🎉
-    </>
-  ) : (
-    <Box sx={{ pt: 2 }}>
-      파티가 만들어지기를 기다리고 있어요 <br />
-      파티장이 되어 파티원을 모아 보세요
-    </Box>
-  );
-};
-
-const cardButtonRender = waitingCount => {
-  return waitingCount
-    ? '그렇다면 내가 빠질 수 없지 😎'
-    : '🎊 길을 비켜라 파티장 나가신다 🎊';
-};
-
 const CardSlide = ({ ottId, ottName, waitingCount }) => {
   const navigate = useNavigate();
   const handleClickCarouselButton = () => {
     waitingCount && navigate(`recruit/${ottId}`);
     !waitingCount && navigate(`create?ottId=${ottId}`);
+  };
+
+  const cardTitleRender = () => {
+    return waitingCount ? (
+      <>
+        {`${waitingCount}`.split('').map((number, i) => (
+          <CounterNumber key={i} variant="large">
+            {number}
+          </CounterNumber>
+        ))}
+        명이
+        <br />
+        파티를 기다리고 있어요🎉
+      </>
+    ) : (
+      <Box sx={{ pt: 2 }}>
+        파티가 만들어지기를 기다리고 있어요 <br />
+        파티장이 되어 파티원을 모아 보세요
+      </Box>
+    );
+  };
+
+  const cardButtonRender = () => {
+    return waitingCount
+      ? '그렇다면 내가 빠질 수 없지 😎'
+      : '🎊 길을 비켜라 파티장 나가신다 🎊';
   };
 
   return (
@@ -81,7 +81,7 @@ const CardSlide = ({ ottId, ottName, waitingCount }) => {
             }}
           />
           {ottName}에서
-          {cardTitleRender(waitingCount)}
+          {cardTitleRender()}
         </Typography>
       </CardContent>
       <CardActions
@@ -109,7 +109,7 @@ const CardSlide = ({ ottId, ottName, waitingCount }) => {
             },
           ]}
         >
-          {cardButtonRender(waitingCount)}
+          {cardButtonRender()}
         </Button>
       </CardActions>
     </Card>
