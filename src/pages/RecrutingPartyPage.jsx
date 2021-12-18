@@ -28,6 +28,7 @@ const RecrutingPartyPage = () => {
 
   const [lastPartyId, setLastPartyId] = useState(null);
   const [currPartyList, setCurrPartyList] = useState([]);
+  const [totalPartySize, setTotalpartySize] = useState(0);
   const [recruitingPartyListAPIState, fetchRecruitingPartyListAPI] = useAsync(
     getRecruitingParties,
     [ottServiceId, SIZE],
@@ -54,7 +55,9 @@ const RecrutingPartyPage = () => {
 
   useEffect(() => {
     if (partyListValue) {
-      const { partyList } = partyListValue;
+      const { partyList, totalSize } = partyListValue;
+
+      setTotalpartySize(totalSize);
 
       setCurrPartyList(prevPartyList => {
         return partyList.length
@@ -90,6 +93,7 @@ const RecrutingPartyPage = () => {
   const handleNavigateCreatePage = useCallback(() => {
     navigate(`/create?ottId=${ottServiceId}`);
   }, [navigate, ottServiceId]);
+  console.log(totalPartySize !== currPartyList.length);
 
   return (
     <>
@@ -113,17 +117,21 @@ const RecrutingPartyPage = () => {
             alignItems: 'center',
           }}
         >
-          <PartyList parties={currPartyList} onClickParty={handleOpen} />
+          {currPartyList.length !== 0 && (
+            <PartyList parties={currPartyList} onClickParty={handleOpen} />
+          )}
           {partyListLoading && <h1>로딩중</h1>}
           {partyListError && <div>에러</div>}
-          <Button
-            variant="contained"
-            size="small"
-            color="modiGray"
-            onClick={handleClickMoreButton}
-          >
-            더보기
-          </Button>
+          {totalPartySize !== currPartyList.length && (
+            <Button
+              variant="contained"
+              size="small"
+              color="modiGray"
+              onClick={handleClickMoreButton}
+            >
+              더보기
+            </Button>
+          )}
         </PageContents>
       </PageContainer>
       <Modal open={open} onClose={handleClose}>
