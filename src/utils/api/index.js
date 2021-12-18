@@ -27,11 +27,16 @@ const post = (uri, requireToken = false, data = {}) => {
   return axiosRequest(uri, requireToken, httpMethods.POST, data);
 };
 
+const patch = (uri, requireToken = true, data = {}) => {
+  return axiosRequest(uri, requireToken, httpMethods.PATCH, data);
+};
 // const put = (uri, requireToken, data) => {
 //   return axiosRequest(uri, requireToken, httpMethods.PUT, data);
 // };
 
-// const _delete = (uri, requireToken) => axiosRequest(uri, requireToken);
+const _delete = (uri, requireToken = true) => {
+  return axiosRequest(uri, requireToken, httpMethods.DELETE);
+};
 
 export const getOttList = () => get('/otts');
 export const getOtt = ottId => get(`/otts/${ottId}`);
@@ -91,3 +96,13 @@ export const getAllMyParty = (status = 'RECRUITING', size = 5, lastPartyId) => {
 export const getMyPartyById = partyId => {
   return get(`/users/me/parties/${partyId}`, true);
 };
+
+export const getNewUsername = (size = 5) => {
+  return get(`/users/generate-username?size=${size}`);
+};
+
+export const updateUsername = username => {
+  return patch(`/users/me/username`, true, username);
+};
+
+export const deleteParty = partyId => _delete(`/parties/${partyId}`);

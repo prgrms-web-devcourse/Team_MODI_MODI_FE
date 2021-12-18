@@ -169,7 +169,6 @@ const CreatePartyPage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     const submitData = partyCreateFormater(newParty);
-    console.log(submitData);
     const { partyId } = await createNewParty(submitData);
     navigate(`/myParty/${partyId}`);
   };

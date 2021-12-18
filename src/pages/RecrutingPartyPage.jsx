@@ -14,10 +14,13 @@ import { useOttInfoState } from 'contexts/OttInfoProvider';
 import useAsync from 'hooks/useAsync';
 import { getPartyDetail, getRecruitingParties } from 'utils/api';
 import PartyNoneItem from 'components/PartyJoin/PartyNoneItem';
+import { useAuthState } from 'contexts/authContext';
+import Alert from 'components/Common/Alert';
 
 const SIZE = 4;
 
 const RecrutingPartyPage = () => {
+  const { userId: myUserId } = useAuthState();
   const navigate = useNavigate();
   const params = useParams();
   const ottServiceId = useMemo(() => parseInt(params.ottServiceId), [params]);
@@ -30,6 +33,9 @@ const RecrutingPartyPage = () => {
   const [lastPartyId, setLastPartyId] = useState(null);
   const [currPartyList, setCurrPartyList] = useState([]);
   const [totalPartySize, setTotalpartySize] = useState(0);
+  const [isOpenPartyInfoModal, setOpenPartyInfoModal] = useState(false);
+  const [isOpenAlreadyJoinAlert, setOpenAlreadyJoinAlert] = useState(false);
+
   const [recruitingPartyListAPIState, fetchRecruitingPartyListAPI] = useAsync(
     getRecruitingParties,
     [ottServiceId, SIZE],
@@ -73,28 +79,36 @@ const RecrutingPartyPage = () => {
     }
   }, [partyListValue]);
 
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (partyDetailValue) {
+      const { members } = partyDetailValue;
+      const isAlreadySignedInParty = members.some(
+        ({ userId }) => userId === myUserId,
+      );
+      isAlreadySignedInParty
+        ? setOpenAlreadyJoinAlert(true)
+        : setOpenPartyInfoModal(true);
+    }
+  }, [partyDetailValue, myUserId]);
 
   const handleClickMoreButton = useCallback(() => {
     fetchRecruitingPartyListAPI(ottServiceId, SIZE, lastPartyId);
   }, [fetchRecruitingPartyListAPI, ottServiceId, lastPartyId]);
 
-  const handleOpen = useCallback(
+  const handleFetchPartyDetail = useCallback(
     partyId => {
       fetchPartyDetailApiState(partyId);
-      setOpen(true);
     },
     [fetchPartyDetailApiState],
   );
 
-  const handleClose = useCallback(() => {
-    setOpen(false);
+  const handleClosePartyInfoModal = useCallback(() => {
+    setOpenPartyInfoModal(false);
   }, []);
 
   const handleNavigateCreatePage = useCallback(() => {
     navigate(`/create?ottId=${ottServiceId}`);
   }, [navigate, ottServiceId]);
-  console.log(totalPartySize !== currPartyList.length);
 
   return (
     <>
@@ -119,7 +133,10 @@ const RecrutingPartyPage = () => {
           }}
         >
           {currPartyList.length !== 0 ? (
-            <PartyList parties={currPartyList} onClickParty={handleOpen} />
+            <PartyList
+              parties={currPartyList}
+              onClickParty={handleFetchPartyDetail}
+            />
           ) : (
             <PartyNoneItem />
           )}
@@ -137,10 +154,10 @@ const RecrutingPartyPage = () => {
           )}
         </PageContents>
       </PageContainer>
-      <Modal open={open} onClose={handleClose}>
+      <Modal open={isOpenPartyInfoModal} onClose={handleClosePartyInfoModal}>
         <ModalBox>
           <IconButton
-            onClick={handleClose}
+            onClick={handleClosePartyInfoModal}
             sx={{
               position: 'absolute',
               top: '24px',
@@ -155,6 +172,13 @@ const RecrutingPartyPage = () => {
           {partyDetailError && <div>에러</div>}
         </ModalBox>
       </Modal>
+      <Alert
+        isOpen={isOpenAlreadyJoinAlert}
+        type="fail"
+        messege="내가 이미 가입한 파티에요"
+        helperText="아직 파티원을 모집 중입니다."
+        onClose={() => setOpenAlreadyJoinAlert(false)}
+      />
     </>
   );
 };

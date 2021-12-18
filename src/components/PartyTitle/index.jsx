@@ -21,7 +21,7 @@ const PartyTitle = ({
       sx={{
         display: 'flex',
         alignItems: 'center',
-        height: '80px',
+        p: '16px 0',
       }}
     >
       <OttLogo ottName={ottName} size={72} />
