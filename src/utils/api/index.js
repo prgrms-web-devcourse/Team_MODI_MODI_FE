@@ -34,7 +34,9 @@ const patch = (uri, requireToken = true, data = {}) => {
 //   return axiosRequest(uri, requireToken, httpMethods.PUT, data);
 // };
 
-// const _delete = (uri, requireToken) => axiosRequest(uri, requireToken);
+const _delete = (uri, requireToken = true) => {
+  return axiosRequest(uri, requireToken, httpMethods.DELETE);
+};
 
 export const getOttList = () => get('/otts');
 export const getOtt = ottId => get(`/otts/${ottId}`);
@@ -102,3 +104,5 @@ export const getNewUsername = (size = 5) => {
 export const updateUsername = username => {
   return patch(`/users/me/username`, true, username);
 };
+
+export const deleteParty = partyId => _delete(`/parties/${partyId}`);
