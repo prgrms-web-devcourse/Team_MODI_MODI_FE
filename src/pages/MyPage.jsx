@@ -150,7 +150,7 @@ const MyPage = () => {
       ...prevUserInfo,
       username: selectedUsername,
     }));
-    setIsOpen(false);
+    handleCloseModal();
   };
 
   return (
