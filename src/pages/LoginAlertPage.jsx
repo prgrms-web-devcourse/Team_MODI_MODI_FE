@@ -40,7 +40,7 @@ const LoginAlertPage = () => {
           }}
         />
         <Typography variant="large" component="p">
-          🔒 로그인이 필요한 서비스입니다 🔒
+          로그인이 필요한 서비스입니다.
         </Typography>
         <Button
           variant="contained"
