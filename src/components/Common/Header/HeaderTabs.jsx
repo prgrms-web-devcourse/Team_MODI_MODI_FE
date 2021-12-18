@@ -31,7 +31,11 @@ const HeaderTabs = ({ isMainPage }) => {
       }}
     >
       <HeaderModal open={open} onClose={handleClose} />
-      <HeaderTab label="파티찾기" isMain={isMainPage} onClick={handleOpen} />
+      <HeaderTab
+        label="파티찾기"
+        isMainPage={isMainPage}
+        onClick={handleOpen}
+      />
       <HeaderTab
         label="파티만들기"
         isMainPage={isMainPage}
