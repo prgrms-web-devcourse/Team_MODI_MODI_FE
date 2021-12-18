@@ -7,6 +7,7 @@ import RuleContainer from 'components/Common/Rule';
 import PartyMemberList from 'components/Common/PartyMemberList';
 import PartyInfo from 'components/PartyJoin/PartyInfo';
 import PricePanel from 'components/PartyTitle/PricePanel';
+import ScrollWrapper from './../Common/ScrollWrapper';
 
 const PartyDetail = ({ partyDetail }) => {
   const {
@@ -32,19 +33,21 @@ const PartyDetail = ({ partyDetail }) => {
       <PartyTitle ottName={ottName} ottGrade={grade}>
         <PricePanel monthlyPrice={monthlyPrice} servicePeriod={period} />
       </PartyTitle>
-      <PartyInfo
-        ottName={ottName}
-        ottGrade={grade}
-        startDate={startDate}
-        endDate={endDate}
-        period={period}
-        monthlyFee={monthlyPrice}
-      />
-      <RuleContainer rules={rules} />
-      <PartyMemberList
-        members={members}
-        partyMemberCapacity={partyMemberCapacity}
-      />
+      <ScrollWrapper>
+        <PartyInfo
+          ottName={ottName}
+          ottGrade={grade}
+          startDate={startDate}
+          endDate={endDate}
+          period={period}
+          monthlyFee={monthlyPrice}
+        />
+        <RuleContainer rules={rules} />
+        <PartyMemberList
+          members={members}
+          partyMemberCapacity={partyMemberCapacity}
+        />
+      </ScrollWrapper>
       <Button
         variant="contained"
         sx={{
