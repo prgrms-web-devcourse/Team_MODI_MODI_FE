@@ -3,17 +3,23 @@ import { PageContainer, PageContents, PageHeader } from 'components/Common';
 import InfoElement from 'components/Common/InfoElement';
 import { USER_INFO_KEY } from 'constants/keys';
 import { useAuthState, useAuthDispatch } from 'contexts/authContext';
+import Alert from 'components/Common/Alert';
 import useAsync from 'hooks/useAsync';
 import useStorage from 'hooks/useStorage';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { chargePoint } from 'utils/api';
 import { pointFormatter } from 'utils/formatting';
 
 const PointChargePage = () => {
   const { points } = useAuthState();
+  const navigate = useNavigate();
   const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const [chargeInput, setChargeInput] = useState(0);
-  const [pointState, chargeCallback] = useAsync(chargePoint, [], [], true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [alertType, setAlertType] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [chargeState, chargeCallback] = useAsync(chargePoint, [], [], true);
 
   const [, setUserInfo] = useStorage(USER_INFO_KEY, null, 'session');
 
@@ -23,17 +29,29 @@ const PointChargePage = () => {
 
   const handleChargeClick = () => {
     chargeCallback({ points: chargeInput });
+    setIsOpen(prev => !prev);
   };
 
+  const { value: chargeValue, error: chargeError } = chargeState;
+
   useEffect(() => {
-    if (pointState.value) {
+    if (chargeValue) {
       setUserInfo(prevUserInfo => ({
         ...prevUserInfo,
-        points: pointState.value.points,
+        points: chargeValue.points,
       }));
-      onUpdateUserInfo(pointState.value);
+      onUpdateUserInfo(chargeValue);
+      setAlertType('paymentSuccess');
+      setAlertMessage('결제에 성공했습니다!');
     }
-  }, [pointState.value, onUpdateUserInfo, setUserInfo]);
+  }, [chargeValue, onUpdateUserInfo, setUserInfo, navigate]);
+
+  useEffect(() => {
+    if (chargeError) {
+      setAlertType('paymentFail');
+      setAlertMessage('결제에 실패했습니다!');
+    }
+  }, [chargeError]);
 
   return (
     <>
@@ -88,13 +106,18 @@ const PointChargePage = () => {
                 }}
               />
             </Box>
-
             <Button variant="contained" onClick={handleChargeClick}>
               충전하기
             </Button>
           </Box>
         </PageContents>
       </PageContainer>
+      <Alert
+        isOpen={isOpen}
+        type={alertType}
+        messege={alertMessage}
+        onClose={() => navigate('/user')}
+      />
     </>
   );
 };
