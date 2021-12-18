@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 
 import OttLogo from 'components/Ott/OttLogo';
 import OttServiceName from './OttServiceName';
-import { ParseDate } from 'utils/ParseDate';
+import { parseDate } from 'utils/parseDate';
 
 const PartyTitle = ({
   ottName,
@@ -57,7 +57,7 @@ const PartyTitle = ({
               wordBreak: 'keep-all',
             }}
           >
-            {`${ParseDate(startDate)} ~ ${ParseDate(endDate)} (${period}개월)`}
+            {`${parseDate(startDate)} ~ ${parseDate(endDate)} (${period}개월)`}
           </Typography>
         )}
       </Box>

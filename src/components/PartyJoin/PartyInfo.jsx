@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import InfoElement from 'components/Common/InfoElement';
 import { priceToString } from 'utils/priceToString';
-import { ParseDate } from 'utils/ParseDate';
+import { parseDate } from 'utils/parseDate';
 
 const PartyInfo = ({
   ottName,
@@ -13,8 +13,8 @@ const PartyInfo = ({
   period,
   monthlyFee,
 }) => {
-  const parsedStartDate = useMemo(() => ParseDate(startDate), [startDate]);
-  const parsedEndDate = useMemo(() => ParseDate(endDate), [endDate]);
+  const parsedStartDate = useMemo(() => parseDate(startDate), [startDate]);
+  const parsedEndDate = useMemo(() => parseDate(endDate), [endDate]);
   const parsedTotalPrice = useMemo(
     () => priceToString(period * monthlyFee),
     [period, monthlyFee],

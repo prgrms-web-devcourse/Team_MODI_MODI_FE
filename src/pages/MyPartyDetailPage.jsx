@@ -16,6 +16,8 @@ import {
 } from 'components/Common';
 import RuleContainer from 'components/Common/Rule';
 import PartyShareAccount from 'components/MyParty/PartyShareAccount';
+import { parseDate } from 'utils/parseDate';
+import SharedInfoEditModal from 'components/Common/SharedInfoEditModal';
 
 const MyPartyDetailPage = () => {
   const { userId: loginUserId } = useAuthState();
@@ -24,9 +26,12 @@ const MyPartyDetailPage = () => {
   const { myPartyId } = params;
 
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
-  const { isLoading: isPartyLoading, value: PartyDetail } = partyDetailstate;
+  const { isLoading: isPartyLoading, value: partyDetail } = partyDetailstate;
   const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
   const { value: sharedInfo } = sharedInfoState;
+
+  const [fliped, setFliped] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const {
     ottName = '',
@@ -41,11 +46,28 @@ const MyPartyDetailPage = () => {
     monthlyReimbursement = 0,
     partyMemberCapacity = 0,
     status = '',
-  } = PartyDetail || {};
+  } = partyDetail || {};
 
   const checkLeader = members.find(
     ({ userId }) => userId === loginUserId,
   )?.leader;
+
+  const handleFlipCard = useCallback(() => {
+    setFliped(prev => !prev);
+  }, []);
+
+  const handleEditSharedInfo = useCallback(e => {
+    e.stopPropagation();
+    setOpenEditModal(true);
+  }, []);
+
+  const handleCloseSharedInfo = useCallback(() => {
+    setOpenEditModal(false);
+  }, []);
+
+  const handlSubmitEditedSharedInfo = useCallback(i => {
+    console.log(i);
+  }, []);
 
   const feeRender = isLeader => {
     if (isLeader) {
@@ -93,79 +115,88 @@ const MyPartyDetailPage = () => {
     }
   };
 
-  const [fliped, setFliped] = useState(false);
-
-  const handleFlipCard = useCallback(() => {
-    setFliped(prev => !prev);
-  }, []);
-
-  return !isPartyLoading ? (
+  return (
     <>
-      <PageContainer>
-        <PageHeader>
-          <PartyTitle
-            ottName={ottName}
-            ottGrade={grade}
-            isLeader={checkLeader}
-          />
-          {feeRender(checkLeader)}
-        </PageHeader>
-        <PageContents>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Chip
-              label={status === 'RECRUITING' ? '모집중' : '진행중'}
-              color={status === 'RECRUITING' ? 'primary' : 'secondary'}
-              size="small"
-              sx={{ mr: 1 }}
-            />
-            <Typography variant="small" color="text.secondary">
-              {`${startDate}~${endDate}(${period}개월)`}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              mt: 2,
-              mb: 5,
-              position: 'relative',
-              display: 'flex',
-              justifyContent: 'center',
-              height: 192,
-              perspective: '2000px',
-            }}
-          >
-            {status === 'RECRUITING' ? (
-              <CardTemplate blur={true} />
-            ) : (
-              <PartyShareAccount
-                fliped={fliped}
-                onFlipCard={handleFlipCard}
-                sharedInfo={sharedInfo}
-                partyStatus={status}
+      {isPartyLoading && <p>로딩스피너</p>}
+      {partyDetail && (
+        <>
+          <PageContainer>
+            <PageHeader>
+              <PartyTitle
+                ottName={ottName}
+                ottGrade={grade}
+                isLeader={checkLeader}
               />
-            )}
-          </Box>
-          <Divider />
-          <PartyMemberList
-            members={members}
-            partyMemberCapacity={partyMemberCapacity}
+              {feeRender(checkLeader)}
+            </PageHeader>
+            <PageContents>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                <Chip
+                  label={status === 'RECRUITING' ? '모집중' : '진행중'}
+                  color={status === 'RECRUITING' ? 'primary' : 'secondary'}
+                  size="small"
+                  sx={{ mr: 1 }}
+                />
+                <Typography
+                  variant="small"
+                  color="text.secondary"
+                  sx={{ wordBreak: 'keep-all' }}
+                >
+                  {`${parseDate(startDate)} ~ ${parseDate(
+                    endDate,
+                  )} (${period}개월)`}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  mt: 2,
+                  mb: 5,
+                  position: 'relative',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  height: 192,
+                  perspective: '2000px',
+                }}
+              >
+                {status === 'RECRUITING' ? (
+                  <CardTemplate blur={true} />
+                ) : (
+                  <PartyShareAccount
+                    fliped={fliped}
+                    onFlipCard={handleFlipCard}
+                    sharedInfo={sharedInfo}
+                    partyStatus={status}
+                    onEditSharedInfo={handleEditSharedInfo}
+                  />
+                )}
+              </Box>
+              <Divider />
+              <PartyMemberList
+                members={members}
+                partyMemberCapacity={partyMemberCapacity}
+              />
+              <Divider
+                sx={{
+                  mt: 2,
+                  mb: 1,
+                }}
+              />
+              <RuleContainer rules={rules} sx={{ borderBottom: '0' }} />
+            </PageContents>
+          </PageContainer>
+          <SharedInfoEditModal
+            open={openEditModal}
+            onClose={handleCloseSharedInfo}
+            onSubmit={handlSubmitEditedSharedInfo}
           />
-          <Divider
-            sx={{
-              mt: 2,
-              mb: 1,
-            }}
-          />
-          <RuleContainer rules={rules} sx={{ borderBottom: '0' }} />
-        </PageContents>
-      </PageContainer>
+        </>
+      )}
     </>
-  ) : (
-    <p>로딩스피너?</p>
   );
 };
 
