@@ -1,38 +1,23 @@
 import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
-import { Button, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { RuleList } from 'components/Common';
-import useAsync from 'hooks/useAsync';
-import { getNewUsername, updateUsername } from 'utils/api';
+import { Button, Typography } from '@mui/material';
+import { useState } from 'react';
 import ChipList from 'components/Common/ChipList';
 
-const UserNameEdit = ({ username }) => {
-  const [generatedUsernameAPIState] = useAsync(getNewUsername, [5]);
+const UserNameEdit = ({
+  username,
+  generatedUsernameValue,
+  onUpdateUsername,
+}) => {
   const [selectedUsername, setSelectedUsername] = useState('');
-  const [updateUsernameAPIState, updateUsernameCallback] = useAsync(
-    updateUsername,
-    [],
-    [],
-    true,
-  );
-
-  const {
-    isLoading: generatedLoading,
-    value: generatedUsernameValue,
-    error: generatedUsernameError,
-  } = generatedUsernameAPIState || {};
 
   const handleClickUsername = username => {
     setSelectedUsername(username);
   };
 
-  const handleUpdateUsername = () => {
-    updateUsernameCallback({ username: selectedUsername });
+  const handleClickUpdate = () => {
+    onUpdateUsername(selectedUsername);
   };
-  useEffect(() => {
-    console.log(generatedUsernameValue);
-  }, [generatedUsernameValue]);
 
   return (
     <Box
@@ -72,7 +57,7 @@ const UserNameEdit = ({ username }) => {
           width: '30%',
         }}
         disabled={!selectedUsername}
-        onClick={handleUpdateUsername}
+        onClick={handleClickUpdate}
       >
         수정하기
       </Button>
@@ -82,6 +67,8 @@ const UserNameEdit = ({ username }) => {
 
 UserNameEdit.propTypes = {
   username: PropTypes.string,
+  generatedUsernameValue: PropTypes.object,
+  onUpdateUsername: PropTypes.func,
 };
 
 export default UserNameEdit;
