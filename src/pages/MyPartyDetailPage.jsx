@@ -1,12 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Chip, Divider, Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { Box, Button, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
-import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
+import { deleteParty, getMyPartyById, getSharedAccountInfo } from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import { useAuthState } from 'contexts/authContext';
 import { priceToString } from 'utils/priceToString';
 import PartyTitle from 'components/PartyTitle';
+import Alert from 'components/Common/Alert';
 import {
   PageContainer,
   PageContents,
@@ -19,16 +21,27 @@ import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 
 const MyPartyDetailPage = () => {
   const { userId: loginUserId } = useAuthState();
+  const navigate = useNavigate();
 
   const params = useParams();
   const { myPartyId } = params;
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
   const { isLoading: isPartyLoading, value: PartyDetail } = partyDetailstate;
   const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
+  const [deletePartyAPIState, fetchDeletePartyAPI] = useAsync(
+    deleteParty,
+    [],
+    [],
+    true,
+  );
+
   const { value: sharedInfo } = sharedInfoState;
 
   const {
+    partyId = 0,
     ottName = '',
     grade = '',
     monthlyPrice = 0,
@@ -47,6 +60,11 @@ const MyPartyDetailPage = () => {
     ({ userId }) => userId === loginUserId,
   )?.leader;
 
+  useEffect(() => {
+    deletePartyAPIState.value === '' && navigate('/user');
+  }, [deletePartyAPIState.value, navigate]);
+
+  const checkHasMember = members.length - 1;
   const feeRender = isLeader => {
     if (isLeader) {
       return (
@@ -99,6 +117,10 @@ const MyPartyDetailPage = () => {
     setFliped(prev => !prev);
   }, []);
 
+  const handleDeleteParty = useCallback(() => {
+    fetchDeletePartyAPI(partyId);
+  }, [fetchDeletePartyAPI, partyId]);
+
   return !isPartyLoading ? (
     <>
       <PageContainer>
@@ -126,6 +148,14 @@ const MyPartyDetailPage = () => {
             <Typography variant="small" color="text.secondary">
               {`${startDate}~${endDate}(${period}개월)`}
             </Typography>
+            <Alert
+              isOpen={isOpen}
+              type={'fail'}
+              messege="조금만 더 파티원을 기다려보아요!"
+              onClose={() => setIsOpen(false)}
+              onClickDelete={handleDeleteParty}
+              isConfirm={true}
+            />
           </Box>
           <Box
             sx={{
@@ -161,6 +191,26 @@ const MyPartyDetailPage = () => {
             }}
           />
           <RuleContainer rules={rules} sx={{ borderBottom: '0' }} />
+          {status === 'RECRUITING' && checkLeader && !checkHasMember && (
+            <Box
+              sx={{
+                m: 3,
+                textAlign: 'center',
+              }}
+            >
+              <Button
+                variant="contained"
+                size="small"
+                color="error"
+                sx={{
+                  margin: '0 auto',
+                }}
+                onClick={() => setIsOpen(true)}
+              >
+                파티 삭제
+              </Button>
+            </Box>
+          )}
         </PageContents>
       </PageContainer>
     </>

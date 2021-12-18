@@ -3,7 +3,15 @@ import { styled } from '@mui/system';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import LottieIcon from './LottieIcon';
 
-const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
+const Alert = ({
+  isOpen,
+  type,
+  messege,
+  helperText,
+  onClose,
+  isConfirm,
+  onClickDelete,
+}) => {
   return (
     <Modal open={isOpen} onClose={onClose}>
       <AlertBox>
@@ -26,24 +34,41 @@ const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
             {helperText}
           </Typography>
         </Box>
-        <Button
-          type="button"
-          variant="contained"
-          size="small"
-          sx={{
-            fontSize: 16,
-            borderRadius: 20,
-            width: '40%',
-            margin: '0 auto',
-          }}
-          onClick={onClose}
-        >
-          확인
-        </Button>
+        <Box>
+          {isConfirm && (
+            <ConfirmButton
+              sx={{
+                mr: 2,
+              }}
+              type="button"
+              variant="contained"
+              size="small"
+              color="error"
+              onClick={onClickDelete}
+            >
+              파티 삭제
+            </ConfirmButton>
+          )}
+          <ConfirmButton
+            type="button"
+            variant="contained"
+            size="small"
+            onClick={onClose}
+          >
+            확인
+          </ConfirmButton>
+        </Box>
       </AlertBox>
     </Modal>
   );
 };
+
+const ConfirmButton = styled(Button)`
+  font-size: 16;
+  border-radius: 20;
+  width: 40%;
+  margin: 0 auto;
+`;
 
 const AlertBox = styled(Box)`
   position: absolute;
@@ -70,6 +95,8 @@ Alert.propTypes = {
   helperText: PropTypes.string,
   onClose: PropTypes.func,
   isOpen: PropTypes.bool,
+  isConfirm: PropTypes.bool,
+  onClickDelete: PropTypes.func,
 };
 
 export default Alert;
