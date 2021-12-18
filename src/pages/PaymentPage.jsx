@@ -186,24 +186,22 @@ const PaymentPage = () => {
       </Modal>
       <>
         {partyJoinLoading && <h1>로딩중</h1>}
-        {partyDetailValue && (
-          <Alert
-            isOpen={openPaymentSuccess}
-            type="paymentSuccess"
-            messege="가입 성공"
-            helperText="새로운 파티원이 된 걸 환영합니다!"
-            onClose={handleNavigateMyPartyDetailPage}
-          />
-        )}
-        {partyDetailError && (
-          <Alert
-            isOpen={openPaymentFail}
-            type="paymentFail"
-            messege="결제 실패"
-            helperText="결제 중에 오류가 발생했습니다."
-            onClose={handleClosePaymentFailAlert}
-          />
-        )}
+
+        <Alert
+          isOpen={openPaymentSuccess}
+          type="paymentSuccess"
+          messege="가입 성공"
+          helperText="새로운 파티원이 된 걸 환영합니다!"
+          onClose={handleNavigateMyPartyDetailPage}
+        />
+
+        <Alert
+          isOpen={openPaymentFail}
+          type="paymentFail"
+          messege="결제 실패"
+          helperText="결제 중에 오류가 발생했습니다."
+          onClose={handleClosePaymentFailAlert}
+        />
       </>
     </>
   );
