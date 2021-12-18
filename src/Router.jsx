@@ -11,6 +11,7 @@ import MyPartyDetailPage from 'pages/MyPartyDetailPage';
 import MainPage from 'pages/MainPage';
 import TestPageDorr from 'pages/testPages/TestPageDorr';
 import PointChargePage from 'pages/PointChargePage';
+import NotFoundPage from './pages/NotFoundPage';
 
 const Router = () => {
   return (
@@ -30,6 +31,7 @@ const Router = () => {
           <Route path="charge" element={<PointChargePage />} />
           <Route path="oauth/redirect" element={<OauthRedirectPage />} />
           <Route path="myParty/:myPartyId" element={<MyPartyDetailPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/test" element={<TestPageDorr />} />
       </Routes>
