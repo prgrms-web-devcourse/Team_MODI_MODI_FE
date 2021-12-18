@@ -15,6 +15,7 @@ const axiosRequest = (uri, requireToken, method = httpMethods.GET, data) => {
 
   if (requireToken) {
     const TOKEN = JSON.parse(sessionStorage.getItem(TOKEN_KEY));
+    console.log(TOKEN);
     args.push({ headers: { Authorization: `Bearer ${TOKEN}` } });
   }
 
@@ -27,6 +28,9 @@ const post = (uri, requireToken = false, data = {}) => {
   return axiosRequest(uri, requireToken, httpMethods.POST, data);
 };
 
+const patch = (uri, requireToken = true, data = {}) => {
+  return axiosRequest(uri, requireToken, httpMethods.PATCH, data);
+};
 // const put = (uri, requireToken, data) => {
 //   return axiosRequest(uri, requireToken, httpMethods.PUT, data);
 // };
@@ -90,4 +94,12 @@ export const getAllMyParty = (status = 'RECRUITING', size = 5, lastPartyId) => {
 };
 export const getMyPartyById = partyId => {
   return get(`/users/me/parties/${partyId}`, true);
+};
+
+export const getNewUsername = (size = 5) => {
+  return get(`/users/generate-username?size=${size}`);
+};
+
+export const updateUsername = username => {
+  return patch(`/users/me/username`, true, username);
 };
