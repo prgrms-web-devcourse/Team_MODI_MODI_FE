@@ -26,7 +26,7 @@ const MyPageTitle = ({
           alignItems: 'center',
         }}
       >
-        <Box>
+        <Box sx={{ display: 'flex' }}>
           <Typography color="primary.contrastText" variant="mediumB">
             안녕하세요, {username}님
           </Typography>
