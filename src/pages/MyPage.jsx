@@ -1,11 +1,11 @@
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthState, useAuthDispatch } from 'contexts/authContext';
 import { PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import useAsync from 'hooks/useAsync';
 import { getAllMyParty } from 'utils/api';
-import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
-import { useAuthState } from 'contexts/authContext';
 
 const LIMIT = 5;
 
@@ -18,6 +18,7 @@ const initialState = {
 
 const MyPage = () => {
   const { username, points } = useAuthState();
+  const { onLogout } = useAuthDispatch();
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
@@ -71,6 +72,12 @@ const MyPage = () => {
 
   const handleClickCharge = () => {
     navigate(`/charge`);
+  };
+
+  const handleClickLogout = () => {
+    console.log('logout');
+    onLogout();
+    navigate('/');
   };
 
   const handleClickParty = partyId => {
@@ -135,6 +142,7 @@ const MyPage = () => {
         username={username}
         points={points}
         onClickCharge={handleClickCharge}
+        onClickLogout={handleClickLogout}
       />
       <PageContents
         sx={{

@@ -1,18 +1,35 @@
 import PropTypes from 'prop-types';
-import { Avatar, Box, Button, Typography } from '@mui/material';
+import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { priceToString } from 'utils/priceToString';
 
-const MyPageTitle = ({ username, points, onClickCharge }) => {
+const MyPageTitle = ({ username, points, onClickCharge, onClickLogout }) => {
   return (
     <Box
       sx={{
         textAlign: 'center',
         mt: 1,
+        p: '20px 30px',
       }}
     >
-      <Typography color="primary.contrastText" variant="mediumB">
-        안녕하세요, {username}님
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <Typography color="primary.contrastText" variant="mediumB">
+          안녕하세요, {username}님
+        </Typography>
+        <IconButton
+          aria-label="logout"
+          sx={{ bgcolor: 'transparent' }}
+          onClick={onClickLogout}
+        >
+          <LogoutIcon sx={{ color: '#fff' }} />
+        </IconButton>
+      </Box>
       <Box
         sx={{
           mt: 2,
@@ -71,6 +88,7 @@ MyPageTitle.propTypes = {
   username: PropTypes.string,
   points: PropTypes.number,
   onClickCharge: PropTypes.func,
+  onClickLogout: PropTypes.func,
 };
 
 export default MyPageTitle;
