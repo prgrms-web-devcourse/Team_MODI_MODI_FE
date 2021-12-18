@@ -13,6 +13,7 @@ import { PartyList, PartyDetail } from 'components/PartyJoin';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import useAsync from 'hooks/useAsync';
 import { getPartyDetail, getRecruitingParties } from 'utils/api';
+import PartyNoneItem from 'components/PartyJoin/PartyNoneItem';
 
 const SIZE = 4;
 
@@ -117,8 +118,10 @@ const RecrutingPartyPage = () => {
             alignItems: 'center',
           }}
         >
-          {currPartyList.length !== 0 && (
+          {currPartyList.length !== 0 ? (
             <PartyList parties={currPartyList} onClickParty={handleOpen} />
+          ) : (
+            <PartyNoneItem />
           )}
           {partyListLoading && <h1>로딩중</h1>}
           {partyListError && <div>에러</div>}
