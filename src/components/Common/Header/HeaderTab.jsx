@@ -21,7 +21,6 @@ const HeaderTab = ({ label, isMainPage, onClick }) => {
           '&:hover': isMainPage ? hoverMain : hoverDefault,
         },
       ]}
-      siz
       onClick={onClick}
     />
   );
