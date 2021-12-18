@@ -9,7 +9,7 @@ const MyPageTitle = ({
   points,
   onClickCharge,
   onClickEditButton,
-  onClickLogout
+  onClickLogout,
 }) => {
   return (
     <Box
@@ -26,36 +26,36 @@ const MyPageTitle = ({
           alignItems: 'center',
         }}
       >
-      </Box>
-      <Box>
-        <Typography color="primary.contrastText" variant="mediumB">
-          안녕하세요, {username}님
-        </Typography>
-        <Edit
+        <Box>
+          <Typography color="primary.contrastText" variant="mediumB">
+            안녕하세요, {username}님
+          </Typography>
+          <Edit
+            sx={{
+              ml: 1,
+              width: 20,
+            }}
+            onClick={onClickEditButton}
+          />
+        </Box>
+        <IconButton
+          aria-label="logout"
+          size="small"
           sx={{
-            ml: 1,
-            width: 20,
+            bgcolor: 'rgba(0,0,0,0.3)',
           }}
-          onClick={onClickEditButton}
-        />
+          onClick={onClickLogout}
+        >
+          <LogoutIcon
+            sx={{
+              width: '18px',
+              height: '18px',
+              pl: '3px',
+              color: '#fff',
+            }}
+          />
+        </IconButton>
       </Box>
-      <IconButton
-        aria-label="logout"
-        size="small"
-        sx={{
-          bgcolor: 'rgba(0,0,0,0.3)',
-        }}
-        onClick={onClickLogout}
-      >
-        <LogoutIcon
-          sx={{
-            width: '18px',
-            height: '18px',
-            pl: '3px',
-            color: '#fff',
-          }}
-        />
-      </IconButton>
       <Box
         sx={{
           mt: 2,
