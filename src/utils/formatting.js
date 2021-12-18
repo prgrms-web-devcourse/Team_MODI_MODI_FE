@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { priceToString } from './priceToString';
 
 export const dateFormater = date => {
   return dayjs(date).format('YYYY-MM-DD');
@@ -42,7 +43,7 @@ export const partyCreateFormater = newParty => {
 export const pointFormatter = (points, fontSize = 15) => {
   return (
     <>
-      {points}
+      {priceToString(points)}
       <span
         style={{
           marginLeft: '5px',
