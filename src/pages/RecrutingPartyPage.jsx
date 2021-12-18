@@ -13,6 +13,7 @@ import { PartyList, PartyDetail } from 'components/PartyJoin';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import useAsync from 'hooks/useAsync';
 import { getPartyDetail, getRecruitingParties } from 'utils/api';
+import PartyNoneItem from 'components/PartyJoin/PartyNoneItem';
 import { useAuthState } from 'contexts/authContext';
 import Alert from 'components/Common/Alert';
 
@@ -31,6 +32,7 @@ const RecrutingPartyPage = () => {
 
   const [lastPartyId, setLastPartyId] = useState(null);
   const [currPartyList, setCurrPartyList] = useState([]);
+  const [totalPartySize, setTotalpartySize] = useState(0);
   const [isOpenPartyInfoModal, setOpenPartyInfoModal] = useState(false);
   const [isOpenAlreadyJoinAlert, setOpenAlreadyJoinAlert] = useState(false);
 
@@ -60,7 +62,9 @@ const RecrutingPartyPage = () => {
 
   useEffect(() => {
     if (partyListValue) {
-      const { partyList } = partyListValue;
+      const { partyList, totalSize } = partyListValue;
+
+      setTotalpartySize(totalSize);
 
       setCurrPartyList(prevPartyList => {
         return partyList.length
@@ -128,20 +132,26 @@ const RecrutingPartyPage = () => {
             alignItems: 'center',
           }}
         >
-          <PartyList
-            parties={currPartyList}
-            onClickParty={handleFetchPartyDetail}
-          />
+          {currPartyList.length !== 0 ? (
+            <PartyList
+              parties={currPartyList}
+              onClickParty={handleFetchPartyDetail}
+            />
+          ) : (
+            <PartyNoneItem />
+          )}
           {partyListLoading && <h1>로딩중</h1>}
           {partyListError && <div>에러</div>}
-          <Button
-            variant="contained"
-            size="small"
-            color="modiGray"
-            onClick={handleClickMoreButton}
-          >
-            더보기
-          </Button>
+          {totalPartySize !== currPartyList.length && (
+            <Button
+              variant="contained"
+              size="small"
+              color="modiGray"
+              onClick={handleClickMoreButton}
+            >
+              더보기
+            </Button>
+          )}
         </PageContents>
       </PageContainer>
       <Modal open={isOpenPartyInfoModal} onClose={handleClosePartyInfoModal}>
