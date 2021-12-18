@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Box, Button, IconButton, Modal } from '@mui/material';
+import { Button, IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import {
@@ -19,7 +19,7 @@ import Alert from 'components/Common/Alert';
 const SIZE = 4;
 
 const RecrutingPartyPage = () => {
-  const { isLoggedIn, userId: myUserId } = useAuthState();
+  const { userId: myUserId } = useAuthState();
   const navigate = useNavigate();
   const params = useParams();
   const ottServiceId = useMemo(() => parseInt(params.ottServiceId), [params]);
@@ -162,7 +162,14 @@ const RecrutingPartyPage = () => {
           {partyDetailError && <div>에러</div>}
         </ModalBox>
       </Modal>
-      <Modal
+      <Alert
+        isOpen={isOpenAlreadyJoinAlert}
+        type="fail"
+        messege="내가 이미 가입한 파티에요"
+        helperText="아직 파티원을 모집 중입니다."
+        onClose={() => setOpenAlreadyJoinAlert(false)}
+      />
+      {/* <Modal
         open={isOpenAlreadyJoinAlert}
         onClose={() => setOpenAlreadyJoinAlert(false)}
       >
@@ -173,7 +180,7 @@ const RecrutingPartyPage = () => {
             onClose={() => setOpenAlreadyJoinAlert(false)}
           />
         </Box>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
