@@ -7,7 +7,7 @@ const MyPageTitle = ({ username, points, onClickCharge }) => {
     <Box
       sx={{
         textAlign: 'center',
-        mt: 1,
+        mt: 3,
       }}
     >
       <Typography color="primary.contrastText" variant="mediumB">
@@ -26,6 +26,7 @@ const MyPageTitle = ({ username, points, onClickCharge }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            mt: -1,
           }}
         >
           <Typography
