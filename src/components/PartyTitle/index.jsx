@@ -77,6 +77,7 @@ PartyTitle.propTypes = {
     '라프텔',
     '쿠팡 플레이',
     '아마존 프라임',
+    '',
   ]).isRequired,
   ottGrade: PropTypes.string,
   monthlyPrice: PropTypes.number,

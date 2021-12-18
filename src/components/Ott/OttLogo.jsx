@@ -69,6 +69,7 @@ OttLogo.propTypes = {
     '라프텔',
     '쿠팡 플레이',
     '아마존 프라임',
+    '',
   ]),
   size: PropTypes.number,
   sx: PropTypes.object,

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
 import { useAuthState } from 'contexts/authContext';
 
-const LIMIT = 3;
+const LIMIT = 5;
 
 const initialState = {
   parties: [],
@@ -39,33 +39,33 @@ const MyPage = () => {
   );
 
   const navigate = useNavigate();
-
   useEffect(() => {
     if (onGoingState.value) {
-      setOnGoing({
-        ...onGoing,
-        parties: [...onGoing.parties, ...onGoingState.value.parties],
-      });
+      setOnGoing(prevOnGoing => ({
+        ...prevOnGoing,
+        parties: [...prevOnGoing.parties, ...onGoingState.value.parties],
+        buttonDisabled: !onGoingState.value.totalSize,
+      }));
     }
   }, [onGoingState.value]);
 
   useEffect(() => {
     if (recruitingState.value) {
-      const { totalSize, parties } = recruitingState.value;
-      setRecruiting({
-        ...recruiting,
-        parties: [...recruiting.parties, ...parties],
-        buttonDisabled: !totalSize,
-      });
+      setRecruiting(prevRecruiting => ({
+        ...prevRecruiting,
+        parties: [...prevRecruiting.parties, ...recruitingState.value.parties],
+        buttonDisabled: !recruitingState.value.totalSize,
+      }));
     }
   }, [recruitingState.value]);
 
   useEffect(() => {
     if (finishedState.value) {
-      setFinished({
-        ...finished,
-        parties: [...finished.parties, ...finishedState.value.parties],
-      });
+      setFinished(prevFinished => ({
+        ...prevFinished,
+        parties: [...prevFinished.parties, ...finishedState.value.parties],
+        buttonDisabled: !finishedState.value.totalSize,
+      }));
     }
   }, [finishedState.value]);
 

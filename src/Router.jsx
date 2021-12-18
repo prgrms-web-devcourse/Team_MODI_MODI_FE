@@ -25,7 +25,7 @@ const Router = () => {
           />
           <Route path="create" element={<CreatePartyPage />} />
           <Route path="login" element={<LoginPage />} />
-          <Route path="user/:userId" element={<MyPage />} />
+          <Route path="user" element={<MyPage />} />
           <Route path="payment" element={<PaymentPage />} />
           <Route path="charge" element={<PointChargePage />} />
           <Route path="oauth/redirect" element={<OauthRedirectPage />} />
