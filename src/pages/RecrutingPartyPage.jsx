@@ -169,18 +169,6 @@ const RecrutingPartyPage = () => {
         helperText="아직 파티원을 모집 중입니다."
         onClose={() => setOpenAlreadyJoinAlert(false)}
       />
-      {/* <Modal
-        open={isOpenAlreadyJoinAlert}
-        onClose={() => setOpenAlreadyJoinAlert(false)}
-      >
-        <Box>
-          <Alert
-            messege="응 안돼"
-            helperText="돌아가"
-            onClose={() => setOpenAlreadyJoinAlert(false)}
-          />
-        </Box>
-      </Modal> */}
     </>
   );
 };
