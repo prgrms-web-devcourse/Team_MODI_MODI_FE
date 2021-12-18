@@ -9,6 +9,7 @@ const PartyShareAccount = ({
   sharedInfo,
   onFlipCard,
   onEditSharedInfo,
+  isLeader,
 }) => {
   const sharedInfoEditButton = (
     <IconButton
@@ -24,13 +25,16 @@ const PartyShareAccount = ({
   );
 
   const front = (
-    <CardTemplate isFront={true} sharedInfoEditButton={sharedInfoEditButton} />
+    <CardTemplate
+      isFront={true}
+      sharedInfoEditButton={isLeader ? sharedInfoEditButton : null}
+    />
   );
 
   const back = (
     <CardTemplate
       sharedInfo={sharedInfo}
-      sharedInfoEditButton={sharedInfoEditButton}
+      sharedInfoEditButton={isLeader ? sharedInfoEditButton : null}
     />
   );
 
@@ -54,6 +58,7 @@ PartyShareAccount.propTypes = {
   }),
   onFlipCard: PropTypes.func,
   onEditSharedInfo: PropTypes.func,
+  isLeader: PropTypes.bool,
 };
 
 export default PartyShareAccount;

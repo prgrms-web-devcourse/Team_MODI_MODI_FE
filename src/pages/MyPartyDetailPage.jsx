@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
@@ -48,9 +48,10 @@ const MyPartyDetailPage = () => {
     status = '',
   } = partyDetail || {};
 
-  const checkLeader = members.find(
-    ({ userId }) => userId === loginUserId,
-  )?.leader;
+  const isLeader = useMemo(
+    () => members.find(({ userId }) => userId === loginUserId)?.leader,
+    [loginUserId, members],
+  );
 
   const handleFlipCard = useCallback(() => {
     setFliped(prev => !prev);
@@ -125,9 +126,9 @@ const MyPartyDetailPage = () => {
               <PartyTitle
                 ottName={ottName}
                 ottGrade={grade}
-                isLeader={checkLeader}
+                isLeader={isLeader}
               />
-              {feeRender(checkLeader)}
+              {feeRender(isLeader)}
             </PageHeader>
             <PageContents>
               <Box
@@ -172,6 +173,7 @@ const MyPartyDetailPage = () => {
                     sharedInfo={sharedInfo}
                     partyStatus={status}
                     onEditSharedInfo={handleEditSharedInfo}
+                    isLeader={isLeader}
                   />
                 )}
               </Box>
