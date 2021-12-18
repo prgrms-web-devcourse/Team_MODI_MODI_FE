@@ -21,7 +21,7 @@ const Alert = ({
             mb: 2,
           }}
         >
-          <LottieIcon type={type} />
+          {type && <LottieIcon type={type} />}
           <Typography
             variant="large"
             component="p"
