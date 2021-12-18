@@ -1,17 +1,17 @@
-import { ModalBox, PageContainer, PageContents } from 'components/Common';
-import MyPartyTab from 'components/MyParty/MyPartyTab';
-import useAsync from 'hooks/useAsync';
-import { getAllMyParty, getNewUsername, updateUsername } from 'utils/api';
-import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import MyPageTitle from 'components/MyParty/MyPageTitle';
-import { useAuthState } from 'contexts/authContext';
+import { useNavigate } from 'react-router-dom';
 import { IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import UserNameEdit from 'components/MyParty/UserNameEdit';
-import { useAuthDispatch } from 'contexts/authContext';
+import { useAuthState, useAuthDispatch } from 'contexts/authContext';
+import { ModalBox, PageContainer, PageContents } from 'components/Common';
+
 import { USER_INFO_KEY } from 'constants/keys';
 import useStorage from 'hooks/useStorage';
+import useAsync from 'hooks/useAsync';
+import { getAllMyParty, getNewUsername, updateUsername } from 'utils/api';
+import MyPageTitle from 'components/MyParty/MyPageTitle';
+import MyPartyTab from 'components/MyParty/MyPartyTab';
+import UserNameEdit from 'components/MyParty/UserNameEdit';
 
 const LIMIT = 5;
 
@@ -25,7 +25,7 @@ const initialState = {
 const MyPage = () => {
   const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const { username, points } = useAuthState();
-
+  const { onLogout } = useAuthDispatch();
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
@@ -90,6 +90,12 @@ const MyPage = () => {
 
   const handleClickCharge = () => {
     navigate(`/charge`);
+  };
+
+  const handleClickLogout = () => {
+    console.log('logout');
+    onLogout();
+    navigate('/');
   };
 
   const handleClickParty = partyId => {
@@ -164,6 +170,7 @@ const MyPage = () => {
         username={username}
         points={points}
         onClickCharge={handleClickCharge}
+        onClickLogout={handleClickLogout}
         onClickEditButton={() => setIsOpen(true)}
       />
       <PageContents
