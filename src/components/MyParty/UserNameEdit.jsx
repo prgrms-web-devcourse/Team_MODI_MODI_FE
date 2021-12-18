@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import { Button, Typography } from '@mui/material';
 import CachedIcon from '@mui/icons-material/Cached';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChipList from 'components/Common/ChipList';
 
 const UserNameEdit = ({
@@ -19,6 +19,11 @@ const UserNameEdit = ({
 
   const handleClickUpdate = () => {
     onUpdateUsername(selectedUsername);
+  };
+
+  const handleShuffleUsername = () => {
+    setSelectedUsername('');
+    onClickShuffle();
   };
 
   return (
@@ -49,7 +54,7 @@ const UserNameEdit = ({
             cursor: 'pointer',
           }}
           color="primary"
-          onClick={onClickShuffle}
+          onClick={handleShuffleUsername}
         />
         {generatedUsernameValue && (
           <ChipList
