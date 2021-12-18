@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { Box, Button, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
-import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
+import { deleteParty, getMyPartyById, getSharedAccountInfo } from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import { useAuthState } from 'contexts/authContext';
 import { priceToString } from 'utils/priceToString';
@@ -31,9 +31,17 @@ const MyPartyDetailPage = () => {
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
   const { isLoading: isPartyLoading, value: PartyDetail } = partyDetailstate;
   const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
+  const [deletePartyAPIState, fetchDeletePartyAPI] = useAsync(
+    deleteParty,
+    [],
+    [],
+    true,
+  );
+
   const { value: sharedInfo } = sharedInfoState;
 
   const {
+    partyId = 0,
     ottName = '',
     grade = '',
     monthlyPrice = 0,
@@ -51,6 +59,10 @@ const MyPartyDetailPage = () => {
   const checkLeader = members.find(
     ({ userId }) => userId === loginUserId,
   )?.leader;
+
+  useEffect(() => {
+    deletePartyAPIState.value === '' && navigate('/user');
+  }, [deletePartyAPIState.value, navigate]);
 
   const checkHasMember = members.length - 1;
   const feeRender = isLeader => {
@@ -106,9 +118,8 @@ const MyPartyDetailPage = () => {
   }, []);
 
   const handleDeleteParty = useCallback(() => {
-    // 삭제 api 요청
-    navigate('/user');
-  }, [navigate]);
+    fetchDeletePartyAPI(partyId);
+  }, [fetchDeletePartyAPI, partyId]);
 
   return !isPartyLoading ? (
     <>
