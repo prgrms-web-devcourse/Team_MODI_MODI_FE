@@ -47,11 +47,7 @@ const SharedInfoEditModal = ({ open, onClose, onSubmit }) => {
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalBox
-        component="form"
-        onSubmit={handleSumbmitEditedPassword}
-        for="sharedPassword"
-      >
+      <ModalBox component="form" onSubmit={handleSumbmitEditedPassword}>
         <Typography variant="mediumB">공유 계정 정보 변경</Typography>
         <TextField
           fullWidth
