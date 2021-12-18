@@ -10,6 +10,7 @@ import OauthRedirectPage from 'pages/OauthRedirectPage';
 import MyPartyDetailPage from 'pages/MyPartyDetailPage';
 import MainPage from 'pages/MainPage';
 import PointChargePage from 'pages/PointChargePage';
+import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from 'utils/PrivateRoute';
 
 const Router = () => {
@@ -64,6 +65,7 @@ const Router = () => {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

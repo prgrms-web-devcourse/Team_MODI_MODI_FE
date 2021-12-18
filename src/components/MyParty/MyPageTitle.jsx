@@ -2,8 +2,15 @@ import PropTypes from 'prop-types';
 import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { priceToString } from 'utils/priceToString';
+import { Edit } from '@mui/icons-material';
 
-const MyPageTitle = ({ username, points, onClickCharge, onClickLogout }) => {
+const MyPageTitle = ({
+  username,
+  points,
+  onClickCharge,
+  onClickEditButton,
+  onClickLogout
+}) => {
   return (
     <Box
       sx={{
@@ -19,27 +26,36 @@ const MyPageTitle = ({ username, points, onClickCharge, onClickLogout }) => {
           alignItems: 'center',
         }}
       >
+      </Box>
+      <Box>
         <Typography color="primary.contrastText" variant="mediumB">
           안녕하세요, {username}님
         </Typography>
-        <IconButton
-          aria-label="logout"
-          size="small"
+        <Edit
           sx={{
-            bgcolor: 'rgba(0,0,0,0.3)',
+            ml: 1,
+            width: 20,
           }}
-          onClick={onClickLogout}
-        >
-          <LogoutIcon
-            sx={{
-              width: '18px',
-              height: '18px',
-              pl: '3px',
-              color: '#fff',
-            }}
-          />
-        </IconButton>
+          onClick={onClickEditButton}
+        />
       </Box>
+      <IconButton
+        aria-label="logout"
+        size="small"
+        sx={{
+          bgcolor: 'rgba(0,0,0,0.3)',
+        }}
+        onClick={onClickLogout}
+      >
+        <LogoutIcon
+          sx={{
+            width: '18px',
+            height: '18px',
+            pl: '3px',
+            color: '#fff',
+          }}
+        />
+      </IconButton>
       <Box
         sx={{
           mt: 2,
@@ -53,6 +69,7 @@ const MyPageTitle = ({ username, points, onClickCharge, onClickLogout }) => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            mt: -1,
           }}
         >
           <Typography
@@ -99,6 +116,7 @@ MyPageTitle.propTypes = {
   points: PropTypes.number,
   onClickCharge: PropTypes.func,
   onClickLogout: PropTypes.func,
+  onClickEditButton: PropTypes.func,
 };
 
 export default MyPageTitle;
