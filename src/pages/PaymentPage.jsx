@@ -19,6 +19,7 @@ import { useAuthState } from 'contexts/authContext';
 import { COMMISSION_RATE } from 'constants/commissionRate';
 import { useAuthDispatch } from 'contexts/authContext';
 import { USER_INFO_KEY } from 'constants/keys';
+import Alert from 'components/Common/Alert';
 
 const PaymentPage = () => {
   const { points: myPoint } = useAuthState();
@@ -27,7 +28,8 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const partyId = useMemo(() => searchParams.get('partyId'), [searchParams]);
   const [open, setOpen] = useState(false);
-  const [openPaymentResult, setOpenPaymentResult] = useState(false);
+  const [openPaymentSuccess, setOpenPaymentSuccess] = useState(false);
+  const [openPaymentFail, setOpenPaymentFail] = useState(false);
 
   const [partyDetailAPIState] = useAsync(getPartyDetail, [partyId]);
   const [partyJoinApiState, fetchPartyJoinApiState] = useAsync(
@@ -65,8 +67,9 @@ const PaymentPage = () => {
   }, [partyId, navigate]);
 
   useEffect(() => {
-    partyJoinLoading && setOpenPaymentResult(true);
-  }, [partyJoinLoading]);
+    partyJoinValue && setOpenPaymentSuccess(true);
+    partyJoinError && setOpenPaymentFail(true);
+  }, [partyJoinValue, partyJoinError]);
 
   useEffect(() => {
     partyJoinValue && fetchGetMyInfoApiState();
@@ -114,8 +117,8 @@ const PaymentPage = () => {
     fetchPartyJoinApiState(partyId);
   }, [partyId, fetchPartyJoinApiState]);
 
-  const handleClosePaymentResultAlert = useCallback(() => {
-    setOpenPaymentResult(false);
+  const handleClosePaymentFailAlert = useCallback(() => {
+    setOpenPaymentFail(false);
   }, []);
 
   return (
@@ -181,25 +184,25 @@ const PaymentPage = () => {
           />
         </ModalBox>
       </Modal>
-      <Modal open={openPaymentResult}>
-        <ModalBox>
-          {partyJoinLoading && <h1>로딩중</h1>}
-          {partyJoinError && (
-            <>
-              <h1>결제실패</h1>
-              <button onClick={handleClosePaymentResultAlert}> 닫기</button>
-            </>
-          )}
-          {partyJoinValue && (
-            <>
-              <div>결제 성공!</div>
-              <button onClick={handleNavigateMyPartyDetailPage}>
-                파티정보 확인하기
-              </button>
-            </>
-          )}
-        </ModalBox>
-      </Modal>
+      <>
+        {partyJoinLoading && <h1>로딩중</h1>}
+
+        <Alert
+          isOpen={openPaymentSuccess}
+          type="paymentSuccess"
+          messege="가입 성공"
+          helperText="새로운 파티원이 된 걸 환영합니다!"
+          onClose={handleNavigateMyPartyDetailPage}
+        />
+
+        <Alert
+          isOpen={openPaymentFail}
+          type="paymentFail"
+          messege="결제 실패"
+          helperText="결제 중에 오류가 발생했습니다."
+          onClose={handleClosePaymentFailAlert}
+        />
+      </>
     </>
   );
 };
