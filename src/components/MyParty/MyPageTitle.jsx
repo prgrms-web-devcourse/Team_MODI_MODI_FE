@@ -24,10 +24,20 @@ const MyPageTitle = ({ username, points, onClickCharge, onClickLogout }) => {
         </Typography>
         <IconButton
           aria-label="logout"
-          sx={{ bgcolor: 'transparent' }}
+          size="small"
+          sx={{
+            bgcolor: 'rgba(0,0,0,0.3)',
+          }}
           onClick={onClickLogout}
         >
-          <LogoutIcon sx={{ color: '#fff' }} />
+          <LogoutIcon
+            sx={{
+              width: '18px',
+              height: '18px',
+              pl: '3px',
+              color: '#fff',
+            }}
+          />
         </IconButton>
       </Box>
       <Box
