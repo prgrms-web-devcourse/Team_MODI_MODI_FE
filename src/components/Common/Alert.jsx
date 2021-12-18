@@ -5,7 +5,7 @@ import LottieIcon from './LottieIcon';
 
 const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
   return (
-    <Modal open={isOpen}>
+    <Modal open={isOpen} onClose={onClose}>
       <AlertBox>
         <Box
           sx={{
