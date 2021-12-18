@@ -1,8 +1,12 @@
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Chip, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
-import { getMyPartyById, getSharedAccountInfo } from 'utils/api';
+import {
+  getMyPartyById,
+  getSharedAccountInfo,
+  updateSharedInfo,
+} from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import { useAuthState } from 'contexts/authContext';
 import { priceToString } from 'utils/priceToString';
@@ -26,12 +30,27 @@ const MyPartyDetailPage = () => {
   const { myPartyId } = params;
 
   const [partyDetailstate] = useAsync(getMyPartyById, [myPartyId]);
+  const [sharedInfoState, fetchSharedInfo] = useAsync(getSharedAccountInfo, [
+    myPartyId,
+  ]);
+  const [updatedSharedInfoApiState, fetchUpdateShareInfoApiState] = useAsync(
+    updateSharedInfo,
+    [],
+    [],
+    true,
+  );
+  const { value: updateInfo } = updatedSharedInfoApiState;
   const { isLoading: isPartyLoading, value: partyDetail } = partyDetailstate;
-  const [sharedInfoState] = useAsync(getSharedAccountInfo, [myPartyId]);
   const { value: sharedInfo } = sharedInfoState;
 
   const [fliped, setFliped] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+
+  useEffect(() => {
+    if (updateInfo) {
+      fetchSharedInfo();
+    }
+  }, [updateInfo, fetchSharedInfo]);
 
   const {
     ottName = '',
@@ -66,9 +85,12 @@ const MyPartyDetailPage = () => {
     setOpenEditModal(false);
   }, []);
 
-  const handlSubmitEditedSharedInfo = useCallback(i => {
-    console.log(i);
-  }, []);
+  const handlSubmitEditedSharedInfo = useCallback(
+    newPassword => {
+      fetchUpdateShareInfoApiState(myPartyId, { sharedPassword: newPassword });
+    },
+    [fetchUpdateShareInfoApiState, myPartyId],
+  );
 
   const feeRender = isLeader => {
     if (isLeader) {

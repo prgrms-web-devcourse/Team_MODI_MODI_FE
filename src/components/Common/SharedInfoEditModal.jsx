@@ -84,6 +84,7 @@ const SharedInfoEditModal = ({ open, onClose, onSubmit }) => {
           onChange={handleChangeCheckPasswordInput}
           sx={{ mb: 3 }}
         />
+
         <Box display="flex" justifyContent="flex-end">
           <Button
             color="primary"
@@ -105,6 +106,8 @@ SharedInfoEditModal.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
   onSubmit: PropTypes.func,
+  isLoading: PropTypes.bool,
+  error: PropTypes.string,
 };
 
 export default SharedInfoEditModal;

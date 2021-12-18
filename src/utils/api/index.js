@@ -102,3 +102,7 @@ export const getNewUsername = (size = 5) => {
 export const updateUsername = username => {
   return patch(`/users/me/username`, true, username);
 };
+
+export const updateSharedInfo = (partyId, sharedInfo) => {
+  return patch(`/parties/${partyId}/sharedAccount/update`, true, sharedInfo);
+};
