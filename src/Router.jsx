@@ -13,7 +13,6 @@ import PointChargePage from 'pages/PointChargePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from 'utils/PrivateRoute';
 
-
 const Router = () => {
   return (
     <BrowserRouter>
