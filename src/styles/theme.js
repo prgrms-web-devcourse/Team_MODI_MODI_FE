@@ -104,6 +104,24 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '&::-webkit-scrollbar': {
+            width: 7,
+          },
+          '&::-webkit-scrollbar-track': {
+            boxShadow: `inset 0 0 6px rgba(0, 0, 0, 0.3)`,
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#bbbbbb',
+            borderRadius: 4,
+            backgroundClip: 'padding-box',
+            border: '1px solid transparent',
+          },
+        },
+      },
+    },
     MuiButtonBase: {
       styleOverrides: {
         root: {
