@@ -1,11 +1,17 @@
-import { PageContainer, PageContents } from 'components/Common';
+import { ModalBox, PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import useAsync from 'hooks/useAsync';
-import { getAllMyParty } from 'utils/api';
+import { getAllMyParty, getNewUsername, updateUsername } from 'utils/api';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
 import { useAuthState } from 'contexts/authContext';
+import { IconButton, Modal } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import UserNameEdit from 'components/MyParty/UserNameEdit';
+import { useAuthDispatch } from 'contexts/authContext';
+import { USER_INFO_KEY } from 'constants/keys';
+import useStorage from 'hooks/useStorage';
 
 const LIMIT = 5;
 
@@ -17,10 +23,19 @@ const initialState = {
 };
 
 const MyPage = () => {
+  const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const { username, points } = useAuthState();
+
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [, setUserInfo] = useStorage(USER_INFO_KEY, null, 'session');
+
+  const [generatedUsernameAPIState] = useAsync(getNewUsername, [5]);
+  const [, updateUsernameCallback] = useAsync(updateUsername, [], [], true);
+  const { value: generatedUsernameValue } = generatedUsernameAPIState || {};
 
   const [onGoingState] = useAsync(
     getAllMyParty,
@@ -68,6 +83,10 @@ const MyPage = () => {
       }));
     }
   }, [finishedState.value]);
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   const handleClickCharge = () => {
     navigate(`/charge`);
@@ -124,6 +143,16 @@ const MyPage = () => {
     }
   };
 
+  const handleUpdateUsername = selectedUsername => {
+    updateUsernameCallback({ username: selectedUsername });
+    onUpdateUserInfo({ username: selectedUsername });
+    setUserInfo(prevUserInfo => ({
+      ...prevUserInfo,
+      username: selectedUsername,
+    }));
+    handleCloseModal();
+  };
+
   return (
     <PageContainer
       sx={{
@@ -135,6 +164,7 @@ const MyPage = () => {
         username={username}
         points={points}
         onClickCharge={handleClickCharge}
+        onClickEditButton={() => setIsOpen(true)}
       />
       <PageContents
         sx={{
@@ -155,6 +185,27 @@ const MyPage = () => {
           onClickMoreButton={handleClickMoreButton}
         />
       </PageContents>
+      <Modal open={isOpen}>
+        <ModalBox>
+          <IconButton
+            onClick={() => setIsOpen(false)}
+            sx={{
+              position: 'absolute',
+              top: '24px',
+              right: '24px',
+              p: 0,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <UserNameEdit
+            username={username}
+            generatedUsernameValue={generatedUsernameValue}
+            onClose={handleCloseModal}
+            onUpdateUsername={handleUpdateUsername}
+          />
+        </ModalBox>
+      </Modal>
     </PageContainer>
   );
 };
