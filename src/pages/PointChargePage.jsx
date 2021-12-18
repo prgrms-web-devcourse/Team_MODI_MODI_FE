@@ -29,7 +29,6 @@ const PointChargePage = () => {
 
   const handleChargeClick = () => {
     chargeCallback({ points: chargeInput });
-    setIsOpen(prev => !prev);
   };
 
   const { value: chargeValue, error: chargeError } = chargeState;
@@ -43,6 +42,7 @@ const PointChargePage = () => {
       onUpdateUserInfo(chargeValue);
       setAlertType('paymentSuccess');
       setAlertMessage('결제에 성공했습니다!');
+      setIsOpen(prev => !prev);
     }
   }, [chargeValue, onUpdateUserInfo, setUserInfo, navigate]);
 
@@ -50,6 +50,7 @@ const PointChargePage = () => {
     if (chargeError) {
       setAlertType('paymentFail');
       setAlertMessage('결제에 실패했습니다!');
+      setIsOpen(prev => !prev);
     }
   }, [chargeError]);
 
