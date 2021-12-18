@@ -9,9 +9,10 @@ import PaymentPage from 'pages/PaymentPage';
 import OauthRedirectPage from 'pages/OauthRedirectPage';
 import MyPartyDetailPage from 'pages/MyPartyDetailPage';
 import MainPage from 'pages/MainPage';
-import TestPageDorr from 'pages/testPages/TestPageDorr';
 import PointChargePage from 'pages/PointChargePage';
 import NotFoundPage from './pages/NotFoundPage';
+import PrivateRoute from 'utils/PrivateRoute';
+
 
 const Router = () => {
   return (
@@ -19,21 +20,54 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<MainPage />} />
-          <Route path="payment" element={<PaymentPage />} />
           <Route
             path="recruit/:ottServiceId"
             element={<RecrutingPartyPage />}
           />
-          <Route path="create" element={<CreatePartyPage />} />
+          <Route
+            path="create"
+            element={
+              <PrivateRoute>
+                <CreatePartyPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="login" element={<LoginPage />} />
-          <Route path="user" element={<MyPage />} />
-          <Route path="payment" element={<PaymentPage />} />
-          <Route path="charge" element={<PointChargePage />} />
+          <Route
+            path="user"
+            element={
+              <PrivateRoute>
+                <MyPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="payment"
+            element={
+              <PrivateRoute>
+                <PaymentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="charge"
+            element={
+              <PrivateRoute>
+                <PointChargePage />
+              </PrivateRoute>
+            }
+          />
           <Route path="oauth/redirect" element={<OauthRedirectPage />} />
-          <Route path="myParty/:myPartyId" element={<MyPartyDetailPage />} />
+          <Route
+            path="myParty/:myPartyId"
+            element={
+              <PrivateRoute>
+                <MyPartyDetailPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
-        <Route path="/test" element={<TestPageDorr />} />
       </Routes>
     </BrowserRouter>
   );
