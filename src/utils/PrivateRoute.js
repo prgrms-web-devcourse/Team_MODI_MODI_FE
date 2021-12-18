@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 function PrivateRoute({ children }) {
   const { isLoggedIn } = useAuthState();
 
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  return isLoggedIn ? children : <Navigate to="/login" replace={true} />;
 }
 
 PrivateRoute.propTypes = {
