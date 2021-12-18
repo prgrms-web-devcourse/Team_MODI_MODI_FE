@@ -4,7 +4,6 @@ import { IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAuthState, useAuthDispatch } from 'contexts/authContext';
 import { ModalBox, PageContainer, PageContents } from 'components/Common';
-import { useAuthDispatch } from 'contexts/authContext';
 import { USER_INFO_KEY } from 'constants/keys';
 import useStorage from 'hooks/useStorage';
 import useAsync from 'hooks/useAsync';
