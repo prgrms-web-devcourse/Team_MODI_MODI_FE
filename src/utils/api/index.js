@@ -15,7 +15,6 @@ const axiosRequest = (uri, requireToken, method = httpMethods.GET, data) => {
 
   if (requireToken) {
     const TOKEN = JSON.parse(sessionStorage.getItem(TOKEN_KEY));
-    console.log(TOKEN);
     args.push({ headers: { Authorization: `Bearer ${TOKEN}` } });
   }
 
