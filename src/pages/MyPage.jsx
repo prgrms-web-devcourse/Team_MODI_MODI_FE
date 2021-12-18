@@ -1,4 +1,4 @@
-import { PageContainer, PageContents } from 'components/Common';
+import { ModalBox, PageContainer, PageContents } from 'components/Common';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import useAsync from 'hooks/useAsync';
 import { getAllMyParty } from 'utils/api';
@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
 import { useAuthState } from 'contexts/authContext';
+import { IconButton, Modal } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import UserNameEdit from 'components/MyParty/UserNameEdit';
 
 const LIMIT = 5;
 
@@ -21,6 +24,7 @@ const MyPage = () => {
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [onGoingState] = useAsync(
     getAllMyParty,
@@ -135,6 +139,7 @@ const MyPage = () => {
         username={username}
         points={points}
         onClickCharge={handleClickCharge}
+        onClickEditButton={() => setIsOpen(true)}
       />
       <PageContents
         sx={{
@@ -155,6 +160,22 @@ const MyPage = () => {
           onClickMoreButton={handleClickMoreButton}
         />
       </PageContents>
+      <Modal open={isOpen}>
+        <ModalBox>
+          <IconButton
+            onClick={() => setIsOpen(false)}
+            sx={{
+              position: 'absolute',
+              top: '24px',
+              right: '24px',
+              p: 0,
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <UserNameEdit username={username} />
+        </ModalBox>
+      </Modal>
     </PageContainer>
   );
 };

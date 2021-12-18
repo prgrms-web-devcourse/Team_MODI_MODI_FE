@@ -1,8 +1,14 @@
 import PropTypes from 'prop-types';
 import { Avatar, Box, Button, Typography } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
+import { Edit } from '@mui/icons-material';
 
-const MyPageTitle = ({ username, points, onClickCharge }) => {
+const MyPageTitle = ({
+  username,
+  points,
+  onClickCharge,
+  onClickEditButton,
+}) => {
   return (
     <Box
       sx={{
@@ -10,9 +16,24 @@ const MyPageTitle = ({ username, points, onClickCharge }) => {
         mt: 3,
       }}
     >
-      <Typography color="primary.contrastText" variant="mediumB">
-        안녕하세요, {username}님
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography color="primary.contrastText" variant="mediumB">
+          안녕하세요, {username}님
+        </Typography>
+        <Edit
+          sx={{
+            ml: 1,
+            width: 20,
+          }}
+          onClick={onClickEditButton}
+        />
+      </Box>
+
       <Box
         sx={{
           mt: 2,
@@ -72,6 +93,7 @@ MyPageTitle.propTypes = {
   username: PropTypes.string,
   points: PropTypes.number,
   onClickCharge: PropTypes.func,
+  onClickEditButton: PropTypes.func,
 };
 
 export default MyPageTitle;
