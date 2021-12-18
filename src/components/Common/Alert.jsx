@@ -1,37 +1,47 @@
-import { Box, Button, Typography } from '@mui/material';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
-const Alert = ({ type, messege, helperText, onClose }) => {
+import { Box, Button, Typography, Modal } from '@mui/material';
+import LottieIcon from './LottieIcon';
+
+const Alert = ({ isOpen, type, messege, helperText, onClose }) => {
   return (
-    <AlertBox>
-      <Box sx={{ flexGrow: 1 }}>
-        {/* 아이콘영역 타입에 따라 맞는 아이콘 컴포넌트 가져오기 */}
-        <Typography
-          variant="large"
-          component="p"
-          color="text.primary"
-          sx={{ mb: 1 }}
+    <Modal open={isOpen}>
+      <AlertBox>
+        <Box
+          sx={{
+            flexGrow: 1,
+            mb: 2,
+          }}
         >
-          {messege}
-        </Typography>
-        <Typography variant="base" component="p" color="text.secondary">
-          {helperText}
-        </Typography>
-      </Box>
-      <Button
-        type="button"
-        variant="contained"
-        sx={{
-          fontSize: 16,
-          borderRadius: 20,
-          width: '40%',
-          margin: '0 auto',
-        }}
-        onClick={onClose}
-      >
-        확인
-      </Button>
-    </AlertBox>
+          <LottieIcon type={type} />
+          <Typography
+            variant="large"
+            component="p"
+            color="text.primary"
+            sx={{ mb: 0.5 }}
+          >
+            {messege}
+          </Typography>
+          <Typography variant="base" component="p" color="text.secondary">
+            {helperText}
+          </Typography>
+        </Box>
+        <Button
+          type="button"
+          variant="contained"
+          size="small"
+          sx={{
+            fontSize: 16,
+            borderRadius: 20,
+            width: '40%',
+            margin: '0 auto',
+          }}
+          onClick={onClose}
+        >
+          확인
+        </Button>
+      </AlertBox>
+    </Modal>
   );
 };
 
@@ -59,6 +69,7 @@ Alert.propTypes = {
   messege: PropTypes.string,
   helperText: PropTypes.string,
   onClose: PropTypes.func,
+  isOpen: PropTypes.bool,
 };
 
 export default Alert;
