@@ -3,6 +3,7 @@ import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { priceToString } from 'utils/priceToString';
 import { Edit } from '@mui/icons-material';
+import { styled } from '@mui/system';
 
 const MyPageTitle = ({
   username,
@@ -30,13 +31,7 @@ const MyPageTitle = ({
           <Typography color="primary.contrastText" variant="mediumB">
             안녕하세요, {username}님
           </Typography>
-          <Edit
-            sx={{
-              ml: 1,
-              width: 20,
-            }}
-            onClick={onClickEditButton}
-          />
+          <EditButton onClick={onClickEditButton} />
         </Box>
         <IconButton
           aria-label="logout"
@@ -118,5 +113,15 @@ MyPageTitle.propTypes = {
   onClickLogout: PropTypes.func,
   onClickEditButton: PropTypes.func,
 };
+
+const EditButton = styled(Edit)`
+  margin-left: 5px;
+  width: 20px;
+  color: white;
+  cursor: pointer;
+  :hover {
+    color: #fbeda4;
+  }
+`;
 
 export default MyPageTitle;
