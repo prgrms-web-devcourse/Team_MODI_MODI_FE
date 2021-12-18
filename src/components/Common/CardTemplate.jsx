@@ -6,14 +6,17 @@ import Logo from './Logo';
 import CardInfo from './CardInfo';
 import CardDesign from './CardDesign';
 
-const CardTemplate = ({ sharedInfo, isFront, blur }) => {
+const CardTemplate = ({ sharedInfo, isFront, blur, sharedInfoEditButton }) => {
   const sharedId = sharedInfo?.sharedId;
   const sharedPassword = sharedInfo?.sharedPassword;
 
   const cardTitle = (
-    <Typography variant="baseB" color={isFront && 'white'}>
-      계정 공유 정보
-    </Typography>
+    <>
+      <Typography variant="baseB" color={isFront && 'white'}>
+        계정 공유 정보
+      </Typography>
+      {sharedInfoEditButton}
+    </>
   );
 
   const CardInner = () => (
@@ -32,7 +35,7 @@ const CardTemplate = ({ sharedInfo, isFront, blur }) => {
         title={cardTitle}
         sx={{
           pb: 1,
-          pt: 1,
+          pt: 0,
         }}
       />
       <CardContent
@@ -85,6 +88,7 @@ CardTemplate.propTypes = {
     sharedId: PropTypes.string,
     sharedPassword: PropTypes.string,
   }),
+  sharedInfoEditButton: PropTypes.element,
   blur: PropTypes.bool,
 };
 

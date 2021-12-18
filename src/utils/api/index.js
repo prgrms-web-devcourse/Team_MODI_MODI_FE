@@ -105,4 +105,7 @@ export const updateUsername = username => {
   return patch(`/users/me/username`, true, username);
 };
 
+export const updateSharedInfo = (partyId, sharedInfo) => {
+  return patch(`/parties/${partyId}/sharedAccount/update`, true, sharedInfo);
+};
 export const deleteParty = partyId => _delete(`/parties/${partyId}`);
