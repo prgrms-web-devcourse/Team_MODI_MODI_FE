@@ -26,26 +26,22 @@ const PricePanel = ({ monthlyPrice, servicePeriod }) => {
 
   return (
     <Box sx={pricePanelSx}>
-      <Typography variant="microB" color="text.secondary" component="div">
+      <Typography variant="small" color="text.secondary" component="div">
         {`월 ${monthlyPriceToString}P (${servicePeriod}개월)`}
       </Typography>
 
       <MonetizationOnIcon
         sx={{
-          fontSize: 16,
+          fontSize: 18,
           verticalAlign: 'text-bottom',
         }}
         color="primary"
       />
-      <Typography variant="micro" component="span">
+      <Typography variant="small" component="span">
         총{' '}
       </Typography>
       <Typography variant="mediumB" component="span">
-        {totalPriceToString}
-      </Typography>
-      <Typography variant="micro" component="span">
-        {' '}
-        P
+        {totalPriceToString}P
       </Typography>
     </Box>
   );

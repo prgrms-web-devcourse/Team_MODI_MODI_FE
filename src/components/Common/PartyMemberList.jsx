@@ -13,23 +13,22 @@ const PartyMemberList = ({ members, partyMemberCapacity }) => {
   };
 
   return (
-    <>
+    <Box sx={{ p: '24px 0' }}>
       <Typography
         sx={{
           textAlign: 'left',
-          mt: 2,
+          mb: 1,
         }}
         variant="baseB"
-        color="text.secondary"
         component="div"
       >
         파티인원
       </Typography>
       <Box
         sx={{
-          mt: 3,
           display: 'flex',
           alignItems: 'flex-start',
+          gap: '4px',
         }}
       >
         {members.map(({ userId, username, leader }) => (
@@ -42,7 +41,7 @@ const PartyMemberList = ({ members, partyMemberCapacity }) => {
         ))}
         {waitingMemeber()}
       </Box>
-    </>
+    </Box>
   );
 };
 

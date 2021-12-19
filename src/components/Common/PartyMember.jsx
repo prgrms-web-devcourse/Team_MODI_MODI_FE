@@ -38,7 +38,11 @@ const PartyMember = ({
       <Face color="secondary" fontSize="large" />
       {hasText ? (
         <Typography
-          sx={{ wordBreak: 'keep-all' }}
+          sx={{
+            wordBreak: 'keep-all',
+            mt: '4px',
+          }}
+          align="center"
           variant={fontSize}
           color={isWaiting ? 'text.disabled' : 'text.secondary'}
         >
