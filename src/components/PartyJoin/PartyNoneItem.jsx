@@ -20,7 +20,7 @@ const PartyNoneItem = () => {
         color="text.secondary"
         sx={{ wordBreak: 'keep-all' }}
       >
-        아직 만들어진 파티가 없습니다.
+        모집중인 파티가 없습니다.
       </Typography>
       <Typography
         mt={2}

@@ -45,7 +45,7 @@ const ottInfoEn = {
   },
 };
 
-const OttLogo = ({ ottName, size = 72, sx }) => {
+const OttLogo = ({ ottName, size = '4.5rem', sx }) => {
   const ottLogoSx = {
     width: size,
     height: size,
@@ -71,7 +71,7 @@ OttLogo.propTypes = {
     '아마존 프라임',
     '',
   ]),
-  size: PropTypes.number,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   sx: PropTypes.object,
 };
 

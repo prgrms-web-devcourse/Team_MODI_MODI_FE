@@ -8,7 +8,12 @@ const PartyList = ({ parties, onClickParty }) => {
   };
 
   return (
-    <List sx={{ width: '100%' }}>
+    <List
+      sx={{
+        width: '100%',
+        padding: 0,
+      }}
+    >
       {parties.map(
         ({
           partyId,
