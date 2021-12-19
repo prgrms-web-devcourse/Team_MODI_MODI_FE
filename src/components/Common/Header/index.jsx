@@ -28,7 +28,6 @@ const Header = ({ user }) => {
             display: 'flex',
             flexFlow: 'row nowrap',
             justifyContent: 'space-between',
-            padding: '0 20px',
           }}
         >
           <Link
