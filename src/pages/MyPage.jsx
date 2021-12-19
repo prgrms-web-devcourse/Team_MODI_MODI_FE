@@ -184,7 +184,6 @@ const MyPage = () => {
   return (
     <PageContainer
       sx={{
-        mt: 7,
         bgcolor: 'secondary.main',
       }}
     >
@@ -195,14 +194,7 @@ const MyPage = () => {
         onClickLogout={handleClickLogout}
         onClickEditButton={handleOpenEditModal}
       />
-      <PageContents
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          bgcolor: 'white',
-        }}
-      >
+      <PageContents sx={{ p: 0 }}>
         {onGoingValue && recruitingValue && finishedValue && (
           <MyPartyTab
             value={step}

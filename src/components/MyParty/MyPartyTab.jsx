@@ -63,12 +63,14 @@ const PartyTab = ({
         sx={{
           borderBottom: 1,
           borderColor: 'divider',
+          pt: 1,
         }}
       >
         <Tabs
           value={value}
           onChange={handleChange}
           aria-label="party-status-tab"
+          centered
         >
           <Tab label="진행중" {...a11yProps(0)} />
           <Tab label="대기중" {...a11yProps(1)} />

@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material/styles';
+import theme from 'styles/theme.js';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppBar, Box, Container } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
@@ -14,8 +14,6 @@ const Header = ({ user }) => {
   const { isLoggedIn } = useAuthState();
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
-
-  const theme = useTheme();
   const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
 
   return (

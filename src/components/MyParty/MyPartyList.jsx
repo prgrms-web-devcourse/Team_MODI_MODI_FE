@@ -59,7 +59,12 @@ const MyPartyList = ({
       )}
       {parties && (
         <>
-          <Box sx={{ mt: 2 }}>
+          <Box
+            sx={{
+              mt: 2,
+              p: 4,
+            }}
+          >
             {parties.map(({ partyId, ...props }) => (
               <MyPartySummary
                 key={partyId}
