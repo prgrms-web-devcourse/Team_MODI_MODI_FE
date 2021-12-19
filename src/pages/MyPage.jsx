@@ -12,6 +12,7 @@ import { getAllMyParty, getNewUsername, updateUsername } from 'utils/api';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import UserNameEdit from 'components/MyParty/UserNameEdit';
+import Alert from 'components/Common/Alert';
 
 const LIMIT = 5;
 const RANDOM_USERNAME_SIZE = 7;
@@ -27,6 +28,7 @@ const MyPage = () => {
   const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const { username, points } = useAuthState();
   const { onLogout } = useAuthDispatch();
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
@@ -99,6 +101,7 @@ const MyPage = () => {
   };
 
   const handleClickLogout = () => {
+    setIsOpenAlert(false);
     onLogout();
     navigate('/');
   };
@@ -228,6 +231,16 @@ const MyPage = () => {
           />
         </ModalBox>
       </Modal>
+      <Alert
+        isOpen={isOpenAlert}
+        type="fail"
+        messege="정말 로그아웃을 하시겠습니까?"
+        leftButtonText="로그아웃 할래요!"
+        rightButtonText="좀 더 볼래요!"
+        isConfirm={true}
+        onClose={() => setIsOpenAlert(false)}
+        onClickLeftButton={handleClickLogout}
+      />
     </PageContainer>
   );
 };

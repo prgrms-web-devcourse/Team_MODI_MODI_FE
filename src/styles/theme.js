@@ -1,6 +1,15 @@
 import { createTheme } from '@mui/material';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 320,
+      md: 600,
+      lg: 900,
+      xl: 1200,
+    },
+  },
   palette: {
     primary: {
       main: '#BBCC4B',
@@ -55,52 +64,62 @@ const theme = createTheme({
     micro: {
       fontSize: 12,
       fontWeight: 400,
-      lineHeight: 1.3,
+      lineHeight: 1.333,
+      letterSpacing: '-0.05em',
     },
     microB: {
       fontSize: 12,
       fontWeight: 700,
-      lineHeight: 1.3,
+      lineHeight: 1.333,
+      letterSpacing: '-0.05em',
     },
     small: {
       fontSize: 14,
       fontWeight: 400,
-      lineHeight: 1.3,
+      lineHeight: 1.214,
+      letterSpacing: '-0.04em',
     },
     smallB: {
       fontSize: 14,
       fontWeight: 700,
-      lineHeight: 1.3,
+      lineHeight: 1.214,
+      letterSpacing: '-0.04em',
     },
     base: {
-      fontSize: 16,
+      fontSize: '1rem',
       fontWeight: 400,
-      lineHeight: 1.3,
+      lineHeight: 1.222,
+      letterSpacing: '-0.04em',
     },
     baseB: {
-      fontSize: 16,
+      fontSize: '1rem',
       fontWeight: 700,
-      lineHeight: 1.3,
+      lineHeight: 1.222,
+      letterSpacing: '-0.04em',
     },
     medium: {
-      fontSize: 18,
+      fontSize: '1.125rem',
       fontWeight: 400,
-      lineHeight: 1.3,
+      lineHeight: 1.222,
+      letterSpacing: '-0.04em',
     },
     mediumB: {
-      fontSize: 18,
+      fontSize: '1.125rem',
       fontWeight: 700,
-      lineHeight: 1.3,
+      lineHeight: 1.222,
+      letterSpacing: '-0.04em',
     },
     large: {
-      fontSize: 22,
+      fontSize: '1.375rem',
       fontWeight: 700,
-      lineHeight: 1.3,
+      lineHeight: 1.222,
+      letterSpacing: '-0.03em',
     },
     visual: {
-      fontSize: 26,
+      fontSize: '1.625rem',
       fontWeight: 700,
-      lineHeight: 1.3,
+      lineHeight: 1.222,
+      letterSpacing: '-0.03em',
     },
   },
   components: {
@@ -119,6 +138,16 @@ const theme = createTheme({
             backgroundClip: 'padding-box',
             border: '1px solid transparent',
           },
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          padding: '0 15px',
+        },
+        disableGutters: {
+          padding: 0,
         },
       },
     },
@@ -145,10 +174,10 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          borderRadius: 24,
+          borderRadius: '2rem',
         },
         input: {
-          padding: '13px 20px',
+          padding: '0.929em 1.429em',
         },
       },
     },
