@@ -71,25 +71,31 @@ const PointChargeAlert = ({
           {priceToString(paymentPoint - myPoint)} P
         </Typography>
       </Box>
-      <Button
-        variant="contained"
-        size="large"
+      <Box
         sx={{
-          width: '48%',
-          marginRight: '4%',
+          display: 'flex',
         }}
-        onClick={handleNavigateChargePage}
       >
-        충전하기
-      </Button>
-      <Button
-        variant="outlined"
-        size="large"
-        onClick={onClose}
-        sx={{ width: '48%' }}
-      >
-        취소
-      </Button>
+        <Button
+          variant="contained"
+          size="large"
+          sx={{
+            width: '48%',
+            marginRight: '4%',
+          }}
+          onClick={handleNavigateChargePage}
+        >
+          충전하기
+        </Button>
+        <Button
+          variant="outlined"
+          size="large"
+          onClick={onClose}
+          sx={{ width: '48%' }}
+        >
+          취소
+        </Button>
+      </Box>
     </>
   );
 };
