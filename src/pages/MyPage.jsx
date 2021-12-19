@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -133,37 +133,44 @@ const MyPage = () => {
     }
   }, [finishedValue]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
-  const handleClickCharge = () => {
+  const handleClickCharge = useCallback(() => {
     navigate(`/charge`);
-  };
+  }, [navigate]);
 
-  const handleClickLogout = () => {
+  const handleClickLogout = useCallback(() => {
     setIsOpenAlert(false);
     onLogout();
     navigate('/');
-  };
+  }, [navigate, onLogout]);
 
-  const handleClickParty = partyId => {
-    navigate(`/myParty/${partyId}`);
-  };
+  const handleClickParty = useCallback(
+    partyId => {
+      navigate(`/myParty/${partyId}`);
+    },
+    [navigate],
+  );
+
   const handleClickMoreButton = status => {
     const { lastPartyId } = statusState[status];
     fetchState[status](status, SIZE, lastPartyId);
   };
 
-  const handleUpdateUsername = selectedUsername => {
-    fetchupdateUsernameAPI({ username: selectedUsername });
-    onUpdateUserInfo({ username: selectedUsername });
-    setUserInfo(prevUserInfo => ({
-      ...prevUserInfo,
-      username: selectedUsername,
-    }));
-    handleCloseModal();
-  };
+  const handleUpdateUsername = useCallback(
+    selectedUsername => {
+      fetchupdateUsernameAPI({ username: selectedUsername });
+      onUpdateUserInfo({ username: selectedUsername });
+      setUserInfo(prevUserInfo => ({
+        ...prevUserInfo,
+        username: selectedUsername,
+      }));
+      handleCloseModal();
+    },
+    [fetchupdateUsernameAPI, handleCloseModal, onUpdateUserInfo, setUserInfo],
+  );
 
   const handleShuffleUsername = () => {
     fetchGenerateUsernameAPI(RANDOM_USERNAME_SIZE);
@@ -211,12 +218,11 @@ const MyPage = () => {
       <Modal open={isOpen}>
         <ModalBox>
           <IconButton
-            onClick={() => setIsOpen(false)}
+            onClick={handleCloseModal}
             sx={{
               position: 'absolute',
               top: '24px',
               right: '24px',
-              p: 0,
             }}
           >
             <CloseIcon />
@@ -228,6 +234,7 @@ const MyPage = () => {
             onUpdateUsername={handleUpdateUsername}
             onClickShuffle={handleShuffleUsername}
           />
+          )
         </ModalBox>
       </Modal>
       <Alert
