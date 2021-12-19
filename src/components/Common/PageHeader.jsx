@@ -1,16 +1,44 @@
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Chip } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
 
-const PageHeader = ({ title, hasLogo, size = '4.5rem', children }) => {
+const PageHeader = ({
+  title,
+  sub,
+  hasLogo,
+  size = '4.5rem',
+  children,
+  isLeader,
+}) => {
   return (
     <PageHeaderStyle>
       {hasLogo && <OttLogo ottName={title} size={size} />}
       {title && (
-        <Typography variant="large" component="h2">
-          {title}
-        </Typography>
+        <Box>
+          <Typography variant="small">{sub}</Typography>
+          <Typography
+            variant="large"
+            component="h2"
+            sx={{ wordBreak: 'keep-all' }}
+          >
+            {title}
+            {isLeader && (
+              <Chip
+                color="error"
+                label="파티장"
+                variant="contained"
+                size="small"
+                sx={{
+                  ml: 0.5,
+                  height: 20,
+                  fontSize: '12px',
+                  fontWeight: 400,
+                }}
+              />
+            )}
+          </Typography>
+        </Box>
       )}
       {children && children}
     </PageHeaderStyle>
@@ -22,6 +50,8 @@ PageHeader.propTypes = {
   hasLogo: PropTypes.bool,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node,
+  sub: PropTypes.string,
+  isLeader: PropTypes.bool,
 };
 
 const PageHeaderStyle = styled(Box)(({ theme }) => ({

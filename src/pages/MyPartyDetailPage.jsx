@@ -120,6 +120,8 @@ const MyPartyDetailPage = () => {
             display: 'flex',
             alignItems: 'center',
             ml: 'auto',
+            minWidth: '82px',
+            flexShrink: 0,
           }}
         >
           <AddCircleOutline color="secondary" fontSize="small" />
@@ -136,6 +138,8 @@ const MyPartyDetailPage = () => {
             flexDirection: 'column',
             ml: 'auto',
             textAlign: 'right',
+            minWidth: '82px',
+            flexShrink: 0,
           }}
         >
           <Typography variant="smallB" component="p">
@@ -168,12 +172,7 @@ const MyPartyDetailPage = () => {
       {partyDetail && (
         <>
           <PageContainer>
-            <PageHeader>
-              <PartyTitle
-                ottName={ottName}
-                ottGrade={grade}
-                isLeader={isLeader}
-              />
+            <PageHeader hasLogo title={ottName} sub={grade} isLeader={isLeader}>
               {feeRender(isLeader)}
             </PageHeader>
             <PageContents>
