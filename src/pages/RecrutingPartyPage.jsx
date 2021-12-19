@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button, IconButton, Modal } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloseIcon from '@mui/icons-material/Close';
 
 import {
@@ -114,14 +115,16 @@ const RecrutingPartyPage = () => {
     <>
       <PageContainer>
         {ottNameKr && (
-          <PageHeader title={ottNameKr} hasLogo size={72}>
+          <PageHeader title={ottNameKr} hasLogo>
             <Button
               type="button"
               size="small"
-              variant="outlined"
+              variant="contained"
+              color="secondary"
               onClick={handleNavigateCreatePage}
+              endIcon={<AddCircleIcon />}
             >
-              +파티
+              파티
             </Button>
           </PageHeader>
         )}
