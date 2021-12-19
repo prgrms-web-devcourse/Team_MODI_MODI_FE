@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Chip } from '@mui/material';
 import crown from 'assets/crown.png';
+import { RuleToggle } from 'components/Common';
 
 const OttServiceName = ({ ottName, ottGrade, isLeader }) => {
   const OttServiceNameSx = useMemo(
@@ -20,21 +21,29 @@ const OttServiceName = ({ ottName, ottGrade, isLeader }) => {
       <Typography variant="microB" color="text.secondary" align="left">
         {ottGrade}
       </Typography>
-      <Typography variant="baseB" color="text.primary" align="left">
-        {ottName}
-      </Typography>
-      {isLeader && (
-        <img
-          alt="crown"
-          src={crown}
-          style={{
-            position: 'absolute',
-            right: -18,
-            bottom: 4,
-            width: 15,
-          }}
-        />
-      )}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="baseB" color="text.primary" align="left">
+          {ottName}
+        </Typography>
+        {isLeader && (
+          <Chip
+            color="error"
+            label="파티장"
+            variant="contained"
+            size="small"
+            sx={{
+              ml: 0.5,
+              height: 20,
+              fontSize: '12px',
+            }}
+          />
+        )}
+      </Box>
     </Box>
   );
 };
