@@ -26,7 +26,7 @@ const PartyStartDate = ({ startDate, onSelectStartDate }) => {
           mask={'____/__/__'}
           value={startDate}
           disableCloseOnSelect={false}
-          minDate={startDate}
+          minDate={new Date()}
           onChange={handleChange}
           renderInput={params => (
             <TextField
