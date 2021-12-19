@@ -1,73 +1,64 @@
+import { Link } from 'react-router-dom';
 import { styled } from '@mui/system';
-import { Box, Typography } from '@mui/material';
-import {
-  PageContainer,
-  PageContents,
-  SocialLoginButton,
-  Logo,
-} from 'components/Common';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { Box, Typography, Container } from '@mui/material';
+import { SocialLoginButton, Logo } from 'components/Common';
 import popcornLogoSrc from 'assets/popcorn-logo.svg';
 
 const LoginPage = () => {
+  const theme = useTheme();
+  const mdUpMatches = useMediaQuery(theme.breakpoints.up('md'));
+
   return (
-    <PageContainer
+    <Container
       sx={{
-        background:
-          'radial-gradient(53.14% 58.21% at 8.64% 19.43%, #C2D15D 0%, #9EC238 100%)',
+        pt: mdUpMatches ? '17vh' : '10vh',
+        overflow: 'hidden',
+        position: 'relative',
+        height: '100vh',
       }}
     >
       <Box
         sx={{
-          display: 'flex',
-          position: 'relative',
-          flex: 1,
-          flexDirection: 'column',
-          overflow: 'hidden',
-          padding: '100px 30px 0 30px',
+          pb: 4,
+          margin: '0 auto',
+          maxWidth: '350px',
         }}
       >
-        <Logo size={120} color={false} />
-        <Box
+        <Link to="/">
+          <Logo size={120} />
+        </Link>
+        <Typography
+          variant="visual"
+          component="h1"
+          color="text.primary"
           sx={{
-            flex: 1,
-            mt: 3,
+            mt: 1,
           }}
         >
-          <Typography variant="visual" component="h3" color="modiGray.white">
-            세상 모든 OTT
-            <br />
-            모두의 아이디 모디
-          </Typography>
-        </Box>
+          세상 모든 OTT
+          <br />
+          모두의 아이디 모디
+        </Typography>
         <Typography
-          variant="subtitle2"
-          textAlign="center"
-          color="common.white"
-          mb={3.5}
+          variant="base"
+          color="text.secondary"
+          component="p"
           sx={{
+            mt: 2,
             wordBreak: 'keep-all',
           }}
         >
           모디에서 세상의 모든 디지털 컨텐츠를 즐겨보세요!
         </Typography>
-        <PopCornLogo src={popcornLogoSrc} />
-        <StyleCircularDiv />
       </Box>
-
-      <PageContents
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          flex: 0,
-          alignItems: 'center',
-          bgcolor: 'modiGray.semilight',
-        }}
-      >
+      <Box>
         <SocialLoginButton provider="naver" />
         <SocialLoginButton provider="kakao" />
-      </PageContents>
-    </PageContainer>
+      </Box>
+      <PopCornLogo src={popcornLogoSrc} />
+    </Container>
   );
 };
 
@@ -75,31 +66,10 @@ export default LoginPage;
 
 const PopCornLogo = styled('img')`
   position: absolute;
-  width: 192px;
-  height: 200px;
-  top: 250px;
-  right: 40px;
-`;
-
-const StyleCircularDiv = styled(Box)`
-  position: absolute;
-  right: -12px;
-  top: 185px;
-  width: 272px;
-  height: 272px;
-  background-color: white;
-  opacity: 0.1;
-  border-radius: 50%;
-
-  &::after {
-    display: block;
-    content: '';
-    position: absolute;
-    right: 48px;
-    top: 18px;
-    width: 272px;
-    height: 272px;
-    border: 2px dashed white;
-    border-radius: 50%;
-  }
+  width: 80vw;
+  max-width: 600px;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: -1;
 `;

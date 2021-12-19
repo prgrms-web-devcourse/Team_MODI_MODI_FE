@@ -45,9 +45,10 @@ const LoginButton = styled(Button)`
   justify-content: space-around;
   background-color: white;
   width: 100%;
+  max-width: 350px;
   color: black;
   height: 64px;
-  margin: 0.5rem;
+  margin: 0 auto 16px;
   border-radius: 32px;
 
   box-shadow: 0px 4px 7px 2px rgba(66, 66, 66, 0.15);
