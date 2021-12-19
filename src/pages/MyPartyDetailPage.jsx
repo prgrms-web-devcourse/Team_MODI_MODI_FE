@@ -201,10 +201,12 @@ const MyPartyDetailPage = () => {
                 <Alert
                   isOpen={isOpen}
                   type={'fail'}
-                  messege="조금만 더 파티원을 기다려보아요!"
+                  messege="파티를 정말 삭제하시겠습니까?"
                   onClose={() => setIsOpen(false)}
-                  onClickDelete={handleDeleteParty}
+                  onClickLeftButton={handleDeleteParty}
                   isConfirm={true}
+                  leftButtonText="파티 삭제"
+                  rightButtonText="더 기다릴래요!"
                 />
               </Box>
               <Box
