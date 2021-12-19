@@ -36,6 +36,7 @@ const CreatePartyPage = () => {
     sharedPassword: '',
     sharedPasswordCheck: '',
   });
+
   const location = useLocation();
   const navigate = useNavigate();
   const [currentOtt, loadOttInfo] = useAsync(
