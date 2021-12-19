@@ -3,7 +3,7 @@ import { styled } from '@mui/system';
 import { Typography, Box } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
 
-const PageHeader = ({ title, hasLogo, size = 72, children }) => {
+const PageHeader = ({ title, hasLogo, size = '4.5rem', children }) => {
   return (
     <PageHeaderStyle>
       {hasLogo && <OttLogo ottName={title} size={size} />}
@@ -20,7 +20,7 @@ const PageHeader = ({ title, hasLogo, size = 72, children }) => {
 PageHeader.propTypes = {
   title: PropTypes.string,
   hasLogo: PropTypes.bool,
-  size: PropTypes.number,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.node,
 };
 
