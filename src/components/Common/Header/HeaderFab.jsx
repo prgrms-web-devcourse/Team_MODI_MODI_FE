@@ -12,10 +12,10 @@ const HeaderFab = ({ user, isMainPage, userId }) => {
       to={user ? `/user` : '/login'}
       color={isMainPage ? 'default' : 'secondary'}
       sx={{
-        width: 28,
-        height: 28,
-        maxHeight: 28,
-        minHeight: 28,
+        width: 32,
+        height: 32,
+        maxHeight: 32,
+        minHeight: 32,
         ml: 1.5,
         boxShadow: 'none',
       }}
@@ -27,8 +27,8 @@ const HeaderFab = ({ user, isMainPage, userId }) => {
 
 const iconSx = {
   color: 'white',
-  width: 18,
-  height: 18,
+  width: 24,
+  height: 24,
 };
 
 HeaderFab.defaultProps = {
