@@ -170,10 +170,11 @@ const RecrutingPartyPage = () => {
         <ModalBox>
           <IconButton
             onClick={handleClosePartyInfoModal}
+            size="large"
             sx={{
               position: 'absolute',
-              top: '24px',
-              right: '24px',
+              top: '20px',
+              right: '20px',
               p: 0,
             }}
           >

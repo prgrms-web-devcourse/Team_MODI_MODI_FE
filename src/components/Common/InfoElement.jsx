@@ -3,7 +3,7 @@ import { Typography, Box } from '@mui/material';
 
 const InfoElement = ({ left, right }) => {
   const { contentL, variantL = 'small', colorL = 'text.secondary' } = left;
-  const { contentR, variantR = 'small', colorR = 'text.secondary' } = right;
+  const { contentR, variantR = 'small', colorR = 'text.primary' } = right;
 
   return (
     <Box

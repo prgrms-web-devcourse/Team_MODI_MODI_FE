@@ -6,16 +6,14 @@ const OttServiceName = ({ ottName, ottGrade, isLeader }) => {
   const OttServiceNameSx = useMemo(
     () => ({
       position: 'relative',
-      display: 'flex',
-      flexDirection: 'column',
-      ml: '10px',
+      ml: '8px',
     }),
     [],
   );
 
   return (
     <Box sx={OttServiceNameSx}>
-      <Typography variant="microB" color="text.secondary" align="left">
+      <Typography variant="micro" color="text.secondary" align="left">
         {ottGrade}
       </Typography>
       <Box
@@ -24,7 +22,12 @@ const OttServiceName = ({ ottName, ottGrade, isLeader }) => {
           alignItems: 'center',
         }}
       >
-        <Typography variant="baseB" color="text.primary" align="left">
+        <Typography
+          variant="baseB"
+          color="text.primary"
+          component="h2"
+          align="left"
+        >
           {ottName}
         </Typography>
         {isLeader && (

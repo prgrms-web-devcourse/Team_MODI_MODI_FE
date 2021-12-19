@@ -7,12 +7,12 @@ const ModalBox = styled(Box)`
   display: flex;
   flex-direction: column;
   padding: 24px;
-  width: 86%;
+  width: 90%;
+  max-width: 520px;
   max-height: 90%;
   border-radius: 24px;
   background-color: #fff;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.25);
-  text-align: center;
   transform: translate(-50%, -50%);
   outline: none;
 `;
