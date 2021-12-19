@@ -18,7 +18,6 @@ const HeaderModal = ({ open, onClose }) => {
   return (
     <Modal
       open={open}
-      onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >

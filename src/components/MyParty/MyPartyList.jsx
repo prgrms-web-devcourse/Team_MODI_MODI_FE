@@ -5,6 +5,12 @@ import lottie from 'lottie-web';
 import noPartyLottie from 'assets/no-party-lottie.json';
 import { useEffect, useRef } from 'react';
 
+const statusState = {
+  ONGOING: '진행중인',
+  RECRUITING: '대기중인',
+  FINISHED: '종료된',
+};
+
 const MyPartyList = ({
   status,
   parties,
@@ -35,19 +41,19 @@ const MyPartyList = ({
             sx={{
               height: '30vh',
               m: '10 auto',
-              mt: 5,
+              mt: 3,
             }}
           />
           <Typography
             sx={{
-              mt: 4,
+              mt: 3,
             }}
             align="center"
             variant="mediumB"
             component="p"
             color="secondary"
           >
-            {status} NOT FOUND
+            {statusState[status]} 파티가 없습니다.
           </Typography>
         </>
       )}

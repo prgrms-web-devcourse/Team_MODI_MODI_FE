@@ -28,9 +28,14 @@ const MyPageTitle = ({
         }}
       >
         <Box sx={{ display: 'flex' }}>
-          <Typography color="primary.contrastText" variant="mediumB">
-            안녕하세요, {username}님
+          <Typography color="primary.contrastText" variant="medium">
+            안녕하세요,
+            <Typography color="#F0E07E" variant="mediumB" component="span">
+              {username}
+            </Typography>
+            님
           </Typography>
+
           <EditButton onClick={onClickEditButton} />
         </Box>
         <IconButton
