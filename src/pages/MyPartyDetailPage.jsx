@@ -197,16 +197,6 @@ const MyPartyDetailPage = () => {
                     endDate,
                   )} (${period}개월)`}
                 </Typography>
-                <Alert
-                  isOpen={isOpen}
-                  type={'fail'}
-                  messege="파티를 정말 삭제하시겠습니까?"
-                  onClose={() => setIsOpen(false)}
-                  onClickLeftButton={handleDeleteParty}
-                  isConfirm={true}
-                  leftButtonText="파티 삭제"
-                  rightButtonText="더 기다릴래요!"
-                />
               </Box>
               <Box
                 sx={{
@@ -264,6 +254,16 @@ const MyPartyDetailPage = () => {
                   </Button>
                 </Box>
               )}
+              <Alert
+                isOpen={isOpen}
+                type={'fail'}
+                messege="파티를 정말 삭제하시겠습니까?"
+                onClose={() => setIsOpen(false)}
+                onClickLeftButton={handleDeleteParty}
+                isConfirm={true}
+                leftButtonText="파티 삭제"
+                rightButtonText="더 기다릴래요!"
+              />
             </PageContents>
           </PageContainer>
           <SharedInfoEditModal
