@@ -146,6 +146,9 @@ const theme = createTheme({
         root: {
           padding: '0 15px',
         },
+        disableGutters: {
+          padding: 0,
+        },
       },
     },
     MuiButtonBase: {
