@@ -106,8 +106,8 @@ const PaymentPage = () => {
   }, []);
 
   const handleNavigateChargePage = useCallback(() => {
-    navigate('/charge');
-  }, [navigate]);
+    navigate('/charge', { state: partyId });
+  }, [navigate, partyId]);
 
   const handleNavigateMyPartyDetailPage = useCallback(() => {
     navigate(`/myParty/${partyId}`);

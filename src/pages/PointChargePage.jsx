@@ -7,7 +7,7 @@ import Alert from 'components/Common/Alert';
 import useAsync from 'hooks/useAsync';
 import useStorage from 'hooks/useStorage';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { chargePoint } from 'utils/api';
 import { pointFormatter } from 'utils/formatting';
 
@@ -15,6 +15,7 @@ const DAY_CHARGE_LIMIT_ERROR = 'DAY_CHARGE';
 const TOTAL_CHARGE_LIMIT_ERROR = 'TOTAL_CHARGE';
 
 const PointChargePage = () => {
+  const { state: partyId } = useLocation();
   const { points } = useAuthState();
   const navigate = useNavigate();
   const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
@@ -58,7 +59,7 @@ const PointChargePage = () => {
       setAlertMessage('충전에 성공했습니다!');
       setIsOpen(prev => !prev);
     }
-  }, [chargeValue, onUpdateUserInfo, setUserInfo, navigate]);
+  }, [chargeValue, onUpdateUserInfo, setUserInfo]);
 
   useEffect(() => {
     if (chargeError) {
@@ -178,7 +179,9 @@ const PointChargePage = () => {
         isOpen={isOpen}
         type={alertType}
         messege={alertMessage}
-        onClose={() => navigate('/user')}
+        onClose={() => {
+          partyId ? navigate(`/payment?partyId=${partyId}`) : navigate('/user');
+        }}
       />
     </>
   );
