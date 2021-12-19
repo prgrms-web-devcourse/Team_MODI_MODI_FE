@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@mui/system';
+import { Typography, Box } from '@mui/material';
 import InfoElement from 'components/Common/InfoElement';
 import { priceToString } from 'utils/priceToString';
 import { parseDate } from 'utils/parseDate';
@@ -12,6 +12,7 @@ const PartyInfo = ({
   endDate,
   period,
   monthlyFee,
+  isTitle,
 }) => {
   const parsedStartDate = useMemo(() => parseDate(startDate), [startDate]);
   const parsedEndDate = useMemo(() => parseDate(endDate), [endDate]);
@@ -25,24 +26,43 @@ const PartyInfo = ({
   );
 
   return (
-    <Box pt={2} pb={1} sx={{ borderBottom: '2px dashed #eeeeee' }}>
-      <InfoElement
-        left={{ contentL: '서비스' }}
-        right={{ contentR: `${ottName} ${ottGrade}` }}
-      />
-      <InfoElement
-        left={{ contentL: '기간' }}
-        right={{
-          contentR: `${parsedStartDate} ~ ${parsedEndDate} (${period}개월)`,
+    <>
+      <Box
+        sx={{
+          p: '8px 0 24px',
+          borderBottom: '1px dashed #eeeeee',
         }}
-      />
-      <InfoElement
-        left={{ contentL: '서비스 이용료 (월)' }}
-        right={{
-          contentR: `${parsedTotalPrice} (${parsedMonthlyFee})P`,
-        }}
-      />
-    </Box>
+      >
+        {isTitle && (
+          <Typography
+            variant="baseB"
+            component="h3"
+            sx={{
+              mb: 1,
+            }}
+          >
+            파티정보
+          </Typography>
+        )}
+
+        <InfoElement
+          left={{ contentL: '서비스' }}
+          right={{ contentR: `${ottName} ${ottGrade}` }}
+        />
+        <InfoElement
+          left={{ contentL: '기간' }}
+          right={{
+            contentR: `${parsedStartDate} ~ ${parsedEndDate} (${period}개월)`,
+          }}
+        />
+        <InfoElement
+          left={{ contentL: '서비스 이용료 (월)' }}
+          right={{
+            contentR: `${parsedTotalPrice} (${parsedMonthlyFee})P`,
+          }}
+        />
+      </Box>
+    </>
   );
 };
 
@@ -63,6 +83,7 @@ PartyInfo.propTypes = {
   endDate: PropTypes.string,
   period: PropTypes.number,
   monthlyFee: PropTypes.number,
+  isTitle: PropTypes.bool,
 };
 
 export default PartyInfo;
