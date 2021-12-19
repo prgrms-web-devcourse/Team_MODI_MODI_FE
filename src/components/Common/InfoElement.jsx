@@ -11,9 +11,11 @@ const InfoElement = ({ left, right }) => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        pt: 1,
-        pb: 1,
         m: 0,
+        mb: 1,
+        '&:last-child': {
+          mb: 0,
+        },
       }}
       component="dl"
     >
