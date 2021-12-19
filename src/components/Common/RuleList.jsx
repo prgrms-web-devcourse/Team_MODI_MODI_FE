@@ -32,6 +32,7 @@ const RuleList = ({ rules, onSelectRule, clickable }) => {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
+        gap: '4px',
       }}
     >
       {ruleList.map(({ ruleId, ruleName, isSelected }) => (

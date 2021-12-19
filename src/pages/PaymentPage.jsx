@@ -137,6 +137,7 @@ const PaymentPage = () => {
                 endDate={endDate}
                 period={period}
                 monthlyFee={monthlyPrice}
+                isTitle
               />
               <Rule rules={rules} />
               <PaymentInfo

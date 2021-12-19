@@ -7,21 +7,18 @@ const RuleContainer = ({ rules }) => {
   return (
     <Box
       sx={{
-        pt: 2,
-        pb: 1,
-        borderBottom: '2px dashed #eeeeee',
+        p: '24px 0',
+        borderBottom: '1px dashed #eeeeee',
       }}
     >
       <Typography
         variant="baseB"
-        component="div"
-        color="text.secondary"
+        component="h3"
         sx={{
-          textAlign: 'left',
-          mb: 2,
+          mb: 1,
         }}
       >
-        파티 규칙
+        파티규칙
       </Typography>
       <RuleList rules={rules} clickable={false} />
     </Box>
