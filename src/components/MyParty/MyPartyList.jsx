@@ -41,12 +41,12 @@ const MyPartyList = ({
             sx={{
               height: '30vh',
               m: '10 auto',
-              mt: 5,
+              mt: 3,
             }}
           />
           <Typography
             sx={{
-              mt: 4,
+              mt: 3,
             }}
             align="center"
             variant="mediumB"
