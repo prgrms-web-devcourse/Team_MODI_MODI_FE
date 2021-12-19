@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import { Button, Typography } from '@mui/material';
 import CachedIcon from '@mui/icons-material/Cached';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ChipList from 'components/Common/ChipList';
 
 const UserNameEdit = ({

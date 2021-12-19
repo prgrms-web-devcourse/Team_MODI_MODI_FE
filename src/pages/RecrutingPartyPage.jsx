@@ -1,4 +1,10 @@
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+} from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button, IconButton, Modal } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -61,7 +67,7 @@ const RecrutingPartyPage = () => {
     error: partyDetailError,
   } = partyDetailApiState;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (partyListValue) {
       const { partyList, totalSize } = partyListValue;
 
@@ -135,15 +141,17 @@ const RecrutingPartyPage = () => {
             alignItems: 'center',
           }}
         >
-          {currPartyList.length !== 0 ? (
-            <PartyList
-              parties={currPartyList}
-              onClickParty={handleFetchPartyDetail}
-            />
-          ) : (
-            <PartyNoneItem />
-          )}
           {partyListLoading && <h1>로딩중</h1>}
+          {!partyListLoading &&
+            (currPartyList.length !== 0 ? (
+              <PartyList
+                parties={currPartyList}
+                onClickParty={handleFetchPartyDetail}
+              />
+            ) : (
+              <PartyNoneItem />
+            ))}
+
           {partyListError && <div>에러</div>}
           {totalPartySize !== currPartyList.length && (
             <Button
