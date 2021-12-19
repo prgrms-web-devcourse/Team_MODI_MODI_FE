@@ -11,8 +11,10 @@ import { getAllMyParty, getNewUsername, updateUsername } from 'utils/api';
 import MyPageTitle from 'components/MyParty/MyPageTitle';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import UserNameEdit from 'components/MyParty/UserNameEdit';
+import Alert from 'components/Common/Alert';
 
 const SIZE = 3;
+const RANDOM_USERNAME_SIZE = 7;
 
 const initialState = {
   parties: [],
@@ -29,6 +31,7 @@ const MyPage = () => {
   const { onLogout } = useAuthDispatch();
   const navigate = useNavigate();
 
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
@@ -36,9 +39,13 @@ const MyPage = () => {
   const [step, setStep] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const [generatedUsernameAPIState] = useAsync(getNewUsername, [5]);
-  const [, updateUsernameCallback] = useAsync(updateUsername, [], [], true);
-
+  const [generatedUsernameAPIState, fetchGenerateUsernameAPI] = useAsync(
+    getNewUsername,
+    [],
+    [],
+    true,
+  );
+  const [, fetchupdateUsernameAPI] = useAsync(updateUsername, [], [], true);
   const { value: generatedUsernameValue } = generatedUsernameAPIState || {};
 
   const [onGoingAPIState, fetchOnGoingAPI] = useAsync(
@@ -135,7 +142,7 @@ const MyPage = () => {
   };
 
   const handleClickLogout = () => {
-    console.log('logout');
+    setIsOpenAlert(false);
     onLogout();
     navigate('/');
   };
@@ -149,13 +156,22 @@ const MyPage = () => {
   };
 
   const handleUpdateUsername = selectedUsername => {
-    updateUsernameCallback({ username: selectedUsername });
+    fetchupdateUsernameAPI({ username: selectedUsername });
     onUpdateUserInfo({ username: selectedUsername });
     setUserInfo(prevUserInfo => ({
       ...prevUserInfo,
       username: selectedUsername,
     }));
     handleCloseModal();
+  };
+
+  const handleShuffleUsername = () => {
+    fetchGenerateUsernameAPI(RANDOM_USERNAME_SIZE);
+  };
+
+  const handleOpenEditModal = () => {
+    fetchGenerateUsernameAPI(RANDOM_USERNAME_SIZE);
+    setIsOpen(true);
   };
 
   return (
@@ -170,7 +186,7 @@ const MyPage = () => {
         points={points}
         onClickCharge={handleClickCharge}
         onClickLogout={handleClickLogout}
-        onClickEditButton={() => setIsOpen(true)}
+        onClickEditButton={handleOpenEditModal}
       />
       <PageContents
         sx={{
@@ -210,9 +226,20 @@ const MyPage = () => {
             generatedUsernameValue={generatedUsernameValue}
             onClose={handleCloseModal}
             onUpdateUsername={handleUpdateUsername}
+            onClickShuffle={handleShuffleUsername}
           />
         </ModalBox>
       </Modal>
+      <Alert
+        isOpen={isOpenAlert}
+        type="fail"
+        messege="정말 로그아웃을 하시겠습니까?"
+        leftButtonText="로그아웃 할래요!"
+        rightButtonText="좀 더 볼래요!"
+        isConfirm={true}
+        onClose={() => setIsOpenAlert(false)}
+        onClickLeftButton={handleClickLogout}
+      />
     </PageContainer>
   );
 };

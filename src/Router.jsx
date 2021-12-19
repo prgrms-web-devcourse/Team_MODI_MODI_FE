@@ -12,6 +12,7 @@ import MainPage from 'pages/MainPage';
 import PointChargePage from 'pages/PointChargePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from 'utils/PrivateRoute';
+import LoginAlertPage from 'pages/LoginAlertPage';
 
 const Router = () => {
   return (
@@ -65,6 +66,7 @@ const Router = () => {
               </PrivateRoute>
             }
           />
+          <Route path="/needlogin" element={<LoginAlertPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

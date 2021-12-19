@@ -22,15 +22,16 @@ const PartySummary = ({
 
   return (
     <Paper
-      elevation={3}
+      elevation={2}
       sx={{
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        borderRadius: '16px',
-        cursor: 'pointer',
-        p: 2,
+        borderRadius: '1rem',
+        p: 3,
         mb: 1,
+        boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.15)',
+        cursor: 'pointer',
       }}
       onClick={handleClickParty}
     >
@@ -61,22 +62,21 @@ const PartySummary = ({
 
         <Box
           sx={{
-            mt: 1.3,
             textAlign: 'right',
           }}
         >
-          <Typography variant="micro" component="div">
+          <Typography variant="small" component="p">
             {grade}
           </Typography>
-          <MonetizationOn
-            color="primary"
-            sx={{
-              fontSize: 16,
-              verticalAlign: 'sub',
-            }}
-          />
-          <Typography variant="micro">
-            월<Typography variant="microB"> {priceToString(price)}</Typography>
+          <Typography variant="small" component="p">
+            <MonetizationOn
+              color="primary"
+              sx={{
+                fontSize: 18,
+                verticalAlign: 'sub',
+              }}
+            />
+            월<Typography variant="mediumB"> {priceToString(price)}</Typography>
             원
           </Typography>
         </Box>
@@ -84,10 +84,14 @@ const PartySummary = ({
       <Box
         sx={{
           display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           flexWrap: 'wrap',
+          pt: 1,
+          rowGap: 1,
         }}
       >
-        <Box mt={1.5} mr="auto">
+        <Box sx={{ height: '35px' }}>
           {Array.from({ length: maxMemberCapacity }, (_, i) => i).map(index => (
             <Face
               fontSize="large"
@@ -96,19 +100,11 @@ const PartySummary = ({
             />
           ))}
         </Box>
-        <Typography
-          color="text.disabled"
-          component="div"
-          sx={{
-            mt: 'auto',
-            ml: 0,
-            fontSize: '12px',
-            fontWeight: 500,
-            textAlign: 'right',
-          }}
-        >
-          {!mustFilled && '모집인원을 채워야 파티가 시작됩니다.'}
-        </Typography>
+        {!mustFilled && (
+          <Typography color="text.disabled" variant="micro" component="p">
+            모집인원을 채워야 파티가 시작됩니다.
+          </Typography>
+        )}
       </Box>
     </Paper>
   );

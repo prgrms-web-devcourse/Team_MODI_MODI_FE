@@ -14,6 +14,7 @@ const ModalBox = styled(Box)`
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.25);
   text-align: center;
   transform: translate(-50%, -50%);
+  outline: none;
 `;
 
 export default ModalBox;

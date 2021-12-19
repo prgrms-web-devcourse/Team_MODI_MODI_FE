@@ -6,7 +6,7 @@ import theme from 'styles/theme.js';
 import HeaderTab from './HeaderTab.jsx';
 import HeaderModal from './HeaderModal.jsx';
 
-const HeaderTabs = ({ isMainPage }) => {
+const HeaderTabs = ({ isMainPage, tabSize }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,7 +23,7 @@ const HeaderTabs = ({ isMainPage }) => {
       }}
       aria-label="nav tabs"
       sx={{
-        minHeight: 56,
+        minHeight: tabSize,
         minWidth: 70,
         lineHeight: 1,
         padding: 0,
@@ -31,7 +31,12 @@ const HeaderTabs = ({ isMainPage }) => {
       }}
     >
       <HeaderModal open={open} onClose={handleClose} />
-      <HeaderTab label="파티찾기" isMain={isMainPage} onClick={handleOpen} />
+      <HeaderTab
+        label="파티찾기"
+        isMainPage={isMainPage}
+        onClick={handleOpen}
+        tabSize={tabSize}
+      />
       <HeaderTab
         label="파티만들기"
         isMainPage={isMainPage}
@@ -47,6 +52,7 @@ HeaderTabs.defaultProps = {
 
 HeaderTabs.propTypes = {
   isMainPage: PropTypes.bool,
+  tabSize: PropTypes.number,
 };
 
 export default HeaderTabs;
