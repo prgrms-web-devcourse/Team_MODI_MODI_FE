@@ -25,7 +25,6 @@ const RuleToggle = ({
     <Chip
       sx={{
         cursor: 'pointer',
-        m: 0.5,
       }}
       style={{
         opacity: 1,
