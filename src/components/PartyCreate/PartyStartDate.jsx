@@ -3,6 +3,7 @@ import { TextField, Typography, InputAdornment, Box } from '@mui/material';
 import { MobileDatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { calculateNextDate } from 'utils/calculateDate';
 
 const PartyStartDate = ({ startDate, onSelectStartDate }) => {
   const handleChange = newstartDate => {
@@ -26,7 +27,7 @@ const PartyStartDate = ({ startDate, onSelectStartDate }) => {
           mask={'____/__/__'}
           value={startDate}
           disableCloseOnSelect={false}
-          minDate={new Date()}
+          minDate={calculateNextDate()}
           onChange={handleChange}
           renderInput={params => (
             <TextField
