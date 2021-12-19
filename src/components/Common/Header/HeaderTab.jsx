@@ -42,6 +42,10 @@ const hoverMain = {
   fontWeight: 'bold',
 };
 
+const hoverMain = {
+  fontWeight: 'bold',
+};
+
 const hoverDefault = {
   color: 'secondary.main',
   borderBottom: '2px solid',
