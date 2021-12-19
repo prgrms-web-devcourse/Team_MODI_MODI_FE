@@ -14,9 +14,11 @@ const HeaderTab = ({ label, isMainPage, onClick }) => {
           padding: 0,
           opacity: 1,
           background: 'transparent',
+          fontSize: 16,
+          p: '0 8px',
         },
         {
-          '&:hover': isMainPage ? null : hoverDefault,
+          '&:hover': isMainPage ? hoverMain : hoverDefault,
         },
       ]}
       onClick={onClick}
@@ -33,6 +35,10 @@ HeaderTab.propTypes = {
   label: PropTypes.string,
   isMainPage: PropTypes.bool,
   onClick: PropTypes.func,
+};
+
+const hoverMain = {
+  fontWeight: 'bold',
 };
 
 const hoverDefault = {

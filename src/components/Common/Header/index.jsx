@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { AppBar, Box } from '@mui/material';
+import { AppBar, Box, Container } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
@@ -19,35 +19,39 @@ const Header = ({ user }) => {
         sx={{
           background: `${isMainPage ? 'transparent' : '#fff'}`,
           height: 56,
-          display: 'flex',
-          flexFlow: 'row nowrap',
-          justifyContent: 'space-between',
-          padding: '0 20px',
           boxShadow: `${isMainPage ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.15)'}`,
           position: 'fixed',
         }}
       >
-        <Link
-          to="/"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <Logo color={isMainPage ? false : true} />
-        </Link>
-        <Box
+        <Container
           sx={{
-            height: 56,
             display: 'flex',
             flexFlow: 'row nowrap',
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: 'space-between',
           }}
         >
-          <HeaderTabs isMainPage={isMainPage} />
-          <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
-        </Box>
+          <Link
+            to="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <Logo color={isMainPage ? false : true} />
+          </Link>
+          <Box
+            sx={{
+              height: 56,
+              display: 'flex',
+              flexFlow: 'row nowrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <HeaderTabs isMainPage={isMainPage} />
+            <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
+          </Box>
+        </Container>
       </AppBar>
     )
   );
