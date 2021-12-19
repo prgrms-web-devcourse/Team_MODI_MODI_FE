@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Box } from '@mui/material';
 import MyPartyList from './MyPartyList';
@@ -37,19 +36,25 @@ function a11yProps(index) {
 }
 
 const PartyTab = ({
-  onGoingParties,
-  recruitingParties,
-  finishedParties,
-  onGoingButtonState,
-  recruitingButtonState,
-  finishedButtonState,
+  onGoingState,
+  recruitingState,
+  finishedState,
   onClickParty,
   onClickMoreButton,
+  value,
+  onSetStep,
 }) => {
-  const [value, setValue] = useState(0);
+  const { parties: onGoingParties, buttonDisabled: onGoingButtonDisabled } =
+    onGoingState;
+  const {
+    parties: recruitingParties,
+    buttonDisabled: recruitingButtonDisabled,
+  } = recruitingState;
+  const { parties: finishedParties, buttonDisabled: finishedButtonDisabled } =
+    finishedState;
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    onSetStep(newValue);
   };
 
   return (
@@ -72,27 +77,27 @@ const PartyTab = ({
       </Box>
       <TabPanel value={value} index={0}>
         <MyPartyList
-          status={'onGoing'}
+          status={'ONGOING'}
           parties={onGoingParties}
-          buttonDisabled={onGoingButtonState}
+          buttonDisabled={onGoingButtonDisabled}
           onClickParty={onClickParty}
           onClickMoreButton={onClickMoreButton}
         />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <MyPartyList
-          status={'recruiting'}
+          status={'RECRUITING'}
           parties={recruitingParties}
-          buttonDisabled={recruitingButtonState}
+          buttonDisabled={recruitingButtonDisabled}
           onClickParty={onClickParty}
           onClickMoreButton={onClickMoreButton}
         />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <MyPartyList
-          status={'finished'}
+          status={'FINISHED'}
           parties={finishedParties}
-          buttonDisabled={finishedButtonState}
+          buttonDisabled={finishedButtonDisabled}
           onClickParty={onClickParty}
           onClickMoreButton={onClickMoreButton}
         />
@@ -102,14 +107,13 @@ const PartyTab = ({
 };
 
 PartyTab.propTypes = {
-  onGoingParties: PropTypes.array,
-  recruitingParties: PropTypes.array,
-  finishedParties: PropTypes.array,
-  onGoingButtonState: PropTypes.bool,
-  recruitingButtonState: PropTypes.bool,
-  finishedButtonState: PropTypes.bool,
+  value: PropTypes.number,
+  onGoingState: PropTypes.object,
+  recruitingState: PropTypes.object,
+  finishedState: PropTypes.object,
   onClickParty: PropTypes.func,
   onClickMoreButton: PropTypes.func,
+  onSetStep: PropTypes.func,
 };
 
 export default PartyTab;

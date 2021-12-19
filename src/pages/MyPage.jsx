@@ -4,7 +4,6 @@ import { IconButton, Modal } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAuthState, useAuthDispatch } from 'contexts/authContext';
 import { ModalBox, PageContainer, PageContents } from 'components/Common';
-
 import { USER_INFO_KEY } from 'constants/keys';
 import useStorage from 'hooks/useStorage';
 import useAsync from 'hooks/useAsync';
@@ -13,76 +12,119 @@ import MyPageTitle from 'components/MyParty/MyPageTitle';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import UserNameEdit from 'components/MyParty/UserNameEdit';
 
-const LIMIT = 5;
+const SIZE = 3;
 
 const initialState = {
   parties: [],
-  lastPartyId: undefined,
-  loadedSize: LIMIT,
+  lastPartyId: 0,
+  loadedSize: 0,
+  totalSize: 0,
   buttonDisabled: true,
 };
 
 const MyPage = () => {
+  const [, setUserInfo] = useStorage(USER_INFO_KEY, null, 'session');
   const { onUpdate: onUpdateUserInfo } = useAuthDispatch();
   const { username, points } = useAuthState();
   const { onLogout } = useAuthDispatch();
+  const navigate = useNavigate();
+
   const [onGoing, setOnGoing] = useState(initialState);
   const [recruiting, setRecruiting] = useState(initialState);
   const [finished, setFinished] = useState(initialState);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const [, setUserInfo] = useStorage(USER_INFO_KEY, null, 'session');
+  const [step, setStep] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const [generatedUsernameAPIState] = useAsync(getNewUsername, [5]);
   const [, updateUsernameCallback] = useAsync(updateUsername, [], [], true);
+
   const { value: generatedUsernameValue } = generatedUsernameAPIState || {};
 
-  const [onGoingState] = useAsync(
+  const [onGoingAPIState, fetchOnGoingAPI] = useAsync(
     getAllMyParty,
-    ['ONGOING', LIMIT, onGoing.lastPartyId],
-    [onGoing.lastPartyId],
+    ['ONGOING', SIZE],
+    [],
   );
-  const [recruitingState] = useAsync(
+  const [recruitingAPIState, fetchRecruitingAPI] = useAsync(
     getAllMyParty,
-    ['RECRUITING', LIMIT, recruiting.lastPartyId],
-    [recruiting.lastPartyId],
+    ['RECRUITING', SIZE],
+    [],
   );
-  const [finishedState] = useAsync(
+  const [finishedAPIState, fetchFinishedAPI] = useAsync(
     getAllMyParty,
-    ['FINISHED', LIMIT, finished.lastPartyId],
-    [finished.lastPartyId],
+    ['FINISHED', SIZE],
+    [],
   );
 
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (onGoingState.value) {
-      setOnGoing(prevOnGoing => ({
-        ...prevOnGoing,
-        parties: [...prevOnGoing.parties, ...onGoingState.value.parties],
-        buttonDisabled: !onGoingState.value.totalSize,
-      }));
-    }
-  }, [onGoingState.value]);
+  const statusState = {
+    ONGOING: onGoing,
+    RECRUITING: recruiting,
+    FINISHED: finished,
+  };
+  const fetchState = {
+    ONGOING: fetchOnGoingAPI,
+    RECRUITING: fetchRecruitingAPI,
+    FINISHED: fetchFinishedAPI,
+  };
+
+  const { value: onGoingValue } = onGoingAPIState;
+  const { value: recruitingValue } = recruitingAPIState;
+  const { value: finishedValue } = finishedAPIState;
 
   useEffect(() => {
-    if (recruitingState.value) {
-      setRecruiting(prevRecruiting => ({
-        ...prevRecruiting,
-        parties: [...prevRecruiting.parties, ...recruitingState.value.parties],
-        buttonDisabled: !recruitingState.value.totalSize,
-      }));
+    if (onGoingValue) {
+      const { totalSize, parties } = onGoingValue;
+      setOnGoing(prevPartyState => {
+        const loadedSize = prevPartyState.loadedSize + parties.length;
+
+        return {
+          ...prevPartyState,
+          lastPartyId: totalSize && parties[parties.length - 1].partyId,
+          loadedSize,
+          parties: [...prevPartyState.parties, ...parties],
+          totalSize,
+          buttonDisabled: !parties || totalSize === loadedSize,
+        };
+      });
     }
-  }, [recruitingState.value]);
+  }, [onGoingValue]);
 
   useEffect(() => {
-    if (finishedState.value) {
-      setFinished(prevFinished => ({
-        ...prevFinished,
-        parties: [...prevFinished.parties, ...finishedState.value.parties],
-        buttonDisabled: !finishedState.value.totalSize,
-      }));
+    if (recruitingValue) {
+      const { totalSize, parties } = recruitingValue;
+      setRecruiting(prevPartyState => {
+        const loadedSize = prevPartyState.loadedSize + parties.length;
+
+        return {
+          ...prevPartyState,
+          lastPartyId: totalSize && parties[parties.length - 1].partyId,
+          loadedSize,
+          parties: [...prevPartyState.parties, ...parties],
+          totalSize,
+          buttonDisabled: !parties || totalSize === loadedSize,
+        };
+      });
     }
-  }, [finishedState.value]);
+  }, [recruitingValue]);
+
+  useEffect(() => {
+    if (finishedValue) {
+      const { totalSize, parties } = finishedValue;
+      setFinished(prevPartyState => {
+        const loadedSize = prevPartyState.loadedSize + parties.length;
+
+        return {
+          ...prevPartyState,
+          lastPartyId: totalSize && parties[parties.length - 1].partyId,
+          loadedSize,
+          parties: [...prevPartyState.parties, ...parties],
+          totalSize,
+          buttonDisabled: !parties || totalSize === loadedSize,
+        };
+      });
+    }
+  }, [finishedValue]);
 
   const handleCloseModal = () => {
     setIsOpen(false);
@@ -102,51 +144,8 @@ const MyPage = () => {
     navigate(`/myParty/${partyId}`);
   };
   const handleClickMoreButton = status => {
-    switch (status) {
-      case 'onGoing':
-        if (onGoing.loadedSize + LIMIT > onGoingState.value.totalSize) {
-          setOnGoing({
-            ...onGoing,
-            buttonDisabled: true,
-          });
-        } else {
-          setOnGoing({
-            ...onGoing,
-            loadedSize: onGoing.loadedSize + LIMIT,
-            lastPartyId: onGoingState.value.parties[LIMIT - 1].partyId,
-          });
-        }
-        break;
-      case 'recruiting':
-        if (recruiting.loadedSize + LIMIT > recruitingState.value.totalSize) {
-          setRecruiting({
-            ...recruiting,
-            buttonDisabled: true,
-          });
-        } else {
-          setRecruiting({
-            ...recruiting,
-            loadedSize: recruiting.loadedSize + LIMIT,
-            lastPartyId: recruitingState.value.parties[LIMIT - 1].partyId,
-          });
-        }
-        break;
-      case 'finished':
-        if (finished.loadedSize + LIMIT > finishedState.value.totalSize) {
-          setFinished({
-            ...recruiting,
-            buttonDisabled: true,
-          });
-        } else {
-          setFinished({
-            ...finished,
-            loadedSize: onGoing.loadedSize + LIMIT,
-            lastPartyId: finishedState.value.parties[LIMIT - 1].pargyId,
-          });
-        }
-        break;
-      default:
-    }
+    const { lastPartyId } = statusState[status];
+    fetchState[status](status, SIZE, lastPartyId);
   };
 
   const handleUpdateUsername = selectedUsername => {
@@ -181,16 +180,17 @@ const MyPage = () => {
           bgcolor: 'white',
         }}
       >
-        <MyPartyTab
-          onGoingParties={onGoing.parties}
-          recruitingParties={recruiting.parties}
-          finishedParties={finished.parties}
-          onGoingButtonState={onGoing.buttonDisabled}
-          recruitingButtonState={recruiting.buttonDisabled}
-          finishedButtonState={finished.buttonDisabled}
-          onClickParty={handleClickParty}
-          onClickMoreButton={handleClickMoreButton}
-        />
+        {onGoingValue && recruitingValue && finishedValue && (
+          <MyPartyTab
+            value={step}
+            onGoingState={onGoing}
+            recruitingState={recruiting}
+            finishedState={finished}
+            onClickParty={handleClickParty}
+            onClickMoreButton={handleClickMoreButton}
+            onSetStep={newValue => setStep(newValue)}
+          />
+        )}
       </PageContents>
       <Modal open={isOpen}>
         <ModalBox>
