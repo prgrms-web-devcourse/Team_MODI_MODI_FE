@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/system';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Button, Divider } from '@mui/material';
 import { priceToString } from 'utils/priceToString';
 import InfoElement from 'components/Common/InfoElement';
 import { COMMISSION_RATE } from 'constants/commissionRate';
@@ -19,8 +19,8 @@ const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
   }, [onClickChargeButton]);
 
   return (
-    <Box mt={2}>
-      <Typography variant="baseB" color="text.primary">
+    <Box p="24px 0">
+      <Typography variant="baseB" component="h3" sx={{ mb: 1 }}>
         결제정보
       </Typography>
 
@@ -38,29 +38,28 @@ const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
           colorR: 'text.primary',
         }}
       />
-
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'flex-end',
+          justifyContent: 'space-between',
           alignItems: 'center',
-          mt: 1,
+          m: 0,
+          mb: 1,
+          '&:last-child': {
+            mb: 0,
+          },
         }}
+        component="dl"
       >
-        <Typography mr="auto" variant="small" color="text.secondary">
+        <Typography color="text.secondary" variant="small" component="dt">
           보유 포인트
         </Typography>
-
-        <ChargeButton onClick={handleClickChargeButton}>
-          <Typography variant="micro" color="common.white">
-            충전
-          </Typography>
-        </ChargeButton>
-
-        <Typography variant="small" color="text.primary">
+        <Typography color="text.primary" variant="small" component="dd">
+          <ChargeButton onClick={handleClickChargeButton}>충전</ChargeButton>
           {toNumberNotation(myPoint)} P
         </Typography>
       </Box>
+      <Divider sx={{ m: '20px 0' }} />
       <InfoElement
         left={{
           contentL: '결제 포인트',
@@ -81,7 +80,6 @@ const PaymentInfo = ({ totalPrice, myPoint, onClickChargeButton }) => {
           sx={{ textAlign: 'right' }}
           component="div"
         >
-          {' '}
           현재 보유한 포인트가 부족합니다.
         </Typography>
       )}
@@ -97,15 +95,17 @@ PaymentInfo.propTypes = {
   onClickChargeButton: PropTypes.func.isRequired,
 };
 
-const ChargeButton = styled('button')`
-  width: 36px;
-  height: 24px;
-  border-radius: 12px;
+const ChargeButton = styled(Button)`
+  padding: 2px 6px;
+  margin-right: 4px;
+  min-width: 40px;
+  background-color: #87cccd;
+  border-radius: 16px;
   border: 0px;
   outline: 0px;
-  background-color: #87cccd;
+  line-height: 22px;
   cursor: pointer;
-  margin-right: 4px;
+  color: #fff;
 
   &:hover {
     background-color: #95c4c4;
