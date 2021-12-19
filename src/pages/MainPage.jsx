@@ -6,6 +6,7 @@ import MainVisual from 'components/Main/MainVisual';
 import { getOttWaitings } from 'utils/api/index';
 import { useNavigate } from 'react-router-dom';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
+import CarouselSkeleton from 'components/Skeleton/CarouselSkeleton';
 
 const MainPage = () => {
   const [waitings] = useAsync(getOttWaitings);
@@ -29,7 +30,9 @@ const MainPage = () => {
             waitingOtts={waitings.value.waitingOtts}
             slideGap={20}
           />
-        ) : null}
+        ) : (
+          <CarouselSkeleton />
+        )}
         <Box sx={{ padding: '0 30px' }}>
           <Typography variant="baseB" component="h2" sx={{ mb: 2 }}>
             전체 서비스 보기
