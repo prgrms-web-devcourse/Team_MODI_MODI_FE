@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Avatar, Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { priceToString } from 'utils/priceToString';
 import { Edit } from '@mui/icons-material';
@@ -13,13 +13,7 @@ const MyPageTitle = ({
   onClickLogout,
 }) => {
   return (
-    <Box
-      sx={{
-        textAlign: 'center',
-        mt: 1,
-        p: '20px 30px',
-      }}
-    >
+    <TitleWrapper>
       <Box
         sx={{
           display: 'flex',
@@ -28,14 +22,20 @@ const MyPageTitle = ({
         }}
       >
         <Box sx={{ display: 'flex' }}>
-          <Typography color="primary.contrastText" variant="medium">
-            안녕하세요,
+          <Typography
+            color="primary.contrastText"
+            variant="medium"
+            component="h2"
+            sx={{
+              wordBreak: 'keep-all',
+            }}
+          >
+            안녕하세요,{' '}
             <Typography color="#F0E07E" variant="mediumB" component="span">
               {username}
             </Typography>
             님
           </Typography>
-
           <EditButton onClick={onClickEditButton} />
         </Box>
         <IconButton
@@ -48,8 +48,8 @@ const MyPageTitle = ({
         >
           <LogoutIcon
             sx={{
-              width: '18px',
-              height: '18px',
+              width: 24,
+              height: 24,
               pl: '3px',
               color: '#fff',
             }}
@@ -59,9 +59,15 @@ const MyPageTitle = ({
       <Box
         sx={{
           mt: 2,
+          textAlign: 'center',
         }}
       >
-        <Typography color="primary.contrastText" variant="smallB" component="p">
+        <Typography
+          color="primary.contrastText"
+          variant="base"
+          component="p"
+          align="center"
+        >
           나의 포인트
         </Typography>
         <Box
@@ -69,7 +75,6 @@ const MyPageTitle = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            mt: -1,
           }}
         >
           <Typography
@@ -81,33 +86,38 @@ const MyPageTitle = ({
             }}
           >
             {priceToString(points)}
+            <Typography
+              variant="baseB"
+              sx={{
+                display: 'inline-block',
+                position: 'relative',
+                width: 22,
+                height: 22,
+                borderRadius: '100%',
+                color: '#fff',
+                bgcolor: '#53918F',
+                border: '1px solid #67A5B1',
+                textAlign: 'center',
+                ml: 1,
+                verticalAlign: '6px',
+              }}
+            >
+              P
+            </Typography>
           </Typography>
-          <Avatar
-            sx={{
-              pl: 0.3,
-              width: 25,
-              height: 25,
-              fontSize: 15,
-              fontWeight: 700,
-              backgroundColor: '#668F90',
-            }}
-          >
-            P
-          </Avatar>
         </Box>
         <Button
           variant="contained"
           sx={{
-            m: 2,
-            minWidth: '40%',
-            height: 40,
+            width: '190px',
+            mt: 2,
           }}
           onClick={onClickCharge}
         >
           충전하기
         </Button>
       </Box>
-    </Box>
+    </TitleWrapper>
   );
 };
 
@@ -118,6 +128,13 @@ MyPageTitle.propTypes = {
   onClickLogout: PropTypes.func,
   onClickEditButton: PropTypes.func,
 };
+
+const TitleWrapper = styled(Box)(({ theme }) => ({
+  padding: '32px 24px',
+  [theme.breakpoints.down('sm')]: {
+    padding: '30px 15px',
+  },
+}));
 
 const EditButton = styled(Edit)`
   margin-left: 5px;

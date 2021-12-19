@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { Box, Divider, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
+import theme from 'styles/theme.js';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { priceToString } from 'utils/priceToString';
 import crown from 'assets/crown.png';
 import OttLogo from 'components/Ott/OttLogo';
@@ -21,6 +23,8 @@ const MyPartySummary = ({
   const handleClickParty = () => {
     onClickParty(partyId);
   };
+
+  const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
 
   const PriceRender = isLeader => {
     if (isLeader) {
@@ -128,7 +132,9 @@ const MyPartySummary = ({
             variant="small"
             color="text.secondary"
           >
-            {startDate} ~ {endDate}
+            {startDate}
+            <br style={{ display: mdDownMatches ? 'block' : 'none' }} />~
+            {endDate}
           </Typography>
         </Box>
         <Box
