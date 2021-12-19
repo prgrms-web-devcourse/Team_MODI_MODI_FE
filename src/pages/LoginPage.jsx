@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/system';
-import { useTheme } from '@mui/material/styles';
+import theme from 'styles/theme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Box, Typography, Container } from '@mui/material';
 import { SocialLoginButton, Logo } from 'components/Common';
 import popcornLogoSrc from 'assets/popcorn-logo.svg';
 
 const LoginPage = () => {
-  const theme = useTheme();
   const mdUpMatches = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
