@@ -25,6 +25,7 @@ import RuleContainer from 'components/Common/Rule';
 import PartyShareAccount from 'components/MyParty/PartyShareAccount';
 import { parseDate } from 'utils/parseDate';
 import SharedInfoEditModal from 'components/Common/SharedInfoEditModal';
+import MyPartyDetailSkeleton from 'components/Skeleton/MyPartyDetailSkeleton';
 
 const MyPartyDetailPage = () => {
   const { userId: loginUserId } = useAuthState();
@@ -163,7 +164,7 @@ const MyPartyDetailPage = () => {
 
   return (
     <>
-      {isPartyLoading && <p>로딩스피너</p>}
+      {isPartyLoading && <MyPartyDetailSkeleton />}
       {partyDetail && (
         <>
           <PageContainer>
