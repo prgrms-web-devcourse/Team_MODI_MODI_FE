@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppBar, Box, Container } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
@@ -13,12 +15,15 @@ const Header = ({ user }) => {
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
 
+  const theme = useTheme();
+  const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     !isLoginPage && (
       <AppBar
         sx={{
           background: `${isMainPage ? 'transparent' : '#fff'}`,
-          height: 56,
+          height: mdDownMatches ? 56 : 72,
           boxShadow: `${isMainPage ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.15)'}`,
           position: 'fixed',
         }}
@@ -28,6 +33,7 @@ const Header = ({ user }) => {
             display: 'flex',
             flexFlow: 'row nowrap',
             justifyContent: 'space-between',
+            height: '100%',
           }}
         >
           <Link
@@ -37,18 +43,24 @@ const Header = ({ user }) => {
               alignItems: 'center',
             }}
           >
-            <Logo color={isMainPage ? false : true} />
+            <Logo
+              color={isMainPage ? false : true}
+              size={mdDownMatches ? 56 : 72}
+            />
           </Link>
           <Box
             sx={{
-              height: 56,
+              height: '100%',
               display: 'flex',
               flexFlow: 'row nowrap',
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <HeaderTabs isMainPage={isMainPage} />
+            <HeaderTabs
+              isMainPage={isMainPage}
+              tabSize={mdDownMatches ? 56 : 72}
+            />
             <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
           </Box>
         </Container>
