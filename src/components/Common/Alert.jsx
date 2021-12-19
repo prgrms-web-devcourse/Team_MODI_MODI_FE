@@ -10,7 +10,9 @@ const Alert = ({
   helperText,
   onClose,
   isConfirm,
-  onClickDelete,
+  onClickLeftButton,
+  leftButtonText,
+  rightButtonText = '확인',
 }) => {
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -44,9 +46,9 @@ const Alert = ({
               variant="contained"
               size="small"
               color="error"
-              onClick={onClickDelete}
+              onClick={onClickLeftButton}
             >
-              파티 삭제
+              {leftButtonText}
             </ConfirmButton>
           )}
           <ConfirmButton
@@ -55,7 +57,7 @@ const Alert = ({
             size="small"
             onClick={onClose}
           >
-            확인
+            {rightButtonText}
           </ConfirmButton>
         </Box>
       </AlertBox>
@@ -96,7 +98,9 @@ Alert.propTypes = {
   onClose: PropTypes.func,
   isOpen: PropTypes.bool,
   isConfirm: PropTypes.bool,
-  onClickDelete: PropTypes.func,
+  onClickLeftButton: PropTypes.func,
+  leftButtonText: PropTypes.string,
+  rightButtonText: PropTypes.string,
 };
 
 export default Alert;
