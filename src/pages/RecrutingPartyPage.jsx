@@ -23,6 +23,7 @@ import { getPartyDetail, getRecruitingParties } from 'utils/api';
 import PartyNoneItem from 'components/PartyJoin/PartyNoneItem';
 import { useAuthState } from 'contexts/authContext';
 import Alert from 'components/Common/Alert';
+import PartySkeleton from 'components/Skeleton/PartySkeleton';
 
 const SIZE = 4;
 
@@ -141,7 +142,7 @@ const RecrutingPartyPage = () => {
             alignItems: 'center',
           }}
         >
-          {partyListLoading && <h1>로딩중</h1>}
+          {partyListLoading && <PartySkeleton />}
           {!partyListLoading &&
             (currPartyList.length !== 0 ? (
               <PartyList
