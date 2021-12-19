@@ -1,9 +1,6 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-
 import { Typography, Box, Chip } from '@mui/material';
-import crown from 'assets/crown.png';
-import { RuleToggle } from 'components/Common';
 
 const OttServiceName = ({ ottName, ottGrade, isLeader }) => {
   const OttServiceNameSx = useMemo(
