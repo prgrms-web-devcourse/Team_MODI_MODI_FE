@@ -15,6 +15,7 @@ import UserNameEdit from 'components/MyParty/UserNameEdit';
 import Alert from 'components/Common/Alert';
 
 const LIMIT = 5;
+const RANDOM_USERNAME_SIZE = 7;
 
 const initialState = {
   parties: [],
@@ -35,8 +36,13 @@ const MyPage = () => {
 
   const [, setUserInfo] = useStorage(USER_INFO_KEY, null, 'session');
 
-  const [generatedUsernameAPIState] = useAsync(getNewUsername, [5]);
-  const [, updateUsernameCallback] = useAsync(updateUsername, [], [], true);
+  const [generatedUsernameAPIState, fetchGenerateUsernameAPI] = useAsync(
+    getNewUsername,
+    [],
+    [],
+    true,
+  );
+  const [, fetchupdateUsernameAPI] = useAsync(updateUsername, [], [], true);
   const { value: generatedUsernameValue } = generatedUsernameAPIState || {};
 
   const [onGoingState] = useAsync(
@@ -152,13 +158,22 @@ const MyPage = () => {
   };
 
   const handleUpdateUsername = selectedUsername => {
-    updateUsernameCallback({ username: selectedUsername });
+    fetchupdateUsernameAPI({ username: selectedUsername });
     onUpdateUserInfo({ username: selectedUsername });
     setUserInfo(prevUserInfo => ({
       ...prevUserInfo,
       username: selectedUsername,
     }));
     handleCloseModal();
+  };
+
+  const handleShuffleUsername = () => {
+    fetchGenerateUsernameAPI(RANDOM_USERNAME_SIZE);
+  };
+
+  const handleOpenEditModal = () => {
+    fetchGenerateUsernameAPI(RANDOM_USERNAME_SIZE);
+    setIsOpen(true);
   };
 
   return (
@@ -172,8 +187,8 @@ const MyPage = () => {
         username={username}
         points={points}
         onClickCharge={handleClickCharge}
-        onClickLogout={() => setIsOpenAlert(true)}
-        onClickEditButton={() => setIsOpen(true)}
+        onClickLogout={handleClickLogout}
+        onClickEditButton={handleOpenEditModal}
       />
       <PageContents
         sx={{
@@ -212,6 +227,7 @@ const MyPage = () => {
             generatedUsernameValue={generatedUsernameValue}
             onClose={handleCloseModal}
             onUpdateUsername={handleUpdateUsername}
+            onClickShuffle={handleShuffleUsername}
           />
         </ModalBox>
       </Modal>

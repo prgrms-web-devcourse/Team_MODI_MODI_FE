@@ -7,6 +7,7 @@ const ChipItem = ({ chipName, selected, onClickChip }) => {
     <Chip
       sx={{
         m: 0.5,
+        fontWeight: 600,
       }}
       label={chipName}
       component="button"

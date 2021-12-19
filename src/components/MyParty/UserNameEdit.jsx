@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
 import { Button, Typography } from '@mui/material';
-import { useState } from 'react';
+import CachedIcon from '@mui/icons-material/Cached';
+import { useEffect, useState } from 'react';
 import ChipList from 'components/Common/ChipList';
 
 const UserNameEdit = ({
   username,
   generatedUsernameValue,
   onUpdateUsername,
+  onClickShuffle,
 }) => {
   const [selectedUsername, setSelectedUsername] = useState('');
 
@@ -17,6 +19,11 @@ const UserNameEdit = ({
 
   const handleClickUpdate = () => {
     onUpdateUsername(selectedUsername);
+  };
+
+  const handleShuffleUsername = () => {
+    setSelectedUsername('');
+    onClickShuffle();
   };
 
   return (
@@ -42,6 +49,13 @@ const UserNameEdit = ({
         }}
       >
         <Typography>수정할 닉네임</Typography>
+        <CachedIcon
+          sx={{
+            cursor: 'pointer',
+          }}
+          color="primary"
+          onClick={handleShuffleUsername}
+        />
         {generatedUsernameValue && (
           <ChipList
             items={generatedUsernameValue.generatedUsernames}
@@ -69,6 +83,7 @@ UserNameEdit.propTypes = {
   username: PropTypes.string,
   generatedUsernameValue: PropTypes.object,
   onUpdateUsername: PropTypes.func,
+  onClickShuffle: PropTypes.func,
 };
 
 export default UserNameEdit;
