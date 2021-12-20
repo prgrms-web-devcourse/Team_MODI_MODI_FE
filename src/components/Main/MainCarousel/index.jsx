@@ -12,12 +12,15 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   const [mouseStartX, setMouseStartX] = useState(null);
   const [drag, setDrag] = useState(false);
 
-  const moveCarousel = useCallback(() => {
-    slideRef.current.style.transitionDuration = `.5s`;
-    slideRef.current.style.transform = `translateX(calc(-${
-      activeSlide * 100
-    }% - ${activeSlide * slideGap}px))`;
-  }, [activeSlide, slideGap]);
+  const moveCarousel = useCallback(
+    duration => {
+      slideRef.current.style.transitionDuration = `${duration}ms`;
+      slideRef.current.style.transform = `translateX(calc(-${
+        activeSlide * 100
+      }% - ${activeSlide * slideGap}px))`;
+    },
+    [activeSlide, slideGap],
+  );
 
   const handleMouseMove = useCallback(
     e => {
@@ -64,7 +67,7 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
           return prevSlide === totalSlide ? 0 : prevSlide + 1;
         });
       } else {
-        moveCarousel();
+        moveCarousel(300);
       }
       setMouseStartX(null);
     },
@@ -72,7 +75,7 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   );
 
   useEffect(() => {
-    moveCarousel();
+    moveCarousel(300);
   }, [moveCarousel]);
 
   useEffect(() => {
