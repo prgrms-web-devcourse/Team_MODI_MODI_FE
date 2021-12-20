@@ -236,17 +236,15 @@ const MyPartyDetailPage = () => {
               {status === 'RECRUITING' && isLeader && !checkHasMember && (
                 <Box
                   sx={{
-                    m: 3,
+                    mt: 3,
+                    mb: 3,
                     textAlign: 'center',
                   }}
                 >
                   <Button
                     variant="contained"
-                    size="small"
                     color="error"
-                    sx={{
-                      margin: '0 auto',
-                    }}
+                    fullWidth
                     onClick={() => setIsOpen(true)}
                   >
                     파티 삭제

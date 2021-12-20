@@ -163,8 +163,11 @@ const RecrutingPartyPage = () => {
           {partyListError && <div>에러</div>}
           {totalPartySize !== currPartyList.length && (
             <Button
+              fullWidth
+              sx={{
+                mt: 2,
+              }}
               variant="contained"
-              size="small"
               color="modiGray"
               onClick={handleClickMoreButton}
             >

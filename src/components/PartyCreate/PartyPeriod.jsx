@@ -31,12 +31,12 @@ const PartyPeriod = ({ period, onSelectPeriod }) => {
         aria-label="Party Period"
         defaultValue={1}
         value={period}
-        step={1}
         valueLabelDisplay="auto"
+        step={1}
         marks={marks}
         min={1}
         max={12}
-        onChangeCommitted={handleDragStop}
+        onChange={handleDragStop}
       />
     </Box>
   );

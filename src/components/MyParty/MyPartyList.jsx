@@ -62,6 +62,7 @@ const MyPartyList = ({
           <Box
             sx={{
               p: 4,
+              pb: 0,
             }}
           >
             {parties.map(({ partyId, ...props }) => (
@@ -74,14 +75,19 @@ const MyPartyList = ({
             ))}
           </Box>
           <Box
-            style={{
+            sx={{
+              p: 3,
+              pt: 0,
               textAlign: 'center',
             }}
           >
             {!buttonDisabled && (
               <Button
+                fullWidth
+                sx={{
+                  mt: 1,
+                }}
                 variant="contained"
-                size="small"
                 color="modiGray"
                 onClick={handleClickMoreButton}
               >
