@@ -46,8 +46,8 @@ const MyPage = () => {
     true,
   );
   const [, fetchupdateUsernameAPI] = useAsync(updateUsername, [], [], true);
-  const { value: generatedUsernameValue } = generatedUsernameAPIState || {};
-
+  const { isLoading: generatedUsernameLoading, value: generatedUsernameValue } =
+    generatedUsernameAPIState || {};
   const [onGoingAPIState, fetchOnGoingAPI] = useAsync(
     getAllMyParty,
     ['ONGOING', SIZE],

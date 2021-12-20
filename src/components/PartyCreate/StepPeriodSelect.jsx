@@ -10,6 +10,7 @@ const StepPartyPeriod = ({
   onSelectStartDate,
   period,
   onSelectPeriod,
+  checkSelectStartDate,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const StepPartyPeriod = ({
       <PartyStartDate
         startDate={startDate}
         onSelectStartDate={onSelectStartDate}
+        checkSelectStartDate={checkSelectStartDate}
       />
       <PartyPeriod period={period} onSelectPeriod={onSelectPeriod} />
     </>
@@ -28,6 +30,7 @@ StepPartyPeriod.propTypes = {
   onSelectPeriod: PropTypes.func,
   onSelectStartDate: PropTypes.func,
   period: PropTypes.number,
+  checkSelectStartDate: PropTypes.bool,
 };
 
 export default StepPartyPeriod;

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
-import { Button, Box, MobileStepper } from '@mui/material';
+import { Button, Box, MobileStepper, Container } from '@mui/material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
   StepOttSelect,
@@ -15,6 +15,9 @@ import { createNewParty, getOtt, getRules } from 'utils/api';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { calculateEndDate, calculateNextDate } from 'utils/calculateDate';
 import { partyCreateFormater } from 'utils/formatting';
+import theme from 'styles/theme.js';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Alert from 'components/Common/Alert';
 
 const CreatePartyPage = () => {
   const { ottServices } = useOttInfoState();
@@ -22,6 +25,10 @@ const CreatePartyPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [stepComplete, setStepComplete] = useState(true);
   const [complete, setComplete] = useState(false);
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
+  const [alertType, setAlertType] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [checkSelectStartDate, setCheckSelectStartDate] = useState(true);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
@@ -36,12 +43,19 @@ const CreatePartyPage = () => {
     sharedPassword: '',
     sharedPasswordCheck: '',
   });
-
   const location = useLocation();
   const navigate = useNavigate();
+  const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
+
   const [currentOtt, loadOttInfo] = useAsync(
     getOtt,
     [newParty.ottId],
+    [],
+    true,
+  );
+  const [partyCreateAPIState, fetchPartyCreateAPI] = useAsync(
+    createNewParty,
+    [],
     [],
     true,
   );
@@ -57,6 +71,16 @@ const CreatePartyPage = () => {
     },
     [loadOttInfo, nextStep],
   );
+
+  const {
+    isLoading: partyCreateLoading,
+    value: partyCreateValue,
+    error: partyCreateError,
+  } = partyCreateAPIState;
+
+  useEffect(() => {
+    partyCreateLoading && setComplete(false);
+  }, [partyCreateLoading]);
 
   useEffect(() => {
     if (rules.value) {
@@ -101,13 +125,17 @@ const CreatePartyPage = () => {
     setStepComplete(true);
   };
 
-  const handleStartDate = startDate => {
-    const endDate = calculateEndDate(startDate, newParty.period);
-    setNewParty(current => ({
-      ...current,
-      startDate,
-      endDate,
-    }));
+  const handleStartDate = (startDate, checkStartDate) => {
+    if (checkStartDate) {
+      const endDate = calculateEndDate(startDate, newParty.period);
+      setNewParty(current => ({
+        ...current,
+        startDate,
+        endDate,
+      }));
+    } else {
+      setCheckSelectStartDate(false);
+    }
   };
 
   const handlePeriod = period => {
@@ -153,6 +181,16 @@ const CreatePartyPage = () => {
     }));
   };
 
+  const handleCloseAlert = useCallback(() => {
+    if (partyCreateValue) {
+      const { partyId } = partyCreateValue;
+      navigate(`/myParty/${partyId}`);
+    }
+    if (partyCreateError) {
+      navigate('/');
+    }
+  }, [navigate, partyCreateValue, partyCreateError]);
+
   useEffect(() => {
     const { sharedId, sharedPassword, sharedPasswordCheck } = newParty;
     if (
@@ -170,9 +208,24 @@ const CreatePartyPage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     const submitData = partyCreateFormater(newParty);
-    const { partyId } = await createNewParty(submitData);
-    navigate(`/myParty/${partyId}`);
+    fetchPartyCreateAPI(submitData);
   };
+
+  useEffect(() => {
+    if (partyCreateValue) {
+      setAlertType('createSuccess');
+      setAlertMessage('파티원을 기다려보세요!');
+      setIsOpenAlert(true);
+    }
+  }, [partyCreateValue]);
+
+  useEffect(() => {
+    if (partyCreateError) {
+      setAlertType('fail');
+      setAlertMessage('파티 생성에 실패하였습니다.');
+      setIsOpenAlert(true);
+    }
+  }, [partyCreateError]);
 
   const steps = [
     {
@@ -191,6 +244,7 @@ const CreatePartyPage = () => {
           onSelectStartDate={handleStartDate}
           period={newParty.period}
           onSelectPeriod={handlePeriod}
+          checkSelectStartDate={checkSelectStartDate}
         />
       ),
     },
@@ -225,58 +279,73 @@ const CreatePartyPage = () => {
   ];
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{
-        display: 'block',
-        background: '#fff',
-        padding: '60px 30px 0',
-        position: 'relative',
-        minHeight: '100vh',
-      }}
-    >
-      <StyledStepper
-        variant="progress"
-        steps={5}
-        position="static"
-        activeStep={activeStep}
-      />
-
-      {steps[activeStep].step}
-
-      <BottomButtonWrapper>
-        <StepperButton
-          type="button"
-          size="large"
-          variant="outlined"
-          onClick={handleBack}
-          disabled={activeStep === 0}
+    <>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: 'block',
+          background: '#fff',
+        }}
+      >
+        <Container
+          maxWidth="md"
+          sx={{
+            position: 'relative',
+            minHeight: '100vh',
+            pt: mdDownMatches ? '56px' : '72px',
+            pb: 10,
+          }}
         >
-          <KeyboardArrowLeft />
-          이전
-        </StepperButton>
-        {activeStep !== 4 ? (
-          <StepperButton
-            type="button"
-            size="large"
-            variant="contained"
-            disabled={stepComplete}
-            onClick={handleNext}
-          >
-            다음 <KeyboardArrowRight />
-          </StepperButton>
-        ) : (
-          <StepperButton
-            type="submit"
-            size="large"
-            variant="contained"
-            disabled={!complete}
-          >
-            완료
-          </StepperButton>
-        )}
-      </BottomButtonWrapper>
-    </form>
+          <StyledStepper
+            variant="progress"
+            steps={5}
+            position="static"
+            activeStep={activeStep}
+          />
+
+          {steps[activeStep].step}
+
+          <BottomButtonWrapper>
+            <StepperButton
+              type="button"
+              size="large"
+              variant="outlined"
+              onClick={handleBack}
+              disabled={activeStep === 0}
+            >
+              <KeyboardArrowLeft />
+              이전
+            </StepperButton>
+            {activeStep !== 4 ? (
+              <StepperButton
+                type="button"
+                size="large"
+                variant="contained"
+                disabled={stepComplete}
+                onClick={handleNext}
+              >
+                다음 <KeyboardArrowRight />
+              </StepperButton>
+            ) : (
+              <StepperButton
+                type="submit"
+                size="large"
+                variant="contained"
+                disabled={!complete}
+              >
+                완료
+              </StepperButton>
+            )}
+          </BottomButtonWrapper>
+        </Container>
+      </form>
+      <Alert
+        isOpen={isOpenAlert}
+        type={alertType}
+        messege={alertMessage}
+        onClose={handleCloseAlert}
+      />
+    </>
   );
 };
 
@@ -297,10 +366,10 @@ const BottomButtonWrapper = styled(Box)`
   justify-content: space-between;
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: 20px;
   padding: 2;
   width: 100%;
-  padding: 30px;
+  padding: 0 30px;
 `;
 
 export default CreatePartyPage;

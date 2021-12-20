@@ -3,10 +3,16 @@ import { TextField, Typography, InputAdornment, Box } from '@mui/material';
 import { MobileDatePicker, LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { calculateNextDate } from 'utils/calculateDate';
 
-const PartyStartDate = ({ startDate, onSelectStartDate }) => {
+const PartyStartDate = ({
+  startDate,
+  onSelectStartDate,
+  checkSelectStartDate,
+}) => {
+  const nextDate = calculateNextDate();
   const handleChange = newstartDate => {
-    onSelectStartDate(newstartDate);
+    onSelectStartDate(newstartDate, nextDate < newstartDate);
   };
 
   return (
@@ -26,7 +32,7 @@ const PartyStartDate = ({ startDate, onSelectStartDate }) => {
           mask={'____/__/__'}
           value={startDate}
           disableCloseOnSelect={false}
-          minDate={startDate}
+          minDate={calculateNextDate()}
           onChange={handleChange}
           renderInput={params => (
             <TextField
@@ -44,6 +50,11 @@ const PartyStartDate = ({ startDate, onSelectStartDate }) => {
           )}
         />
       </LocalizationProvider>
+      {!checkSelectStartDate && (
+        <Typography sx={{ ml: 1 }} color="error" variant="smallB">
+          시작일은 내일 날짜부터 선택할 수 있습니다.
+        </Typography>
+      )}
     </Box>
   );
 };
@@ -51,6 +62,7 @@ const PartyStartDate = ({ startDate, onSelectStartDate }) => {
 PartyStartDate.propTypes = {
   startDate: PropTypes.instanceOf(Date),
   onSelectStartDate: PropTypes.func,
+  checkSelectStartDate: PropTypes.bool,
 };
 
 export default PartyStartDate;
