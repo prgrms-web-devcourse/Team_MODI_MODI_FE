@@ -203,7 +203,7 @@ const MyPage = () => {
           onClickEditButton={handleOpenEditModal}
         />
         <PageContents sx={{ p: 0 }}>
-          {onGoingValue && recruitingValue && finishedValue && (
+          {(onGoingValue || recruitingValue || finishedValue) && (
             <MyPartyTab
               value={step}
               onGoingState={onGoing}

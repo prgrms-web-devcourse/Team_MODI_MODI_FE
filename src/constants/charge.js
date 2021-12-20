@@ -1,0 +1,4 @@
+export const DAY_CHARGE_LIMIT_ERROR = 'DAY_CHARGE';
+export const TOTAL_CHARGE_LIMIT_ERROR = 'TOTAL_CHARGE';
+export const DAY_CHARGE_MAX = 100000;
+export const TOTAL_CHARGE_MAX = 1000000;
