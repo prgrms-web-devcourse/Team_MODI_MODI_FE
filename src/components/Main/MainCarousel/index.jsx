@@ -27,7 +27,11 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
       if (drag) {
         slideRef.current.style.transform = `translateX(calc(-${
           activeSlide * 100
-        }% - ${activeSlide * slideGap + mouseStartX - e.pageX}px))`;
+        }% - ${
+          activeSlide * slideGap +
+          mouseStartX -
+          (e.clientX ?? e.changedTouches[0].clientX)
+        }px))`;
       }
     },
     [activeSlide, slideGap, mouseStartX, drag],
@@ -46,23 +50,31 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   }, [totalSlide]);
 
   const handleDragStart = useCallback(e => {
-    e.preventDefault();
-    setMouseStartX(e.clientX);
+    // e.preventDefault();
+
+    setMouseStartX(e.clientX ?? e.changedTouches[0].clientX);
     setDrag(true);
   }, []);
 
   const handleDragEnd = useCallback(
     e => {
-      e.preventDefault();
+      // e.preventDefault();
+
       setDrag(false);
       if (mouseStartX === null) {
         return;
       }
-      if (mouseStartX - e.pageX < -150) {
+      if (
+        mouseStartX - (e.clientX ?? e.changedTouches[0].clientX) <
+        -(e.target.offsetWidth / 2)
+      ) {
         setActiveSlide(prevSlide => {
           return prevSlide === 0 ? totalSlide : prevSlide - 1;
         });
-      } else if (mouseStartX - e.pageX > 150) {
+      } else if (
+        mouseStartX - (e.clientX ?? e.changedTouches[0].clientX) >
+        e.target.offsetWidth / 2
+      ) {
         setActiveSlide(prevSlide => {
           return prevSlide === totalSlide ? 0 : prevSlide + 1;
         });
@@ -81,13 +93,23 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   useEffect(() => {
     const refValue = slideRef.current;
     refValue.addEventListener('mousedown', handleDragStart);
+    refValue.addEventListener('touchstart', handleDragStart, {
+      passive: true,
+    });
     window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('touchend', handleDragEnd);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleMouseMove);
 
     return () => {
       refValue.removeEventListener('mousedown', handleDragStart);
+      refValue.removeEventListener('touchstart', handleDragStart, {
+        passive: true,
+      });
       window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('touchend', handleDragEnd);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleMouseMove);
     };
   }, [handleDragStart, handleDragEnd, handleMouseMove]);
 
