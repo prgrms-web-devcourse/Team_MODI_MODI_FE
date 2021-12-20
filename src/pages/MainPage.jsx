@@ -17,7 +17,13 @@ const MainPage = () => {
   };
 
   return (
-    <Container disableGutters sx={{ pb: 4 }}>
+    <Container
+      disableGutters
+      sx={{
+        pb: 4,
+        userSelect: 'none',
+      }}
+    >
       <MainVisual />
       <Box
         sx={{
