@@ -61,7 +61,6 @@ const MyPartyList = ({
         <>
           <Box
             sx={{
-              mt: 2,
               p: 4,
             }}
           >
