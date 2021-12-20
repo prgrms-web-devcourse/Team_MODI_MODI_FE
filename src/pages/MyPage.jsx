@@ -229,12 +229,12 @@ const MyPage = () => {
             </IconButton>
             <UserNameEdit
               username={username}
+              generatedUsernameLoading={generatedUsernameLoading}
               generatedUsernameValue={generatedUsernameValue}
               onClose={handleCloseModal}
               onUpdateUsername={handleUpdateUsername}
               onClickShuffle={handleShuffleUsername}
             />
-            )
           </ModalBox>
         </Modal>
         <Alert
