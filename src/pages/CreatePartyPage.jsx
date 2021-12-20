@@ -26,6 +26,7 @@ const CreatePartyPage = () => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [alertType, setAlertType] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+  const [checkSelectStartDate, setCheckSelectStartDate] = useState(true);
   const [newParty, setNewParty] = useState({
     ottId: undefined,
     ottName: '',
@@ -120,13 +121,17 @@ const CreatePartyPage = () => {
     setStepComplete(true);
   };
 
-  const handleStartDate = startDate => {
-    const endDate = calculateEndDate(startDate, newParty.period);
-    setNewParty(current => ({
-      ...current,
-      startDate,
-      endDate,
-    }));
+  const handleStartDate = (startDate, checkStartDate) => {
+    if (checkStartDate) {
+      const endDate = calculateEndDate(startDate, newParty.period);
+      setNewParty(current => ({
+        ...current,
+        startDate,
+        endDate,
+      }));
+    } else {
+      setCheckSelectStartDate(false);
+    }
   };
 
   const handlePeriod = period => {
@@ -235,6 +240,7 @@ const CreatePartyPage = () => {
           onSelectStartDate={handleStartDate}
           period={newParty.period}
           onSelectPeriod={handlePeriod}
+          checkSelectStartDate={checkSelectStartDate}
         />
       ),
     },
