@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IconButton, Modal } from '@mui/material';
+import { IconButton, Modal, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAuthState, useAuthDispatch } from 'contexts/authContext';
 import { ModalBox, PageContainer, PageContents } from 'components/Common';
@@ -182,64 +182,70 @@ const MyPage = () => {
   };
 
   return (
-    <PageContainer
+    <Box
       sx={{
-        bgcolor: 'secondary.main',
+        bgcolor: '#67CFCC',
       }}
     >
-      <MyPageTitle
-        username={username}
-        points={points}
-        onClickCharge={handleClickCharge}
-        onClickLogout={handleClickLogout}
-        onClickEditButton={handleOpenEditModal}
-      />
-      <PageContents sx={{ p: 0 }}>
-        {onGoingValue && recruitingValue && finishedValue && (
-          <MyPartyTab
-            value={step}
-            onGoingState={onGoing}
-            recruitingState={recruiting}
-            finishedState={finished}
-            onClickParty={handleClickParty}
-            onClickMoreButton={handleClickMoreButton}
-            onSetStep={newValue => setStep(newValue)}
-          />
-        )}
-      </PageContents>
-      <Modal open={isOpen}>
-        <ModalBox>
-          <IconButton
-            onClick={handleCloseModal}
-            sx={{
-              position: 'absolute',
-              top: '24px',
-              right: '24px',
-            }}
-          >
-            <CloseIcon />
-          </IconButton>
-          <UserNameEdit
-            username={username}
-            generatedUsernameValue={generatedUsernameValue}
-            onClose={handleCloseModal}
-            onUpdateUsername={handleUpdateUsername}
-            onClickShuffle={handleShuffleUsername}
-          />
-          )
-        </ModalBox>
-      </Modal>
-      <Alert
-        isOpen={isOpenAlert}
-        type="fail"
-        messege="정말 로그아웃을 하시겠습니까?"
-        leftButtonText="로그아웃 할래요!"
-        rightButtonText="좀 더 볼래요!"
-        isConfirm={true}
-        onClose={() => setIsOpenAlert(false)}
-        onClickLeftButton={handleClickLogout}
-      />
-    </PageContainer>
+      <PageContainer
+        sx={{
+          bgcolor: 'secondary.main',
+        }}
+      >
+        <MyPageTitle
+          username={username}
+          points={points}
+          onClickCharge={handleClickCharge}
+          onClickLogout={handleClickLogout}
+          onClickEditButton={handleOpenEditModal}
+        />
+        <PageContents sx={{ p: 0 }}>
+          {onGoingValue && recruitingValue && finishedValue && (
+            <MyPartyTab
+              value={step}
+              onGoingState={onGoing}
+              recruitingState={recruiting}
+              finishedState={finished}
+              onClickParty={handleClickParty}
+              onClickMoreButton={handleClickMoreButton}
+              onSetStep={newValue => setStep(newValue)}
+            />
+          )}
+        </PageContents>
+        <Modal open={isOpen}>
+          <ModalBox>
+            <IconButton
+              onClick={handleCloseModal}
+              sx={{
+                position: 'absolute',
+                top: '24px',
+                right: '24px',
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <UserNameEdit
+              username={username}
+              generatedUsernameValue={generatedUsernameValue}
+              onClose={handleCloseModal}
+              onUpdateUsername={handleUpdateUsername}
+              onClickShuffle={handleShuffleUsername}
+            />
+            )
+          </ModalBox>
+        </Modal>
+        <Alert
+          isOpen={isOpenAlert}
+          type="fail"
+          messege="정말 로그아웃을 하시겠습니까?"
+          leftButtonText="로그아웃 할래요!"
+          rightButtonText="좀 더 볼래요!"
+          isConfirm={true}
+          onClose={() => setIsOpenAlert(false)}
+          onClickLeftButton={handleClickLogout}
+        />
+      </PageContainer>
+    </Box>
   );
 };
 
