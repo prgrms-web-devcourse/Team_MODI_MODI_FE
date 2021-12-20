@@ -142,17 +142,24 @@ const RecrutingPartyPage = () => {
             alignItems: 'center',
           }}
         >
+          {currPartyList?.length !== 0 ? (
+            <PartyList
+              parties={currPartyList}
+              onClickParty={handleFetchPartyDetail}
+            />
+          ) : (
+            <>
+              {partyListLoading ? (
+                <>
+                  <PartySkeleton />
+                  <PartySkeleton />
+                </>
+              ) : (
+                <PartyNoneItem />
+              )}
+            </>
+          )}
           {partyListLoading && <PartySkeleton />}
-          {!partyListLoading &&
-            (currPartyList.length !== 0 ? (
-              <PartyList
-                parties={currPartyList}
-                onClickParty={handleFetchPartyDetail}
-              />
-            ) : (
-              <PartyNoneItem />
-            ))}
-
           {partyListError && <div>에러</div>}
           {totalPartySize !== currPartyList.length && (
             <Button
