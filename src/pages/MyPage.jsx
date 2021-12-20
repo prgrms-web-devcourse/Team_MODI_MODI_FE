@@ -226,7 +226,6 @@ const MyPage = () => {
             onUpdateUsername={handleUpdateUsername}
             onClickShuffle={handleShuffleUsername}
           />
-          )
         </ModalBox>
       </Modal>
       <Alert
