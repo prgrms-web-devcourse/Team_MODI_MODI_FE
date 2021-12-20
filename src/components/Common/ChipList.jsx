@@ -17,7 +17,11 @@ const ChipList = ({ items, onClickChip }) => {
   };
 
   return (
-    <Box>
+    <Box
+      sx={{
+        textAlign: 'center',
+      }}
+    >
       {itemList.map(({ generatedUsername }, index) => (
         <ChipItem
           key={index}
