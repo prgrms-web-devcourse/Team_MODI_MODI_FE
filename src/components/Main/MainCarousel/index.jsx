@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, IconButton } from '@mui/material';
 import { ArrowBackIosNew, ArrowForwardIos } from '@mui/icons-material';
@@ -9,21 +9,84 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   const slideRef = useRef(null);
   const totalSlide = waitingOtts.length - 1;
   const [activeSlide, setActiveSlide] = useState(0);
+  const [mouseStartX, setMouseStartX] = useState(null);
+  const [drag, setDrag] = useState(false);
 
-  useEffect(() => {
-    slideRef.current.style.transition = 'all 0.5s ease-in-out';
+  const moveCarousel = useCallback(() => {
+    slideRef.current.style.transitionDuration = '0s';
     slideRef.current.style.transform = `translateX(calc(-${
       activeSlide * 100
     }% - ${activeSlide * slideGap}px))`;
   }, [activeSlide, slideGap]);
 
-  const handleNextSlide = e => {
-    setActiveSlide(prevSlide => (prevSlide === totalSlide ? 0 : prevSlide + 1));
-  };
+  const handleMouseMove = useCallback(
+    e => {
+      if (drag) {
+        slideRef.current.style.transform = `translateX(calc(-${
+          activeSlide * 100
+        }% - ${activeSlide * slideGap + mouseStartX - e.pageX}px))`;
+      }
+    },
+    [activeSlide, slideGap, mouseStartX, drag],
+  );
 
-  const handlePrevSlide = e => {
-    setActiveSlide(prevSlide => (prevSlide === 0 ? totalSlide : prevSlide - 1));
-  };
+  const handleNextSlide = useCallback(() => {
+    setActiveSlide(prevSlide => {
+      return prevSlide >= totalSlide ? 0 : prevSlide + 1;
+    });
+  }, [totalSlide]);
+
+  const handlePrevSlide = useCallback(() => {
+    setActiveSlide(prevSlide => {
+      return prevSlide <= 0 ? totalSlide : prevSlide - 1;
+    });
+  }, [totalSlide]);
+
+  const handleDragStart = useCallback(e => {
+    e.preventDefault();
+    setMouseStartX(e.clientX);
+    setDrag(true);
+  }, []);
+
+  const handleDragEnd = useCallback(
+    e => {
+      e.preventDefault();
+      setDrag(false);
+      if (mouseStartX === null) {
+        return;
+      }
+      if (mouseStartX - e.pageX < -150) {
+        setActiveSlide(prevSlide => {
+          return prevSlide === 0 ? totalSlide : prevSlide - 1;
+        });
+      } else if (mouseStartX - e.pageX > 150) {
+        setActiveSlide(prevSlide => {
+          return prevSlide === totalSlide ? 0 : prevSlide + 1;
+        });
+      } else {
+        moveCarousel();
+      }
+      setMouseStartX(null);
+    },
+    [mouseStartX, totalSlide, moveCarousel],
+  );
+
+  useEffect(() => {
+    moveCarousel();
+  }, [moveCarousel]);
+
+  useEffect(() => {
+    const refValue = slideRef.current;
+    refValue.addEventListener('mousedown', handleDragStart);
+    window.addEventListener('mouseup', handleDragEnd);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      refValue.removeEventListener('mousedown', handleDragStart);
+      window.removeEventListener('mouseup', handleDragEnd);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [handleDragStart, handleDragEnd, handleMouseMove]);
 
   return (
     <Box
@@ -42,6 +105,9 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
         <Box
           ref={slideRef}
           sx={{
+            position: 'relative',
+            left: 0,
+            width: '100%',
             display: 'flex',
             gap: `${slideGap}px`,
             pb: 1,
