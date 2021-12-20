@@ -1,13 +1,65 @@
 {
-    "extends": ["react-app", "plugin:prettier/recommended"],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto"
-        }
-      ],
-      "import/no-anonymous-default-export": "off"
-    }
+  "env": {
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": [
+    "react-app",
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/jsx-runtime"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto",
+        "arrowParens": "avoid"
+      }
+    ],
+    "import/no-anonymous-default-export": "off",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "no-var": "error",
+    "no-unused-vars": "warn",
+    "semi": "error",
+    "prefer-const": "error",
+    "no-new-object": "error",
+    "array-bracket-newline": ["error", "consistent"],
+    "array-element-newline": ["error", "consistent"],
+    "object-property-newline": [
+      "error",
+      { "allowAllPropertiesOnSameLine": false }
+    ],
+    "object-shorthand": ["error", "always"],
+    "lines-between-class-members": ["error", "always"],
+    "no-new-func": "error",
+    "prefer-arrow-callback": "error",
+    "implicit-arrow-linebreak": ["error", "beside"],
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "prefer-template": "error",
+    "brace-style": "error",
+    "curly": "error",
+    "keyword-spacing": [
+      "error",
+      {
+        "before": true,
+        "after": true
+      }
+    ],
+    "no-fallthrough": ["error"],
+    "default-case": ["error", { "commentPattern": "^no\\sdefault" }],
+    "eqeqeq": ["error", "always"],
+    "newline-before-return": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
+      }
+    ]
   }
-  
+}

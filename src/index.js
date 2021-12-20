@@ -1,15 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+
+import { ThemeProvider } from '@emotion/react';
+import theme from './styles/theme';
+import { CssBaseline } from '@mui/material';
+
+import Router from './Router';
+import { AuthProvider } from 'contexts/authContext';
+import { OttInfoProvider } from 'contexts/OttInfoProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <AuthProvider>
+        <OttInfoProvider>
+          <CssBaseline />
+          <Router />
+        </OttInfoProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
