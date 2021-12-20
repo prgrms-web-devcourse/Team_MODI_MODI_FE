@@ -13,12 +13,12 @@ import MyPartyTab from 'components/MyParty/MyPartyTab';
 import UserNameEdit from 'components/MyParty/UserNameEdit';
 import Alert from 'components/Common/Alert';
 
-const SIZE = 3;
+const SIZE = 5;
 const RANDOM_USERNAME_SIZE = 7;
 
 const initialState = {
   parties: [],
-  lastPartyId: 0,
+  lastSortingId: 0,
   loadedSize: 0,
   totalSize: 0,
   buttonDisabled: true,
@@ -82,12 +82,13 @@ const MyPage = () => {
   useEffect(() => {
     if (onGoingValue) {
       const { totalSize, parties } = onGoingValue;
+
       setOnGoing(prevPartyState => {
         const loadedSize = prevPartyState.loadedSize + parties.length;
 
         return {
           ...prevPartyState,
-          lastPartyId: totalSize && parties[parties.length - 1].partyId,
+          lastSortingId: totalSize && parties[parties.length - 1].sortingId,
           loadedSize,
           parties: [...prevPartyState.parties, ...parties],
           totalSize,
@@ -100,12 +101,13 @@ const MyPage = () => {
   useEffect(() => {
     if (recruitingValue) {
       const { totalSize, parties } = recruitingValue;
+
       setRecruiting(prevPartyState => {
         const loadedSize = prevPartyState.loadedSize + parties.length;
 
         return {
           ...prevPartyState,
-          lastPartyId: totalSize && parties[parties.length - 1].partyId,
+          lastSortingId: totalSize && parties[parties.length - 1].sortingId,
           loadedSize,
           parties: [...prevPartyState.parties, ...parties],
           totalSize,
@@ -118,12 +120,13 @@ const MyPage = () => {
   useEffect(() => {
     if (finishedValue) {
       const { totalSize, parties } = finishedValue;
+
       setFinished(prevPartyState => {
         const loadedSize = prevPartyState.loadedSize + parties.length;
 
         return {
           ...prevPartyState,
-          lastPartyId: totalSize && parties[parties.length - 1].partyId,
+          lastSortingId: totalSize && parties[parties.length - 1].sortingId,
           loadedSize,
           parties: [...prevPartyState.parties, ...parties],
           totalSize,
@@ -155,8 +158,8 @@ const MyPage = () => {
   );
 
   const handleClickMoreButton = status => {
-    const { lastPartyId } = statusState[status];
-    fetchState[status](status, SIZE, lastPartyId);
+    const { lastSortingId } = statusState[status];
+    fetchState[status](status, SIZE, lastSortingId);
   };
 
   const handleUpdateUsername = useCallback(

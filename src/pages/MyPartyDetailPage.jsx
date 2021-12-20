@@ -12,7 +12,6 @@ import {
 import useAsync from 'hooks/useAsync';
 import { useAuthState } from 'contexts/authContext';
 import { priceToString } from 'utils/priceToString';
-import PartyTitle from 'components/PartyTitle';
 import Alert from 'components/Common/Alert';
 import {
   PageContainer,

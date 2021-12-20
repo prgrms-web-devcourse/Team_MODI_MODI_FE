@@ -30,9 +30,6 @@ const post = (uri, requireToken = false, data = {}) => {
 const patch = (uri, requireToken = true, data = {}) => {
   return axiosRequest(uri, requireToken, httpMethods.PATCH, data);
 };
-// const put = (uri, requireToken, data) => {
-//   return axiosRequest(uri, requireToken, httpMethods.PUT, data);
-// };
 
 const _delete = (uri, requireToken = true) => {
   return axiosRequest(uri, requireToken, httpMethods.DELETE);
@@ -75,16 +72,20 @@ export const chargePoint = point => post(`/points/add`, true, point);
 export const getMyPoint = () => get(`/users/me/points`, true);
 
 export const getMyInfo = () => get(`/users/me`, true);
-export const getAllMyParty = (status = 'RECRUITING', size = 5, lastPartyId) => {
+export const getAllMyParty = (
+  status = 'RECRUITING',
+  size = 5,
+  lastSortingId,
+) => {
   let searchParamObj = {
     status,
     size,
   };
 
-  if (lastPartyId) {
+  if (lastSortingId) {
     searchParamObj = {
       ...searchParamObj,
-      lastPartyId,
+      lastSortingId,
     };
   }
 
