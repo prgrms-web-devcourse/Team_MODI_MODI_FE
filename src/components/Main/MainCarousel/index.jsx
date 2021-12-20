@@ -50,15 +50,15 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   }, [totalSlide]);
 
   const handleDragStart = useCallback(e => {
-    // e.preventDefault();
 
     setMouseStartX(e.clientX ?? e.changedTouches[0].clientX);
+
     setDrag(true);
   }, []);
 
   const handleDragEnd = useCallback(
     e => {
-      // e.preventDefault();
+      e.preventDefault();
 
       setDrag(false);
       if (mouseStartX === null) {
@@ -75,6 +75,7 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
         mouseStartX - (e.clientX ?? e.changedTouches[0].clientX) >
         e.target.offsetWidth / 2
       ) {
+
         setActiveSlide(prevSlide => {
           return prevSlide === totalSlide ? 0 : prevSlide + 1;
         });
