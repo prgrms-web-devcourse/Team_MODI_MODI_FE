@@ -13,7 +13,7 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
   const [drag, setDrag] = useState(false);
 
   const moveCarousel = useCallback(() => {
-    slideRef.current.style.transitionDuration = '0s';
+    slideRef.current.style.transitionDuration = `.5s`;
     slideRef.current.style.transform = `translateX(calc(-${
       activeSlide * 100
     }% - ${activeSlide * slideGap}px))`;
