@@ -57,8 +57,6 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
 
   const handleDragEnd = useCallback(
     e => {
-      e.preventDefault();
-
       setDrag(false);
       if (mouseStartX === null) {
         return;
@@ -96,9 +94,11 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
       passive: true,
     });
     window.addEventListener('mouseup', handleDragEnd);
-    window.addEventListener('touchend', handleDragEnd);
+    refValue.addEventListener('touchend', handleDragEnd);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleMouseMove);
+    refValue.addEventListener('touchmove', handleMouseMove, {
+      passive: true,
+    });
 
     return () => {
       refValue.removeEventListener('mousedown', handleDragStart);
@@ -106,9 +106,9 @@ const MainCarousel = ({ waitingOtts, slideGap }) => {
         passive: true,
       });
       window.removeEventListener('mouseup', handleDragEnd);
-      window.removeEventListener('touchend', handleDragEnd);
+      refValue.removeEventListener('touchend', handleDragEnd);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleMouseMove);
+      refValue.removeEventListener('touchmove', handleMouseMove);
     };
   }, [handleDragStart, handleDragEnd, handleMouseMove]);
 
