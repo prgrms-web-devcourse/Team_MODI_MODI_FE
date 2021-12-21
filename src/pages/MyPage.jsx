@@ -14,7 +14,7 @@ import UserNameEdit from 'components/MyParty/UserNameEdit';
 import Alert from 'components/Common/Alert';
 
 const SIZE = 5;
-const RANDOM_USERNAME_SIZE = 7;
+const RANDOM_USERNAME_SIZE = 5;
 
 const initialState = {
   parties: [],
