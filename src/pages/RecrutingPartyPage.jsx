@@ -24,6 +24,8 @@ import PartyNoneItem from 'components/PartyJoin/PartyNoneItem';
 import { useAuthState } from 'contexts/authContext';
 import Alert from 'components/Common/Alert';
 import PartySkeleton from 'components/Skeleton/PartySkeleton';
+import { Box } from '@mui/system';
+import LottieIcon from 'components/Common/LottieIcon';
 
 const SIZE = 4;
 
@@ -190,7 +192,18 @@ const RecrutingPartyPage = () => {
           >
             <CloseIcon />
           </IconButton>
-          {partyDetailLoading && <div>로딩중...</div>}
+          {partyDetailLoading && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <LottieIcon type="loadingCat" />
+            </Box>
+          )}
           {partyDetailValue && <PartyDetail partyDetail={partyDetailValue} />}
           {partyDetailError && <div>에러</div>}
         </ModalBox>
