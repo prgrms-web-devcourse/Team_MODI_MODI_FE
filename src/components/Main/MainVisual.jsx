@@ -23,7 +23,6 @@ const MainVisual = () => {
           color="modiGray.white"
           component="p"
           sx={{
-            opacity: 0.6,
             mt: '11px',
           }}
         >
