@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box } from '@mui/system';
-import { Button, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
 import CachedIcon from '@mui/icons-material/Cached';
 import { useEffect, useRef, useState } from 'react';
 import lottie from 'lottie-web';
@@ -60,13 +60,13 @@ const UserNameEdit = ({
         }}
       >
         <Typography>수정할 닉네임</Typography>
-        <CachedIcon
-          sx={{
-            cursor: 'pointer',
-          }}
+        <IconButton
           color="primary"
+          tooltip="닉네임 셔플"
           onClick={handleShuffleUsername}
-        />
+        >
+          <CachedIcon />
+        </IconButton>
         {generatedUsernameLoading && (
           <Box
             ref={lottieIcon}
