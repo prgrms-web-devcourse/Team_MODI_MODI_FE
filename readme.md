@@ -74,7 +74,7 @@
 | 김현석 | 장윤지 | 정예원 | 이경미 |
 | :---: | :---: | :---: | :---: |
 |![dorr](https://user-images.githubusercontent.com/80025421/146864059-ea6bf67a-dca3-4081-ab4b-dcc706bf16d1.jpg)|![jen](https://user-images.githubusercontent.com/80025421/146864066-eb68c92a-e156-4872-b255-4c4a8237fb69.jpg)|![nancy](https://user-images.githubusercontent.com/80025421/146864072-73cf1790-d9f1-4695-9546-19a049347c9c.jpg)|![koby](https://user-images.githubusercontent.com/80025421/146864078-89aefc79-ec38-4247-b8cb-86dbc7ebc8a2.jpg)
-| [Dorr](https://github.com/dorrdorr9311) | [Jen](https://github.com/yjnim) | [Nancy](https://github.com/Yeewon) | [Kobi](https://github.com/sshyukk) |
+| [Dorr](https://github.com/dorrdorr9311) | [Jen](https://github.com/yjnim) | [Nancy](https://github.com/Yeewon) | [Kobi](https://github.com/goumi1009) |
 
 
 ## 📌 폴더 구조
