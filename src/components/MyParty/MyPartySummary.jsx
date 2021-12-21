@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { priceToString } from 'utils/priceToString';
 import crown from 'assets/crown.png';
 import OttLogo from 'components/Ott/OttLogo';
+import { parseDate } from 'utils/parseDate';
 
 const MyPartySummary = ({
   partyId,
@@ -132,9 +133,9 @@ const MyPartySummary = ({
             variant="small"
             color="text.secondary"
           >
-            {startDate}
-            <br style={{ display: mdDownMatches ? 'block' : 'none' }} />~
-            {endDate}
+            {parseDate(startDate)}
+            <br style={{ display: mdDownMatches ? 'block' : 'none' }} /> -{' '}
+            {parseDate(endDate)}
           </Typography>
         </Box>
         <Box
