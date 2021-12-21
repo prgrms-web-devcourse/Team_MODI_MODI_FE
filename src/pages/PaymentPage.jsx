@@ -20,6 +20,8 @@ import { COMMISSION_RATE } from 'constants/commissionRate';
 import { useAuthDispatch } from 'contexts/authContext';
 import { USER_INFO_KEY } from 'constants/keys';
 import Alert from 'components/Common/Alert';
+import LottieIcon from 'components/Common/LottieIcon';
+import { Box } from '@mui/system';
 
 const PaymentPage = () => {
   const { points: myPoint } = useAuthState();
@@ -126,7 +128,18 @@ const PaymentPage = () => {
       <PageContainer>
         <PageHeader title="파티 결제" />
         <PageContents>
-          {partyDetailLoading && <div>로딩중</div>}
+          {partyDetailLoading && (
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <LottieIcon type="loadingCat" />
+            </Box>
+          )}
           {partyDetailError && <div>에러</div>}
           {partyDetailValue && (
             <>

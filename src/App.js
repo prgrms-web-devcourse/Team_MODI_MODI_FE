@@ -9,6 +9,8 @@ import useStorage from 'hooks/useStorage';
 import { OTT_INFO_KEY, TOKEN_KEY, USER_INFO_KEY } from 'constants/keys';
 import { useAuthDispatch } from 'contexts/authContext';
 import { useAuthState } from 'contexts/authContext';
+import LottieIcon from 'components/Common/LottieIcon';
+import { Box } from '@mui/system';
 
 function App() {
   const { isLoggedIn } = useAuthState();
@@ -116,7 +118,18 @@ function App() {
   return (
     <>
       <Header user={false} />
-      {(ottListLoading || myInfoLoading) && <h1>로딩중</h1>}
+      {(ottListLoading || myInfoLoading) && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          <LottieIcon type="loadingCat" />
+        </Box>
+      )}
       {(ottListError || myInfoError) && <h1>에러</h1>}
       {ottServices.length !== 0 && <Outlet />}
     </>

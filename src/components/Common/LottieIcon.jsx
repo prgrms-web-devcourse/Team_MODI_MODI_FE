@@ -6,6 +6,7 @@ import paymentFail from 'assets/pay-fail-lottie.json';
 import success from 'assets/success-lottie.json';
 import fail from 'assets/fail-lottie.json';
 import createSuccess from 'assets/create-party-success.json';
+import catLoaderLottie from 'assets/cat-loader-lottie.json';
 import { Box } from '@mui/material';
 
 const lottieTypes = {
@@ -27,6 +28,10 @@ const lottieTypes = {
   },
   createSuccess: {
     lottie: createSuccess,
+    loop: true,
+  },
+  loadingCat: {
+    lottie: catLoaderLottie,
     loop: true,
   },
 };
