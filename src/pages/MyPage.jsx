@@ -12,6 +12,7 @@ import MyPageTitle from 'components/MyParty/MyPageTitle';
 import MyPartyTab from 'components/MyParty/MyPartyTab';
 import UserNameEdit from 'components/MyParty/UserNameEdit';
 import Alert from 'components/Common/Alert';
+import ScrollTopBtn from 'components/Common/ScrollTopBtn';
 
 const SIZE = 5;
 const RANDOM_USERNAME_SIZE = 5;
@@ -78,6 +79,11 @@ const MyPage = () => {
   const { value: onGoingValue } = onGoingAPIState;
   const { value: recruitingValue } = recruitingAPIState;
   const { value: finishedValue } = finishedAPIState;
+
+  // const handleFollow = () => {
+  //   setScrollY(window.pageYOffset);
+  //   scrollY > 100 ? setTopBtnStaatus(true) : setTopBtnStaatus(false);
+  // };
 
   useEffect(() => {
     if (onGoingValue) {
@@ -214,6 +220,7 @@ const MyPage = () => {
               onSetStep={newValue => setStep(newValue)}
             />
           )}
+          <ScrollTopBtn />
         </PageContents>
         <Modal open={isOpen}>
           <ModalBox>
