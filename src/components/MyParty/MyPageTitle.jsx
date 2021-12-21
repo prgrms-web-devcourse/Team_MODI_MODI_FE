@@ -19,6 +19,7 @@ const MyPageTitle = ({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
+          mt: -2,
         }}
       >
         <Box sx={{ display: 'flex' }}>

@@ -100,11 +100,15 @@ const PartySummary = ({
             />
           ))}
         </Box>
-        {!mustFilled && (
-          <Typography color="text.disabled" variant="micro" component="p">
-            모집인원을 채워야 파티가 시작됩니다.
-          </Typography>
-        )}
+        <Typography
+          color={mustFilled ? 'error' : 'text.secondary'}
+          variant="micro"
+          component="p"
+        >
+          {mustFilled
+            ? '파티 인원 미달시 파티 종료'
+            : '파티 인원 관계없이 파티 시작'}
+        </Typography>
       </Box>
     </Paper>
   );
