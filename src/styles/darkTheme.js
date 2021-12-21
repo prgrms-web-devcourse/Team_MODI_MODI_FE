@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material';
 
-const theme = createTheme({
+const darkTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -12,23 +12,27 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#B2CC16',
-      dark: '#AEBF3F',
-      contrastText: '#ffffff',
+      main: '#c5e1a5',
+      dark: '#94af76',
+      light: '#f8ffd7',
+      contrastText: 'rgba(0,0,0, 0.87)',
     },
     secondary: {
-      main: '#67CFCC',
-      contrastText: '#ffffff',
+      main: '#b2ebf2',
+      dark: '#81b9bf',
+      light: '#e5ffff',
+      contrastText: 'rgba(0,0,0, 0.87)',
     },
     thirdary: {
       main: '#FBEDA4',
     },
     divider: '#EEEEEE',
     background: {
-      default: '#F7F8FA ',
-      pageContent: '#fff',
-      mainVisual: '#b2cc16',
-      myPartyMain: '#67CFCC',
+      default: '#262626',
+      paper: '#343434',
+      pageContent: '#202020',
+      mainVisual: '#181818',
+      myPartyMain: '#181818',
     },
     modiGray: {
       black: '#191A20',
@@ -36,12 +40,12 @@ const theme = createTheme({
       light: '#EEEEEE',
       semilight: '#F7F8FA',
       white: '#FFFFFF',
-      contrastText: '#FFFFFF',
+      contrastText: '#191A20',
     },
     text: {
-      primary: '#343434',
-      secondary: '#666666',
-      disabled: '#BBBBBB',
+      primary: '#fff',
+      secondary: 'rgba(255, 255, 255, .7)',
+      disabled: 'rgba(255, 255, 255, .5)',
     },
     action: {
       active: '#BBBBBB',
@@ -187,4 +191,4 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+export default darkTheme;
