@@ -37,14 +37,14 @@ const MainVisual = () => {
   );
 };
 
-const VisualBox = styled(Box)`
-  overflow: hidden;
-  position: relative;
-  padding: 10vh 30px 0;
-  height: 40vh;
-  min-height: 290px;
-  background-color: #b2cc16;
-`;
+const VisualBox = styled(Box)(({ theme }) => ({
+  overflow: 'hidden',
+  position: 'relative',
+  padding: '10vh 30px 0',
+  height: '40vh',
+  minHeight: '290px',
+  backgroundColor: theme.palette.background.mainVisual,
+}));
 
 const SymbolImg = styled('img')`
   display: block;

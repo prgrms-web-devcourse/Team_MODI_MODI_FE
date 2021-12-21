@@ -23,7 +23,7 @@ const MyPageTitle = ({
       >
         <Box sx={{ display: 'flex' }}>
           <Typography
-            color="primary.contrastText"
+            color="common.white"
             variant="medium"
             component="h2"
             sx={{
@@ -63,7 +63,7 @@ const MyPageTitle = ({
         }}
       >
         <Typography
-          color="primary.contrastText"
+          color="common.white"
           variant="base"
           component="p"
           align="center"

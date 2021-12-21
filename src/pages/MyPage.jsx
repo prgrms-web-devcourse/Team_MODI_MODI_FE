@@ -187,12 +187,12 @@ const MyPage = () => {
   return (
     <Box
       sx={{
-        bgcolor: '#67CFCC',
+        bgcolor: 'background.myPartyMain',
       }}
     >
       <PageContainer
         sx={{
-          bgcolor: 'secondary.main',
+          bgcolor: 'background.myPartyMain',
         }}
       >
         <MyPageTitle

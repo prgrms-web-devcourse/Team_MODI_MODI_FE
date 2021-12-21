@@ -20,7 +20,9 @@ const Header = ({ user }) => {
     !isLoginPage && (
       <AppBar
         sx={{
-          background: `${isMainPage ? 'transparent' : '#fff'}`,
+          backgroundColor: `${
+            isMainPage ? 'transparent' : 'background.pageContent'
+          }`,
           height: mdDownMatches ? 56 : 72,
           boxShadow: `${isMainPage ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.15)'}`,
           position: 'fixed',

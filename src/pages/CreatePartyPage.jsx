@@ -280,13 +280,7 @@ const CreatePartyPage = () => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'block',
-          background: '#fff',
-        }}
-      >
+      <StyledForm onSubmit={handleSubmit}>
         <Container
           maxWidth="md"
           sx={{
@@ -338,7 +332,7 @@ const CreatePartyPage = () => {
             )}
           </BottomButtonWrapper>
         </Container>
-      </form>
+      </StyledForm>
       <Alert
         isOpen={isOpenAlert}
         type={alertType}
@@ -371,5 +365,10 @@ const BottomButtonWrapper = styled(Box)`
   width: 100%;
   padding: 0 30px;
 `;
+
+const StyledForm = styled('form')(({ theme }) => ({
+  display: 'flex',
+  background: theme.palette.background.pageContent,
+}));
 
 export default CreatePartyPage;
