@@ -1,9 +1,9 @@
-import PropTypes from ' prop-types';
-import { ThemeProvider } from '@mui/styles';
+import { ThemeProvider } from '@emotion/react';
 import { useState, useCallback, useMemo, useContext } from 'react';
 import { createContext } from 'react';
-import theme from 'styles/theme';
+import lightTheme from 'styles/theme';
 import darkTheme from 'styles/darkTheme';
+import PropTypes from 'prop-types';
 
 const CustomThemeDispatch = createContext(null);
 
@@ -11,13 +11,10 @@ export const CustomThemeProvider = ({ children }) => {
   const [mode, setMode] = useState('light');
 
   const handleToggleTheme = useCallback(() => {
-    setMode(prevMode => (prevMode === 'light' ? 'light' : 'dark'));
+    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
   }, []);
 
-  const customTheme = useMemo(
-    () => (mode === 'light' ? theme : darkTheme),
-    [mode],
-  );
+  const theme = mode === 'light' ? lightTheme : darkTheme;
 
   const actions = useMemo(
     () => ({
@@ -27,11 +24,9 @@ export const CustomThemeProvider = ({ children }) => {
   );
 
   return (
-    <ThemeProvider theme={customTheme}>
-      <CustomThemeDispatch.Provider value={actions}>
-        {children}
-      </CustomThemeDispatch.Provider>
-    </ThemeProvider>
+    <CustomThemeDispatch.Provider value={actions}>
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </CustomThemeDispatch.Provider>
   );
 };
 

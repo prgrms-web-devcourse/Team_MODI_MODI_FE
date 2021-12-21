@@ -3,11 +3,13 @@ import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import theme from 'styles/theme.js';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { AppBar, Box, Container } from '@mui/material';
+import { AppBar, Box, Container, IconButton } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
 import { useAuthState } from 'contexts/authContext.jsx';
+import { useCustomThemeDispatch } from 'contexts/CustomThemeProvider.jsx';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const Header = ({ user }) => {
   const location = useLocation();
@@ -15,6 +17,7 @@ const Header = ({ user }) => {
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
   const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
+  const { onToggleTheme } = useCustomThemeDispatch();
 
   return (
     !isLoginPage && (
@@ -48,6 +51,9 @@ const Header = ({ user }) => {
               size={mdDownMatches ? 56 : 72}
             />
           </Link>
+          <IconButton onClick={() => onToggleTheme()}>
+            <Brightness7Icon />
+          </IconButton>
           <Box
             sx={{
               height: '100%',
