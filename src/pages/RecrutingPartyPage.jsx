@@ -26,6 +26,7 @@ import Alert from 'components/Common/Alert';
 import PartySkeleton from 'components/Skeleton/PartySkeleton';
 import { Box } from '@mui/system';
 import LottieIcon from 'components/Common/LottieIcon';
+import ScrollTopBtn from 'components/Common/ScrollTopBtn';
 
 const SIZE = 4;
 
@@ -176,6 +177,7 @@ const RecrutingPartyPage = () => {
               더보기
             </Button>
           )}
+          <ScrollTopBtn />
         </PageContents>
       </PageContainer>
       <Modal open={isOpenPartyInfoModal} onClose={handleClosePartyInfoModal}>
