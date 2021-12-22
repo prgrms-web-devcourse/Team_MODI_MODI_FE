@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { styled } from '@mui/system';
 import { Button, Box, MobileStepper, Container } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import {
   StepOttSelect,
@@ -20,7 +21,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Alert from 'components/Common/Alert';
 
 const CreatePartyPage = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
@@ -46,24 +46,28 @@ const CreatePartyPage = () => {
 
   const { ottServices } = useOttInfoState();
   const [rules] = useAsync(getRules);
-  const [currentOtt, getOttInfo] = useAsync(getOtt, [newParty.ottId], [], true);
+  const [selectedOtt, fetchSelectedOttAPI] = useAsync(
+    getOtt,
+    [newParty.ottId],
+    [],
+    true,
+  );
   const [partyCreateAPIState, fetchPartyCreateAPI] = useAsync(
     createNewParty,
     [],
     [],
     true,
   );
-
-  const [isOpenAlert, setIsOpenAlert] = useState(false);
-  const [alertType, setAlertType] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
-  const [checkSelectStartDate, setCheckSelectStartDate] = useState(true);
-
   const {
     isLoading: partyCreateLoading,
     value: partyCreateValue,
     error: partyCreateError,
   } = partyCreateAPIState;
+
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
+  const [alertType, setAlertType] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
+  const [checkSelectStartDate, setCheckSelectStartDate] = useState(true);
 
   // rule api 받아서 key,value 추가
   useEffect(() => {
@@ -82,28 +86,26 @@ const CreatePartyPage = () => {
   // ott선택 한 ott api 요청
   const handleSelectedOtt = useCallback(
     selectOttId => {
-      getOttInfo(selectOttId);
+      fetchSelectedOttAPI(selectOttId);
     },
-    [getOttInfo],
+    [fetchSelectedOttAPI],
   );
 
   // 쿼리스트링 있다면 받아온
   useEffect(() => {
-    if (location.search && ottServices.length) {
-      const currentOtt = searchParams.get('ottId');
-      handleSelectedOtt(currentOtt);
-    }
-  }, [ottServices, handleSelectedOtt, location.search, searchParams]);
+    const entryOtt = searchParams.get('ottId');
+    handleSelectedOtt(entryOtt);
+  }, [handleSelectedOtt, searchParams]);
 
   useEffect(() => {
-    currentOtt.value &&
+    selectedOtt.value &&
       setNewParty(currentParty => ({
         ...currentParty,
-        ottId: currentOtt.value.ottId,
-        ottName: currentOtt.value.ottName,
-        grade: currentOtt.value.grade,
+        ottId: selectedOtt.value.ottId,
+        ottName: selectedOtt.value.ottName,
+        grade: selectedOtt.value.grade,
       }));
-  }, [currentOtt.value]);
+  }, [selectedOtt.value]);
 
   // 이전 버튼 클릭이벤트
   const handleBack = useCallback(() => {
@@ -228,11 +230,6 @@ const CreatePartyPage = () => {
     fetchPartyCreateAPI(submitData);
   };
 
-  // post 보내고 완료버튼 disable처리
-  useEffect(() => {
-    partyCreateLoading && setComplete(false);
-  }, [partyCreateLoading]);
-
   // 파티 생성 완료 여부 alert
   useEffect(() => {
     if (partyCreateValue) {
@@ -241,7 +238,6 @@ const CreatePartyPage = () => {
       setIsOpenAlert(true);
     }
   }, [partyCreateValue]);
-
   useEffect(() => {
     if (partyCreateError) {
       setAlertType('fail');
@@ -361,14 +357,16 @@ const CreatePartyPage = () => {
                 다음 <KeyboardArrowRight />
               </StepperButton>
             ) : (
-              <StepperButton
+              <LoadingButton
                 type="submit"
                 size="large"
                 variant="contained"
+                loading={partyCreateLoading}
                 disabled={!complete}
+                sx={{ width: '48%' }}
               >
                 완료
-              </StepperButton>
+              </LoadingButton>
             )}
           </BottomButtonWrapper>
         </Container>
