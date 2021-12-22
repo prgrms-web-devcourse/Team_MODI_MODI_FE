@@ -80,11 +80,6 @@ const MyPage = () => {
   const { value: recruitingValue } = recruitingAPIState;
   const { value: finishedValue } = finishedAPIState;
 
-  // const handleFollow = () => {
-  //   setScrollY(window.pageYOffset);
-  //   scrollY > 100 ? setTopBtnStaatus(true) : setTopBtnStaatus(false);
-  // };
-
   useEffect(() => {
     if (onGoingValue) {
       const { totalSize, parties } = onGoingValue;
@@ -193,12 +188,12 @@ const MyPage = () => {
   return (
     <Box
       sx={{
-        bgcolor: '#67CFCC',
+        bgcolor: 'background.myPartyMain',
       }}
     >
       <PageContainer
         sx={{
-          bgcolor: 'secondary.main',
+          bgcolor: 'background.myPartyMain',
         }}
       >
         <MyPageTitle
@@ -230,6 +225,7 @@ const MyPage = () => {
                 position: 'absolute',
                 top: '24px',
                 right: '24px',
+                background: 'transparent',
               }}
             >
               <CloseIcon />

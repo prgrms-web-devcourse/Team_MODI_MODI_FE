@@ -1,6 +1,6 @@
 import { createTheme } from '@mui/material';
 
-const lightTheme = createTheme({
+const darkTheme = createTheme({
   breakpoints: {
     values: {
       xs: 0,
@@ -11,38 +11,42 @@ const lightTheme = createTheme({
     },
   },
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
-      main: '#B2CC16',
-      dark: '#AEBF3F',
-      contrastText: '#ffffff',
+      main: '#9fcea1',
+      dark: '#709d72',
+      light: '#d1ffd2',
+      contrastText: 'rgba(0,0,0, 0.87)',
     },
     secondary: {
-      main: '#67CFCC',
-      contrastText: '#ffffff',
+      main: '#b2ebf2',
+      dark: '#81b9bf',
+      light: '#e5ffff',
+      contrastText: 'rgba(0,0,0, 0.87)',
     },
     thirdary: {
       main: '#FBEDA4',
     },
     divider: '#EEEEEE',
     background: {
-      default: '#F7F8FA ',
-      pageContent: '#fff',
-      mainVisual: '#b2cc16',
-      myPartyMain: '#67CFCC',
+      default: '#262626',
+      paper: '#343434',
+      pageContent: '#202020',
+      mainVisual: '#181818',
+      myPartyMain: '#181818',
     },
     modiGray: {
       black: '#191A20',
-      main: '#BBBBBB',
+      main: '#666666',
       light: '#EEEEEE',
       semilight: '#F7F8FA',
       white: '#FFFFFF',
-      contrastText: '#FFFFFF',
+      contrastText: '#191A20',
     },
     text: {
-      primary: '#343434',
-      secondary: '#666666',
-      disabled: '#BBBBBB',
+      primary: '#fff',
+      secondary: 'rgba(255, 255, 255, .7)',
+      disabled: 'rgba(255, 255, 255, .5)',
     },
     action: {
       active: '#BBBBBB',
@@ -188,4 +192,4 @@ const lightTheme = createTheme({
   },
 });
 
-export default lightTheme;
+export default darkTheme;

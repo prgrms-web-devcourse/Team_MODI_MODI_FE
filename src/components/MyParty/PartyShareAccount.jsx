@@ -17,7 +17,7 @@ const PartyShareAccount = ({
       onClick={onEditSharedInfo}
       sx={{
         bgcolor: 'transparent',
-        color: 'text.secondary',
+        color: 'text.sescondary',
       }}
     >
       <EditIcon sx={{ fontSize: '16px' }} />

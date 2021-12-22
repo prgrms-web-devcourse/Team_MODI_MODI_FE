@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
 import { Modal, Box, Typography, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import theme from 'styles/theme.js';
 import OttList from 'components/Ott/OttList';
 import { useOttInfoState } from 'contexts/OttInfoProvider';
 import { useNavigate } from 'react-router';
 import { ModalBox } from 'components/Common';
+import { useTheme } from '@emotion/react';
 
 const HeaderModal = ({ open, onClose }) => {
+  const theme = useTheme();
   const { ottServices } = useOttInfoState();
   const navigate = useNavigate();
 
@@ -29,6 +30,7 @@ const HeaderModal = ({ open, onClose }) => {
             aria-label="close"
             onClick={onClose}
             sx={{
+              background: 'transparent',
               color: theme.palette.text.secondary,
               padding: 0,
             }}
