@@ -4,15 +4,26 @@ import { createContext } from 'react';
 import lightTheme from 'styles/theme';
 import darkTheme from 'styles/darkTheme';
 import PropTypes from 'prop-types';
+import useStorage from 'hooks/useStorage';
 
 const CustomThemeDispatch = createContext(null);
 
 export const CustomThemeProvider = ({ children }) => {
-  const [mode, setMode] = useState('light');
+  const [storedThemeMode, setStoreThemeMode] = useStorage(
+    'mode',
+    'light',
+    'local',
+  );
+  const [mode, setMode] = useState(storedThemeMode);
 
   const handleToggleTheme = useCallback(() => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
-  }, []);
+    setMode(prevMode => {
+      const nextMode = prevMode === 'light' ? 'dark' : 'light';
+      setStoreThemeMode(nextMode);
+
+      return nextMode;
+    });
+  }, [setStoreThemeMode]);
 
   const theme = mode === 'light' ? lightTheme : darkTheme;
 
