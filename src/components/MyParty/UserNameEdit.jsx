@@ -45,18 +45,18 @@ const UserNameEdit = ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        m: 5,
+        wordBreak: 'keep-all',
       }}
     >
       <Typography>현재 닉네임</Typography>
       <Typography variant="h5">{username}</Typography>
-
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          m: 5,
+          mt: 5,
+          mb: 5,
         }}
       >
         <Typography>수정할 닉네임</Typography>
@@ -87,6 +87,7 @@ const UserNameEdit = ({
         variant="contained"
         sx={{
           width: '30%',
+          minwidth: '140px',
         }}
         disabled={!selectedUsername}
         onClick={handleClickUpdate}
