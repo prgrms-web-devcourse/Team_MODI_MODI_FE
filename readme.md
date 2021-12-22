@@ -75,10 +75,10 @@
 |<li>내 파티 상세 정보 확인</li><li>공유 계정 정보 확인</li><li>공유 계정 정보 수정(Only Leader)</li>|<li>포인트 충전</li>|
 
 
-|404 페이지|
-|------|
-|<p align="center"><img src="https://user-images.githubusercontent.com/80025421/146867358-0187dbda-e372-4e23-a94c-675c05e31f9f.gif" width=60%/></p> |
-|<li>잘못된 경로 알림</li>|
+|404 페이지|다크 모드|
+|------|------|
+|<p align="center"><img src="https://user-images.githubusercontent.com/80025421/146867358-0187dbda-e372-4e23-a94c-675c05e31f9f.gif" width=60%/></p> | <p align="center"><img src="https://user-images.githubusercontent.com/80025421/147077889-7db7d02c-ccb2-4390-8fb9-f09493546754.gif" width=60%/></p>|
+|<li>잘못된 경로 알림</li>|<li>다크 모드 지원</li>|
 <br/>
 
 ---
