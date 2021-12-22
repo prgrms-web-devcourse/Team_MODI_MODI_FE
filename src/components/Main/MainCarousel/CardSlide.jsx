@@ -105,7 +105,7 @@ const CardSlide = ({ ottId, ottName, waitingCount }) => {
               color: 'text.primary',
               boxShadow: 'none',
               m: '0 auto',
-              p: '10px 30px',
+              p: '10px 20px',
               borderRadius: 30,
             },
             {
