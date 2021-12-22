@@ -11,10 +11,19 @@ const CreatePartyTitle = ({
 }) => {
   return (
     <Box sx={sx}>
-      <Typography variant="mediumB" component="h2" color="text.secondary">
+      <Typography
+        sx={{ wordBreak: 'keep-all' }}
+        variant="mediumB"
+        component="h2"
+        color="text.secondary"
+      >
         우리, 파티를 만들어 볼까요?
       </Typography>
-      <TitleTypography variant="large" component="h3">
+      <TitleTypography
+        sx={{ wordBreak: 'keep-all' }}
+        variant="large"
+        component="h3"
+      >
         {subTitle}
       </TitleTypography>
     </Box>
