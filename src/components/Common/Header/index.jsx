@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import theme from 'styles/theme.js';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppBar, Box, Container, IconButton } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
@@ -10,12 +9,15 @@ import Logo from 'components/Common/Logo.jsx';
 import { useAuthState } from 'contexts/authContext.jsx';
 import { useCustomThemeDispatch } from 'contexts/CustomThemeProvider.jsx';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import { useTheme } from '@emotion/react';
 
 const Header = ({ user }) => {
   const location = useLocation();
   const { isLoggedIn } = useAuthState();
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
+  const theme = useTheme();
   const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
   const { onToggleTheme } = useCustomThemeDispatch();
 
@@ -39,21 +41,37 @@ const Header = ({ user }) => {
             height: '100%',
           }}
         >
-          <Link
-            to="/"
-            style={{
+          <Box
+            sx={{
               display: 'flex',
-              alignItems: 'center',
             }}
           >
-            <Logo
-              color={isMainPage ? false : true}
-              size={mdDownMatches ? 56 : 72}
-            />
-          </Link>
-          <IconButton onClick={() => onToggleTheme()}>
-            <Brightness7Icon />
-          </IconButton>
+            <Link
+              to="/"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Logo
+                color={isMainPage ? false : true}
+                size={mdDownMatches ? 56 : 72}
+              />
+            </Link>
+            <IconButton
+              sx={{
+                backgroundColor: 'transparent',
+                color: isMainPage ? 'common.white' : 'text.primary',
+              }}
+              onClick={() => onToggleTheme()}
+            >
+              {theme.palette.mode === 'dark' ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+          </Box>
           <Box
             sx={{
               height: '100%',

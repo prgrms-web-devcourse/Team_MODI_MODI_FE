@@ -11,10 +11,11 @@ const darkTheme = createTheme({
     },
   },
   palette: {
+    mode: 'dark',
     primary: {
-      main: '#c5e1a5',
-      dark: '#94af76',
-      light: '#f8ffd7',
+      main: '#9fcea1',
+      dark: '#709d72',
+      light: '#d1ffd2',
       contrastText: 'rgba(0,0,0, 0.87)',
     },
     secondary: {
@@ -36,7 +37,7 @@ const darkTheme = createTheme({
     },
     modiGray: {
       black: '#191A20',
-      main: '#BBBBBB',
+      main: '#666666',
       light: '#EEEEEE',
       semilight: '#F7F8FA',
       white: '#FFFFFF',

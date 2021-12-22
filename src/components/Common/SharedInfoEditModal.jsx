@@ -86,10 +86,20 @@ const SharedInfoEditModal = ({ open, onClose, onSubmit }) => {
             color="primary"
             type="sumbit"
             onClick={handleSumbmitEditedPassword}
+            sx={{
+              background: 'transparent',
+            }}
           >
             변경
           </Button>
-          <Button color="modiGray" onClick={handleClickCancelButton}>
+          <Button
+            color="modiGray"
+            onClick={handleClickCancelButton}
+            sx={{
+              background: 'transparent',
+              color: 'text.primary',
+            }}
+          >
             취소
           </Button>
         </Box>
