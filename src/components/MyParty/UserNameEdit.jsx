@@ -85,10 +85,8 @@ const UserNameEdit = ({
       </Box>
       <Button
         variant="contained"
-        sx={{
-          width: '30%',
-          minwidth: '140px',
-        }}
+        sx={{ width: '30%' }}
+        style={{ minWidth: '140px' }}
         disabled={!selectedUsername}
         onClick={handleClickUpdate}
       >
