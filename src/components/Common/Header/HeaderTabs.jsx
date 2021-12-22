@@ -6,7 +6,7 @@ import theme from 'styles/theme.js';
 import HeaderTab from './HeaderTab.jsx';
 import HeaderModal from './HeaderModal.jsx';
 
-const HeaderTabs = ({ isMainPage, tabSize }) => {
+const HeaderTabs = ({ isMainPage, tabSize, mode = 'light' }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -27,7 +27,9 @@ const HeaderTabs = ({ isMainPage, tabSize }) => {
         minWidth: 70,
         lineHeight: 1,
         padding: 0,
-        color: `${isMainPage ? '#fff' : theme.palette.text.secondary}`,
+        color: `${
+          isMainPage || mode === 'dark' ? '#fff' : theme.palette.text.secondary
+        }`,
       }}
     >
       <HeaderModal open={open} onClose={handleClose} />
@@ -53,6 +55,7 @@ HeaderTabs.defaultProps = {
 HeaderTabs.propTypes = {
   isMainPage: PropTypes.bool,
   tabSize: PropTypes.number,
+  mode: PropTypes.oneOf(['light', 'dark']),
 };
 
 export default HeaderTabs;

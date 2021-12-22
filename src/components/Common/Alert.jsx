@@ -72,25 +72,25 @@ const ConfirmButton = styled(Button)`
   margin: 0 auto;
 `;
 
-const AlertBox = styled(Box)`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 24px;
-  width: 100%;
-  max-width: 350px;
-  min-height: 280px;
-  max-height: 90%;
-  overflow: auto;
-  border-radius: 24px;
-  background-color: #fff;
-  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.25);
-  text-align: center;
-  outline: none;
-`;
+const AlertBox = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  padding: '24px',
+  width: '100%',
+  maxWidth: '350px',
+  minHeight: '280px',
+  maxHeight: '90%',
+  overflow: 'auto',
+  borderRadius: '24px',
+  backgroundColor: theme.palette.background.pageContent,
+  boxShadow: '1px 2px 10px rgba(0, 0, 0, 0.25)',
+  textAlign: 'center',
+  outline: 'none',
+}));
 
 Alert.propTypes = {
   type: PropTypes.string,

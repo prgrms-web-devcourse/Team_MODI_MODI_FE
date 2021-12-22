@@ -6,7 +6,7 @@ import {
   useMemo,
 } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Button, IconButton, Modal } from '@mui/material';
+import { Button, IconButton, Modal, Typography } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -174,7 +174,9 @@ const RecrutingPartyPage = () => {
               color="modiGray"
               onClick={handleClickMoreButton}
             >
-              더보기
+              <Typography variant="smallB" color="common.white">
+                더보기
+              </Typography>
             </Button>
           )}
           <ScrollTopBtn />
@@ -187,6 +189,7 @@ const RecrutingPartyPage = () => {
             size="large"
             sx={{
               position: 'absolute',
+              background: 'transparent',
               top: '20px',
               right: '20px',
               p: 0,

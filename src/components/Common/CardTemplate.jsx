@@ -61,7 +61,7 @@ const CardTemplate = ({ sharedInfo, isFront, blur, sharedInfoEditButton }) => {
           </BlurWrapper>
           <Typography
             variant="smallB"
-            color="text.secondary"
+            color="#757575"
             align="center"
             component="div"
             sx={{
@@ -97,6 +97,7 @@ const BlurWrapper = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 16px;
   top: 0;
   left: 0;
   width: 100%;
@@ -109,6 +110,7 @@ const Glass = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 16px;
   top: 0;
   left: 0;
   width: 100%;

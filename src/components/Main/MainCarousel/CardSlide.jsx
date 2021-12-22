@@ -10,8 +10,10 @@ import {
 } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
 
 const CardSlide = ({ ottId, ottName, waitingCount }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const handleClickCarouselButton = () => {
     waitingCount && navigate(`recruit/${ottId}`);
@@ -95,11 +97,15 @@ const CardSlide = ({ ottId, ottName, waitingCount }) => {
           variant="contained"
           sx={[
             {
-              background: '#eee',
+              background: `${
+                theme.palette.mode === 'light'
+                  ? '#eee'
+                  : theme.palette.modiGray.main
+              }`,
               color: 'text.primary',
               boxShadow: 'none',
               m: '0 auto',
-              p: '10px 30px',
+              p: '10px 20px',
               borderRadius: 30,
             },
             {

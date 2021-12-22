@@ -72,9 +72,21 @@ const PartyTab = ({
           aria-label="party-status-tab"
           centered
         >
-          <Tab label="진행중" {...a11yProps(0)} />
-          <Tab label="대기중" {...a11yProps(1)} />
-          <Tab label="종료" {...a11yProps(2)} />
+          <Tab
+            label="진행중"
+            {...a11yProps(0)}
+            sx={{ backgroundColor: 'background.pageContent' }}
+          />
+          <Tab
+            label="대기중"
+            {...a11yProps(1)}
+            sx={{ backgroundColor: 'background.pageContent' }}
+          />
+          <Tab
+            label="종료"
+            {...a11yProps(2)}
+            sx={{ backgroundColor: 'background.pageContent' }}
+          />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

@@ -124,7 +124,7 @@ const MyPartyDetailPage = () => {
           }}
         >
           <AddCircleOutline color="secondary" fontSize="small" />
-          <Typography variant="baseB">
+          <Typography variant="baseB" ml={0.5}>
             월 {priceToString(monthlyReimbursement)}원
           </Typography>
         </Box>

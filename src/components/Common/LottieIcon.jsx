@@ -53,6 +53,7 @@ const LottieIcon = ({ type }) => {
       sx={{
         height: 200,
         mt: '-30px',
+        background: 'transparent',
       }}
       ref={lottieIcon}
     />
