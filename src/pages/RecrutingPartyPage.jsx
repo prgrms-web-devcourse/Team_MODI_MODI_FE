@@ -28,7 +28,6 @@ import { Box } from '@mui/system';
 import LottieIcon from 'components/Common/LottieIcon';
 import ScrollTopBtn from 'components/Common/ScrollTopBtn';
 
-
 const SIZE = 4;
 
 const RecrutingPartyPage = () => {
