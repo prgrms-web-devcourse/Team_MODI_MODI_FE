@@ -1,15 +1,20 @@
-import { Box, Button, TextField, Divider, Typography } from '@mui/material';
-import { PageContainer, PageContents, PageHeader } from 'components/Common';
-import InfoElement from 'components/Common/InfoElement';
-import { USER_INFO_KEY } from 'constants/keys';
-import { useAuthState, useAuthDispatch } from 'contexts/authContext';
-import Alert from 'components/Common/Alert';
-import useAsync from 'hooks/useAsync';
-import useStorage from 'hooks/useStorage';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+import { Box, TextField, Divider, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import {
+  PageContainer,
+  PageContents,
+  PageHeader,
+  InfoElement,
+  Alert,
+} from 'components/Common';
+import { useAuthState, useAuthDispatch } from 'contexts/authContext';
+import useAsync from 'hooks/useAsync';
+import useStorage from 'hooks/useStorage';
 import { chargePoint } from 'utils/api';
 import { pointFormatter } from 'utils/formatting';
+import { USER_INFO_KEY } from 'constants/keys';
 import {
   DAY_CHARGE_LIMIT_ERROR,
   DAY_CHARGE_MAX,
@@ -59,7 +64,11 @@ const PointChargePage = () => {
     chargeCallback({ points: Number(chargeInput) });
   };
 
-  const { value: chargeValue, error: chargeError } = chargeState;
+  const {
+    isLoading: chargeIsLoading,
+    value: chargeValue,
+    error: chargeError,
+  } = chargeState;
 
   useEffect(() => {
     if (chargeValue) {
@@ -180,13 +189,14 @@ const PointChargePage = () => {
                 포인트 사용 후 다시 시도해주세요 😎
               </Typography>
             )}
-            <Button
+            <LoadingButton
               variant="contained"
               disabled={chargeDisabled}
               onClick={handleChargeClick}
+              loading={chargeIsLoading}
             >
               충전하기
-            </Button>
+            </LoadingButton>
           </Box>
         </PageContents>
       </PageContainer>
