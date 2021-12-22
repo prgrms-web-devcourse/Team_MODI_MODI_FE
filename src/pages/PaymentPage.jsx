@@ -22,6 +22,7 @@ import { USER_INFO_KEY } from 'constants/keys';
 import Alert from 'components/Common/Alert';
 import LottieIcon from 'components/Common/LottieIcon';
 import { Box } from '@mui/system';
+import { LoadingButton } from '@mui/lab';
 
 const PaymentPage = () => {
   const { points: myPoint } = useAuthState();
@@ -159,7 +160,7 @@ const PaymentPage = () => {
                 onClickChargeButton={handleNavigateChargePage}
               />
               {paymentAvailable && (
-                <Button
+                <LoadingButton
                   variant="contained"
                   sx={{
                     width: '100%',
@@ -167,9 +168,10 @@ const PaymentPage = () => {
                   }}
                   size="large"
                   onClick={handleRequestJoinParty}
+                  loading={partyJoinLoading}
                 >
                   <Typography variant="baseB">결제하기</Typography>
-                </Button>
+                </LoadingButton>
               )}
               {!paymentAvailable && (
                 <Button
