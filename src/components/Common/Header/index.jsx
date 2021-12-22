@@ -12,7 +12,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useTheme } from '@emotion/react';
 
-const Header = ({ user }) => {
+const Header = () => {
   const location = useLocation();
   const { isLoggedIn } = useAuthState();
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
@@ -61,7 +61,7 @@ const Header = ({ user }) => {
             <IconButton
               sx={{
                 backgroundColor: 'transparent',
-                color: isMainPage ? 'common.white' : 'text.primary',
+                color: theme.palette.mode === 'dark' ? '#FFEE94' : '#5D7167',
               }}
               onClick={() => onToggleTheme()}
             >
@@ -84,6 +84,7 @@ const Header = ({ user }) => {
             <HeaderTabs
               isMainPage={isMainPage}
               tabSize={mdDownMatches ? 56 : 72}
+              mode={theme.palette.mode}
             />
             <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
           </Box>
