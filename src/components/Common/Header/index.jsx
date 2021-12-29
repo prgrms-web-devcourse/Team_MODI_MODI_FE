@@ -7,11 +7,7 @@ import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
 import { useAuthState } from 'contexts/authContext.jsx';
-import { useCustomThemeDispatch } from 'contexts/CustomThemeProvider.jsx';
-
 import { useTheme } from '@emotion/react';
-
-import { useAuthDispatch } from 'contexts/authContext.jsx';
 import HeaderDrawerMenu from './HeaderDrawerMenu.jsx';
 
 const Header = () => {
