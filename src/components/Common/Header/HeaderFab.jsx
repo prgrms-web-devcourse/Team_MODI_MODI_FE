@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Fab } from '@mui/material';
 import { LoginRounded, Person } from '@mui/icons-material';
 
-const HeaderFab = ({ user, isMainPage, userId }) => {
+const HeaderFab = ({ user, isMainPage, onClickMenu, onClickLoginButton }) => {
   return (
     <Fab
       disableRipple={true}
       aria-label={user ? 'User Page' : 'Login'}
-      component={Link}
-      to={user ? `/user` : '/login'}
       color={isMainPage ? 'default' : 'secondary'}
+      onClick={user ? onClickMenu : onClickLoginButton}
       sx={{
         width: 32,
         height: 32,
@@ -40,6 +38,8 @@ HeaderFab.propTypes = {
   user: PropTypes.bool,
   isMainPage: PropTypes.bool,
   userId: PropTypes.number,
+  onClickMenu: PropTypes.func,
+  onClickLoginButton: PropTypes.func,
 };
 
 export default HeaderFab;
