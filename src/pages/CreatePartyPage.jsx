@@ -91,10 +91,10 @@ const CreatePartyPage = () => {
     [fetchSelectedOttAPI],
   );
 
-  // 쿼리스트링 있다면 받아온
+  // 쿼리스트링 있다면 받아온다.
   useEffect(() => {
     const entryOtt = searchParams.get('ottId');
-    handleSelectedOtt(entryOtt);
+    entryOtt && handleSelectedOtt(entryOtt);
   }, [handleSelectedOtt, searchParams]);
 
   useEffect(() => {
