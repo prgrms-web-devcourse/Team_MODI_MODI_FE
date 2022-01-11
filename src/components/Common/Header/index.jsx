@@ -11,6 +11,7 @@ import { useCustomThemeDispatch } from 'contexts/CustomThemeProvider.jsx';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useTheme } from '@emotion/react';
+import Notice from 'components/Common/Notice.jsx';
 
 const Header = () => {
   const location = useLocation();
@@ -86,6 +87,7 @@ const Header = () => {
               tabSize={mdDownMatches ? 56 : 72}
               mode={theme.palette.mode}
             />
+            <Notice badgeContent={10} />
             <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
           </Box>
         </Container>
