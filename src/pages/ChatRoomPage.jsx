@@ -5,10 +5,10 @@ import PageContainer from 'components/Common/PageContainer';
 import PageContents from 'components/Common/PageContents';
 import PageHeader from 'components/Common/PageHeader';
 import { useParams } from 'react-router-dom';
+import ChatMessageInputBox from 'components/Chat/ChatMessageInputBox';
 
 const ChatRoomPage = () => {
   const { partyId } = useParams();
-  console.log(partyId);
 
   return (
     <PageContainer>
@@ -17,7 +17,42 @@ const ChatRoomPage = () => {
           <ContactSupportIcon />
         </IconButton>
       </PageHeader>
-      <PageContents />
+      <PageContents>
+        <ChatMessageInputBox />
+        {/* <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            position: 'absolute',
+            bottom: '24px',
+            width: 'calc(100% - 48px)',
+            backgroundColor: '#eeeeee',
+            pl: 2.5,
+            py: 0.5,
+            borderRadius: 4,
+            '&:focus-within': {
+              outline: '2.5px solid #B2cc16',
+            },
+          }}
+        >
+          <InputBase
+            placeholder="메세지를 입력하세요."
+            maxRows={10}
+            multiline
+            fullWidth
+            autoFocus
+          />
+          <IconButton
+            sx={{
+              alignSelf: 'flex-start',
+              background: 'transparent',
+              color: 'primary.main',
+            }}
+          >
+            <SendIcon />
+          </IconButton>
+        </Box> */}
+      </PageContents>
     </PageContainer>
   );
 };
