@@ -35,7 +35,7 @@ const CHAT_ROOM_LIST_DUMMY = {
       countNotReadMessage: 122,
     },
     {
-      partyId: 1,
+      partyId: 5,
       ottName: '웨이브',
       partyLeaderName: '좋은 카멜레온',
       latestMessageText: '혹시 지금 저만 계정 접속이 안되나요??',

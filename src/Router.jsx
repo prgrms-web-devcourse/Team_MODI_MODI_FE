@@ -14,6 +14,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from 'utils/PrivateRoute';
 import LoginAlertPage from 'pages/LoginAlertPage';
 import ChatPage from 'pages/ChatPage';
+import ChatRoomPage from 'pages/ChatRoomPage';
 
 const Router = () => {
   return (
@@ -69,7 +70,10 @@ const Router = () => {
           />
           <Route path="/needlogin" element={<LoginAlertPage />} />
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="chat" element={<ChatPage />} />
+          <Route path="chat">
+            <Route index element={<ChatPage />} />
+            <Route path=":partyId" element={<ChatRoomPage />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
