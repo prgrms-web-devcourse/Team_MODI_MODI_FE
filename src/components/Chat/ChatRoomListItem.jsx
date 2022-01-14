@@ -16,6 +16,12 @@ const ChatRoomListItem = ({
   latestMessageText,
   countNotReadMessage,
 }) => {
+  const textOverflowEllipsisSx = {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+  };
+
   return (
     <>
       <ListItem disableGutters disablePadding divider>
@@ -52,22 +58,14 @@ const ChatRoomListItem = ({
                   variant="smallB"
                   component="div"
                   mb={0.5}
-                  sx={{
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
-                  }}
+                  sx={textOverflowEllipsisSx}
                 >
                   {`${partyLeaderName}의 ${ottName}`}
                 </Typography>
                 <Typography
                   variant="micro"
                   component="div"
-                  sx={{
-                    overflow: 'hidden',
-                    whiteSpace: 'nowrap',
-                    textOverflow: 'ellipsis',
-                  }}
+                  sx={textOverflowEllipsisSx}
                 >
                   {latestMessageText}
                 </Typography>
