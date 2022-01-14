@@ -1,7 +1,6 @@
 import {
   Badge,
   Box,
-  Divider,
   ListItem,
   ListItemAvatar,
   ListItemText,
@@ -19,19 +18,13 @@ const ChatRoomListItem = ({
 }) => {
   return (
     <>
-      <ListItem
-        disableGutters
-        disablePadding
-        divider
-        sx={{
-          mt: 1.5,
-          mb: 1.5,
-          cursor: 'pointer',
-        }}
-      >
+      <ListItem disableGutters disablePadding divider>
         <ListItemButton
           sx={{
             width: '100%',
+            background: 'transparent',
+            pt: 2,
+            pb: 2,
           }}
         >
           <ListItemAvatar>
