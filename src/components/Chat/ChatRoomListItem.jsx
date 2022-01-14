@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  ListItemButton,
   Typography,
 } from '@mui/material';
 import OttLogo from 'components/Ott/OttLogo';
@@ -19,47 +20,76 @@ const ChatRoomListItem = ({
   return (
     <>
       <ListItem
+        disableGutters
+        disablePadding
+        divider
         sx={{
           mt: 1.5,
           mb: 1.5,
+          cursor: 'pointer',
         }}
       >
-        <ListItemAvatar>
-          <OttLogo ottName={ottName} size={45} />
-        </ListItemAvatar>
-        <ListItemText disableTypography>
-          <Box
+        <ListItemButton
+          sx={{
+            width: '100%',
+          }}
+        >
+          <ListItemAvatar>
+            <OttLogo ottName={ottName} size={45} />
+          </ListItemAvatar>
+          <ListItemText
+            disableTypography
             sx={{
-              display: 'flex',
-              alignItems: 'center',
+              width: '100%',
             }}
           >
             <Box
               sx={{
-                width: '100%',
-                pr: 4,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
               }}
             >
-              <Typography variant="smallB" component="div" mb={0.5}>
-                {`${partyLeaderName}의 ${ottName}`}
-              </Typography>
-              <Typography
-                variant="micro"
-                component="div"
+              <Box
                 sx={{
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
+                  width: '80%',
                 }}
               >
-                {latestMessageText}
-              </Typography>
+                <Typography
+                  variant="smallB"
+                  component="div"
+                  mb={0.5}
+                  sx={{
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {`${partyLeaderName}의 ${ottName}`}
+                </Typography>
+                <Typography
+                  variant="micro"
+                  component="div"
+                  sx={{
+                    overflow: 'hidden',
+                    whiteSpace: 'nowrap',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {latestMessageText}
+                </Typography>
+              </Box>
+              <Badge
+                badgeContent={countNotReadMessage}
+                color="primary"
+                sx={{
+                  mr: 2,
+                }}
+              />
             </Box>
-            <Badge badgeContent={countNotReadMessage} color="primary" />
-          </Box>
-        </ListItemText>
+          </ListItemText>
+        </ListItemButton>
       </ListItem>
-      <Divider />
     </>
   );
 };
