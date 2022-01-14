@@ -13,6 +13,7 @@ import PointChargePage from 'pages/PointChargePage';
 import NotFoundPage from './pages/NotFoundPage';
 import PrivateRoute from 'utils/PrivateRoute';
 import LoginAlertPage from 'pages/LoginAlertPage';
+import ChatPage from 'pages/ChatPage';
 
 const Router = () => {
   return (
@@ -68,6 +69,7 @@ const Router = () => {
           />
           <Route path="/needlogin" element={<LoginAlertPage />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="chat" element={<ChatPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
