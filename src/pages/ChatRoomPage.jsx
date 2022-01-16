@@ -63,6 +63,20 @@ const ChatRoomPage = () => {
   const myUserId = 1;
   const { messageInfos } = CHAT_ROOM_PAGE_DUMMY_DATA;
 
+  const scrollSx = {
+    '&::-webkit-srollbar-tarck': {
+      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
+    },
+    '&::-webkit-scrollbar': {
+      width: '10px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#dddddd',
+      borderRadius: '5px',
+      border: '2px solid #dddddd',
+    },
+  };
+
   return (
     <PageContainer>
       <PageHeader title="조용한 사슴의 넷플릭스">
@@ -82,6 +96,8 @@ const ChatRoomPage = () => {
           direction="column-reverse"
           sx={{
             overflowY: 'auto',
+            mb: 1,
+            ...scrollSx,
           }}
         >
           {messageInfos.map(
@@ -106,7 +122,11 @@ const ChatRoomPage = () => {
             </Typography>
           </Divider>
         </Stack>
-        <ChatMessageInput sx={{ zIndex: 1000 }} />
+        <ChatMessageInput
+          sx={{
+            zIndex: 1000,
+          }}
+        />
       </PageContents>
     </PageContainer>
   );
