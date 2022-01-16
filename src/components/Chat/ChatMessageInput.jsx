@@ -1,10 +1,11 @@
 import { IconButton, InputBase, Stack } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
+import { useTheme } from '@emotion/react';
 
 const ChatMessageInput = () => {
   const [message, setMessage] = useState('');
-
+  const theme = useTheme();
   const handleSetMessage = e => {
     setMessage(e.target.value);
   };
@@ -30,12 +31,15 @@ const ChatMessageInput = () => {
       py={0.5}
       sx={{
         width: '100%',
-        backgroundColor: '#eeeeee',
+        backgroundColor:
+          theme.palette.mode === 'light' ? 'modiGray.light' : 'modiGray.main',
         borderRadius: 4,
         zIndex: 1000,
-        '&:focus-within': {
-          outline: '3px solid #B2cc16',
-        },
+
+        '&:focus-within': theme => ({
+          outline: '3px solid',
+          outlineColor: theme.palette.primary.main,
+        }),
       }}
     >
       <InputBase

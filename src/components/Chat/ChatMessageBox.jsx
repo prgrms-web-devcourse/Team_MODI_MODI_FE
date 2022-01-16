@@ -1,58 +1,49 @@
-const ChatMessageBox = () => {
+import { useTheme } from '@emotion/react';
+import { Box, Paper, Stack, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+import LetterAvatar from './LetterAvatar';
+
+const ChatMessageBox = ({ username, content, time, myMessage }) => {
+  const theme = useTheme();
+  const othersMessageBackgroundColor =
+    theme.palette.mode === 'light' ? 'modiGray.light' : 'modiGray.main';
+  const color = myMessage ? 'primary.main' : othersMessageBackgroundColor;
+
   return (
-    <Stack direction="row" my={1}>
-      <Avatar>조</Avatar>
+    <Stack direction={`row${myMessage ? '-reverse' : ''}`} my={1}>
+      {!myMessage && <LetterAvatar>{username}</LetterAvatar>}
       <Box ml={1.5} mr={1}>
-        <Typography variant="smallB">조용한 사슴</Typography>
-        <Stack direction="row" alignItems="flex-end" mb={1}>
+        {!myMessage && <Typography variant="smallB">{username}</Typography>}
+        <Stack
+          direction={`row${myMessage ? '-reverse' : ''}`}
+          alignItems="flex-end"
+        >
           <Paper
             elevation={0}
             sx={{
+              mt: 0.5,
               px: 2,
               py: 1,
-              bgcolor: '#eeeeee',
+              backgroundColor: color,
               width: 'fit-content',
             }}
           >
-            <Typography variant="small">메세지입니다.</Typography>
+            <Typography variant="small">{content}</Typography>
           </Paper>
-          <Typography variant="micro" ml={1} sx={{ whiteSpace: 'nowrap' }}>
-            오전 12: 24
-          </Typography>
-        </Stack>
-        <Stack direction="row" alignItems="flex-end" my={1}>
-          <Paper
-            elevation={0}
-            sx={{
-              px: 2,
-              py: 1,
-              bgcolor: '#eeeeee',
-              width: 'fit-content',
-            }}
-          >
-            <Typography variant="small">메세지입니다.</Typography>
-          </Paper>
-          <Typography variant="micro" ml={1} sx={{ whiteSpace: 'nowrap' }}>
-            오전 12: 24
-          </Typography>
-        </Stack>
-        <Stack direction="row" alignItems="flex-end" my={1}>
-          <Paper
-            elevation={0}
-            sx={{
-              px: 2,
-              py: 1,
-              bgcolor: '#eeeeee',
-              width: 'fit-content',
-            }}
-          >
-            <Typography variant="small">메세지입니다.</Typography>
-          </Paper>
-          <Typography variant="micro" ml={1} sx={{ whiteSpace: 'nowrap' }}>
-            오전 12: 24
+          <Typography variant="micro" mx={1} sx={{ whiteSpace: 'nowrap' }}>
+            {time}
           </Typography>
         </Stack>
       </Box>
     </Stack>
   );
 };
+
+ChatMessageBox.propTypes = {
+  username: PropTypes.string,
+  content: PropTypes.string,
+  time: PropTypes.string,
+  myMessage: PropTypes.bool,
+};
+
+export default ChatMessageBox;
