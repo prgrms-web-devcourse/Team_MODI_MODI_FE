@@ -14,6 +14,7 @@ import PageContents from 'components/Common/PageContents';
 import PageHeader from 'components/Common/PageHeader';
 import { useParams } from 'react-router-dom';
 import ChatMessageInput from 'components/Chat/ChatMessageInput';
+import LetterAvatar from 'components/Chat/LetterAvatar';
 
 const ChatRoomPage = () => {
   const { partyId } = useParams();
@@ -116,7 +117,7 @@ const ChatRoomPage = () => {
           </Stack>
 
           <Stack direction="row" my={1}>
-            <Avatar>조</Avatar>
+            <LetterAvatar>조용한 사슴</LetterAvatar>
             <Box ml={1.5} mr={1}>
               <Typography variant="smallB">조용한 사슴</Typography>
               <Stack direction="row" alignItems="flex-end" mb={1}>
@@ -191,7 +192,7 @@ const ChatRoomPage = () => {
             </Typography>
           </Divider>
           <Stack direction="row" my={1}>
-            <Avatar>조</Avatar>
+            <LetterAvatar>귀여운 강아지</LetterAvatar>
             <Box ml={1.5} mr={1}>
               <Typography variant="smallB">귀여운 강아지</Typography>
               <Stack direction="row" alignItems="flex-end">
