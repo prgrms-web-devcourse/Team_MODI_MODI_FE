@@ -1,8 +1,8 @@
-import { Box, IconButton, InputBase } from '@mui/material';
+import { IconButton, InputBase, Stack } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
 
-const ChatMessageInputBox = () => {
+const ChatMessageInput = () => {
   const [message, setMessage] = useState('');
 
   const handleSetMessage = e => {
@@ -14,31 +14,34 @@ const ChatMessageInputBox = () => {
       e.preventDefault();
       console.log(message);
       setMessage('');
-      e.target.value = '';
     }
   };
 
+  const handleClickSendButton = e => {
+    console.log(message);
+    setMessage('');
+  };
+
   return (
-    <Box
+    <Stack
+      justifyContent="center"
+      flexDirection="row"
+      pl={2.5}
+      py={0.5}
       sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        position: 'absolute',
-        bottom: '24px',
-        width: 'calc(100% - 48px)',
+        width: '100%',
         backgroundColor: '#eeeeee',
-        pl: 2.5,
-        py: 0.5,
         borderRadius: 4,
+        zIndex: 1000,
         '&:focus-within': {
-          outline: '2.5px solid #B2cc16',
+          outline: '3px solid #B2cc16',
         },
       }}
     >
       <InputBase
         placeholder="메세지를 입력하세요."
-        defaultValue={message}
-        maxRows={10}
+        value={message}
+        maxRows={5}
         onChange={handleSetMessage}
         onKeyDown={handleSendMessage}
         multiline
@@ -48,15 +51,16 @@ const ChatMessageInputBox = () => {
       <IconButton
         type="submit"
         sx={{
-          alignSelf: 'flex-start',
+          alignSelf: 'flex-end',
           background: 'transparent',
           color: 'primary.main',
         }}
+        onClick={handleClickSendButton}
       >
         <SendIcon />
       </IconButton>
-    </Box>
+    </Stack>
   );
 };
 
-export default ChatMessageInputBox;
+export default ChatMessageInput;
