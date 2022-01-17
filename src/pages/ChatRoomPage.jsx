@@ -64,16 +64,13 @@ const ChatRoomPage = () => {
   const { messageInfos } = CHAT_ROOM_PAGE_DUMMY_DATA;
 
   const scrollSx = {
-    '&::-webkit-srollbar-tarck': {
-      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.3)',
-    },
     '&::-webkit-scrollbar': {
       width: '10px',
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#dddddd',
+      backgroundColor: 'modiGray.main',
       borderRadius: '5px',
-      border: '2px solid #dddddd',
+      border: '2px solid modiGray.main',
     },
   };
 
@@ -95,7 +92,7 @@ const ChatRoomPage = () => {
         <Stack
           direction="column-reverse"
           sx={{
-            overflowY: 'auto',
+            overflowY: 'scroll',
             mb: 1,
             ...scrollSx,
           }}
