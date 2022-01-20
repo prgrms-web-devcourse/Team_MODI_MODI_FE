@@ -5,62 +5,51 @@ import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
 
 const NoticeList = ({ onClickClose }) => {
-  const notices = [
+  const notificationResponses = [
     {
-      noticeId: 1,
+      id: 1,
+      content: '공유계정 정보가 변경 되었습니다.',
+      createdAt: '2022-01-18T16:25:23.065224',
+      readCheck: false,
       partyId: '1',
-      partyLeader: '귀여운 강아지',
+      partyLeaderName: '귀여운 강아지',
       ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
     },
     {
-      noticeId: 2,
-      partyId: '1',
-      partyLeader: '귀여운 강아지',
+      id: 2,
+      content: '공유계정 정보가 변경되었습니다.',
+      createdAt: '2022-01-18T16:25:22.493746',
+      readCheck: false,
+      partyId: 9,
+      partyLeaderName: '싫은 뻐꾸기',
       ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
     },
     {
-      noticeId: 3,
-      partyId: '1',
-      partyLeader: '귀여운 강아지',
+      id: 3,
+      content: '공유계정 정보가 변경되었습니다.',
+      createdAt: '2022-01-18T16:25:23.065224',
+      readCheck: false,
+      partyId: 9,
+      partyLeaderName: '싫은 뻐꾸기',
       ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
     },
     {
-      noticeId: 4,
-      partyId: '1',
-      partyLeader: '귀여운 강아지',
+      id: 4,
+      content: '공유계정 정보가 변경되었습니다.',
+      createdAt: '2022-01-18T16:25:23.603224',
+      readCheck: false,
+      partyId: 9,
+      partyLeaderName: '싫은 뻐꾸기',
       ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
     },
     {
-      noticeId: 5,
-      partyId: '1',
-      partyLeader: '귀여운 강아지',
+      id: 5,
+      content: '싫은 뻐꾸기님이 파티원으로 참여했습니다.',
+      createdAt: '2022-01-18T16:29:50.037277',
+      readCheck: false,
+      partyId: 10,
+      partyLeaderName: '질긴 코알라',
       ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
-    },
-    {
-      noticeId: 6,
-      partyId: '1',
-      partyLeader: '귀여운 강아지',
-      ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
-    },
-    {
-      noticeId: 7,
-      partyId: '1',
-      partyLeader: '귀여운 강아지',
-      ottName: '넷플릭스',
-      time: '21/01/11',
-      message: '공유계정 정보가 변경 되었습니다.',
     },
   ];
 
@@ -91,8 +80,8 @@ const NoticeList = ({ onClickClose }) => {
       </Box>
       <ScrollWrapper>
         <List>
-          {notices.map(notice => (
-            <NoticeItem key={notice.noticeId} notice={notice} />
+          {notificationResponses.map(notice => (
+            <NoticeItem key={notice.id} notice={notice} />
           ))}
         </List>
       </ScrollWrapper>

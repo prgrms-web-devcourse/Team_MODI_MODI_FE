@@ -4,7 +4,8 @@ import { OttLogo } from 'components/Ott';
 import PropTypes from 'prop-types';
 
 const NoticeItem = ({ notice }) => {
-  const { partyId, partyLeader, ottName, time, message } = notice;
+  const { partyId, partyLeaderName, ottName, createdAt, content, readCheck } =
+    notice;
 
   return (
     <ListItem
@@ -32,7 +33,7 @@ const NoticeItem = ({ notice }) => {
         }}
       >
         <Typography variant="smallB" component="span">
-          {partyLeader}의 {ottName}
+          {partyLeaderName}의 {ottName}
         </Typography>
         <Typography
           variant="small"
@@ -42,10 +43,10 @@ const NoticeItem = ({ notice }) => {
             ml: 1,
           }}
         >
-          {time}
+          {createdAt}
         </Typography>
         <Typography variant="base" component="p">
-          {message}
+          {content}
         </Typography>
       </Box>
     </ListItem>
