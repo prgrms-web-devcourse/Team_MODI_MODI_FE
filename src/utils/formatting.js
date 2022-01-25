@@ -56,3 +56,11 @@ export const pointFormatter = (points, fontSize = 15) => {
     </>
   );
 };
+
+export const formattingCreatedAt = createdAt => {
+  const splitDate = createdAt.split('-');
+  const month = splitDate[1];
+  const day = splitDate[2].split('T')[0];
+
+  return `${month}/${day}`;
+};

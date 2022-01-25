@@ -1,11 +1,11 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Box, ListItem, Typography } from '@mui/material';
 import { OttLogo } from 'components/Ott';
-import PropTypes from 'prop-types';
+import { formattingCreatedAt } from 'utils/formatting';
 
 const NoticeItem = ({ notice }) => {
-  const { partyId, partyLeaderName, ottName, createdAt, content, readCheck } =
-    notice;
+  const { partyId, partyLeaderName, ottName, createdAt, content } = notice;
 
   return (
     <ListItem
@@ -24,7 +24,7 @@ const NoticeItem = ({ notice }) => {
         }}
       />
       <Box
-        to={`/${partyId}`}
+        to={`/myParty/${partyId}`}
         component={Link}
         sx={{
           display: 'block',
@@ -43,7 +43,7 @@ const NoticeItem = ({ notice }) => {
             ml: 1,
           }}
         >
-          {createdAt}
+          {formattingCreatedAt(createdAt)}
         </Typography>
         <Typography variant="base" component="p">
           {content}
