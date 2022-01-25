@@ -9,7 +9,7 @@ const PageContainer = styled(Container)(({ theme }) => ({
   paddingTop: 72,
   [theme.breakpoints.down('md')]: {
     padding: 0,
-    paddingTop: 56,
+    paddingTop: 110,
   },
 }));
 

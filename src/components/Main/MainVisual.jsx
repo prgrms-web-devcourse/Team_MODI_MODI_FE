@@ -9,6 +9,7 @@ const MainVisual = () => {
         sx={{
           position: 'relative',
           margin: '0 auto',
+          pt: 8,
           maxWidth: 550,
           height: '100%',
         }}
@@ -39,9 +40,9 @@ const MainVisual = () => {
 const VisualBox = styled(Box)(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
-  padding: '10vh 30px 0',
+  padding: '6vh 30px 0',
   height: '40vh',
-  minHeight: '290px',
+  minHeight: '320px',
   backgroundColor: theme.palette.background.mainVisual,
 }));
 

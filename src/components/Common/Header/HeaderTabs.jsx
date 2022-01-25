@@ -44,6 +44,11 @@ const HeaderTabs = ({ isMainPage, tabSize, mode = 'light' }) => {
         isMainPage={isMainPage}
         onClick={() => navigate('/create')}
       />
+      <HeaderTab
+        label="포인트 충전"
+        isMainPage={isMainPage}
+        onClick={() => navigate('/charge')}
+      />
     </Tabs>
   );
 };
