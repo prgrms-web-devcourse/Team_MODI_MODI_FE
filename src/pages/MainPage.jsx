@@ -27,7 +27,7 @@ const MainPage = () => {
       <MainVisual />
       <Box
         sx={{
-          mt: '-85px',
+          mt: '-88px',
           position: 'relative',
         }}
       >

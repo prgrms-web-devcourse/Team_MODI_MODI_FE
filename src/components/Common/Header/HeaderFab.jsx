@@ -12,11 +12,11 @@ const HeaderFab = ({ user, isMainPage, userId }) => {
       to={user ? `/user` : '/login'}
       color={isMainPage ? 'default' : 'secondary'}
       sx={{
-        width: 32,
-        height: 32,
-        maxHeight: 32,
-        minHeight: 32,
-        ml: 1.5,
+        width: 30,
+        height: 30,
+        maxHeight: 30,
+        minHeight: 30,
+        ml: 2,
         boxShadow: 'none',
       }}
     >

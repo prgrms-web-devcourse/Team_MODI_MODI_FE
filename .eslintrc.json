@@ -32,7 +32,7 @@
     "array-element-newline": ["error", "consistent"],
     "object-property-newline": [
       "error",
-      { "allowAllPropertiesOnSameLine": false }
+      { "allowAllPropertiesOnSameLine": true }
     ],
     "object-shorthand": ["error", "always"],
     "lines-between-class-members": ["error", "always"],
