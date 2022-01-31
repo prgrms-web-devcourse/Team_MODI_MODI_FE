@@ -13,3 +13,4 @@ export { default as RuleToggle } from './RuleToggle';
 export { default as SocialLoginButton } from './SocialLoginButton';
 export { default as Rule } from './Rule';
 export { default as Alert } from './Alert';
+export { default as PageTransformModal } from './PageTransformModal';
