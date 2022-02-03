@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useMemo, useCallback, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { AppBar, Box, Container, IconButton, Popover } from '@mui/material';
+import { AppBar, Box, Container, IconButton } from '@mui/material';
 import HeaderTabs from './HeaderTabs.jsx';
 import HeaderFab from './HeaderFab.jsx';
 import Logo from 'components/Common/Logo.jsx';
@@ -16,6 +16,7 @@ import { eventSource } from 'utils/eventStream';
 import { getNotificationList, readNotification } from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import NoticeList from './../Notification/NoticeList';
+import PageTransformModal from './../PageTransformModal';
 
 const Header = () => {
   const location = useLocation();
@@ -37,6 +38,9 @@ const Header = () => {
 
   const { isLoading, value } = noticeState;
 
+  const [open, setOpen] = useState();
+  const [notificationCount, setNotificationCount] = useState(0);
+
   useEffect(() => {
     if (userId) {
       console.log(userId);
@@ -44,15 +48,13 @@ const Header = () => {
     }
   }, [userId, fetchNoticeApiState]);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
   const handleClick = event => {
     fetchNoticeApiState();
-    setAnchorEl(event.currentTarget);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    setOpen(false);
   };
 
   const handleClickNotification = noticeId => {
@@ -62,9 +64,6 @@ const Header = () => {
     // 파티 읽음 처리
   };
 
-  const open = Boolean(anchorEl);
-
-  const [notificationCount, setNotificationCount] = useState(0);
   useEffect(() => {
     value && setNotificationCount(value.unreadCount);
   }, [value]);
@@ -139,27 +138,18 @@ const Header = () => {
             </IconButton>
             <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
           </Box>
-          <Popover
-            sx={{
-              borderRadius: '16px',
-            }}
-            open={open}
-            onClose={handleClose}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-          >
-            {isLoading && <p>로딩중</p>}
-            {value && (
-              <NoticeList
-                onClickClose={handleClose}
-                onClickNotification={handleClickNotification}
-                notifications={value.notificationResponseList}
-              />
-            )}
-          </Popover>
+          {open && (
+            <PageTransformModal>
+              {isLoading && <p>로딩중</p>}
+              {value && (
+                <NoticeList
+                  onClickClose={handleClose}
+                  onClickNotification={handleClickNotification}
+                  notifications={value.notificationResponseList}
+                />
+              )}
+            </PageTransformModal>
+          )}
         </Container>
       </AppBar>
     )
