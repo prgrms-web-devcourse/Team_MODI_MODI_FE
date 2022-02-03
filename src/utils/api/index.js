@@ -113,3 +113,7 @@ export const updateSharedInfo = (partyId, sharedInfo) => {
 export const deleteParty = partyId => _delete(`/parties/${partyId}`);
 
 export const getNotificationList = () => get(`/notifications`, true);
+
+export const readNotification = partyId => {
+  return patch(`/notifications/${partyId}`, true);
+};

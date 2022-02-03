@@ -13,7 +13,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useTheme } from '@emotion/react';
 import Notice from 'components/Common/Notice';
 import { eventSource } from 'utils/eventStream';
-import { getNotificationList } from 'utils/api';
+import { getNotificationList, readNotification } from 'utils/api';
 import useAsync from 'hooks/useAsync';
 import NoticeList from './../Notification/NoticeList';
 
@@ -30,17 +30,19 @@ const Header = () => {
     getNotificationList,
     [],
     [],
-    false,
+    true,
   );
 
-  const { isLoading, value, error } = noticeState;
+  const [, fetchReadNotificationAPI] = useAsync(readNotification, [], [], true);
+
+  const { isLoading, value } = noticeState;
 
   useEffect(() => {
-    console.log('ddd');
     if (userId) {
-      eventSource(userId, sseNotification);
+      console.log(userId);
+      eventSource(userId, fetchNoticeApiState);
     }
-  }, [userId]);
+  }, [userId, fetchNoticeApiState]);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -53,16 +55,19 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleClickNotification = noticeId => {
+    console.log(noticeId);
+    handleClose();
+    fetchReadNotificationAPI(noticeId);
+    // 파티 읽음 처리
+  };
+
   const open = Boolean(anchorEl);
 
   const [notificationCount, setNotificationCount] = useState(0);
   useEffect(() => {
     value && setNotificationCount(value.unreadCount);
   }, [value]);
-
-  const sseNotification = () => {
-    setNotificationCount(current => current + 1);
-  };
 
   return (
     !isLoginPage && (
@@ -150,6 +155,7 @@ const Header = () => {
             {value && (
               <NoticeList
                 onClickClose={handleClose}
+                onClickNotification={handleClickNotification}
                 notifications={value.notificationResponseList}
               />
             )}

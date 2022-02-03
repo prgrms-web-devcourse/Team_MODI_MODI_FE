@@ -4,7 +4,12 @@ import ScrollWrapper from './../ScrollWrapper';
 import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
 
-const NoticeList = ({ onClickClose, notifications }) => {
+const NoticeList = ({ onClickClose, onClickNotification, notifications }) => {
+  const handleClickNotification = noticeId => {
+    console.log(noticeId);
+    onClickNotification(noticeId);
+  };
+
   return (
     <Box
       sx={{
@@ -33,7 +38,11 @@ const NoticeList = ({ onClickClose, notifications }) => {
       <ScrollWrapper>
         <List>
           {notifications.map(notice => (
-            <NoticeItem key={notice.id} notice={notice} />
+            <NoticeItem
+              key={notice.id}
+              notice={notice}
+              onClick={handleClickNotification(notice.id)}
+            />
           ))}
         </List>
       </ScrollWrapper>
@@ -46,4 +55,5 @@ export default NoticeList;
 NoticeList.propTypes = {
   onClickClose: PropTypes.func,
   notifications: PropTypes.array,
+  onClickNotification: PropTypes.func,
 };

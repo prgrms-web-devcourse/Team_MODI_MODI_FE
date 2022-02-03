@@ -8,9 +8,5 @@ export const eventSource = (userId, setCount) => {
 
   source.addEventListener('sse', e => setCount());
 
-  setInterval(() => {
-    console.log(source.readyState);
-  }, 1000);
-
   return source.readyState;
 };
