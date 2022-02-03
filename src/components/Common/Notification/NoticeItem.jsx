@@ -4,8 +4,12 @@ import { Box, ListItem, Typography } from '@mui/material';
 import { OttLogo } from 'components/Ott';
 import { formattingCreatedAt } from 'utils/formatting';
 
-const NoticeItem = ({ notice }) => {
-  const { partyId, partyLeaderName, ottName, createdAt, content } = notice;
+const NoticeItem = ({ notice, onClickNotification }) => {
+  const { id, partyId, partyLeaderName, ottName, createdAt, content } = notice;
+
+  const handleClickNotification = () => {
+    onClickNotification(id);
+  };
 
   return (
     <ListItem
@@ -14,6 +18,7 @@ const NoticeItem = ({ notice }) => {
         alignItems: 'flex-start',
         padding: '12px 0',
       }}
+      onClick={handleClickNotification}
     >
       <OttLogo
         ottName={ottName}
@@ -57,4 +62,5 @@ export default NoticeItem;
 
 NoticeItem.propTypes = {
   notice: PropTypes.object,
+  onClickNotification: PropTypes.func,
 };

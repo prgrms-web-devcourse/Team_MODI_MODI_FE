@@ -61,7 +61,7 @@ const Header = () => {
     console.log(noticeId);
     handleClose();
     fetchReadNotificationAPI(noticeId);
-    // 파티 읽음 처리
+    fetchNoticeApiState();
   };
 
   useEffect(() => {

@@ -5,11 +5,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
 
 const NoticeList = ({ onClickClose, onClickNotification, notifications }) => {
-  const handleClickNotification = noticeId => {
-    console.log(noticeId);
-    onClickNotification(noticeId);
-  };
-
   return (
     <Box
       sx={{
@@ -41,7 +36,7 @@ const NoticeList = ({ onClickClose, onClickNotification, notifications }) => {
             <NoticeItem
               key={notice.id}
               notice={notice}
-              onClick={handleClickNotification(notice.id)}
+              onClickNotification={onClickNotification}
             />
           ))}
         </List>
