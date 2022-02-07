@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { AppBar, Box, Container, IconButton } from '@mui/material';
@@ -11,15 +11,62 @@ import { useCustomThemeDispatch } from 'contexts/CustomThemeProvider.jsx';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useTheme } from '@emotion/react';
+import Notice from 'components/Common/Notice';
+import { eventSource } from 'utils/eventStream';
+import { getNotificationList, readNotification } from 'utils/api';
+import useAsync from 'hooks/useAsync';
+import NoticeList from './../Notification/NoticeList';
+import PageTransformModal from './../PageTransformModal';
 
 const Header = () => {
   const location = useLocation();
-  const { isLoggedIn } = useAuthState();
+  const { isLoggedIn, userId } = useAuthState();
   const isMainPage = useMemo(() => location.pathname === '/', [location]);
   const isLoginPage = useMemo(() => location.pathname === '/login', [location]);
   const theme = useTheme();
   const mdDownMatches = useMediaQuery(theme.breakpoints.down('md'));
   const { onToggleTheme } = useCustomThemeDispatch();
+
+  const [noticeState, fetchNoticeApiState] = useAsync(
+    getNotificationList,
+    [],
+    [],
+    true,
+  );
+
+  const [, fetchReadNotificationAPI] = useAsync(readNotification, [], [], true);
+
+  const { isLoading, value } = noticeState;
+
+  const [open, setOpen] = useState();
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    if (userId) {
+      console.log(userId);
+      eventSource(userId, fetchNoticeApiState);
+    }
+  }, [userId, fetchNoticeApiState]);
+
+  const handleClick = event => {
+    fetchNoticeApiState();
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleClickNotification = noticeId => {
+    console.log(noticeId);
+    handleClose();
+    fetchReadNotificationAPI(noticeId);
+    fetchNoticeApiState();
+  };
+
+  useEffect(() => {
+    value && setNotificationCount(value.unreadCount);
+  }, [value]);
 
   return (
     !isLoginPage && (
@@ -86,8 +133,23 @@ const Header = () => {
               tabSize={mdDownMatches ? 56 : 72}
               mode={theme.palette.mode}
             />
+            <IconButton onClick={handleClick}>
+              <Notice badgeContent={notificationCount} />
+            </IconButton>
             <HeaderFab user={isLoggedIn} isMainPage={isMainPage} />
           </Box>
+          {open && (
+            <PageTransformModal>
+              {isLoading && <p>로딩중</p>}
+              {value && (
+                <NoticeList
+                  onClickClose={handleClose}
+                  onClickNotification={handleClickNotification}
+                  notifications={value.notificationResponseList}
+                />
+              )}
+            </PageTransformModal>
+          )}
         </Container>
       </AppBar>
     )

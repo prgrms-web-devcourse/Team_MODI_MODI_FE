@@ -94,6 +94,7 @@ export const getAllMyParty = (
 
   return get(`/users/me/parties?${stringifyParams}`, true);
 };
+
 export const getMyPartyById = partyId => {
   return get(`/users/me/parties/${partyId}`, true);
 };
@@ -110,3 +111,9 @@ export const updateSharedInfo = (partyId, sharedInfo) => {
   return patch(`/parties/${partyId}/sharedAccount/update`, true, sharedInfo);
 };
 export const deleteParty = partyId => _delete(`/parties/${partyId}`);
+
+export const getNotificationList = () => get(`/notifications`, true);
+
+export const readNotification = partyId => {
+  return patch(`/notifications/${partyId}`, true);
+};
